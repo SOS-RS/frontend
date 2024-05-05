@@ -69,9 +69,6 @@ const SignIn = () => {
                 <FormItem>
                   <div className="flex justify-between items-center">
                     <FormLabel className="text-base ">Senha</FormLabel>
-                    <FormLabel className="underline cursor-pointer text-slate-500 font-normal  hover:text-black ">
-                      Esqueceu?
-                    </FormLabel>
                   </div>
                   <FormControl>
                     <Input
