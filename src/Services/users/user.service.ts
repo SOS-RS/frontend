@@ -1,38 +1,19 @@
 import { api } from "../../api";
 
-import { IUpdateUser, IUser } from "./types";
+import { IServerResponse } from "@/types";
+import { ICreateUser, IUpdateUser, IUser } from "./types";
 
 const UserServices = {
-  create: async (payload: IUser): Promise<IUser> => {
-    const { data } = await api.post<{ message: string; data: IUser }>(
-      "/users",
-      payload
-    );
-    return data.data;
+  create: async (payload: ICreateUser): Promise<string> => {
+    const { data } = await api.post<{ message: string }>("/users", payload);
+    return data.message;
   },
-  getAll: async (): Promise<IUser[]> => {
-    const { data } = await api.get<{
-      message: "string";
-      data: IUser[];
-    }>("/users");
-    return data.data;
-  },
-  getOne: async (userId: string): Promise<IUser> => {
-    const { data } = await api.get<{
-      message: "string";
-      data: IUser;
-    }>(`/users/${userId}`);
-    return data.data;
-  },
-  update: async (
-    userId: string,
-    payload: IUpdateUser
-  ): Promise<{ message: string }> => {
-    const { data } = await api.put<{ message: string }>(
+  update: async (userId: string, payload: IUpdateUser): Promise<IUser> => {
+    const { data } = await api.put<IServerResponse<IUser>>(
       `/users/${userId}`,
       payload
     );
-    return data;
+    return data.data;
   },
 };
 

@@ -1,12 +1,15 @@
 export interface ISession {
+  id: string;
   userId: string;
-  sessionId: string;
-  loginType: LoginType;
+  ip: string;
+  userAgent: string;
+  active: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum LoginType {
   User = "user",
-  Slot = "slot",
 }
 
 export interface ISessionContext {

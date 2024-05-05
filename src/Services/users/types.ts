@@ -1,13 +1,24 @@
 export interface IUser {
-  email: string;
+  id: string;
   name: string;
-  password?: string;
-  cpf?: string;
-  phone?: string;
-  photo?: string;
+  lastName: string;
+  login: string;
+  password: string;
+  phone: string;
+  accessLevel: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IUpdateUser {
-  photo: string;
-  phone?: string;
+  id: string;
+  accessLevel: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICreateUser {
+  name: string;
+  lastName: string;
+  phone: string;
 }
