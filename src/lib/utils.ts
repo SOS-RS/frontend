@@ -20,10 +20,10 @@ function variantStatusPriority(priority: SupplyPriority) {
  * deprecated
  */
 const colorStatusPriority = (priority: SupplyPriority) => {
-  if (priority === SupplyPriority.Needing) return '#f69f9d';
-  if (priority === SupplyPriority.Urgent) return '#f8b993';
-  if (priority === SupplyPriority.UnderControl) return '#f9cf8d';
-  if (priority === SupplyPriority.Remaining) return '#63bc43';
+  if (priority === SupplyPriority.Needing) return 'bg-[#f69f9d]';
+  if (priority === SupplyPriority.Urgent) return 'bg-[#f8b993]';
+  if (priority === SupplyPriority.UnderControl) return 'bg-[#f9cf8d]';
+  if (priority === SupplyPriority.Remaining) return 'bg-[#63bc43]';
 };
 
 /**

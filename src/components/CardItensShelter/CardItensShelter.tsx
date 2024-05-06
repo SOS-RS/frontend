@@ -27,12 +27,12 @@ const CardItensShelter = (props: ICardItensShelter) => {
     setShowTopDiv(!showTopDiv);
   };
 
-  const cor = colorStatusPriority(priority);
+  const circleClassName = colorStatusPriority(priority);
+
   return (
     <div className="flex pb-8 flex-col gap-2   ">
       <div className="flex gap-2 items-center">
-        <CircleStatus className={`bg-[${cor}]`} size={4} />
-
+        <CircleStatus className={circleClassName} size={4} />
         <div>
           <h1 className="font-medium">{nameStatusPriority(priority)}</h1>
         </div>
