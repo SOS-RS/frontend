@@ -11,7 +11,7 @@ import {
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
 import { cn, getAvailabilityProps } from '@/lib/utils';
-import { SupplyPriority } from '@/services/supply/types';
+import { SupplyPriority } from '@/service/supply/types';
 import { Button } from '@/components/ui/button';
 
 const Shelter = () => {

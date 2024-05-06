@@ -14,9 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ICreateSupply, SupplyPriority } from '@/services/supply/types';
+import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 import { getSupplyPriorityProps } from '@/lib/utils';
-import { SupplyServices } from '@/services';
+import { SupplyServices } from '@/service';
 
 const CreateSupply = () => {
   const navigate = useNavigate();
