@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
@@ -110,23 +110,25 @@ const Home = () => {
           ) : shelters.results.length === 0 ? (
             <NoFoundSearch />
           ) : (
-            shelters.results.map((s, idx) => (
-              <ShelterListItem key={idx} data={s} />
-            ))
-          )}
-          {hasMore ? (
-            <Button
-              className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
-              size="sm"
-              loading={loading}
-              onClick={handleFetchMore}
-            >
-              Carregar mais
-            </Button>
-          ) : (
-            <p className="text-muted-foreground font-semibold">
-              Não há mais registros
-            </p>
+            <Fragment>
+              {shelters.results.map((s, idx) => (
+                <ShelterListItem key={idx} data={s} />
+              ))}
+              {hasMore ? (
+                <Button
+                  className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
+                  size="sm"
+                  loading={loading}
+                  onClick={handleFetchMore}
+                >
+                  Carregar mais
+                </Button>
+              ) : (
+                <p className="text-muted-foreground font-semibold">
+                  Não há mais registros
+                </p>
+              )}
+            </Fragment>
           )}
         </main>
       </div>
