@@ -1,4 +1,4 @@
-import { SupplyPriority } from '@/Services/supply/types';
+import { SupplyPriority } from '@/services/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -6,6 +6,9 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * deprecated
+ */
 function variantStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Needing) return 'danger';
   if (priority === SupplyPriority.Urgent) return 'warn';
@@ -13,6 +16,9 @@ function variantStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Remaining) return 'success';
 }
 
+/**
+ * deprecated
+ */
 const colorStatusPriority = (priority: SupplyPriority) => {
   if (priority === SupplyPriority.Needing) return '#f69f9d';
   if (priority === SupplyPriority.Urgent) return '#f8b993';
@@ -20,17 +26,14 @@ const colorStatusPriority = (priority: SupplyPriority) => {
   if (priority === SupplyPriority.Remaining) return '#63bc43';
 };
 
+/**
+ * deprecated
+ */
 function nameStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Needing) return 'Necessita urgentimente';
   if (priority === SupplyPriority.Urgent) return 'Urgente';
   if (priority === SupplyPriority.UnderControl) return 'Sob-controle';
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
-}
-
-function tokenName() {
-  const loc = localStorage.getItem('loc') ?? 'br';
-  const key = `${loc}:token`;
-  return key;
 }
 
 function getAvailabilityProps(
@@ -55,11 +58,60 @@ function getAvailabilityProps(
     };
 }
 
+function getSupplyPriorityProps(priority: SupplyPriority) {
+  switch (priority) {
+    case SupplyPriority.UnderControl:
+      return {
+        label: 'Sob controle',
+        className: 'bg-light-yellow',
+      };
+    case SupplyPriority.Remaining:
+      return {
+        label: 'Disponível para doação',
+        className: 'bg-light-green',
+      };
+    case SupplyPriority.Needing:
+      return {
+        label: 'Urgente',
+        className: 'bg-light-orange',
+      };
+    case SupplyPriority.Urgent:
+      return {
+        label: 'Necessita Urgentemente',
+        className: 'bg-light-red',
+      };
+  }
+}
+
+function getObjectValue<T>(obj: T, path: string, sep = '.'): any {
+  return path
+    .split(sep)
+    .reduce(
+      (acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined),
+      obj as Record<string, any>
+    );
+}
+
+function group<T extends Record<string, any>>(
+  arr: Array<T>,
+  groupBy: string,
+  sep = '.'
+): { [key: string]: Array<T> } {
+  const data = arr.reduce((prev, current) => {
+    const key: string = getObjectValue(current, groupBy, sep);
+    if (prev[key]) return { ...prev, [key]: [...prev[key], current] };
+    return { ...prev, [key]: [current] };
+  }, {} as { [key: string]: Array<T> });
+
+  return data;
+}
+
 export {
   cn,
-  tokenName,
   getAvailabilityProps,
-  colorStatusPriority,
+  group,
+  getSupplyPriorityProps,
   variantStatusPriority,
+  colorStatusPriority,
   nameStatusPriority,
 };

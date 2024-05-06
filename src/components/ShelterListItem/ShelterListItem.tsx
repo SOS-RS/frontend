@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
 import { cn, getAvailabilityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
-import { ChevronRight } from 'lucide-react';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;

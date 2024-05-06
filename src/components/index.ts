@@ -5,6 +5,7 @@ import { CardAboutShelter } from './CardAboutShelter';
 import { CardItensShelter } from './CardItensShelter';
 import { ShelterListItem } from './ShelterListItem';
 import { NoFoundSearch } from './NoFoundSearch';
+import { CircleStatus } from './CircleStatus';
 
 export {
   LoadingScreen,
@@ -14,4 +15,5 @@ export {
   CardAboutShelter,
   CardItensShelter,
   NoFoundSearch,
+  CircleStatus,
 };

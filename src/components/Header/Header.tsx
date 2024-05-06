@@ -1,22 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-
+import React from 'react';
 import { IHeader } from './types';
+import { cn } from '@/lib/utils';
 
-const Header = (props: IHeader) => {
-  const { endAdornment, startAdornment, title } = props;
-  const navigate = useNavigate();
+const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
+  const {
+    endAdornment,
+    startAdornment,
+    title,
+    className = '',
+    ...rest
+  } = props;
 
   return (
-    <div className="bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full">
-      <div className="flex gap-2 ">
-        <div className="cursor-pointer" onClick={() => navigate(`/`)}>
-          {startAdornment}
-        </div>
+    <div
+      ref={ref}
+      className={cn(
+        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full',
+        className
+      )}
+      {...rest}
+    >
+      <div className="flex gap-1 items-center">
+        {startAdornment}
         <h3 className="font-medium text-white">{title}</h3>
       </div>
       <div className="cursor-pointer ">{endAdornment}</div>
     </div>
   );
-};
+});
 
 export { Header };
