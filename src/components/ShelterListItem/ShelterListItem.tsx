@@ -8,6 +8,7 @@ import { cn, getAvailabilityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
+import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
@@ -49,9 +50,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             Necessita urgente de doações de:
           </p>
           <div className="flex gap-2 flex-wrap">
-            {data.supplies.map((s, idx) => (
-              <Chip variant="danger" key={idx} label={s.name} />
-            ))}
+            {data.supplies
+              .filter((s) => s.priority >= SupplyPriority.Urgent)
+              .map((s, idx) => (
+                <Chip variant="danger" key={idx} label={s.name} />
+              ))}
           </div>
         </div>
       )}

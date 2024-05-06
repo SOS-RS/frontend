@@ -2,23 +2,29 @@ import { useMemo } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  CardAboutShelter,
-  CardItensShelter,
-  Header,
-  LoadingScreen,
-} from '@/components';
+import { CardAboutShelter, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps } from '@/lib/utils';
-import { SupplyPriority } from '@/service/supply/types';
+import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { ShelterCategoryItems } from './components';
+import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
 
 const Shelter = () => {
   const params = useParams();
   const { id } = params;
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
+
+  const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
+    const grouped = group(shelter?.supplies ?? [], 'priority');
+    return Object.entries(grouped)
+      .sort(([a], [b]) => (+a > +b ? -1 : 1))
+      .map(([key, values]) => ({
+        priority: +key,
+        tags: values.map((v) => v.name),
+      }));
+  }, [shelter.supplies]);
 
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
@@ -67,22 +73,9 @@ const Shelter = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
-          <CardItensShelter
-            priority={SupplyPriority.Needing}
-            shelter={shelter}
-          />
-          <CardItensShelter
-            priority={SupplyPriority.Urgent}
-            shelter={shelter}
-          />
-          <CardItensShelter
-            priority={SupplyPriority.Remaining}
-            shelter={shelter}
-          />
-          <CardItensShelter
-            priority={SupplyPriority.UnderControl}
-            shelter={shelter}
-          />
+          {shelterCategories.map((categoryProps, idx) => (
+            <ShelterCategoryItems key={idx} {...categoryProps} />
+          ))}
         </div>
       </div>
     </div>

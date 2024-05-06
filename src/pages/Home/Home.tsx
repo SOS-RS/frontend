@@ -71,8 +71,7 @@ const Home = () => {
           <Button variant="ghost" size="sm" className="flex gap-2 items-center">
             <ListFilter className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
-              {' '}
-              Filtros{' '}
+              Filtros
             </h1>
           </Button>
         </div> */}
