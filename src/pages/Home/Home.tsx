@@ -1,21 +1,24 @@
-import { Header } from "@/components";
-import { Input } from "@/components/ui/input";
-import { RotateCw } from "lucide-react";
+import { Alert, Header } from "@/components";
+import { RotateCw, CircleAlert } from "lucide-react";
+
+const alertDescription =
+  "Você pode consultar a lista de abrigos disponíveis e os itens que necessitam de doações.";
 
 const Home = () => {
   return (
-    <div className="flex flex-col h-screen justify-center gap-5">
+    <div className="flex flex-col h-screen">
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={<RotateCw size={20} />}
       />
-      <div className="gap-2 flex flex-col">
-        <div className="flex-1 flex">
-          <h1 className=""> Abrigos disponíveis</h1>
-        </div>
-        <div className="flex-1 flex">
-          <Input className="" />
-        </div>
+      <div className="p-5 gap-3 flex flex-col">
+        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+          Abrigos disponíveis
+        </h1>
+        <Alert
+          description={alertDescription}
+          startAdornment={<CircleAlert size={20} />}
+        />
       </div>
     </div>
   );
