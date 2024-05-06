@@ -6,6 +6,7 @@ import { CardItensShelter } from './CardItensShelter';
 import { ShelterListItem } from './ShelterListItem';
 import { NoFoundSearch } from './NoFoundSearch';
 import { CircleStatus } from './CircleStatus';
+import { DialogSelector } from './DialogSelector';
 
 export {
   LoadingScreen,
@@ -16,4 +17,5 @@ export {
   CardItensShelter,
   NoFoundSearch,
   CircleStatus,
+  DialogSelector,
 };
