@@ -6,6 +6,7 @@ export interface IShelter {
   petFriendly?: boolean | null;
   shelteredPeople?: number | null;
   capacity?: number | null;
+  prioritySum: number;
   contact?: string | null;
   createdAt: string;
   updatedAt?: string | null;

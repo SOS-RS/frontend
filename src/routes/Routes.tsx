@@ -8,7 +8,7 @@ const Routes = () => {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/abrigo/:id" element={<Shelter />} />
-      <Route path="/abrigo/item/:itemId" element={<ShelterItem />} />
+      <Route path="/abrigo/:shelterId/items" element={<ShelterItem />} />
       <Route path="/" element={<Home />} />
       <Route path="*" element={<Navigate to="/signin" />} />
     </Switch>

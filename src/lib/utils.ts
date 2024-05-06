@@ -1,3 +1,4 @@
+import { SupplyPriority } from '@/services/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -33,4 +34,52 @@ function getAvailabilityProps(
     };
 }
 
-export { cn, tokenName, getAvailabilityProps };
+function getSupplyPriorityProps(priority: SupplyPriority) {
+  switch (priority) {
+    case SupplyPriority.UnderControl:
+      return {
+        label: 'Sob controle',
+        className: 'bg-light-yellow',
+      };
+    case SupplyPriority.Remaining:
+      return {
+        label: 'Disponível para doação',
+        className: 'bg-light-green',
+      };
+    case SupplyPriority.Needing:
+      return {
+        label: 'Urgente',
+        className: 'bg-light-orange',
+      };
+    case SupplyPriority.Urgent:
+      return {
+        label: 'Necessita Urgentemente',
+        className: 'bg-light-red',
+      };
+  }
+}
+
+function getObjectValue<T>(obj: T, path: string, sep = '.'): any {
+  return path
+    .split(sep)
+    .reduce(
+      (acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined),
+      obj as Record<string, any>
+    );
+}
+
+function group<T extends Record<string, any>>(
+  arr: Array<T>,
+  groupBy: string,
+  sep = '.'
+): { [key: string]: Array<T> } {
+  const data = arr.reduce((prev, current) => {
+    const key: string = getObjectValue(current, groupBy, sep);
+    if (prev[key]) return { ...prev, [key]: [...prev[key], current] };
+    return { ...prev, [key]: [current] };
+  }, {} as { [key: string]: Array<T> });
+
+  return data;
+}
+
+export { cn, tokenName, getAvailabilityProps, group, getSupplyPriorityProps };
