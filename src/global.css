@@ -69,7 +69,7 @@
 @layer base {
   * {
     @apply border-border;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
   body {
     @apply bg-background text-foreground;
