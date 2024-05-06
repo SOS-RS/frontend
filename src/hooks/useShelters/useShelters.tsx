@@ -1,9 +1,9 @@
 import { usePaginatedQuery } from '../usePaginatedQuery';
 import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
-import { IUseShelterData } from './types';
+import { IUseSheltersData } from './types';
 
 const useShelters = () => {
-  return usePaginatedQuery<IUseShelterData>(PaginatedQueryPath.Shelters);
+  return usePaginatedQuery<IUseSheltersData>(PaginatedQueryPath.Shelters);
 };
 
 export { useShelters };

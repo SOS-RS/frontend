@@ -1,17 +1,27 @@
-import { ChevronLeft, Pencil } from "lucide-react";
+import { ChevronLeft, Pencil } from 'lucide-react';
 
-import { CardAboutShelter, CardItensShelter, Header } from "@/components";
+import {
+  CardAboutShelter,
+  CardItensShelter,
+  Header,
+  LoadingScreen,
+} from '@/components';
+import { useParams } from 'react-router-dom';
+import { useShelter } from '@/hooks';
 
 const Shelter = () => {
+  const params = useParams();
+  const { id } = params;
+  const { data: shelter, loading } = useShelter(id ?? '-1');
+
+  if (loading) return <LoadingScreen />;
+
   return (
     <div className="flex flex-col h-screen">
-      <Header
-        title="Escola Rodrigo de Castro"
-        startAdornment={<ChevronLeft size={20} />}
-      />
+      <Header title={shelter.name} startAdornment={<ChevronLeft size={20} />} />
       <div className="p-4 flex flex-col">
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Escola Rodrigo de Castro
+          {shelter.name}
         </h1>
         <h1 className="text-[#348717] font-semibold text-sm">
           Abrigo disponível

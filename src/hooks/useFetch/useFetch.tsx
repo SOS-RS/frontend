@@ -4,9 +4,9 @@ import { AxiosRequestConfig } from 'axios';
 import { api } from '@/api';
 import { IServerResponse } from '@/types';
 
-function useFetch<T = any>(path: string, initialValue: T) {
+function useFetch<T = any>(path: string, initialValue?: T) {
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<T>(initialValue);
+  const [data, setData] = useState<T>(initialValue || ({} as T));
 
   const refresh = useCallback(
     (config?: AxiosRequestConfig<any>) => {
