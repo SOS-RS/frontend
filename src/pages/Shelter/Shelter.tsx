@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 
 import {
@@ -8,11 +9,19 @@ import {
 } from '@/components';
 import { useParams } from 'react-router-dom';
 import { useShelter } from '@/hooks';
+import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
+import { cn, getAvailabilityProps } from '@/lib/utils';
 
 const Shelter = () => {
   const params = useParams();
   const { id } = params;
   const { data: shelter, loading } = useShelter(id ?? '-1');
+
+  const { availability, className: availabilityClassName } =
+    useMemo<IShelterAvailabilityProps>(
+      () => getAvailabilityProps(shelter?.capacity, shelter?.shelteredPeople),
+      [shelter?.capacity, shelter?.shelteredPeople]
+    );
 
   if (loading) return <LoadingScreen />;
 
@@ -23,8 +32,8 @@ const Shelter = () => {
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           {shelter.name}
         </h1>
-        <h1 className="text-[#348717] font-semibold text-sm">
-          Abrigo disponível
+        <h1 className={cn(availabilityClassName, 'font-semibold')}>
+          {availability}
         </h1>
       </div>
       <div className="p-4">

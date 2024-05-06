@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn } from '@/lib/utils';
+import { cn, getAvailabilityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
@@ -15,24 +15,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   const navigate = useNavigate();
 
   const { availability, className: availabilityClassName } =
-    useMemo<IShelterAvailabilityProps>(() => {
-      if (capacity && shelteredPeople) {
-        if (shelteredPeople < capacity)
-          return {
-            availability: 'Abrigo disponível',
-            className: 'text-green-600',
-          };
-        else
-          return {
-            availability: 'Abrigo lotado',
-            className: 'text-red-400',
-          };
-      } else
-        return {
-          availability: 'Consultar disponibilidade',
-          className: 'text-blue-400',
-        };
-    }, [capacity, shelteredPeople]);
+    useMemo<IShelterAvailabilityProps>(
+      () => getAvailabilityProps(capacity, shelteredPeople),
+      [capacity, shelteredPeople]
+    );
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
