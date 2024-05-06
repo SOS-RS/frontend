@@ -52,14 +52,6 @@ Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhor
 4. Faça push para a branch (`git push origin feature/MinhaFeature`).
 5. Abra um Pull Request.
 
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## Contato
-
-Para mais informações, entre em contato com [seu nome] pelo e-mail [seu email].
-
 ---
 
 Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
