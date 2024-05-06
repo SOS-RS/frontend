@@ -1,17 +1,14 @@
+import { Header } from "@/components";
 import { Input } from "@/components/ui/input";
-import { refresh-ccw, Search } from "lucide-react";
-
+import { RotateCw } from "lucide-react";
 
 const Home = () => {
-  const searchIcon = Search;
-  const refreshIcon = refresh-ccw
-
   return (
     <div className="flex flex-col h-screen justify-center gap-5">
-      <div className=" bg-red-600 flex h-[45px] justify-start items-center text-white p-3">
-        <h3> SOS Rio Grande do Sul</h3>
-        
-      </div>
+      <Header
+        title="SOS Rio Grande do Sul"
+        endAdornment={<RotateCw size={20} />}
+      />
       <div className="gap-2 flex flex-col">
         <div className="flex-1 flex">
           <h1 className=""> Abrigos disponíveis</h1>
@@ -20,7 +17,7 @@ const Home = () => {
           <Input className="" />
         </div>
       </div>
-    </div> 
+    </div>
   );
 };
 
