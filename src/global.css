@@ -4,6 +4,13 @@
 
 @layer base {
   :root {
+    --light-yellow: #f9cf8d;
+    --light-red: #f69f9d;
+    --light-green: #63bc43;
+    --light-orange: #f8b993;
+    --light-blue: #a2d2dc;
+    --text: #2f2f2f;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -69,12 +76,12 @@
 @layer base {
   * {
     @apply border-border;
-    font-family: "Poppins", sans-serif;
+    @apply text-text;
+    font-family: 'Poppins', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
     margin: 0;
     padding: 0;
-    overflow: hidden;
   }
 }

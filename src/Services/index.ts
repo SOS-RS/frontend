@@ -1,4 +1,6 @@
-import { UserServices } from "./users";
-import { SessionServices } from "./session";
+import { SessionServices } from './session';
+import { ShelterServices } from './shelter';
+import { SupplyServices } from './supply';
+import { UserServices } from './users';
 
-export { UserServices, SessionServices };
+export { UserServices, SessionServices, SupplyServices, ShelterServices };
