@@ -77,7 +77,7 @@
   * {
     @apply border-border;
     @apply text-text;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
