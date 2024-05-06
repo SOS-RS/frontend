@@ -7,7 +7,7 @@ const Header = (props: IHeader) => {
     <div className=" bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 ">
       <div className="flex gap-2">
         {startAdornment}
-        <h3> {title}</h3>
+        <h3 className="font-medium "> {title}</h3>
       </div>
       <div className="cursor-pointer ">{endAdornment}</div>
     </div>
