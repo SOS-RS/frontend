@@ -16,7 +16,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         if (shelteredPeople < capacity)
           return {
             availability: 'Abrigo disponível',
-            className: 'text-green-400',
+            className: 'text-green-600',
           };
         else
           return {
