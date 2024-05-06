@@ -50,7 +50,7 @@ const Home = () => {
       />
       <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Abrigos disponíveis
+          Abrigos disponíveis ({shelters.count})
         </h1>
         <Alert
           description={alertDescription}

@@ -55,11 +55,15 @@ const Shelter = () => {
         </div>
         <div className="flex justify-between p-4 items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-          <div className="flex gap-2 items-center ">
-            <h1 className="font-medium text-[16px] text-[#1D61C8]">
+          <div className="flex gap-2 items-center [&_svg]:stroke-blue-600">
+            <Button
+              variant="ghost"
+              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              onClick={() => navigate(`/abrigo/${id}/items`)}
+            >
               Editar itens
-            </h1>
-            <Pencil size={17} />
+              <Pencil size={17} />
+            </Button>
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">

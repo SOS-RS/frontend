@@ -3,5 +3,6 @@ import { SignIn } from './SignIn';
 import { Home } from './Home';
 import { Shelter } from './Shelter';
 import { ShelterItem } from './ShelterItem';
+import { CreateSupply } from './CreateSupply';
 
-export { SignIn, Home, Shelter, ShelterItem };
+export { SignIn, Home, Shelter, ShelterItem, CreateSupply };

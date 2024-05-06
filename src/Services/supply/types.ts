@@ -14,3 +14,12 @@ export interface ISupply {
   createdAt: string;
   updatedAt?: string | null;
 }
+
+export type IUpdateSupply = Partial<
+  Pick<ISupply, 'name' | 'supplyCategoryId' | 'priority'>
+>;
+
+export type ICreateSupply = Pick<
+  ISupply,
+  'name' | 'supplyCategoryId' | 'priority' | 'shelterId'
+>;

@@ -7,6 +7,7 @@ import { ShelterListItem } from './ShelterListItem';
 import { NoFoundSearch } from './NoFoundSearch';
 import { CircleStatus } from './CircleStatus';
 import { DialogSelector } from './DialogSelector';
+import { TextField } from './TextField';
 
 export {
   LoadingScreen,
@@ -18,4 +19,5 @@ export {
   NoFoundSearch,
   CircleStatus,
   DialogSelector,
+  TextField,
 };
