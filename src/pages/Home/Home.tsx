@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
 
-import { Alert, Header, ShelterListItem } from '@/components';
+import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -79,6 +79,8 @@ const Home = () => {
         <main className="flex flex-col gap-4 overflow-y-auto">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
+          ) : shelters.results.length === 0 ? (
+            <NoFoundSearch />
           ) : (
             shelters.results.map((s, idx) => (
               <ShelterListItem key={idx} data={s} />
