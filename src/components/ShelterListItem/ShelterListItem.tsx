@@ -24,7 +24,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           };
         else
           return {
-            availability: 'Abrigo indisponível',
+            availability: 'Abrigo lotado',
             className: 'text-red-400',
           };
       } else
@@ -45,7 +45,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <ChevronRight className="h-5 w-5" />
       </Button>
       <h3
-        className="font-semibold text-lg mr-12"
+        className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
         onClick={() => navigate(`/abrigo/${data.id}`)}
       >
         {data.name}
@@ -60,7 +60,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <div className="flex flex-col gap-3">
           <Separator className="mt-2" />
           <p className="text-muted-foreground text-sm md:text-lg font-medium">
-            Necessita urgente de doações de
+            Necessita urgente de doações de:
           </p>
           <div className="flex gap-2 flex-wrap">
             {data.supplies.map((s, idx) => (
