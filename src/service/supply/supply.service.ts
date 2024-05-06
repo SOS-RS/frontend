@@ -1,13 +1,17 @@
 import { api } from '@/api';
-import { ISupply } from './types';
+import { ICreateSupply, IUpdateSupply } from './types';
 import { IServerResponse } from '@/types';
 
 const SupplyServices = {
   update: async (
     id: string,
-    payload: Partial<Pick<ISupply, 'name' | 'supplyCategoryId' | 'priority'>>
+    payload: IUpdateSupply
   ): Promise<IServerResponse> => {
     const { data } = await api.put(`/supplies/${id}`, payload);
+    return data;
+  },
+  create: async (payload: ICreateSupply): Promise<IServerResponse> => {
+    const { data } = await api.post('/supplies', payload);
     return data;
   },
 };

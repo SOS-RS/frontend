@@ -1,4 +1,4 @@
-import { SupplyPriority } from '@/services/supply/types';
+import { SupplyPriority } from '@/service/supply/types';
 
 export interface ISupplyRowItemProps {
   id: string;

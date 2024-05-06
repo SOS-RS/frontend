@@ -9,9 +9,9 @@ import { group } from '@/lib/utils';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { SupplyPriority } from '@/Services/supply/types';
+import { SupplyPriority } from '@/service/supply/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { SupplyServices } from '@/Services';
+import { SupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 
 const ShelterItem = () => {
@@ -50,6 +50,7 @@ const ShelterItem = () => {
             })
             .catch((err) => {
               toast({
+                variant: 'destructive',
                 title: 'Ocorreu um erro ao atualizar a categoria do suprimento',
                 description: `${err}`,
               });
@@ -102,7 +103,7 @@ const ShelterItem = () => {
             <Button
               variant="ghost"
               className="[&_svg]:stroke-blue-500"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate(`/abrigo/${shelterId}`)}
             >
               <ChevronLeft size={20} />
             </Button>
@@ -117,6 +118,7 @@ const ShelterItem = () => {
           <Button
             variant="ghost"
             className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
+            onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
           >
             <PlusCircle />
             Cadastrar novo item
