@@ -1,11 +1,10 @@
-import { useCallback, useContext } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { useCallback, useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 import {
   Form,
@@ -14,23 +13,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
-import { signInFormSchema } from "./types";
+import { signInFormSchema } from './types';
 
-import { SessionContext } from "@/contexts";
+import { SessionContext } from '@/contexts';
 
 type SignInFormValues = z.infer<typeof signInFormSchema>;
 
 const SignIn = () => {
   const { refreshSession } = useContext(SessionContext);
-  const navigate = useNavigate();
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
-      login: "",
-      password: "",
+      login: '',
+      password: '',
     },
   });
 
