@@ -49,6 +49,7 @@ const CardItensShelter = (props: ICardItensShelter) => {
           ))}
         </div>
       )}
+
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger
