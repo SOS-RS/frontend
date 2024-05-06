@@ -27,7 +27,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
         {...rest}
       >
         {React.cloneElement(icon as any, {
-          className: 'min-w-5 min-h-5 w-5 h-5',
+          className: 'min-w-5 min-h-5 w-5 h-5 stroke-muted-foreground',
         })}
         <h1 className={cn('font-normal', value ? 'text-nowrap' : '')}>
           {label}

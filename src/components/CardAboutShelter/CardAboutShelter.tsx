@@ -28,17 +28,17 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={shelter.address} />
         <InfoRow
-          icon={<UsersRound />}
-          label="Capacidade do abrigo:"
+          icon={<HandHeart />}
+          label="Pessoas abrigadas:"
           value={
-            check(shelter.capacity)
-              ? `${shelter.capacity} pessoas`
+            check(shelter.shelteredPeople)
+              ? `${shelter.shelteredPeople} pessoas`
               : 'Não informado'
           }
         />
         <InfoRow
-          icon={<HandHeart />}
-          label="Pessoas abrigadas:"
+          icon={<UsersRound />}
+          label="Capacidade do abrigo:"
           value={
             check(shelter.capacity)
               ? `${shelter.capacity} pessoas`
