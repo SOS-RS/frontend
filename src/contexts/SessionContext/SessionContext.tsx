@@ -1,25 +1,24 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { ISession, ISessionContext } from './types';
-import { SessionServices } from '@/Services';
-import { tokenName } from '@/lib/utils';
+import { SessionServices } from '@/services';
 
 const SessionContext = createContext({} as ISessionContext);
 
 const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(
-    !!window.localStorage.getItem(tokenName())
+    !!window.localStorage.getItem('token')
   );
   const [session, setSession] = useState<ISession | null>(null);
 
   const refreshSession = useCallback(() => {
-    const tk = window.localStorage.getItem(tokenName());
+    const tk = window.localStorage.getItem('token');
     if (tk) {
       setLoading(true);
       SessionServices.show()
         .then((data) => setSession(data))
         .catch(() => {
-          window.localStorage.removeItem(tokenName());
+          window.localStorage.removeItem('token');
           setSession(null);
         })
         .finally(() => setLoading(false));
