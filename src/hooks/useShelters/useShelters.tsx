@@ -1,9 +1,8 @@
-import { api } from '@/api';
-import { IServerResponse } from '@/types';
+import { useState, useCallback, useEffect } from 'react';
 import { AxiosRequestConfig } from 'axios';
 
-import { useState, useCallback, useEffect } from 'react';
-
+import { api } from '@/api';
+import { IServerResponse } from '@/types';
 import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
 import { IUseSheltersData } from './types';

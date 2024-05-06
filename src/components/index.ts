@@ -5,6 +5,7 @@ import { CardAboutShelter } from './CardAboutShelter';
 import { CardItensShelter } from './CardItensShelter';
 import { ShelterListItem } from './ShelterListItem';
 import { CircleStatus } from './CircleStatus';
+import { DialogSelector } from './DialogSelector';
 
 export {
   LoadingScreen,
@@ -14,4 +15,5 @@ export {
   CardAboutShelter,
   CardItensShelter,
   CircleStatus,
+  DialogSelector,
 };
