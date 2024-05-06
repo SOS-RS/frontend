@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn, getAvailabilityProps } from '@/lib/utils';
+import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
@@ -20,6 +20,14 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       () => getAvailabilityProps(capacity, shelteredPeople),
       [capacity, shelteredPeople]
     );
+
+  const tags = useMemo(
+    () =>
+      data.supplies
+        .filter((s) => s.priority >= SupplyPriority.Needing)
+        .sort((a, b) => b.priority - a.priority),
+    [data.supplies]
+  );
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
@@ -50,11 +58,13 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             Necessita urgente de doações de:
           </p>
           <div className="flex gap-2 flex-wrap">
-            {data.supplies
-              .filter((s) => s.priority >= SupplyPriority.Urgent)
-              .map((s, idx) => (
-                <Chip variant="danger" key={idx} label={s.name} />
-              ))}
+            {tags.map((s, idx) => (
+              <Chip
+                className={getSupplyPriorityProps(s.priority).className}
+                key={idx}
+                label={s.name}
+              />
+            ))}
           </div>
         </div>
       )}

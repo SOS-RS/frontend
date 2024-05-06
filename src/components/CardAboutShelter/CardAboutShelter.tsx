@@ -3,67 +3,68 @@ import {
   UsersRound,
   HandHeart,
   PawPrint,
-  Phone,
   Landmark,
+  Smartphone,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
 import { ICardAboutShelter } from './types';
+import { InfoRow } from './components';
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
+
+  const check = (v?: string | number | boolean | null) => {
+    return (
+      (v !== undefined && v !== null) ||
+      (typeof v === 'number' && v === 0) ||
+      (typeof v === 'boolean' && v)
+    );
+  };
+
   return (
-    <Card className="gap-2 p-4 flex flex-col bg-[#E8F0F8] text-sm">
-      <div className="text-[#646870] font-medium ">Sobre o abrigo</div>
-      <div className="flex gap-2 font-medium ">
-        <Home />
-        <h1> {shelter.address} </h1>
-      </div>
-      <div className="flex gap-2 font-medium ">
-        <UsersRound />
-        <h1>Capacidade do abrigo:</h1>
-        <h1 className="font-bold">
-          {typeof shelter.capacity !== 'number'
-            ? 'Não informado'
-            : `${shelter.capacity} pessoas`}
-        </h1>
-      </div>
-      <div className="flex gap-2 font-medium ">
-        <HandHeart />
-        <h1>Pessoas abrigadas:</h1>
-        <h1 className="font-bold">
-          {typeof shelter.capacity !== 'number'
-            ? 'Não informado'
-            : `${shelter.capacity} pessoas`}{' '}
-        </h1>
-      </div>
-      <div className="flex gap-2 font-medium ">
-        <PawPrint />
-        <h1>
-          {shelter.petFriendly
-            ? 'O abrigo aceita animais'
-            : 'O abrigo não aceita animais'}
-        </h1>
-      </div>
-      <div className="flex gap-2 font-medium ">
-        <Phone />
-        <h1>Contato:</h1>
-        <h1 className="font-medium">
-          {typeof shelter.contact !== 'string'
-            ? 'Não informado'
-            : shelter.contact}
-        </h1>
-      </div>
-      <div className="flex flex-col font-medium ">
-        <div className="flex gap-2 ">
-          <Landmark />
-          <h1>Chaves Pix:</h1>
-        </div>
-        <div className="pl-8">
-          <h1 className="font-medium">
-            {typeof shelter.pix !== 'string' ? 'Não informado' : shelter.pix}
-          </h1>
-        </div>
+    <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
+      <div className="text-[#646870] font-medium">Sobre o abrigo</div>
+      <div className="flex flex-col flex-wrap gap-3">
+        <InfoRow icon={<Home />} label={shelter.address} />
+        <InfoRow
+          icon={<UsersRound />}
+          label="Capacidade do abrigo:"
+          value={
+            check(shelter.capacity)
+              ? `${shelter.capacity} pessoas`
+              : 'Não informado'
+          }
+        />
+        <InfoRow
+          icon={<HandHeart />}
+          label="Pessoas abrigadas:"
+          value={
+            check(shelter.capacity)
+              ? `${shelter.capacity} pessoas`
+              : 'Não informado'
+          }
+        />
+        <InfoRow
+          icon={<PawPrint />}
+          label={
+            check(shelter.petFriendly)
+              ? 'O abrigo aceita animais'
+              : 'O abrigo não aceita animais'
+          }
+        />
+        <InfoRow
+          icon={<Smartphone />}
+          label="Contato:"
+          value={
+            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+          }
+        />
+        <InfoRow
+          icon={<Landmark />}
+          label="Chave Pix:"
+          value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+        />
       </div>
     </Card>
   );
