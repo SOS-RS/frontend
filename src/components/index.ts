@@ -1,3 +1,4 @@
-import { LoadingScreen } from "./LoadingScreen";
+import { LoadingScreen } from './LoadingScreen';
+import { ShelterListItem } from './ShelterListItem';
 
-export { LoadingScreen };
+export { LoadingScreen, ShelterListItem };

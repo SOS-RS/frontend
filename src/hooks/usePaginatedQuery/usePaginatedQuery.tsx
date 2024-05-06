@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 
 import { api } from '@/api';
@@ -25,6 +25,10 @@ function usePaginatedQuery<T = any>(path: string | PaginatedQueryPath) {
     },
     [path]
   );
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
 
   return { data, loading, refresh };
 }

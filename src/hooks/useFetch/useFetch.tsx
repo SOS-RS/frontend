@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import { AxiosRequestConfig } from "axios";
+import { useCallback, useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
-import { api } from "@/api";
-import { IServerResponse } from "@/types";
+import { api } from '@/api';
+import { IServerResponse } from '@/types';
 
 function useFetch<T = any>(path: string, initialValue: T) {
   const [loading, setLoading] = useState<boolean>(true);
