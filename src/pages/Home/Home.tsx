@@ -62,9 +62,9 @@ const Home = () => {
             <Search name="search" size="20" className="text-gray-400" />
           </div>
         </div>
-        <div className="flex gap-2 text-blue-600 items-center p-1">
+        <div className="flex gap-2 [&>svg]:fill-blue-600 items-center p-1">
           <ListFilter />
-          <h1 className="font-semibold text-[16px]"> Filtros </h1>
+          <h1 className="font-semibold text-[16px] text-blue-500"> Filtros </h1>
         </div>
         <main className="flex flex-col gap-4 overflow-y-auto">
           {loading ? (
