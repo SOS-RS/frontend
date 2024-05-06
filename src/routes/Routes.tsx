@@ -1,6 +1,6 @@
-import { Routes as Switch, Route, Navigate } from "react-router-dom";
+import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 
-import { Home, SignIn, SignUp } from "@/pages";
+import { Home, SignIn, SignUp } from '@/pages';
 
 const Routes = () => {
   return (
