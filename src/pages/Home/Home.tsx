@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
@@ -13,15 +13,15 @@ const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
-    '',
     {
       throttle: 400,
       callback: (v) => {
+        const params = {
+          search: `address:contains:${v},name:contains:${v}`,
+          or: 'true',
+        };
         refresh({
-          params: {
-            search: `address:contains:${v},name:contains:${v}`,
-            or: 'true',
-          },
+          params: v ? params : {},
         });
       },
     },
@@ -51,13 +51,6 @@ const Home = () => {
       true
     );
   }, [refresh, searchValue, shelters.page, shelters.perPage]);
-
-  useEffect(() => {
-    setSearch(searchValue);
-  }, [searchValue, setSearch]);
-
-  // const { page, perPage, count } = shelters;
-  // const hasNextPage = page * perPage < count;
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -89,7 +82,10 @@ const Home = () => {
           <Input
             placeholder="Buscar por abrigo ou endereço"
             className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
-            onChange={(ev) => setSearchValue(ev.target.value)}
+            onChange={(ev) => {
+              setSearchValue(ev.target.value);
+              setSearch(ev.target.value);
+            }}
             value={searchValue}
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">

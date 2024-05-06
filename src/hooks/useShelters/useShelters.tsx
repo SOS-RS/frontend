@@ -49,8 +49,6 @@ const useShelters = () => {
     []
   );
 
-  console.log(data.results.length);
-
   useEffect(() => {
     refresh();
   }, [refresh]);
