@@ -1,41 +1,38 @@
-import { api } from "../../api";
+import { api } from '../../api';
 
-import { IServerResponse } from "@/types";
+import { IServerResponse } from '@/types';
 import {
   ICreateShelter,
   IFullUpdateShelter,
   IShelter,
   IUpdateShelter,
-} from "./types";
+} from './types';
 
 const ShelterServices = {
-  create: async (payload: ICreateShelter): Promise<IShelter> => {
-    const { data } = await api.post<IServerResponse<IShelter>>(
-      "/shelters",
-      payload
-    );
-    return data.data;
+  create: async (payload: ICreateShelter): Promise<IServerResponse> => {
+    const { data } = await api.post<IServerResponse>('/shelters', payload);
+    return data;
   },
   getAll: async (): Promise<IShelter[]> => {
-    const { data } = await api.get<IServerResponse<IShelter[]>>("/shelters");
+    const { data } = await api.get<IServerResponse<IShelter[]>>('/shelters');
     return data.data;
   },
-  update: async (id: string, payload: IUpdateShelter): Promise<IShelter> => {
-    const { data } = await api.put<IServerResponse<IShelter>>(
-      `/shelters/${id}`,
-      payload
-    );
-    return data.data;
+  update: async (
+    id: string,
+    payload: IUpdateShelter
+  ): Promise<IServerResponse> => {
+    const { data } = await api.put<IServerResponse>(`/shelters/${id}`, payload);
+    return data;
   },
-  filterUpdate: async (
+  adminUpdate: async (
     id: string,
     payload: IFullUpdateShelter
-  ): Promise<IShelter> => {
-    const { data } = await api.put<IServerResponse<IShelter>>(
+  ): Promise<IServerResponse> => {
+    const { data } = await api.put<IServerResponse>(
       `/shelters/${id}/admin`,
       payload
     );
-    return data.data;
+    return data;
   },
 };
 

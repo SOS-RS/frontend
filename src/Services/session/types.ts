@@ -5,6 +5,4 @@ export interface IAuthResponse {
 export interface IAuthRequest {
   login: string;
   password: string;
-  ip: string;
-  userAgent: string;
 }

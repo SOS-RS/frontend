@@ -1,3 +1,3 @@
-import { SupplyServices } from "./supply.service";
+import { ShelterServices } from './shelter.service';
 
-export { SupplyServices };
+export { ShelterServices };

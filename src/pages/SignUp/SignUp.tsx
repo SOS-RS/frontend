@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 
 import { tokenName } from "@/lib/utils";
-import { SessionServices, UserServices } from "@/Services";
+import { SessionServices, UserServices } from "@/services";
 import { SessionContext } from "@/contexts";
 import { signUpFormSchema } from "./types";
 
