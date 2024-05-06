@@ -16,23 +16,40 @@ const useShelters = () => {
     results: [],
   });
 
-  const refresh = useCallback((config: AxiosRequestConfig<any> = {}) => {
-    setLoading(true);
-    api
-      .get<IServerResponse<IPaginatedResponse<IUseSheltersData>>>(
-        PaginatedQueryPath.Shelters,
-        {
-          ...config,
-          params: {
-            orderBy: 'prioritySum',
-            order: 'desc',
-            ...(config.params ?? {}),
-          },
-        }
-      )
-      .then(({ data }) => setData(data.data))
-      .finally(() => setLoading(false));
-  }, []);
+  const refresh = useCallback(
+    (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
+      if (!append) setLoading(true);
+      api
+        .get<IServerResponse<IPaginatedResponse<IUseSheltersData>>>(
+          PaginatedQueryPath.Shelters,
+          {
+            ...config,
+            params: {
+              orderBy: 'prioritySum',
+              order: 'desc',
+              ...(config.params ?? {}),
+            },
+          }
+        )
+        .then(({ data }) => {
+          if (append) {
+            setData((prev) => ({
+              ...prev,
+              ...data.data,
+              results: [...prev.results, ...data.data.results],
+            }));
+          } else {
+            setData(data.data);
+          }
+        })
+        .finally(() => {
+          if (!append) setLoading(false);
+        });
+    },
+    []
+  );
+
+  console.log(data.results.length);
 
   useEffect(() => {
     refresh();

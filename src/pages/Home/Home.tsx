@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
@@ -27,10 +27,37 @@ const Home = () => {
     },
     []
   );
+  const hasMore = useMemo(
+    () => shelters.page * shelters.perPage < shelters.count,
+    [shelters.page, shelters.perPage, shelters.count]
+  );
+
+  const handleFetchMore = useCallback(() => {
+    const params = {
+      page: shelters.page + 1,
+      perPage: shelters.perPage,
+    };
+
+    if (searchValue)
+      Object.assign(params, {
+        search: `address:contains:${searchValue},name:contains:${searchValue}`,
+        or: 'true',
+      });
+
+    refresh(
+      {
+        params,
+      },
+      true
+    );
+  }, [refresh, searchValue, shelters.page, shelters.perPage]);
 
   useEffect(() => {
     setSearch(searchValue);
   }, [searchValue, setSearch]);
+
+  // const { page, perPage, count } = shelters;
+  // const hasNextPage = page * perPage < count;
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -54,17 +81,19 @@ const Home = () => {
         </h1>
         <Alert
           description={alertDescription}
-          startAdornment={<CircleAlert size={20} />}
+          startAdornment={
+            <CircleAlert size={20} className="stroke-light-yellow" />
+          }
         />
         <div className="relative">
           <Input
             placeholder="Buscar por abrigo ou endereço"
-            className="h-[48px] text-sm font-medium text-[#8C94A4] pl-10 pr-4"
+            className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
             onChange={(ev) => setSearchValue(ev.target.value)}
             value={searchValue}
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <Search name="search" size="20" className="text-gray-400" />
+            <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
         </div>
         {/* <div className="[&_svg]:stroke-blue-500">
@@ -75,7 +104,7 @@ const Home = () => {
             </h1>
           </Button>
         </div> */}
-        <main className="flex flex-col gap-4 overflow-y-auto">
+        <main className="flex flex-col gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
           ) : shelters.results.length === 0 ? (
@@ -84,6 +113,20 @@ const Home = () => {
             shelters.results.map((s, idx) => (
               <ShelterListItem key={idx} data={s} />
             ))
+          )}
+          {hasMore ? (
+            <Button
+              className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
+              size="sm"
+              loading={loading}
+              onClick={handleFetchMore}
+            >
+              Carregar mais
+            </Button>
+          ) : (
+            <p className="text-muted-foreground font-semibold">
+              Não há mais registros
+            </p>
           )}
         </main>
       </div>

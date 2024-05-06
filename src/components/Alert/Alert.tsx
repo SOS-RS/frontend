@@ -1,12 +1,13 @@
-import { Card } from "../ui/card";
-import { IAlert } from "./types";
+import { Card } from '../ui/card';
+import { IAlert } from './types';
 
 const Alert = (props: IAlert) => {
   const { description, startAdornment } = props;
+
   return (
-    <Card className="p-2 flex gap-2 text-slate-500  border-slate-500 rounded-md">
+    <Card className="p-3 flex gap-3 border-zinc-200 border-[1px] rounded-md select-none w-full items-center text-justify">
       <div>{startAdornment}</div>
-      <span className="text-sm">{description}</span>
+      <span className="text-sm text-zinc-600">{description}</span>
     </Card>
   );
 };

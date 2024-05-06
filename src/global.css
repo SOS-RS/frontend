@@ -78,6 +78,7 @@
     @apply border-border;
     @apply text-text;
     font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased !important;
   }
   body {
     @apply bg-background text-foreground;
