@@ -11,6 +11,7 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
         warn: 'bg-light-yellow',
         success: 'bg-light-green',
         danger: 'bg-light-red',
+        alert: 'bg-light-orange',
         info: 'bg-light-blue',
       },
     },

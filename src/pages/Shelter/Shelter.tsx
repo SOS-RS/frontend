@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
 import { cn, getAvailabilityProps } from '@/lib/utils';
+import { SupplyPriority } from '@/Services/supply/types';
 
 const Shelter = () => {
   const params = useParams();
@@ -37,17 +38,28 @@ const Shelter = () => {
         </h1>
       </div>
       <div className="p-4">
-        <CardAboutShelter />
+        <CardAboutShelter shelter={shelter} />
       </div>
       <div className="flex justify-between p-4 items-center">
         <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-        <div className="flex gap-2 items-center text-[#1D61C8]">
-          <h1 className="font-medium text-[16px] ">Editar itens</h1>
+        <div className="flex gap-2 items-center ">
+          <h1 className="font-medium text-[16px] text-[#1D61C8]">
+            Editar itens
+          </h1>
           <Pencil size={17} />
         </div>
       </div>
-      <div className="flex justify-between p-4 ">
-        <CardItensShelter />
+      <div className="flex flex-col gap-8 p-4 ">
+        <CardItensShelter priority={SupplyPriority.Needing} shelter={shelter} />
+        <CardItensShelter priority={SupplyPriority.Urgent} shelter={shelter} />
+        <CardItensShelter
+          priority={SupplyPriority.UnderControl}
+          shelter={shelter}
+        />
+        <CardItensShelter
+          priority={SupplyPriority.Remaining}
+          shelter={shelter}
+        />
       </div>
     </div>
   );
