@@ -1,4 +1,4 @@
-import { SupplyPriority } from '@/services/supply/types';
+import { SupplyPriority } from '@/Services/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

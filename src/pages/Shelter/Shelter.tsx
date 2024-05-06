@@ -11,7 +11,7 @@ import {
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
 import { cn, getAvailabilityProps } from '@/lib/utils';
-import { SupplyPriority } from '@/services/supply/types';
+import { SupplyPriority } from '@/Services/supply/types';
 import { Button } from '@/components/ui/button';
 
 const Shelter = () => {
@@ -72,11 +72,11 @@ const Shelter = () => {
             shelter={shelter}
           />
           <CardItensShelter
-            priority={SupplyPriority.UnderControl}
+            priority={SupplyPriority.Remaining}
             shelter={shelter}
           />
           <CardItensShelter
-            priority={SupplyPriority.Remaining}
+            priority={SupplyPriority.UnderControl}
             shelter={shelter}
           />
         </div>

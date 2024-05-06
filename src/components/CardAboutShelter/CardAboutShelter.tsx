@@ -21,7 +21,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       </div>
       <div className="flex gap-2 font-medium ">
         <UsersRound />
-        <h1>Capacidade de abrigo:</h1>
+        <h1>Capacidade do abrigo:</h1>
         <h1 className="font-bold">
           {typeof shelter.capacity !== 'number'
             ? 'Não informado'

@@ -9,9 +9,9 @@ import { group } from '@/lib/utils';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { SupplyPriority } from '@/services/supply/types';
+import { SupplyPriority } from '@/Services/supply/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { SupplyServices } from '@/services';
+import { SupplyServices } from '@/Services';
 import { useToast } from '@/components/ui/use-toast';
 
 const ShelterItem = () => {
