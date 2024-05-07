@@ -69,7 +69,7 @@ const Home = () => {
       <MapView />
       <div className="flex h-full flex-col-reverse justify-between pt-4 md:flex-row gap-4 md:p-4 w-full">
         <div className="flex-1 flex flex-col max-h-[40vh] md:max-h-[93vh] min-w-96 w-full md:max-w-md rounded-lg p-4 gap-4 z-10 bg-card shadow-md">
-          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+          <h1 className="text-[#2f2f2f] font-semibold text-lg md:text-2xl">
             Abrigos disponíveis ({shelters.count})
           </h1>
           <main className="flex w-full overflow-y-auto flex-col gap-4">

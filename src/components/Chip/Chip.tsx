@@ -6,7 +6,7 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
   const { label, className, variant = 'info', ...rest } = props;
 
   const variants = cva(
-    'px-4 py-1 text-nowrap font-semibold rounded-3xl text-pretty',
+    'px-4 py-1 text-nowrap font-semibold rounded-3xl text-pretty text-sm md:text-md',
     {
       variants: {
         variant: {
