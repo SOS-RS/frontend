@@ -11,7 +11,7 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleTags: number = 10;
   const visibleTags = useMemo(
-    () => (opened ? tags : tags.slice(0, 10)),
+    () => (opened ? tags : tags.slice(0, maxVisibleTags)),
     [opened, tags]
   );
   const { className: circleClassName, label } = useMemo(
