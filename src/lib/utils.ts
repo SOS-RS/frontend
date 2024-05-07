@@ -40,7 +40,7 @@ function getAvailabilityProps(
   capacity?: number | null,
   shelteredPeople?: number | null
 ) {
-  if (capacity && shelteredPeople) {
+  if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',
@@ -72,12 +72,12 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
       };
     case SupplyPriority.Needing:
       return {
-        label: 'Urgente',
+        label: 'Precisa',
         className: 'bg-light-orange',
       };
     case SupplyPriority.Urgent:
       return {
-        label: 'Necessita Urgentemente',
+        label: 'Precisa Urgentemente',
         className: 'bg-light-red',
       };
   }
