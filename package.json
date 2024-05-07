@@ -27,6 +27,7 @@
     "date-fns": "^3.6.0",
     "formik": "^2.4.6",
     "lucide-react": "^0.378.0",
+    "mapbox-gl": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
@@ -38,6 +39,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
+    "@types/mapbox-gl": "^3.1.0",
     "@types/node": "^20.12.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

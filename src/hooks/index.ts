@@ -4,6 +4,7 @@ import { usePaginatedQuery } from './usePaginatedQuery';
 import { useThrottle } from './useThrottle';
 import { useShelter } from './useShelter';
 import { useSupplyCategories } from './useSupplyCategories';
+import { useMap } from './useMap';
 
 export {
   useShelters,
@@ -12,4 +13,5 @@ export {
   useThrottle,
   useShelter,
   useSupplyCategories,
+  useMap,
 };
