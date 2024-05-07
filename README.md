@@ -12,15 +12,18 @@ Este frontend foi desenvolvido utilizando as seguintes tecnologias:
 
 - **React**: Uma biblioteca JavaScript para construir interfaces de usuário.
 
-## Funcionalidades
+## Funcionalidades e Backlog
 
 O app inclui as seguintes funcionalidades:
 
-- [x]**Cadastro de Itens de suprimentos**: Permite que voluntários se inscrevam para ajudar.
-- [x]**Busca de abrigos**: Gerencia a logística de distribuição de suprimentos para as áreas mais necessitadas.
-- [x]**Alteração de necessidades de abrigos**: Exibe um mapa das áreas afetadas e pontos de coleta de suprimentos.
-- [ ]**Cadastro de abrigos**: Facilita a comunicação entre os gestores de crise, voluntários e beneficiados.
-- [ ]**Cadastro de usuários**: Facilita a comunicação entre os gestores de crise, voluntários e beneficiados.
+- [x] **Cadastro de Itens de suprimentos**: Permite que voluntários se inscrevam para ajudar.
+- [x] **Busca de abrigos**: Gerencia a logística de distribuição de suprimentos para as áreas mais necessitadas.
+- [x] **Alteração de necessidades de abrigos**: Exibe um mapa das áreas afetadas e pontos de coleta de suprimentos.
+- [ ] **Cadastro de abrigos**: Criar tela para cadastro de abrigos (Nome, endereço, capacidade, vagas, aceita pets).
+- [ ] **Alteração de abrigos**: Pemitir alterar quantidade de vagas disponívies, se aceita pet ou endereço.
+- [ ] **Cadastro de usuários**: Criar tela de cadastro (nome, telefone, senha) e login.
+- [ ] **Filtro por item e por cidade**: Opção de filtrar abrigos por cidade ou que precisam de algum item específico.
+- [ ] **Alterar ordenação**: Trocar a ordenação atual para ordenação por última atualização.
 
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
 
