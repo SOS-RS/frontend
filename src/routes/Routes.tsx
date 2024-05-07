@@ -1,6 +1,6 @@
 import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 
-import { CreateSupply, Home, Shelter, ShelterItem } from '@/pages';
+import { CreateSupply, Home, Shelter, ShelterItem, SignIn } from '@/pages';
 
 const Routes = () => {
   return (
@@ -12,6 +12,7 @@ const Routes = () => {
         element={<CreateSupply />}
       />
       <Route path="/" element={<Home />} />
+      <Route path="/entrar" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );

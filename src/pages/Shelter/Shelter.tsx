@@ -74,7 +74,7 @@ const Shelter = () => {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-8 p-4 ">
+        <div className="flex flex-col gap-8 p-4">
           {shelterCategories.map((categoryProps, idx) => (
             <ShelterCategoryItems key={idx} {...categoryProps} />
           ))}

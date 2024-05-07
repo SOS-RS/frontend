@@ -8,7 +8,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <SessionProvider>
-        <Routes />;
+        <Routes />
       </SessionProvider>
     </BrowserRouter>
   );
