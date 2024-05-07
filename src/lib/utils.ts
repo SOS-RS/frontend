@@ -40,7 +40,7 @@ function getAvailabilityProps(
   capacity?: number | null,
   shelteredPeople?: number | null
 ) {
-  if (capacity && shelteredPeople) {
+  if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',

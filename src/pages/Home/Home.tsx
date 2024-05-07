@@ -7,7 +7,7 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 
 const alertDescription =
-  'Você pode consultar a lista de abrigos disponíveis e os itens que necessitam de doações.';
+  'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
