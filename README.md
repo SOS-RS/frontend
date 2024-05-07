@@ -24,7 +24,7 @@ O app inclui as seguintes funcionalidades:
 - [ ] **Cadastro de usuários**: Criar tela de cadastro (nome, telefone, senha) e login.
 - [ ] **Filtro por item e por cidade**: Opção de filtrar abrigos por cidade ou que precisam de algum item específico.
 - [ ] **Alterar ordenação**: Trocar a ordenação atual para ordenação por última atualização.
-
+- [ ] **Adicionar mapa de abrigos**: Criar uma tela com um mapa e todos os abrigos. Verificar a posibilidade de usar geolocation para mostrar a posição do usuário no mapa.
 
 
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
