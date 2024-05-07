@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const { priority, tags } = props;
   const [opened, setOpened] = useState<boolean>(false);
-  const maxVisibleTags: number = 7;
+  const maxVisibleTags: number = 10;
   const visibleTags = useMemo(
-    () => (opened ? tags : tags.slice(0, 7)),
+    () => (opened ? tags : tags.slice(0, 10)),
     [opened, tags]
   );
   const { className: circleClassName, label } = useMemo(

@@ -72,12 +72,12 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
       };
     case SupplyPriority.Needing:
       return {
-        label: 'Urgente',
+        label: 'Precisa',
         className: 'bg-light-orange',
       };
     case SupplyPriority.Urgent:
       return {
-        label: 'Necessita Urgentemente',
+        label: 'Precisa Urgentemente',
         className: 'bg-light-red',
       };
   }
