@@ -9,6 +9,7 @@ import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
+import { SupplyPriority } from '@/service/supply/types';
 
 const Shelter = () => {
   const params = useParams();
@@ -18,6 +19,7 @@ const Shelter = () => {
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
     const grouped = group(shelter?.supplies ?? [], 'priority');
+    delete grouped[SupplyPriority.UnderControl];
     return Object.entries(grouped)
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
