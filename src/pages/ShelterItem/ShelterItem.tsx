@@ -1,23 +1,40 @@
 import { ChevronLeft, PlusCircle } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { DialogSelector, Header, LoadingScreen } from '@/components';
+import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
-import { useShelter } from '@/hooks';
+import { useShelter, useSupplies, useThrottle } from '@/hooks';
 import { group } from '@/lib/utils';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { SupplyPriority } from '@/service/supply/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { SupplyServices } from '@/service';
+import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
+import { ISupply, SupplyPriority } from '@/service/supply/types';
 
 const ShelterItem = () => {
   const navigate = useNavigate();
   const { shelterId = '-1' } = useParams();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
+  const { data: supplies } = useSupplies();
+  const [filteredSupplies, setFilteredSupplies] = useState<ISupply[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [, setSearch] = useThrottle<string>(
+    {
+      throttle: 400,
+      callback: (v) => {
+        if (v) {
+          setFilteredSupplies(
+            supplies.filter((s) =>
+              s.name.toLowerCase().includes(v.toLowerCase())
+            )
+          );
+        } else setFilteredSupplies(supplies);
+      },
+    },
+    [supplies]
+  );
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
@@ -27,12 +44,8 @@ const ShelterItem = () => {
   const { toast } = useToast();
 
   const supplyGroups = useMemo(
-    () =>
-      group<IUseShelterDataSupply>(
-        shelter?.supplies ?? [],
-        'supplyCategory.name'
-      ),
-    [shelter.supplies]
+    () => group<ISupply>(filteredSupplies ?? [], 'supplyCategory.name'),
+    [filteredSupplies]
   );
 
   const handleClickSupplyRow = useCallback(
@@ -42,7 +55,7 @@ const ShelterItem = () => {
         value: `${item.priority}`,
         onSave: (v) => {
           setLoadingSave(true);
-          SupplyServices.update(item.id, { priority: +v })
+          ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
             .then(() => {
               setModalOpened(false);
               setModalData(null);
@@ -61,8 +74,12 @@ const ShelterItem = () => {
         },
       });
     },
-    [refresh, toast]
+    [refresh, shelterId, toast]
   );
+
+  useEffect(() => {
+    setFilteredSupplies(supplies);
+  }, [supplies]);
 
   if (loading) return <LoadingScreen />;
 
@@ -123,6 +140,16 @@ const ShelterItem = () => {
             <PlusCircle />
             Cadastrar novo item
           </Button>
+          <div className="w-full my-2">
+            <TextField
+              label="Buscar"
+              value={searchValue}
+              onChange={(ev) => {
+                setSearchValue(ev.target.value);
+                setSearch(ev.target.value);
+              }}
+            />
+          </div>
           <div className="flex flex-col gap-2 w-full my-4">
             {Object.entries(supplyGroups).map(([key, values], idx) => (
               <SupplyRow
@@ -131,7 +158,7 @@ const ShelterItem = () => {
                 items={values.map((v) => ({
                   id: v.id,
                   name: v.name,
-                  priority: v.priority,
+                  priority: 0, //v.priority,
                 }))}
                 onClick={handleClickSupplyRow}
               />

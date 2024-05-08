@@ -1,4 +1,21 @@
-import { IShelter } from '@/service/shelter/types';
-import { ISupply } from '@/service/supply/types';
+export interface IUseSheltersData {
+  id: string;
+  name: string;
+  address: string;
+  pix?: string | null;
+  shelteredPeople?: number | null;
+  capacity?: number | null;
+  contact?: string | null;
+  petFriendly?: boolean | null;
+  prioritySum: number;
+  latitude?: string | null;
+  longitude?: string | null;
+  createdAt: string;
+  updatedAt?: string | null;
+  shelterSupplies: IUseSheltersDataSupplyData[];
+}
 
-export type IUseSheltersData = IShelter & { supplies: ISupply[] };
+export interface IUseSheltersDataSupplyData {
+  supply: { name: string };
+  priority: number;
+}

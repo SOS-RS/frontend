@@ -13,20 +13,21 @@ import { SupplyPriority } from '@/service/supply/types';
 
 const Shelter = () => {
   const params = useParams();
-  const { id } = params;
+  const { id = '-1' } = params;
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
+  const { data: shelters } = useShelter(id);
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.supplies ?? [], 'priority');
+    const grouped = group(shelters?.shelterSupplies ?? [], 'priority');
     delete grouped[SupplyPriority.UnderControl];
     return Object.entries(grouped)
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
-        tags: values.map((v) => v.name),
+        tags: values.map((v) => v.supply.name),
       }));
-  }, [shelter.supplies]);
+  }, [shelters.shelterSupplies]);
 
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(

@@ -7,19 +7,10 @@ export enum SupplyPriority {
 
 export interface ISupply {
   id: string;
-  shelterId: string;
   supplyCategoryId: string;
   name: string;
-  priority: SupplyPriority;
   createdAt: string;
   updatedAt?: string | null;
 }
 
-export type IUpdateSupply = Partial<
-  Pick<ISupply, 'name' | 'supplyCategoryId' | 'priority'>
->;
-
-export type ICreateSupply = Pick<
-  ISupply,
-  'name' | 'supplyCategoryId' | 'priority' | 'shelterId'
->;
+export type ICreateSupply = Pick<ISupply, 'name' | 'supplyCategoryId'>;
