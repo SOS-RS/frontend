@@ -15,11 +15,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
 
   const check = (v?: string | number | boolean | null) => {
-    return (
-      (v !== undefined && v !== null) ||
-      (typeof v === 'number' && v === 0) ||
-      (typeof v === 'boolean' && v)
-    );
+    return v !== undefined && v !== null;
   };
 
   return (
@@ -49,8 +45,10 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           icon={<PawPrint />}
           label={
             check(shelter.petFriendly)
-              ? 'O abrigo aceita animais'
-              : 'O abrigo não aceita animais'
+              ? shelter.petFriendly
+                ? 'O abrigo aceita animais'
+                : 'O abrigo não aceita animais'
+              : 'Não informado se aceita animais'
           }
         />
         <InfoRow
