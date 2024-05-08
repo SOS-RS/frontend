@@ -23,10 +23,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const tags = useMemo(
     () =>
-      data.supplies
-        .filter((s) => s.priority >= SupplyPriority.Needing)
-        .sort((a, b) => b.priority - a.priority),
-    [data.supplies]
+      data.shelterSupplies
+        .filter((s) => s.supply.priority >= SupplyPriority.Needing)
+        .sort((a, b) => b.supply.priority - a.supply.priority),
+    [data.shelterSupplies]
   );
 
   return (
@@ -51,7 +51,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
         {data.address}
       </h6>
-      {data.supplies.length > 0 && (
+      {data.shelterSupplies.length > 0 && (
         <div className="flex flex-col gap-3">
           <Separator className="mt-2" />
           <p className="text-muted-foreground text-sm md:text-lg font-medium">
@@ -60,9 +60,9 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           <div className="flex gap-2 flex-wrap">
             {tags.map((s, idx) => (
               <Chip
-                className={getSupplyPriorityProps(s.priority).className}
+                className={getSupplyPriorityProps(s.supply.priority).className}
                 key={idx}
-                label={s.name}
+                label={s.supply.name}
               />
             ))}
           </div>

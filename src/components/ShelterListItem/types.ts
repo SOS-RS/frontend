@@ -1,4 +1,4 @@
-import { IUseSheltersData } from '@/hooks/useShelters/types';
+import { IShelterData } from '@/hooks/useShelters/types';
 
 export interface IShelterAvailabilityProps {
   availability: string;
@@ -6,5 +6,6 @@ export interface IShelterAvailabilityProps {
 }
 
 export interface IShelterListItemProps {
-  data: IUseSheltersData;
+  data: IShelterData;
+  onClick?: () => void;
 }

@@ -7,6 +7,7 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { IMapViewMarker } from '@/components/MapView/types';
 import { defaultCoords } from '@/hooks/useMap/useMap';
+import { IShelterData } from '@/hooks/useShelters/types';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
@@ -53,7 +54,7 @@ const Home = () => {
     );
   }, [refresh, searchValue, shelters.page, shelters.perPage]);
 
-  const handleShelterItemClick = useCallback((item: IUseSheltersData) => {
+  const handleShelterItemClick = useCallback((item: IShelterData) => {
     if (item.latitude && item.longitude)
       setCoords([item.latitude, item.longitude]);
   }, []);
