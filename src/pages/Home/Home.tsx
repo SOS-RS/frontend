@@ -1,16 +1,28 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
-import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  RotateCw,
+  CircleAlert,
+  Search,
+  Loader,
+  LogOutIcon,
+} from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
+import { SessionContext } from '@/contexts';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
+  const {
+    loading: loadingSession,
+    refreshSession,
+    session,
+  } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
     {
@@ -57,15 +69,36 @@ const Home = () => {
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
-          <Button
-            loading={loading}
-            variant="ghost"
-            size="sm"
-            onClick={() => refresh()}
-            className="disabled:bg-red-500 hover:bg-red-400"
-          >
-            <RotateCw size={20} className="stroke-white" />
-          </Button>
+          <div className="flex gap-2 items-center">
+            {session && (
+              <h3 className="text-gray-300 font-thin">
+                Bem vindo, {session.name}
+              </h3>
+            )}
+            <Button
+              loading={loading}
+              variant="ghost"
+              size="sm"
+              onClick={() => refresh()}
+              className="disabled:bg-red-500 hover:bg-red-400"
+            >
+              <RotateCw size={20} className="stroke-white" />
+            </Button>
+            {session && (
+              <Button
+                loading={loadingSession}
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  refreshSession();
+                }}
+                className="disabled:bg-red-500 hover:bg-red-400"
+              >
+                <LogOutIcon size={20} className="stroke-white" />
+              </Button>
+            )}
+          </div>
         }
       />
       <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">

@@ -63,7 +63,7 @@ const Shelter = () => {
           <Button
             variant="ghost"
             className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-            onClick={() => navigate(`/abrigo/atualizar/${id}`)}
+            onClick={() => navigate(`/abrigo/${id}/atualizar`)}
           >
             Editar abrigo
             <Pencil size={17} className="stroke-blue-600" />

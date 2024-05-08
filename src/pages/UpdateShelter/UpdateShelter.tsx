@@ -10,50 +10,56 @@ import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const { id } = params;
-  const { data: shelter, loading } = useShelter(id ?? '-1');
+  const { shelterId = '-1' } = params;
+  const { data: shelter, loading } = useShelter(shelterId);
 
-  const { errors, getFieldProps, isSubmitting, handleSubmit } =
-    useFormik<IUpdateShelter>({
-      initialValues: {
-        address: shelter.address,
-        shelteredPeople: shelter.shelteredPeople ?? 0,
-        capacity: shelter.capacity ?? 0,
-        contact: shelter.contact ?? '',
-      },
-      enableReinitialize: true,
-      validateOnBlur: false,
-      validateOnChange: false,
-      validateOnMount: false,
-      validationSchema: Yup.object().shape({
-        address: Yup.string().required('Este campo deve ser preenchido'),
-        shelteredPeople: Yup.number().required(
-          'Este campo deve ser preenchido'
-        ),
-        capacity: Yup.number().required('Este campo deve ser preenchido'),
-        contact: Yup.string().required('Este campo deve ser preenchido'),
-      }),
-      onSubmit: async (values) => {
-        try {
-          const data = await ShelterServices.update(id ?? '', values);
-          console.log(data);
-          toast({
-            title: 'Atualização feita com sucesso',
-          });
-          navigate(`/abrigo/${id}`);
-        } catch (err: any) {
-          toast({
-            variant: 'destructive',
-            title: 'Ocorreu um erro ao tentar atualizar',
-            description: `${err?.response?.data?.message ?? err}`,
-          });
-        }
-      },
-    });
+  const {
+    errors,
+    getFieldProps,
+    isSubmitting,
+    handleSubmit,
+    setFieldValue,
+    values,
+  } = useFormik<IUpdateShelter>({
+    initialValues: {
+      shelteredPeople: shelter.shelteredPeople ?? 0,
+      petFriendly: shelter.petFriendly ?? false,
+    },
+    enableReinitialize: true,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validationSchema: Yup.object().shape({
+      shelteredPeople: Yup.number().required('Este campo deve ser preenchido'),
+      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        await ShelterServices.update(shelterId, values);
+        toast({
+          title: 'Atualização feita com sucesso',
+        });
+        navigate(`/abrigo/${shelterId}`);
+      } catch (err: any) {
+        toast({
+          variant: 'destructive',
+          title: 'Ocorreu um erro ao tentar atualizar',
+          description: `${err?.response?.data?.message ?? err}`,
+        });
+      }
+    },
+  });
 
   if (loading) return <LoadingScreen />;
 
@@ -80,36 +86,30 @@ const UpdateShelter = () => {
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
             <TextField
-              label="Endereço do abrigo"
-              {...getFieldProps('address')}
-              error={!!errors.address}
-              helperText={errors.address}
-            />
-
-            <TextField
-              label="Contato"
-              {...getFieldProps('contact')}
-              error={!!errors.contact}
-              helperText={errors.contact}
-            />
-
-            <TextField
               type="number"
               label="Quantidade de pessoas abrigadas"
               {...getFieldProps('shelteredPeople')}
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
-
-            <TextField
-              type="number"
-              label="Capacidade do abrigo"
-              {...getFieldProps('capacity')}
-              error={!!errors.capacity}
-              helperText={errors.capacity}
-            />
+            <label className="text-muted-foreground">
+              O abrigo aceita animais
+            </label>
+            <Select
+              value={values.petFriendly ? 'true' : 'false'}
+              onValueChange={(v) => {
+                setFieldValue('petFriendly', v === 'true');
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue className="text-muted-foreground" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">Sim</SelectItem>
+                <SelectItem value="false">Não</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-
           <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
             <Button
               loading={isSubmitting}
