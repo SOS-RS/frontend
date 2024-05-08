@@ -92,6 +92,7 @@ const Home = () => {
             <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
         </div>
+        <div></div>
         {/* <div className="[&_svg]:stroke-blue-500">
           <Button variant="ghost" size="sm" className="flex gap-2 items-center">
             <ListFilter className="h-5 w-5" />
