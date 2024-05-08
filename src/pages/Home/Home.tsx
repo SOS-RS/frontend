@@ -154,7 +154,7 @@ const Home = () => {
           )}
         </main>
       </div>
-      <div className="w-full p-4 flex gap-3 justify-center p-4 flex-wrap items-center bg-red-600">
+      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
         <p className="text-white">
           Para cadastrar novos abrigos clique{' '}
           <a
@@ -165,18 +165,18 @@ const Home = () => {
             aqui
           </a>
         </p>
-        <span className="text-white">•</span>
-        <p className="text-white flex flex-nowrap items-center gap-2">
+        <span className="text-white hidden md:block">•</span>
+        <span className="text-white flex flex-nowrap gap-2 items-center">
           Projeto Open Source disponível em{' '}
           <a
-            className="underline hover:text-gray-300"
+            className="underline hover:text-gray-300 flex"
             href="https://github.com/SOS-RS"
             target="_blank"
           >
             Github
           </a>
           <Heart className="h-3 w-3 stroke-white fill-white" />
-        </p>
+        </span>
       </div>
     </div>
   );
