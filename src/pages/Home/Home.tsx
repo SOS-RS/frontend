@@ -92,15 +92,6 @@ const Home = () => {
             <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
         </div>
-        <div></div>
-        {/* <div className="[&_svg]:stroke-blue-500">
-          <Button variant="ghost" size="sm" className="flex gap-2 items-center">
-            <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
-              Filtros
-            </h1>
-          </Button>
-        </div> */}
         <main className="flex flex-col gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />

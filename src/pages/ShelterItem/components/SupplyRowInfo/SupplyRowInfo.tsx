@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
+
 import { CircleStatus } from '@/components';
 import { ISupplyRowInfoProps } from './types';
-import { useMemo } from 'react';
 import { getSupplyPriorityProps } from '@/lib/utils';
 
 const SupplyRowInfo = (props: ISupplyRowInfoProps) => {

@@ -1,6 +1,6 @@
 import { SupplyPriority } from '@/service/supply/types';
 
 export interface IShelterCategoryItemsProps {
-  priority: SupplyPriority;
+  priority?: SupplyPriority;
   tags: string[];
 }

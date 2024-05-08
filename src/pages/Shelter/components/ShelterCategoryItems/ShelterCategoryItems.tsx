@@ -5,9 +5,11 @@ import { IShelterCategoryItemsProps } from './types';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
+import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
-  const { priority, tags } = props;
+  console.log({ props });
+  const { priority = SupplyPriority.UnderControl, tags } = props;
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleTags: number = 10;
   const visibleTags = useMemo(
