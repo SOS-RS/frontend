@@ -12,10 +12,12 @@ import { ISupplyRowItemProps } from './components/SupplyRow/types';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
-const ShelterItem = () => {
+const EditShelterSupply = () => {
   const navigate = useNavigate();
   const { shelterId = '-1' } = useParams();
+  const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
   const [filteredSupplies, setFilteredSupplies] = useState<ISupply[]>([]);
@@ -41,8 +43,12 @@ const ShelterItem = () => {
     IDialogSelectorProps,
     'value' | 'onSave'
   > | null>();
-  const { toast } = useToast();
-
+  const shelterSupplyData = useMemo(() => {
+    return (shelter?.shelterSupplies ?? []).reduce(
+      (prev, current) => ({ ...prev, [current.supply.id]: current }),
+      {} as Record<string, IUseShelterDataSupply>
+    );
+  }, [shelter?.shelterSupplies]);
   const supplyGroups = useMemo(
     () => group<ISupply>(filteredSupplies ?? [], 'supplyCategory.name'),
     [filteredSupplies]
@@ -50,27 +56,47 @@ const ShelterItem = () => {
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
+      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
-        value: `${item.priority}`,
+        value: `${item.priority ?? SupplyPriority.UnderControl}`,
         onSave: (v) => {
+          const isNewSupply = item.priority === undefined;
           setLoadingSave(true);
-          ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
-            .then(() => {
-              setModalOpened(false);
-              setModalData(null);
-              refresh();
-            })
-            .catch((err) => {
-              toast({
-                variant: 'destructive',
-                title: 'Ocorreu um erro ao atualizar a categoria do suprimento',
-                description: `${err}`,
-              });
-            })
-            .finally(() => {
-              setLoadingSave(false);
+
+          const successCallback = () => {
+            setModalOpened(false);
+            setModalData(null);
+            refresh();
+          };
+
+          const errorCallback = (err: any) => {
+            toast({
+              variant: 'destructive',
+              title: 'Ocorreu um erro ao atualizar a categoria do suprimento',
+              description: `${err}`,
             });
+          };
+
+          if (isNewSupply) {
+            ShelterSupplyServices.create({
+              shelterId,
+              supplyId: item.id,
+              priority: +v,
+            })
+              .then(successCallback)
+              .catch(errorCallback)
+              .finally(() => {
+                setLoadingSave(false);
+              });
+          } else {
+            ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
+              .then(successCallback)
+              .catch(errorCallback)
+              .finally(() => {
+                setLoadingSave(false);
+              });
+          }
         },
       });
     },
@@ -151,18 +177,24 @@ const ShelterItem = () => {
             />
           </div>
           <div className="flex flex-col gap-2 w-full my-4">
-            {Object.entries(supplyGroups).map(([key, values], idx) => (
-              <SupplyRow
-                key={idx}
-                name={key}
-                items={values.map((v) => ({
+            {Object.entries(supplyGroups).map(([key, values], idx) => {
+              const items: ISupplyRowItemProps[] = values.map((v) => {
+                const supply = shelterSupplyData[v.id];
+                return {
                   id: v.id,
                   name: v.name,
-                  priority: 0, //v.priority,
-                }))}
-                onClick={handleClickSupplyRow}
-              />
-            ))}
+                  priority: supply?.priority,
+                };
+              });
+              return (
+                <SupplyRow
+                  key={idx}
+                  name={key}
+                  items={items}
+                  onClick={handleClickSupplyRow}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
@@ -170,4 +202,4 @@ const ShelterItem = () => {
   );
 };
 
-export { ShelterItem };
+export { EditShelterSupply };

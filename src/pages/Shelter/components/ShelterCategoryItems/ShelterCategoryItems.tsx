@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
-  console.log({ props });
   const { priority = SupplyPriority.UnderControl, tags } = props;
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleTags: number = 10;

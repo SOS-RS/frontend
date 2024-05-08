@@ -5,7 +5,7 @@ import {
   CreateSupply,
   Home,
   Shelter,
-  ShelterItem,
+  EditShelterSupply,
 } from '@/pages';
 
 const Routes = () => {
@@ -13,7 +13,7 @@ const Routes = () => {
     <Switch>
       <Route path="/abrigo/:id" element={<Shelter />} />
       <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
-      <Route path="/abrigo/:shelterId/items" element={<ShelterItem />} />
+      <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />
       <Route
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}

@@ -3,7 +3,7 @@ import { SupplyPriority } from '@/service/supply/types';
 export interface ISupplyRowItemProps {
   id: string;
   name: string;
-  priority: SupplyPriority;
+  priority?: SupplyPriority;
 }
 
 export interface ISupplyRowProps {
