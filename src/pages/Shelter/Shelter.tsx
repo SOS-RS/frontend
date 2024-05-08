@@ -31,7 +31,7 @@ const Shelter = () => {
   }, [shelter.supplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.supplies?.filter((s) => s.name.toLowerCase().includes(getWordToFilterVolunteer()))
+    return shelter?.supplies?.filter((s) => s.name.toLowerCase().includes(getWordToFilterVolunteer())).reverse()
   }, [shelter.supplies])
 
   const { availability, className: availabilityClassName } =

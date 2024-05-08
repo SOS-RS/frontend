@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
+import { cn, getAvailabilityProps, getSupplyPriorityProps, getWordToFilterVolunteer } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
@@ -24,7 +24,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   const tags = useMemo(
     () => {
       return data.supplies
-        .filter((s) => (s.priority >= SupplyPriority.Needing || s.name.toLowerCase().includes('voluntário')))
+        .filter((s) => (s.priority >= SupplyPriority.Needing || s.name.toLowerCase().includes(getWordToFilterVolunteer())))
         .sort((a, b) => b.priority - a.priority).slice(0, 10)
     },
     [data.supplies]
@@ -32,7 +32,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const volunteerTags = useMemo(
     () =>
-      data.supplies.filter((s) => s.name.toLowerCase().includes('voluntário')).reverse(),
+      data.supplies.filter((s) => s.name.toLowerCase().includes(getWordToFilterVolunteer())).reverse(),
     [data.supplies]
   )
 
