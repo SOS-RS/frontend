@@ -6,12 +6,15 @@ import {
   Home,
   Shelter,
   EditShelterSupply,
+  SignIn,
+  UpdateShelter,
 } from '@/pages';
 
 const Routes = () => {
   return (
     <Switch>
       <Route path="/abrigo/:id" element={<Shelter />} />
+      <Route path="/abrigo/:shelterId/atualizar" element={<UpdateShelter />} />
       <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
       <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />
       <Route
@@ -19,6 +22,7 @@ const Routes = () => {
         element={<CreateSupply />}
       />
       <Route path="/" element={<Home />} />
+      <Route path="/entrar" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );

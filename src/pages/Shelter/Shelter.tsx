@@ -56,22 +56,33 @@ const Shelter = () => {
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           {shelter.name}
         </h1>
-        <h1 className={cn(availabilityClassName, 'font-semibold')}>
-          {availability}
-        </h1>
+        <div className="flex flex-1 items-center justify-between">
+          <h1 className={cn(availabilityClassName, 'font-semibold')}>
+            {availability}
+          </h1>
+          <Button
+            variant="ghost"
+            className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+            onClick={() => navigate(`/abrigo/${id}/atualizar`)}
+          >
+            Editar abrigo
+            <Pencil size={17} className="stroke-blue-600" />
+          </Button>
+        </div>
+
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
         </div>
         <div className="flex justify-between p-4 items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-          <div className="flex gap-2 items-center [&_svg]:stroke-blue-600">
+          <div className="flex gap-2 items-center ">
             <Button
               variant="ghost"
               className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
               onClick={() => navigate(`/abrigo/${id}/items`)}
             >
               Editar itens
-              <Pencil size={17} />
+              <Pencil size={17} className="stroke-blue-600" />
             </Button>
           </div>
         </div>

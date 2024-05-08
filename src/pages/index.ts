@@ -5,6 +5,7 @@ import { Shelter } from './Shelter';
 import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
+import { UpdateShelter } from './UpdateShelter';
 
 export {
   SignIn,
@@ -13,4 +14,5 @@ export {
   EditShelterSupply,
   CreateSupply,
   CreateShelter,
+  UpdateShelter,
 };

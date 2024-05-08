@@ -118,11 +118,11 @@ const EditShelterSupply = () => {
           title="Escolha a prioridade do item"
           options={[
             {
-              label: 'Necessita urgente',
+              label: 'Precisa urgente',
               value: `${SupplyPriority.Urgent}`,
             },
             {
-              label: 'Urgente',
+              label: 'Precisa',
               value: `${SupplyPriority.Needing}`,
             },
             {

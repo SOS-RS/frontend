@@ -17,6 +17,12 @@ const ShelterServices = {
     const { data } = await api.get<IServerResponse<IShelter[]>>('/shelters');
     return data.data;
   },
+  getOne: async (id: string): Promise<IShelter> => {
+    const { data } = await api.get<IServerResponse<IShelter>>(
+      `/shelters/${id}`
+    );
+    return data.data;
+  },
   update: async (
     id: string,
     payload: IUpdateShelter

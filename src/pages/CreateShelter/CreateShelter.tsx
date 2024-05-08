@@ -13,39 +13,63 @@ import {
 import { Header, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { ICreateShelter } from '@/service/shelter/types';
+import { toast } from '@/components/ui/use-toast';
+import { ShelterServices } from '@/service';
+import { withAuth } from '@/hocs';
 
-const CreateShelter = () => {
+const CreateShelterComponent = () => {
   const navigate = useNavigate();
 
-  const verifySelected = (selected: string) => {
-    if (selected === 'sim') return true;
-    return false;
-  };
-
-  const { errors, getFieldProps, isSubmitting, setFieldValue, handleSubmit } =
-    useFormik<ICreateShelter>({
-      initialValues: {
-        name: '',
-        address: '',
-        shelteredPeople: 0,
-        capacity: 0,
-        petFriendly: false,
-        contact: '',
-        pix: '',
-      },
-      enableReinitialize: true,
-      validateOnBlur: false,
-      validateOnChange: false,
-      validateOnMount: false,
-      validationSchema: Yup.object().shape({
-        name: Yup.string().required('Este campo deve ser preenchido'),
-        address: Yup.string().required('Este campo deve ser preenchido'),
-      }),
-      onSubmit: async (values) => {
-        //criar endpoint
-        console.log(values);
-      },
-    });
+  const {
+    errors,
+    getFieldProps,
+    isSubmitting,
+    setFieldValue,
+    handleSubmit,
+    values,
+  } = useFormik<ICreateShelter>({
+    initialValues: {
+      name: '',
+      address: '',
+      shelteredPeople: 0,
+      capacity: 0,
+      petFriendly: false,
+      contact: null,
+      pix: null,
+    },
+    enableReinitialize: true,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required('Este campo deve ser preenchido'),
+      address: Yup.string().required('Este campo deve ser preenchido'),
+      shelteredPeople: Yup.number()
+        .min(0, 'O valor mínimo para este campo é 0')
+        .nullable(),
+      capacity: Yup.number()
+        .min(1, 'O valor mínimo para este campo é 1')
+        .nullable(),
+      petFriendly: Yup.bool().nullable(),
+      contact: Yup.string().nullable(),
+      pix: Yup.string().nullable(),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await ShelterServices.create(values);
+        toast({
+          title: 'Cadastro feita com sucesso',
+        });
+        resetForm();
+      } catch (err: any) {
+        toast({
+          variant: 'destructive',
+          title: 'Ocorreu um erro ao tentar cadastrar',
+          description: `${err?.response?.data?.message ?? err}`,
+        });
+      }
+    },
+  });
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -56,7 +80,7 @@ const CreateShelter = () => {
           <Button
             variant="ghost"
             className="[&_svg]:stroke-blue-500"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/')}
           >
             <ChevronLeft size={20} />
           </Button>
@@ -75,54 +99,51 @@ const CreateShelter = () => {
               error={!!errors.name}
               helperText={errors.name}
             />
-
             <TextField
               label="Endereço do abrigo"
               {...getFieldProps('address')}
               error={!!errors.address}
               helperText={errors.address}
             />
-
             <TextField
               label="Contato"
               {...getFieldProps('contact')}
               error={!!errors.contact}
               helperText={errors.contact}
             />
-
             <TextField
               type="number"
+              min="0"
               label="Quantidade de pessoas abrigadas"
               {...getFieldProps('shelteredPeople')}
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
-
             <TextField
               type="number"
+              min="0"
               label="Capacidade do abrigo"
               {...getFieldProps('capacity')}
               error={!!errors.capacity}
               helperText={errors.capacity}
             />
-
             <label className="text-muted-foreground">
               O abrigo aceita animais
             </label>
             <Select
+              value={values.petFriendly ? 'true' : 'false'}
               onValueChange={(v) => {
-                setFieldValue('petFriendly', verifySelected(v));
+                setFieldValue('petFriendly', v === 'true');
               }}
             >
               <SelectTrigger className="w-full">
                 <SelectValue className="text-muted-foreground" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="sim">Sim</SelectItem>
-                <SelectItem value="nao">Não</SelectItem>
+                <SelectItem value="true">Sim</SelectItem>
+                <SelectItem value="false">Não</SelectItem>
               </SelectContent>
             </Select>
-
             <TextField
               label="Chave pix"
               {...getFieldProps('pix')}
@@ -144,5 +165,7 @@ const CreateShelter = () => {
     </div>
   );
 };
+
+const CreateShelter = withAuth(CreateShelterComponent);
 
 export { CreateShelter };
