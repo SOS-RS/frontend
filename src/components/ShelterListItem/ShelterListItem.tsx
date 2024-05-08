@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { BadgeCheck, ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
 import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
@@ -14,7 +14,6 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
   const { capacity, shelteredPeople } = data;
   const navigate = useNavigate();
-
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(capacity, shelteredPeople),
@@ -39,12 +38,17 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
-      <h3
-        className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
-        onClick={() => navigate(`/abrigo/${data.id}`)}
-      >
-        {data.name}
-      </h3>
+      <div className="flex items-center gap-1">
+        {data.verified && (
+          <BadgeCheck className="h-5 w-5 stroke-white fill-red-600" />
+        )}
+        <h3
+          className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
+          onClick={() => navigate(`/abrigo/${data.id}`)}
+        >
+          {data.name}
+        </h3>
+      </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
       </h6>
@@ -55,7 +59,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <div className="flex flex-col gap-3">
           <Separator className="mt-2" />
           <p className="text-muted-foreground text-sm md:text-lg font-medium">
-            Necessita urgente de doações de:
+            Precisa urgente de doações de:
           </p>
           <div className="flex gap-2 flex-wrap">
             {tags.map((s, idx) => (

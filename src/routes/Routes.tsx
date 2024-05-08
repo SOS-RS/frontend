@@ -1,12 +1,22 @@
 import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 
-import { CreateSupply, Home, Shelter, ShelterItem, SignIn } from '@/pages';
+import {
+  CreateShelter,
+  CreateSupply,
+  Home,
+  Shelter,
+  EditShelterSupply,
+  SignIn,
+  UpdateShelter,
+} from '@/pages';
 
 const Routes = () => {
   return (
     <Switch>
       <Route path="/abrigo/:id" element={<Shelter />} />
-      <Route path="/abrigo/:shelterId/items" element={<ShelterItem />} />
+      <Route path="/abrigo/:shelterId/atualizar" element={<UpdateShelter />} />
+      <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
+      <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />
       <Route
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}

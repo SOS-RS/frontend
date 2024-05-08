@@ -1,5 +1,12 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import { RotateCw, Search, Loader } from 'lucide-react';
+import {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { RotateCw, Search, Loader, Heart, LogOutIcon } from 'lucide-react';
 
 import { Header, MapView, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
@@ -7,10 +14,16 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { IMapViewMarker } from '@/components/MapView/types';
 import { defaultCoords } from '@/hooks/useMap/useMap';
-import { IShelterData } from '@/hooks/useShelters/types';
+import { IUseShelterData } from '@/hooks/useShelter/types';
+import { SessionContext } from '@/contexts';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
+  const {
+    session,
+    loading: loadingSession,
+    refreshSession,
+  } = useContext(SessionContext);
   const [coords, setCoords] = useState<[number, number]>(defaultCoords);
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
@@ -54,7 +67,7 @@ const Home = () => {
     );
   }, [refresh, searchValue, shelters.page, shelters.perPage]);
 
-  const handleShelterItemClick = useCallback((item: IShelterData) => {
+  const handleShelterItemClick = useCallback((item: IUseShelterData) => {
     if (item.latitude && item.longitude)
       setCoords([item.latitude, item.longitude]);
   }, []);
@@ -75,15 +88,36 @@ const Home = () => {
         title="SOS Rio Grande do Sul"
         className="z-10"
         endAdornment={
-          <Button
-            loading={loading}
-            variant="ghost"
-            size="sm"
-            onClick={() => refresh()}
-            className="disabled:bg-red-500 hover:bg-red-400"
-          >
-            <RotateCw size={20} className="stroke-white" />
-          </Button>
+          <div className="flex gap-2 items-center">
+            {session && (
+              <h3 className="text-gray-300 font-thin">
+                Bem vindo, {session.name}
+              </h3>
+            )}
+            <Button
+              loading={loading}
+              variant="ghost"
+              size="sm"
+              onClick={() => refresh()}
+              className="disabled:bg-red-500 hover:bg-red-400"
+            >
+              <RotateCw size={20} className="stroke-white" />
+            </Button>
+            {session && (
+              <Button
+                loading={loadingSession}
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  refreshSession();
+                }}
+                className="disabled:bg-red-500 hover:bg-red-400"
+              >
+                <LogOutIcon size={20} className="stroke-white" />
+              </Button>
+            )}
+          </div>
         }
       />
       <MapView markers={markers} coords={coords} />
@@ -140,6 +174,30 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
+        <p className="text-white">
+          Para cadastrar novos abrigos clique{' '}
+          <a
+            href="https://forms.gle/2S7L2gR529Dc8P3T9"
+            className="underline hover:text-gray-300"
+            target="_blank"
+          >
+            aqui
+          </a>
+        </p>
+        <span className="text-white hidden md:block">•</span>
+        <span className="text-white flex flex-nowrap gap-2 items-center">
+          Projeto Open Source disponível em{' '}
+          <a
+            className="underline hover:text-gray-300 flex"
+            href="https://github.com/SOS-RS"
+            target="_blank"
+          >
+            Github
+          </a>
+          <Heart className="h-3 w-3 stroke-white fill-white" />
+        </span>
       </div>
     </div>
   );

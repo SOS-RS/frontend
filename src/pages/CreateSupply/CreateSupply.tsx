@@ -16,7 +16,8 @@ import {
 } from '@/components/ui/select';
 import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 import { getSupplyPriorityProps } from '@/lib/utils';
-import { SupplyServices } from '@/service';
+import { ShelterSupplyServices, SupplyServices } from '@/service';
+import { ICreateShelterSupply } from '@/service/shelterSupply/types';
 
 const CreateSupply = () => {
   const navigate = useNavigate();
@@ -31,12 +32,12 @@ const CreateSupply = () => {
     handleSubmit,
     setFieldValue,
     values,
-  } = useFormik<ICreateSupply>({
+  } = useFormik<ICreateSupply & Omit<ICreateShelterSupply, 'supplyId'>>({
     initialValues: {
       name: '',
-      priority: SupplyPriority.UnderControl,
       supplyCategoryId: supplyCategories?.at(0)?.id ?? '-1',
       shelterId,
+      priority: SupplyPriority.UnderControl,
     },
     enableReinitialize: true,
     validateOnBlur: false,
@@ -50,9 +51,14 @@ const CreateSupply = () => {
     }),
     onSubmit: async (values) => {
       try {
-        await SupplyServices.create({
-          ...values,
+        const resp = await SupplyServices.create({
+          name: values.name,
+          supplyCategoryId: values.supplyCategoryId,
+        });
+        await ShelterSupplyServices.create({
+          supplyId: resp.data.id,
           priority: +values.priority,
+          shelterId,
         });
         toast({
           title: 'Item cadastrado com sucesso',

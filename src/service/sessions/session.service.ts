@@ -1,11 +1,10 @@
-import { ISession } from '../../contexts/SessionContext/types';
 import { IServerResponse } from '../../types';
 import { api } from '@/api';
-import { IAuthRequest } from './types';
+import { IAuthRequest, IAuthResponse, ISession } from './types';
 
 const SessionServices = {
-  auth: async (payload: IAuthRequest): Promise<ISession> => {
-    const { data } = await api.post<IServerResponse<ISession>>(
+  auth: async (payload: IAuthRequest): Promise<IAuthResponse> => {
+    const { data } = await api.post<IServerResponse<IAuthResponse>>(
       '/sessions',
       payload
     );

@@ -8,7 +8,6 @@ export interface IShelter {
   latitude?: number | null;
   longitude?: number | null;
   capacity?: number | null;
-  prioritySum: number;
   contact?: string | null;
   createdAt: string;
   updatedAt?: string | null;
@@ -17,8 +16,9 @@ export interface IShelter {
 export interface ICreateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
 
-export interface IUpdateShelter
-  extends Pick<IShelter, 'shelteredPeople' | 'capacity' | 'petFriendly'> {}
+export type IUpdateShelter = Partial<
+  Pick<IShelter, 'shelteredPeople' | 'petFriendly'>
+>;
 
 export interface IFullUpdateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
