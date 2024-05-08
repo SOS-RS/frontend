@@ -22,12 +22,19 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     );
 
   const tags = useMemo(
-    () =>
-      data.supplies
-        .filter((s) => s.priority >= SupplyPriority.Needing)
-        .sort((a, b) => b.priority - a.priority),
+    () => {
+      return data.supplies
+        .filter((s) => (s.priority >= SupplyPriority.Needing || s.name.toLowerCase().includes('voluntário')))
+        .sort((a, b) => b.priority - a.priority).slice(0, 10)
+    },
     [data.supplies]
   );
+
+  const volunteerTags = useMemo(
+    () =>
+      data.supplies.filter((s) => s.name.toLowerCase().includes('voluntário')).reverse(),
+    [data.supplies]
+  )
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
@@ -52,21 +59,41 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         {data.address}
       </h6>
       {data.supplies.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <Separator className="mt-2" />
-          <p className="text-muted-foreground text-sm md:text-lg font-medium">
-            Necessita urgente de doações de:
-          </p>
-          <div className="flex gap-2 flex-wrap">
-            {tags.map((s, idx) => (
-              <Chip
-                className={getSupplyPriorityProps(s.priority).className}
-                key={idx}
-                label={s.name}
-              />
-            ))}
+        <>
+          <div className="flex flex-col gap-3">
+            <Separator className="mt-2" />
+            <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              Status voluntários:
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {volunteerTags.length == 0 ?
+                <p> Não informado. <i> (Pode ser adicionado ao clickar no abrigo) </i></p>
+                :
+                volunteerTags.map((s, idx) => (
+                  <Chip
+                    className={getSupplyPriorityProps(s.priority).className}
+                    key={idx}
+                    label={s.name}
+                  />
+                ))}
+            </div>
           </div>
-        </div>
+          <div className="flex flex-col gap-3">
+            <Separator className="mt-2" />
+            <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              Necessita urgente de doações de:
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {tags.map((s, idx) => (
+                <Chip
+                  className={getSupplyPriorityProps(s.priority).className}
+                  key={idx}
+                  label={s.name}
+                />
+              ))}
+            </div>
+          </div>
+        </>
       )}
       {data.updatedAt && (
         <small className="text-sm md:text-md font-light text-muted-foreground mt-2">

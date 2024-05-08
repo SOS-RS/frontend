@@ -2,14 +2,15 @@ import { useMemo } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { CardAboutShelter, Header, LoadingScreen } from '@/components';
+import { CardAboutShelter, Chip, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, group } from '@/lib/utils';
+import { cn, getAvailabilityProps, getSupplyPriorityProps, getWordToFilterVolunteer, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
 const Shelter = () => {
   const params = useParams();
@@ -18,8 +19,9 @@ const Shelter = () => {
   const { data: shelter, loading } = useShelter(id ?? '-1');
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.supplies ?? [], 'priority');
+    const grouped = group(shelter?.supplies?.filter((s) => !s.name.toLowerCase().includes(getWordToFilterVolunteer())) ?? [], 'priority');
     delete grouped[SupplyPriority.UnderControl];
+
     return Object.entries(grouped)
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
@@ -27,6 +29,10 @@ const Shelter = () => {
         tags: values.map((v) => v.name),
       }));
   }, [shelter.supplies]);
+
+  const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
+    return shelter?.supplies?.filter((s) => s.name.toLowerCase().includes(getWordToFilterVolunteer()))
+  }, [shelter.supplies])
 
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
@@ -75,6 +81,23 @@ const Shelter = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
+
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-2 items-center">
+              <h3>
+                Voluntários
+              </h3>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {volunteerTags.map((v, idx) => (
+                <Chip
+                  className={getSupplyPriorityProps(v.priority).className}
+                  key={idx}
+                  label={v.name}
+                />
+              ))}
+            </div>
+          </div>
           {shelterCategories.map((categoryProps, idx) => (
             <ShelterCategoryItems key={idx} {...categoryProps} />
           ))}

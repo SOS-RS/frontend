@@ -106,6 +106,10 @@ function group<T extends Record<string, any>>(
   return data;
 }
 
+function getWordToFilterVolunteer(): string {
+  return 'voluntário'
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -114,4 +118,5 @@ export {
   variantStatusPriority,
   colorStatusPriority,
   nameStatusPriority,
+  getWordToFilterVolunteer
 };
