@@ -23,8 +23,8 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   const tags = useMemo(
     () =>
       data.shelterSupplies
-        .filter((s) => s.supply.priority >= SupplyPriority.Needing)
-        .sort((a, b) => b.supply.priority - a.supply.priority),
+        .filter((s) => s.priority >= SupplyPriority.Needing)
+        .sort((a, b) => b.priority - a.priority),
     [data.shelterSupplies]
   );
 
@@ -40,7 +40,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       </Button>
       <div className="flex items-center gap-1">
         {data.verified && (
-          <BadgeCheck className="h-5 w-5 stroke-white fill-red-600" />
+          <BadgeCheck className="h-6 w-6 stroke-white fill-red-600" />
         )}
         <h3
           className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
@@ -59,12 +59,12 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <div className="flex flex-col gap-3">
           <Separator className="mt-2" />
           <p className="text-muted-foreground text-sm md:text-lg font-medium">
-            Precisa urgente de doações de:
+            Necessita urgente de doações de:
           </p>
           <div className="flex gap-2 flex-wrap">
             {tags.map((s, idx) => (
               <Chip
-                className={getSupplyPriorityProps(s.supply.priority).className}
+                className={getSupplyPriorityProps(s.priority).className}
                 key={idx}
                 label={s.supply.name}
               />

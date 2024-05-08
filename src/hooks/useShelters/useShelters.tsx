@@ -5,11 +5,11 @@ import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
-import { IShelterData } from './types';
+import { IUseShelterData } from '../useShelter/types';
 
 const useShelters = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<IPaginatedResponse<IShelterData>>({
+  const [data, setData] = useState<IPaginatedResponse<IUseShelterData>>({
     count: 0,
     page: 1,
     perPage: 20,
@@ -20,7 +20,7 @@ const useShelters = () => {
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<IPaginatedResponse<IShelterData>>>(
+        .get<IServerResponse<IPaginatedResponse<IUseShelterData>>>(
           PaginatedQueryPath.Shelters,
           {
             ...config,

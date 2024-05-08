@@ -9,8 +9,8 @@ export interface IUseShelterData {
   petFriendly?: boolean | null;
   prioritySum: number;
   verified: boolean;
-  latitude?: string | null;
-  longitude?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   shelterSupplies: IUseShelterDataSupply[];
   createdAt: string;
   updatedAt?: string | null;
