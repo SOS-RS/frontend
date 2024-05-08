@@ -15,7 +15,10 @@ export interface ICreateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
 
 export interface IUpdateShelter
-  extends Pick<IShelter, 'shelteredPeople' | 'capacity' | 'petFriendly'> {}
+  extends Pick<
+    IShelter,
+    'shelteredPeople' | 'capacity' | 'address' | 'contact'
+  > {}
 
 export interface IFullUpdateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}

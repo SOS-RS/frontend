@@ -35,12 +35,12 @@ const SignIn = () => {
   const onSubmit = useCallback(async () => {}, [refreshSession]);
 
   return (
-    <div className="flex h-screen justify-center ">
-      <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10">
+    <div className="flex h-screen justify-center items-center md:bg-slate-100">
+      <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10 bg-white max-h-[600px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="contents">
             <div className="justify-center flex md:justify-normal">
-              <h1 className="font-bold text-4xl">SOS-RS</h1>
+              <h1 className="font-bold text-4xl text-red-600">SOS-RS</h1>
             </div>
             <span>Preencha abaixo as credenciais de acesso.</span>
             <FormField
@@ -83,7 +83,7 @@ const SignIn = () => {
               type="submit"
               className="min-h-[48px] rouded-[4px] bg-slate-800 hover:bg-slate-950 "
             >
-              <span className="text-sm font-medium tracking-widest ">
+              <span className="text-sm font-medium tracking-widest text-white">
                 Entrar
               </span>
             </Button>
