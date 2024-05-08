@@ -5,6 +5,8 @@ export interface IShelter {
   address: string;
   petFriendly?: boolean | null;
   shelteredPeople?: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
   capacity?: number | null;
   prioritySum: number;
   contact?: string | null;

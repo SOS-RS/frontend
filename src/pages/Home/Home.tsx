@@ -1,13 +1,16 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { RotateCw, Search, Loader } from 'lucide-react';
 
 import { Header, MapView, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
+import { IMapViewMarker } from '@/components/MapView/types';
+import { defaultCoords } from '@/hooks/useMap/useMap';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
+  const [coords, setCoords] = useState<[number, number]>(defaultCoords);
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
     {
@@ -28,6 +31,7 @@ const Home = () => {
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
+  const [markers, setMarkers] = useState<IMapViewMarker[]>([]);
 
   const handleFetchMore = useCallback(() => {
     const params = {
@@ -49,6 +53,21 @@ const Home = () => {
     );
   }, [refresh, searchValue, shelters.page, shelters.perPage]);
 
+  const handleShelterItemClick = useCallback((item: IUseSheltersData) => {
+    if (item.latitude && item.longitude)
+      setCoords([item.latitude, item.longitude]);
+  }, []);
+
+  useEffect(() => {
+    const markersData: IMapViewMarker[] = shelters.results.reduce(
+      (prev, { latitude, longitude }) =>
+        latitude && longitude ? [...prev, { latitude, longitude }] : prev,
+      [] as IMapViewMarker[]
+    );
+
+    setMarkers(markersData);
+  }, [shelters]);
+
   return (
     <div className="flex flex-col h-screen items-center relative">
       <Header
@@ -66,7 +85,7 @@ const Home = () => {
           </Button>
         }
       />
-      <MapView />
+      <MapView markers={markers} coords={coords} />
       <div className="flex h-full flex-col-reverse justify-between pt-4 md:flex-row gap-4 md:p-4 w-full">
         <div className="flex-1 flex flex-col max-h-[40vh] md:max-h-[93vh] min-w-96 w-full md:max-w-md rounded-lg p-4 gap-4 z-10 bg-card shadow-md">
           <h1 className="text-[#2f2f2f] font-semibold text-lg md:text-2xl">
@@ -80,7 +99,11 @@ const Home = () => {
             ) : (
               <Fragment>
                 {shelters.results.map((s, idx) => (
-                  <ShelterListItem key={idx} data={s} />
+                  <ShelterListItem
+                    key={idx}
+                    data={s}
+                    onClick={() => handleShelterItemClick(s)}
+                  />
                 ))}
                 {hasMore ? (
                   <Button
