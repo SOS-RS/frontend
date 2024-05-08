@@ -68,7 +68,7 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
     case SupplyPriority.Remaining:
       return {
         label: 'Disponível para doação',
-        className: 'bg-light-green text-gray-100',
+        className: 'bg-light-green',
       };
     case SupplyPriority.Needing:
       return {
