@@ -94,7 +94,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => search()}
+              onClick={() => clearSearch()}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
