@@ -1,72 +1,86 @@
 import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import {
-  RotateCw,
-  CircleAlert,
-  Search,
-  Loader,
-  LogOutIcon,
-  Heart,
-} from 'lucide-react';
+import { RotateCw, CircleAlert, Search, Loader, ListFilter, LogOutIcon, Heart } from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
+import { Filter } from './components/Filter';
+import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
 
 const Home = () => {
-  const { data: shelters, loading, refresh } = useShelters();
+  const { data: shelters, loading, search, resetSearch } = useShelters();
   const {
     loading: loadingSession,
     refreshSession,
     session,
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: (v) => {
         const params = {
-          search: `address:contains:${v},name:contains:${v}`,
-          or: 'true',
+          ...shelters.filters,
+          search: v ? v : '',
+          page: shelters.page,
+          perPage: shelters.perPage,
         };
-        refresh({
-          params: v ? params : {},
+
+        search({          
+          params: params,
         });
       },
     },
     []
   );
+
+  const clearSearch = () => {
+    setSearchValue('');
+    resetSearch();
+  }
+
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
 
+  const closeModal = () => {
+    setOpenModal(false);
+  }
+
+  const handleSearch = (values: IUseShelterSearchParams) => {
+    setOpenModal(false);
+    setSearchValue(values.search ?? '');
+    search({
+      params: {
+        ...values
+      }
+    });
+  }
+
   const handleFetchMore = useCallback(() => {
     const params = {
+      ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
+      search: searchValue ? searchValue : '',
     };
 
-    if (searchValue)
-      Object.assign(params, {
-        search: `address:contains:${searchValue},name:contains:${searchValue}`,
-        or: 'true',
-      });
+    search({          
+      params: params,
+    }, true);
 
-    refresh(
-      {
-        params,
-      },
-      true
-    );
-  }, [refresh, searchValue, shelters.page, shelters.perPage]);
+  }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
+      {isModalOpen && <Filter handleSearch={handleSearch} isModalOpen={isModalOpen} closeModal={closeModal} filters={shelters.filters} />}
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
@@ -80,7 +94,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => refresh()}
+              onClick={() => search()}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
@@ -125,6 +139,24 @@ const Home = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
+        </div>
+        <div className="flex flex-row">
+          <Button variant="ghost" size="sm" 
+                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
+                  onClick={() => setOpenModal(true)}>
+            <ListFilter className="h-5 w-5" />
+            <h1 className="font-semibold text-[16px] text-blue-500">
+              Filtros
+            </h1>
+          </Button>
+          <Button variant="ghost" size="sm" 
+                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
+                  onClick={() => clearSearch()}>
+            <CircleAlert className="h-5 w-5" />
+            <h1 className="font-semibold text-[16px] text-blue-500">
+              Limpar Filtros
+            </h1>
+          </Button>
         </div>
         <main className="flex flex-col gap-4">
           {loading ? (
