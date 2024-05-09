@@ -132,9 +132,9 @@ const Home = () => {
           ) : shelters.results.length === 0 ? (
             <NoFoundSearch />
           ) : (
-            <Fragment>
-              {shelters.results.map((s, idx) => (
-                <ShelterListItem key={idx} data={s} />
+            <>
+              {shelters.results.map((shelter, index) => (
+                <ShelterListItem key={index} data={shelter} />
               ))}
               {hasMore ? (
                 <Button
@@ -150,7 +150,7 @@ const Home = () => {
                   Não há mais registros
                 </p>
               )}
-            </Fragment>
+            </>
           )}
         </main>
       </div>
