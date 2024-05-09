@@ -165,9 +165,19 @@ const Home = () => {
             <NoFoundSearch />
           ) : (
             <Fragment>
-              {shelters.results.map((s, idx) => (
-                <ShelterListItem key={idx} data={s} />
-              ))}
+              {shelters.results.sort((a, b)=>{
+                  if (!a.updatedAt && !b.updatedAt) {
+                    return 0;
+                  } else if (!a.updatedAt) {
+                      return -1; 
+                  } else if (!b.updatedAt) {
+                      return 1; 
+                  }
+
+                  return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+                }).map((s, idx) => (
+                  <ShelterListItem key={idx} data={s} />
+                ))}
               {hasMore ? (
                 <Button
                   className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
