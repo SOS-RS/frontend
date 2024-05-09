@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
+import { Filter } from '../Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 
 const alertDescription =
@@ -79,6 +80,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen items-center">
+      {isModalOpen && <Filter handleSearch={handleSearch} isModalOpen={isModalOpen} closeModal={closeModal} filters={shelters.filters} />}
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
@@ -137,6 +139,20 @@ const Home = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
+        </div>
+        <div className="flex flex-row">
+          <Button variant="ghost" size="sm" className="flex gap-2 items-center" onClick={() => setOpenModal(true)}>
+            <ListFilter className="h-5 w-5" />
+            <h1 className="font-semibold text-[16px] text-blue-500">
+              Filtros
+            </h1>
+          </Button>
+          <Button variant="ghost" size="sm" className="flex gap-2 items-center" onClick={() => clearSearch()}>
+            <CircleAlert className="h-5 w-5" />
+            <h1 className="font-semibold text-[16px] text-blue-500">
+              Limpar Filtros
+            </h1>
+          </Button>
         </div>
         <main className="flex flex-col gap-4">
           {loading ? (
