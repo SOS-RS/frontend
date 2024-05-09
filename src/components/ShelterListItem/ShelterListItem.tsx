@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { BadgeCheck, ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
 import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
@@ -38,12 +38,17 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
-      <h3
-        className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
-        onClick={() => navigate(`/abrigo/${data.id}`)}
-      >
-        {data.name}
-      </h3>
+      <div className="flex items-center gap-1">
+        {data.verified && (
+          <BadgeCheck className="h-5 w-5 stroke-white fill-red-600" />
+        )}
+        <h3
+          className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
+          onClick={() => navigate(`/abrigo/${data.id}`)}
+        >
+          {data.name}
+        </h3>
+      </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
       </h6>

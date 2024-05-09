@@ -1,7 +1,8 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-import { ISession, ISessionContext } from './types';
+import { ISessionContext } from './types';
 import { SessionServices } from '@/service';
+import { ISession } from '@/service/sessions/types';
 
 const SessionContext = createContext({} as ISessionContext);
 

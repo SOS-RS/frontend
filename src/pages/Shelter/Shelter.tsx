@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
+import { BadgeCheck, ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { CardAboutShelter, Header, LoadingScreen } from '@/components';
@@ -53,9 +53,14 @@ const Shelter = () => {
         }
       />
       <div className="p-4 flex flex-col max-w-5xl w-full">
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          {shelter.name}
-        </h1>
+        <div className="flex items-center gap-1">
+          {shelter.verified && (
+            <BadgeCheck className="h-6 w-6 stroke-white fill-red-600" />
+          )}
+          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+            {shelter.name}
+          </h1>
+        </div>
         <div className="flex flex-1 items-center justify-between">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
