@@ -72,7 +72,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             </p>
             <div className="flex gap-2 flex-wrap">
               {volunteerTags.length == 0 ?
-                <p> Não informado. <i> (Pode ser adicionado ao clickar no abrigo) </i></p>
+                <p> Não informado. <i> (Pode ser adicionado ao clicar no abrigo) </i></p>
                 :
                 volunteerTags.map((s, idx) => (
                   <Chip
