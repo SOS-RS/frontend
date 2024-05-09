@@ -22,7 +22,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const tags = useMemo(
     () => {
-      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.supplyCategory.name.toLowerCase())))
+      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())))
         .sort((a, b) => b.priority - a.priority).slice(0, 10)
     },
     [data.shelterSupplies]
@@ -30,7 +30,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const volunteerTags = useMemo(
     () =>{
-      return data.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.supplyCategory.name.toLowerCase()))).reverse()
+      return data.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase()))).reverse()
     },
     [data.shelterSupplies]
   )

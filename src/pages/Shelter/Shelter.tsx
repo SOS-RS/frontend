@@ -21,7 +21,7 @@ const Shelter = () => {
   const { data: shelters } = useShelter(id);
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.supplyCategory.name.toLowerCase()))) ?? [], 'priority');
+    const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))) ?? [], 'priority');
     delete grouped[SupplyPriority.UnderControl];
 
     return Object.entries(grouped)
@@ -33,7 +33,7 @@ const Shelter = () => {
   }, [shelters.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.supplyCategory.name.toLowerCase()))).reverse()
+    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))).reverse()
   }, [shelter.shelterSupplies])
 
   const { availability, className: availabilityClassName } =
