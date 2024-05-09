@@ -8,7 +8,6 @@ import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPri
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
-import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
