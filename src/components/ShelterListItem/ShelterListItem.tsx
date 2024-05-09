@@ -12,7 +12,7 @@ import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
-  const { data } = props;
+  const { data, onClick } = props;
   const { capacity, shelteredPeople } = data;
   const navigate = useNavigate();
   const { availability, className: availabilityClassName } =
@@ -42,13 +42,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <div className="flex items-center gap-1">
         <h3
           className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
-          onClick={() => navigate(`/abrigo/${data.id}`)}
+          onClick={onClick}
         >
           {data.name}
         </h3>
-        {data.verified && (
-          <VerifiedBadge />
-        )}
+        {data.verified && <VerifiedBadge />}
       </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
