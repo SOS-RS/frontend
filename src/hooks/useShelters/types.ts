@@ -19,3 +19,13 @@ export interface IUseSheltersDataSupplyData {
   supply: { name: string };
   priority: number;
 }
+
+export interface IUseShelterSearchParams {
+  priority: number | undefined;
+  supplies: number[] | undefined;
+  supplyCategories: number[] | undefined;
+  search: string | undefined;
+  filterAvailableShelter: boolean;
+  filterUnavailableShelter: boolean;
+  waitingShelterAvailability: boolean;
+}

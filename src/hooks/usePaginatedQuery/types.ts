@@ -3,4 +3,5 @@ export interface IPaginatedResponse<T = any> {
   page: number;
   perPage: number;
   results: T[];
+  filters?: any
 }
