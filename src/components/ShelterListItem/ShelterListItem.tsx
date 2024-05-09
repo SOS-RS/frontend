@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { BadgeCheck, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
 import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
@@ -9,6 +9,7 @@ import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
 import { SupplyPriority } from '@/service/supply/types';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
@@ -39,15 +40,15 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <ChevronRight className="h-5 w-5" />
       </Button>
       <div className="flex items-center gap-1">
-        {data.verified && (
-          <BadgeCheck className="h-5 w-5 stroke-white fill-red-600" />
-        )}
         <h3
-          className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
+          className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
           onClick={() => navigate(`/abrigo/${data.id}`)}
         >
           {data.name}
         </h3>
+        {data.verified && (
+          <VerifiedBadge />
+        )}
       </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
