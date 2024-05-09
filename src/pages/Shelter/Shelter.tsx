@@ -107,7 +107,7 @@ const Shelter = () => {
               </h3>
             </div>
             <div className="flex gap-2 flex-wrap">
-              {volunteerTags.map((v, idx) => (
+              { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (
                 <Chip
                   className={getSupplyPriorityProps(v.priority).className}
                   key={idx}
