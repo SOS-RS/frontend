@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
-import { Filter } from '../Filter';
+import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 
 const alertDescription =
@@ -76,7 +76,7 @@ const Home = () => {
       params: params,
     }, true);
 
-  }, [search, shelters.filters, shelters.page, shelters.perPage]);
+  }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -141,13 +141,17 @@ const Home = () => {
           </div>
         </div>
         <div className="flex flex-row">
-          <Button variant="ghost" size="sm" className="flex gap-2 items-center" onClick={() => setOpenModal(true)}>
+          <Button variant="ghost" size="sm" 
+                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
+                  onClick={() => setOpenModal(true)}>
             <ListFilter className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
               Filtros
             </h1>
           </Button>
-          <Button variant="ghost" size="sm" className="flex gap-2 items-center" onClick={() => clearSearch()}>
+          <Button variant="ghost" size="sm" 
+                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
+                  onClick={() => clearSearch()}>
             <CircleAlert className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
               Limpar Filtros

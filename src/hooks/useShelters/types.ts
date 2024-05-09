@@ -22,7 +22,7 @@ export interface IUseSheltersDataSupplyData {
 
 export interface IUseShelterSearchParams {
   priority: number | undefined;
-  supplies: number[] | undefined;
+  supplies: string[] | undefined;
   supplyCategories: number[] | undefined;
   search: string | undefined;
   filterAvailableShelter: boolean;

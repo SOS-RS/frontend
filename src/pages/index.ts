@@ -6,7 +6,7 @@ import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
-import { Filter } from './Filter';
+import { Filter } from './Home/components/Filter';
 
 export {
   SignIn,

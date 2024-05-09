@@ -99,7 +99,6 @@ const Filter = (props: any) => {
   }, [result.data, props?.filters?.supplies]);
 
   const handleSupplyCategoriesSelected = (supplyCategoriesSelected: readonly IComplexSelectData[]) => {
-    console.log('init')
     const grouped = group(result.data ?? [], 'supplyCategory.name');
 
     const supplyOptionsFiltered = Object.entries(grouped).reduce((filtered: IComplexSelectGroupedData[], option) => {
