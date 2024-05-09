@@ -106,6 +106,10 @@ function group<T extends Record<string, any>>(
   return data;
 }
 
+function getCategoriesToFilterVolunteers(): string[] {
+  return ['voluntariado', 'especialistas e profissionais']
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -114,4 +118,5 @@ export {
   variantStatusPriority,
   colorStatusPriority,
   nameStatusPriority,
+  getCategoriesToFilterVolunteers,
 };
