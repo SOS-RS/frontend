@@ -13,7 +13,7 @@ const SupplyRow = (props: ISupplyRowProps) => {
           <SupplyRowInfo
             key={idy}
             name={item.name}
-            priority={item.priority ?? SupplyPriority.UnderControl}
+            priority={item.priority ?? SupplyPriority.NotNeeded}
             onClick={() => (onClick ? onClick(item) : undefined)}
           />
         ))}
