@@ -1,5 +1,5 @@
 export enum SupplyPriority {
-  UnderControl = 0,
+  NotNeeded = 0,
   Remaining = 1,
   Needing = 10,
   Urgent = 100,
