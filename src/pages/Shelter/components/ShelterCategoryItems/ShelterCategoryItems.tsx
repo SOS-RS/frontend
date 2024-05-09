@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
-  const { priority = SupplyPriority.UnderControl, tags } = props;
+  const { priority = SupplyPriority.NotNeeded, tags } = props;
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleTags: number = 10;
   const visibleTags = useMemo(

@@ -59,7 +59,7 @@ const EditShelterSupply = () => {
       console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
-        value: `${item.priority ?? SupplyPriority.UnderControl}`,
+        value: `${item.priority ?? SupplyPriority.NotNeeded}`,
         onSave: (v) => {
           const isNewSupply = item.priority === undefined;
           setLoadingSave(true);
@@ -126,12 +126,12 @@ const EditShelterSupply = () => {
               value: `${SupplyPriority.Needing}`,
             },
             {
-              label: 'Sob controle',
-              value: `${SupplyPriority.UnderControl}`,
-            },
-            {
               label: 'Disponível para doação',
               value: `${SupplyPriority.Remaining}`,
+            },
+            {
+              label: 'Remover item',
+              value: `${SupplyPriority.NotNeeded}`,
             },
           ]}
           isSubmitting={loadingSave}
