@@ -12,7 +12,7 @@ function cn(...inputs: ClassValue[]) {
 function variantStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Needing) return 'danger';
   if (priority === SupplyPriority.Urgent) return 'warn';
-  if (priority === SupplyPriority.UnderControl) return 'alert';
+  if (priority === SupplyPriority.NotNeeded) return 'alert';
   if (priority === SupplyPriority.Remaining) return 'success';
 }
 
@@ -22,7 +22,7 @@ function variantStatusPriority(priority: SupplyPriority) {
 const colorStatusPriority = (priority: SupplyPriority) => {
   if (priority === SupplyPriority.Needing) return 'bg-[#f69f9d]';
   if (priority === SupplyPriority.Urgent) return 'bg-[#f8b993]';
-  if (priority === SupplyPriority.UnderControl) return 'bg-[#f9cf8d]';
+  if (priority === SupplyPriority.NotNeeded) return 'bg-[#f9cf8d]';
   if (priority === SupplyPriority.Remaining) return 'bg-[#63bc43]';
 };
 
@@ -32,7 +32,7 @@ const colorStatusPriority = (priority: SupplyPriority) => {
 function nameStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
   if (priority === SupplyPriority.Urgent) return 'Precisa';
-  if (priority === SupplyPriority.UnderControl) return 'Sob-controle';
+  if (priority === SupplyPriority.NotNeeded) return 'Não preciso';
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
 }
 
@@ -60,10 +60,10 @@ function getAvailabilityProps(
 
 function getSupplyPriorityProps(priority: SupplyPriority) {
   switch (priority) {
-    case SupplyPriority.UnderControl:
+    case SupplyPriority.NotNeeded:
       return {
-        label: 'Sob controle',
-        className: 'bg-light-yellow',
+        label: 'Não preciso',
+        className: 'bg-gray-200',
       };
     case SupplyPriority.Remaining:
       return {

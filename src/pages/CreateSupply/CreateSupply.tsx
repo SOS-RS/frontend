@@ -37,7 +37,7 @@ const CreateSupply = () => {
       name: '',
       supplyCategoryId: supplyCategories?.at(0)?.id ?? '-1',
       shelterId,
-      priority: SupplyPriority.UnderControl,
+      priority: SupplyPriority.NotNeeded,
     },
     enableReinitialize: true,
     validateOnBlur: false,
@@ -151,7 +151,7 @@ const CreateSupply = () => {
                     SupplyPriority.Urgent,
                     SupplyPriority.Needing,
                     SupplyPriority.Remaining,
-                    SupplyPriority.UnderControl,
+                    SupplyPriority.NotNeeded,
                   ].map((priority) => {
                     const { className, label } =
                       getSupplyPriorityProps(priority);

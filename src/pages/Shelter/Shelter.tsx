@@ -20,7 +20,7 @@ const Shelter = () => {
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
     const grouped = group(shelters?.shelterSupplies ?? [], 'priority');
-    delete grouped[SupplyPriority.UnderControl];
+    delete grouped[SupplyPriority.NotNeeded];
     return Object.entries(grouped)
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
