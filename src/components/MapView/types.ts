@@ -10,6 +10,6 @@ export interface IMapViewProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export interface IUseMapProps {
-  container: React.RefObject<HTMLDivElement>;
+  className?: string;
   coords: [number, number];
 }

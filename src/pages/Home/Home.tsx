@@ -6,10 +6,10 @@ import { Footer, Header, MapView } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { IMapViewMarker } from '@/components/MapView/types';
-import { defaultCoords } from '@/hooks/useMap/useMap';
 import { IUseShelterData } from '@/hooks/useShelter/types';
 import { SessionContext } from '@/contexts';
 import { ShelterListView } from './components';
+import { defaultCoords } from '@/components/MapView/MapView';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
@@ -129,7 +129,11 @@ const Home = () => {
         className="flex-1 p-0 md:p-4"
       />
       <Footer className="z-10" />
-      <MapView markers={markers} coords={coords} />
+      <MapView
+        markers={markers}
+        coords={coords}
+        className="absolute top-0 right-0 bottom-0 left-0"
+      />
     </div>
   );
 };

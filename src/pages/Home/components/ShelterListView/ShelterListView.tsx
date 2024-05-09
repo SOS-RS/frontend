@@ -27,7 +27,10 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     return (
       <div
         ref={ref}
-        className={cn('flex w-full flex-col-reverse md:flex-row', className)}
+        className={cn(
+          'flex w-full flex-col-reverse md:flex-row justify-between',
+          className
+        )}
         {...rest}
       >
         <div className="flex-1 flex flex-col max-h-[40vh] md:max-h-[85vh] overflow-y-auto min-w-96 w-full md:max-w-md rounded-tr-3xl rounded-tl-3xl md:rounded-lg pb-2 pt-4 px-4 md:pt-4 md:pb-4 gap-4 z-10 bg-card shadow-md">
@@ -68,7 +71,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             )}
           </main>
         </div>
-        <div className="hidden w-full px-4 md:max-w-4xl shadow-sm mx-auto z-10">
+        <div className="w-full py-4 md:py-0 px-4 md:max-w-4xl shadow-sm mx-auto z-10">
           <div className="relative">
             <Input
               placeholder="Buscar por abrigo ou endereço"
