@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CardAboutShelter, Chip, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps, group } from '@/lib/utils';
+import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps, getTagsListName, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
@@ -13,24 +13,60 @@ import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
+const CHILDREN_PROTECTION_CATEGORY = 'Proteção para crianças';
+const SUPPLY_PRIORITIES_TO_RENDER = [SupplyPriority.Urgent, SupplyPriority.Needing, SupplyPriority.Remaining];
+
+
+const mapRegularAndChidlrenProtectionSupplies = (shelterSupplies: IUseShelterDataSupply[]): {
+  childrenProtectionSupplies: IUseShelterDataSupply[];
+  regularSupplies: IUseShelterDataSupply[];
+} => {
+  const childrenProtectionSupplies: IUseShelterDataSupply[] = [];
+  const regularSupplies: IUseShelterDataSupply[] = [];
+
+  shelterSupplies.forEach((currentSupply) => {
+    if (currentSupply.priority === SupplyPriority.NotNeeded) return;
+
+    if (currentSupply.supply.supplyCategory.name === CHILDREN_PROTECTION_CATEGORY) {
+      childrenProtectionSupplies.push(currentSupply);
+    }
+
+    regularSupplies.push(currentSupply);
+  })
+
+  return { childrenProtectionSupplies, regularSupplies };
+}
+
 const Shelter = () => {
   const params = useParams();
   const { id = '-1' } = params;
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
-  const { data: shelters } = useShelter(id);
 
-  const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))) ?? [], 'priority');
-    delete grouped[SupplyPriority.NotNeeded];
+  const shelterCategoriesItems: IShelterCategoryItemsProps[] = useMemo(() => {
+    if (!shelter?.shelterSupplies?.length) return [];
 
-    return Object.entries(grouped)
-      .sort(([a], [b]) => (+a > +b ? -1 : 1))
-      .map(([key, values]) => ({
-        priority: +key,
-        tags: values.map((v) => v.supply.name),
-      }));
-  }, [shelters.shelterSupplies]);
+    const nonVolunteerSupplies = shelter?.shelterSupplies?.filter((s) => {
+      return !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))
+    }) ?? []
+
+    const { childrenProtectionSupplies, regularSupplies } = mapRegularAndChidlrenProtectionSupplies(nonVolunteerSupplies);
+
+    const groupedChildrenProtectionSupplies = group(childrenProtectionSupplies ?? [], 'priority');
+    const groupedRegularSupplies = group(regularSupplies ?? [], 'priority');
+    const supplyTagsByPriority: Array<{ priority: SupplyPriority; tags: string[] }> = [];
+
+    SUPPLY_PRIORITIES_TO_RENDER.forEach((priority) => {
+      const childrenProtectionTags = getTagsListName(groupedChildrenProtectionSupplies[priority]);
+      const regularTags = getTagsListName(groupedRegularSupplies[priority]);
+
+      const tags = [...childrenProtectionTags, ...regularTags];
+
+      if (tags.length) supplyTagsByPriority.push({ priority, tags });
+    });
+
+    return supplyTagsByPriority;
+  }, [shelter?.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
     return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase())) && s.priority > SupplyPriority.Remaining).reverse()
@@ -98,7 +134,7 @@ const Shelter = () => {
         </div>
         <div className="flex flex-col gap-8 p-4 ">
 
-        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <div className="flex gap-2 items-center">
               <h3>
                 Voluntários
@@ -114,12 +150,12 @@ const Shelter = () => {
               ))}
             </div>
           </div>
-          {shelterCategories.map((categoryProps, idx) => (
+          {shelterCategoriesItems.map((categoryProps, idx) => (
             <ShelterCategoryItems key={idx} {...categoryProps} />
           ))}
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   );
 };
 

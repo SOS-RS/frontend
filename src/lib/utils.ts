@@ -1,3 +1,4 @@
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -110,9 +111,14 @@ function getCategoriesToFilterVolunteers(): string[] {
   return ['voluntariado', 'especialistas e profissionais']
 }
 
+function getTagsListName(tags: IUseShelterDataSupply[] = []): string[] {
+  return tags.map(({ supply }) => supply.name) ?? [];
+}
+
 export {
   cn,
   getAvailabilityProps,
+  getTagsListName,
   group,
   getSupplyPriorityProps,
   variantStatusPriority,
