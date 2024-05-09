@@ -8,6 +8,7 @@ export interface IUseSheltersData {
   contact?: string | null;
   petFriendly?: boolean | null;
   prioritySum: number;
+  verified: boolean;
   latitude?: string | null;
   longitude?: string | null;
   createdAt: string;
@@ -18,4 +19,14 @@ export interface IUseSheltersData {
 export interface IUseSheltersDataSupplyData {
   supply: { name: string, supplyCategory: { name: string}};
   priority: number;
+}
+
+export interface IUseShelterSearchParams {
+  priority: number | undefined;
+  supplies: string[] | undefined;
+  supplyCategories: number[] | undefined;
+  search: string | undefined;
+  filterAvailableShelter: boolean;
+  filterUnavailableShelter: boolean;
+  waitingShelterAvailability: boolean;
 }

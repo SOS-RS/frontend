@@ -8,6 +8,7 @@ export interface IUseShelterData {
   contact?: string | null;
   petFriendly?: boolean | null;
   prioritySum: number;
+  verified: boolean;
   latitude?: string | null;
   longitude?: string | null;
   shelterSupplies: IUseShelterDataSupply[];

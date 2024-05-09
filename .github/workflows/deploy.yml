@@ -18,6 +18,12 @@ jobs:
 
       - run: npm install
 
+      - name: Create .env file
+        run: |
+          touch .env
+          echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env
+          cat .env
+
       - run: npm run build
 
       - uses: aws-actions/configure-aws-credentials@v1

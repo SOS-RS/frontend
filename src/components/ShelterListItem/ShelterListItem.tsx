@@ -8,6 +8,7 @@ import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPri
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
@@ -44,12 +45,17 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
-      <h3
-        className="font-semibold text-lg mr-12 hover:cursor-pointer hover:text-slate-500"
-        onClick={() => navigate(`/abrigo/${data.id}`)}
-      >
-        {data.name}
-      </h3>
+      <div className="flex items-center gap-1">
+        <h3
+          className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
+          onClick={() => navigate(`/abrigo/${data.id}`)}
+        >
+          {data.name}
+        </h3>
+        {data.verified && (
+          <VerifiedBadge />
+        )}
+      </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
       </h6>

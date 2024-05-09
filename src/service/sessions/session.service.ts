@@ -1,7 +1,6 @@
-import { ISession } from '../../contexts/SessionContext/types';
 import { IServerResponse } from '../../types';
 import { api } from '@/api';
-import { IAuthRequest, IAuthResponse } from './types';
+import { IAuthRequest, IAuthResponse, ISession } from './types';
 
 const SessionServices = {
   auth: async (payload: IAuthRequest): Promise<IAuthResponse> => {

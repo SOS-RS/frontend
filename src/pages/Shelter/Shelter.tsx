@@ -11,6 +11,7 @@ import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const Shelter = () => {
   const params = useParams();
@@ -59,9 +60,14 @@ const Shelter = () => {
         }
       />
       <div className="p-4 flex flex-col max-w-5xl w-full">
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          {shelter.name}
-        </h1>
+        <div className="flex items-center gap-1">
+          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+            {shelter.name}
+          </h1>
+          {shelter.verified && (
+            <VerifiedBadge />
+          )}
+        </div>
         <div className="flex flex-1 items-center justify-between">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
