@@ -43,7 +43,7 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
    ```
 4. Inicie o servidor de desenvolvimento:
    ```
-   npm start
+   npm run dev
    ```
    O app estará disponível em `http://localhost:3000`.
 
