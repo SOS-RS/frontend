@@ -7,14 +7,16 @@ import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
 import { Filter } from './Home/components/Filter';
+import { UpdateShelterFull } from './UpdateShelterFull';
 
 export {
   SignIn,
   Home,
+  Filter,
   Shelter,
   EditShelterSupply,
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  UpdateShelterFull,
 };

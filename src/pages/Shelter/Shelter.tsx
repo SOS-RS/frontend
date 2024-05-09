@@ -1,21 +1,30 @@
-import { useMemo } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
+import { useContext, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { CardAboutShelter, Chip, Header, LoadingScreen } from '@/components';
-import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps, group } from '@/lib/utils';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { Button } from '@/components/ui/button';
+import { SessionContext } from '@/contexts';
+import { useShelter } from '@/hooks';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import {
+  cn,
+  getAvailabilityProps,
+  getCategoriesToFilterVolunteers,
+  getSupplyPriorityProps,
+  group,
+} from '@/lib/utils';
+import { SupplyPriority } from '@/service/supply/types';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
-import { SupplyPriority } from '@/service/supply/types';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
 const Shelter = () => {
   const params = useParams();
   const { id = '-1' } = params;
+
+  const { session } = useContext(SessionContext);
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
   const { data: shelters } = useShelter(id);
@@ -73,7 +82,13 @@ const Shelter = () => {
           <Button
             variant="ghost"
             className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-            onClick={() => navigate(`/abrigo/${id}/atualizar`)}
+            onClick={() =>
+              navigate(
+                session
+                  ? `/abrigo/${id}/atualizar/admin`
+                  : `/abrigo/${id}/atualizar`
+              )
+            }
           >
             Editar abrigo
             <Pencil size={17} className="stroke-blue-600" />
@@ -97,12 +112,9 @@ const Shelter = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
-
-        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <div className="flex gap-2 items-center">
-              <h3>
-                Voluntários
-              </h3>
+              <h3>Voluntários</h3>
             </div>
             <div className="flex gap-2 flex-wrap">
               { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (

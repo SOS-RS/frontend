@@ -12,6 +12,7 @@ export interface IUseShelterData {
   latitude?: string | null;
   longitude?: string | null;
   shelterSupplies: IUseShelterDataSupply[];
+  verified?: boolean | null;
   createdAt: string;
   updatedAt?: string | null;
 }
