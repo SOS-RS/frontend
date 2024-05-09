@@ -12,30 +12,9 @@ import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/ty
 import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { mapRegularAndChidlrenProtectionSupplies } from '@/lib/mapRegularAndChidlrenProtectionSupplies';
 
-const CHILDREN_PROTECTION_CATEGORY = 'Proteção para crianças';
 const SUPPLY_PRIORITIES_TO_RENDER = [SupplyPriority.Urgent, SupplyPriority.Needing, SupplyPriority.Remaining];
-
-
-const mapRegularAndChidlrenProtectionSupplies = (shelterSupplies: IUseShelterDataSupply[]): {
-  childrenProtectionSupplies: IUseShelterDataSupply[];
-  regularSupplies: IUseShelterDataSupply[];
-} => {
-  const childrenProtectionSupplies: IUseShelterDataSupply[] = [];
-  const regularSupplies: IUseShelterDataSupply[] = [];
-
-  shelterSupplies.forEach((currentSupply) => {
-    if (currentSupply.priority === SupplyPriority.NotNeeded) return;
-
-    if (currentSupply.supply.supplyCategory.name === CHILDREN_PROTECTION_CATEGORY) {
-      childrenProtectionSupplies.push(currentSupply);
-    }
-
-    regularSupplies.push(currentSupply);
-  })
-
-  return { childrenProtectionSupplies, regularSupplies };
-}
 
 const Shelter = () => {
   const params = useParams();
@@ -141,13 +120,15 @@ const Shelter = () => {
               </h3>
             </div>
             <div className="flex gap-2 flex-wrap">
-              { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (
-                <Chip
-                  className={getSupplyPriorityProps(v.priority).className}
-                  key={idx}
-                  label={v.supply.name}
-                />
-              ))}
+              {volunteerTags.length == 0
+                ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p>
+                : volunteerTags.map((v, idx) => (
+                  <Chip
+                    className={getSupplyPriorityProps(v.priority).className}
+                    key={idx}
+                    label={v.supply.name}
+                  />
+                ))}
             </div>
           </div>
           {shelterCategoriesItems.map((categoryProps, idx) => (

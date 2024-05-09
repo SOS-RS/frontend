@@ -112,7 +112,7 @@ function getCategoriesToFilterVolunteers(): string[] {
 }
 
 function getTagsListName(tags: IUseShelterDataSupply[] = []): string[] {
-  return tags.map(({ supply }) => supply.name) ?? [];
+  return tags.map(({ supply }) => supply.name);
 }
 
 export {
