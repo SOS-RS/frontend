@@ -8,18 +8,24 @@ export interface IUseShelterData {
   contact?: string | null;
   petFriendly?: boolean | null;
   prioritySum: number;
-  supplies: IUseShelterDataSupply[];
+  latitude?: string | null;
+  longitude?: string | null;
+  shelterSupplies: IUseShelterDataSupply[];
   createdAt: string;
   updatedAt?: string | null;
 }
 
 export interface IUseShelterDataSupply {
+  priority: number;
+  supply: IUseShelterDataSupplyData;
+}
+
+export interface IUseShelterDataSupplyData {
   id: string;
   name: string;
-  priority: number;
   supplyCategory: IUseShelterDataSupplyCategory;
-  createdAt: Date;
-  updatedAt: Date | null;
+  createdAt: string;
+  updatedAt?: string | null;
 }
 
 export interface IUseShelterDataSupplyCategory {

@@ -30,9 +30,7 @@ const DialogSelector = (props: IDialogSelectorProps) => {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="rounded-md">
         <DialogHeader>
-          <DialogTitle>
-            <h1 className="text-base font-medium">{title}</h1>
-          </DialogTitle>
+          <DialogTitle className="text-base font-medium">{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
         <div className="px-2 py-4 max-h-[50vh] overflow-y-auto">

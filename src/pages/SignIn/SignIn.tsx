@@ -1,97 +1,88 @@
-import { useCallback, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { useContext } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-
-import { signInFormSchema } from './types';
-
 import { SessionContext } from '@/contexts';
+import { TextField } from '@/components';
+import { IAuthRequest } from '@/service/sessions/types';
+import { useToast } from '@/components/ui/use-toast';
+import { SessionServices } from '@/service';
+import { withGuest } from '@/hocs';
 
-type SignInFormValues = z.infer<typeof signInFormSchema>;
-
-const SignIn = () => {
+const SignInComponent = () => {
+  const { toast } = useToast();
   const { refreshSession } = useContext(SessionContext);
 
-  const form = useForm<SignInFormValues>({
-    resolver: zodResolver(signInFormSchema),
-    defaultValues: {
-      login: '',
-      password: '',
-    },
-  });
-
-  const onSubmit = useCallback(async () => {}, [refreshSession]);
+  const { isSubmitting, errors, handleSubmit, getFieldProps } =
+    useFormik<IAuthRequest>({
+      initialValues: {
+        login: '',
+        password: '',
+      },
+      enableReinitialize: true,
+      validateOnBlur: false,
+      validateOnChange: false,
+      validateOnMount: false,
+      validationSchema: Yup.object().shape({
+        login: Yup.string().required('Este campo deve ser preenchido'),
+        password: Yup.string().required('Este campo deve ser preenchido'),
+      }),
+      onSubmit: async (values) => {
+        try {
+          const resp = await SessionServices.auth(values);
+          localStorage.setItem('token', resp.token);
+          refreshSession();
+        } catch (err: any) {
+          toast({
+            variant: 'destructive',
+            title: 'Ocorreu um erro ao realizar o login',
+            description: `${
+              err?.response?.data?.message ?? err?.message ?? err
+            }`,
+          });
+        }
+      },
+    });
 
   return (
-    <div className="flex h-screen justify-center ">
-      <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="contents">
-            <div className="justify-center flex md:justify-normal">
-              <h1 className="font-bold text-4xl">SOS-RS</h1>
-            </div>
-            <span>Preencha abaixo as credenciais de acesso.</span>
-            <FormField
-              control={form.control}
-              name="login"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-base ">Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      {...field}
-                      className="rounded-sm text-sm font-medium tracking-widest min-h-[48px] border-slate-600"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex justify-between items-center">
-                    <FormLabel className="text-base ">Senha</FormLabel>
-                  </div>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      {...field}
-                      className="rounded-sm text-sm font-medium tracking-widest min-h-[48px] border-slate-600"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              className="min-h-[48px] rouded-[4px] bg-slate-800 hover:bg-slate-950 "
-            >
-              <span className="text-sm font-medium tracking-widest ">
-                Entrar
-              </span>
-            </Button>
-          </form>
-        </Form>
+    <div className="flex h-screen justify-center items-center bg-slate-50 p-4">
+      <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10 bg-white max-h-[600px] rounded-md shadow-sm">
+        <form onSubmit={handleSubmit} className="contents">
+          <div className="justify-center flex flex-col md:justify-normal">
+            <h1 className="font-bold text-lg md:text-2xl text-red-600">
+              SOS Rio Grande do Sul
+            </h1>
+            <span className="text-muted-foreground">
+              Preencha abaixo as credenciais de acesso.
+            </span>
+          </div>
+          <TextField
+            label="Login"
+            {...getFieldProps('login')}
+            error={!!errors.login}
+            helperText={errors.login}
+          />
+          <TextField
+            label="Senha"
+            type="password"
+            {...getFieldProps('password')}
+            error={!!errors.password}
+            helperText={errors.password}
+          />
+          <Button
+            loading={isSubmitting}
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full"
+          >
+            Entrar
+          </Button>
+        </form>
       </div>
     </div>
   );
 };
+
+const SignIn = withGuest(SignInComponent);
 
 export { SignIn };

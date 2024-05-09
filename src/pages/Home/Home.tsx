@@ -1,16 +1,29 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
-import { RotateCw, CircleAlert, Search, Loader } from 'lucide-react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  RotateCw,
+  CircleAlert,
+  Search,
+  Loader,
+  LogOutIcon,
+  Heart,
+} from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
+import { SessionContext } from '@/contexts';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
+  const {
+    loading: loadingSession,
+    refreshSession,
+    session,
+  } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
     {
@@ -57,15 +70,36 @@ const Home = () => {
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
-          <Button
-            loading={loading}
-            variant="ghost"
-            size="sm"
-            onClick={() => refresh()}
-            className="disabled:bg-red-500 hover:bg-red-400"
-          >
-            <RotateCw size={20} className="stroke-white" />
-          </Button>
+          <div className="flex gap-2 items-center">
+            {session && (
+              <h3 className="text-gray-300 font-thin">
+                Bem vindo, {session.name}
+              </h3>
+            )}
+            <Button
+              loading={loading}
+              variant="ghost"
+              size="sm"
+              onClick={() => refresh()}
+              className="disabled:bg-red-500 hover:bg-red-400"
+            >
+              <RotateCw size={20} className="stroke-white" />
+            </Button>
+            {session && (
+              <Button
+                loading={loadingSession}
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  refreshSession();
+                }}
+                className="disabled:bg-red-500 hover:bg-red-400"
+              >
+                <LogOutIcon size={20} className="stroke-white" />
+              </Button>
+            )}
+          </div>
         }
       />
       <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
@@ -92,15 +126,6 @@ const Home = () => {
             <Search name="search" size="20" className="stroke-zinc-300" />
           </div>
         </div>
-        <div></div>
-        {/* <div className="[&_svg]:stroke-blue-500">
-          <Button variant="ghost" size="sm" className="flex gap-2 items-center">
-            <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
-              Filtros
-            </h1>
-          </Button>
-        </div> */}
         <main className="flex flex-col gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
@@ -128,6 +153,30 @@ const Home = () => {
             </Fragment>
           )}
         </main>
+      </div>
+      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
+        <p className="text-white">
+          Para cadastrar novos abrigos clique{' '}
+          <a
+            href="https://forms.gle/2S7L2gR529Dc8P3T9"
+            className="underline hover:text-gray-300"
+            target="_blank"
+          >
+            aqui
+          </a>
+        </p>
+        <span className="text-white hidden md:block">•</span>
+        <span className="text-white flex flex-nowrap gap-2 items-center">
+          Projeto Open Source disponível em{' '}
+          <a
+            className="underline hover:text-gray-300 flex"
+            href="https://github.com/SOS-RS"
+            target="_blank"
+          >
+            Github
+          </a>
+          <Heart className="h-3 w-3 stroke-white fill-white" />
+        </span>
       </div>
     </div>
   );

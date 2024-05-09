@@ -30,8 +30,8 @@ const colorStatusPriority = (priority: SupplyPriority) => {
  * deprecated
  */
 function nameStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'Necessita urgentimente';
-  if (priority === SupplyPriority.Urgent) return 'Urgente';
+  if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
+  if (priority === SupplyPriority.Urgent) return 'Precisa';
   if (priority === SupplyPriority.UnderControl) return 'Sob-controle';
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
 }
@@ -106,8 +106,8 @@ function group<T extends Record<string, any>>(
   return data;
 }
 
-function getWordToFilterVolunteer(): string {
-  return 'voluntário'
+function getCategoriesToFilterVolunteers(): string[] {
+  return ['voluntariado', 'especialistas e profissionais']
 }
 
 export {
@@ -118,5 +118,5 @@ export {
   variantStatusPriority,
   colorStatusPriority,
   nameStatusPriority,
-  getWordToFilterVolunteer
+  getCategoriesToFilterVolunteers
 };

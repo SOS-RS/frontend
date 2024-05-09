@@ -4,17 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn, getAvailabilityProps, getSupplyPriorityProps, getWordToFilterVolunteer } from '@/lib/utils';
+import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
-import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
   const { capacity, shelteredPeople } = data;
   const navigate = useNavigate();
-
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(capacity, shelteredPeople),
@@ -23,17 +21,16 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const tags = useMemo(
     () => {
-      return data.supplies
-        .filter((s) => (s.priority >= SupplyPriority.Needing || s.name.toLowerCase().includes(getWordToFilterVolunteer())))
+      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.name.toLowerCase())))
         .sort((a, b) => b.priority - a.priority).slice(0, 10)
     },
-    [data.supplies]
+    [data.shelterSupplies]
   );
 
   const volunteerTags = useMemo(
     () =>
-      data.supplies.filter((s) => s.name.toLowerCase().includes(getWordToFilterVolunteer())).reverse(),
-    [data.supplies]
+      data.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply.name.toLowerCase()))).reverse(),
+    [data.shelterSupplies]
   )
 
   return (
@@ -58,7 +55,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
         {data.address}
       </h6>
-      {data.supplies.length > 0 && (
+      {data.shelterSupplies.length > 0 && (
         <>
           <div className="flex flex-col gap-3">
             <Separator className="mt-2" />
@@ -73,7 +70,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
                   <Chip
                     className={getSupplyPriorityProps(s.priority).className}
                     key={idx}
-                    label={s.name}
+                    label={s.supply.name}
                   />
                 ))}
             </div>
@@ -88,7 +85,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
                 <Chip
                   className={getSupplyPriorityProps(s.priority).className}
                   key={idx}
-                  label={s.name}
+                  label={s.supply.name}
                 />
               ))}
             </div>

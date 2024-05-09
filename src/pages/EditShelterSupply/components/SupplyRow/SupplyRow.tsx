@@ -1,3 +1,4 @@
+import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRowInfo } from '../SupplyRowInfo';
 import { ISupplyRowProps } from './types';
 
@@ -12,7 +13,7 @@ const SupplyRow = (props: ISupplyRowProps) => {
           <SupplyRowInfo
             key={idy}
             name={item.name}
-            priority={item.priority}
+            priority={item.priority ?? SupplyPriority.UnderControl}
             onClick={() => (onClick ? onClick(item) : undefined)}
           />
         ))}
