@@ -139,7 +139,7 @@ const Filter = (props: any) => {
 
   return (
     <Dialog open={props.isModalOpen} onOpenChange={props.closeModal}>
-      <DialogContent className="rounded-md">
+      <DialogContent className="rounded-md overflow-y-scroll max-h-[90vh]">
           <DialogHeader className='pad-10'>
             <DialogTitle className="text-base font-medium">Faça sua busca:</DialogTitle>
           </DialogHeader>
