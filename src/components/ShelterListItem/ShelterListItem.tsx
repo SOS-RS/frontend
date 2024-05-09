@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn, getAvailabilityProps, getSupplyPriorityProps } from '@/lib/utils';
+import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps } from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
-import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
@@ -22,12 +21,19 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     );
 
   const tags = useMemo(
-    () =>
-      data.shelterSupplies
-        .filter((s) => s.priority >= SupplyPriority.Needing)
-        .sort((a, b) => b.priority - a.priority),
+    () => {
+      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())))
+        .sort((a, b) => b.priority - a.priority).slice(0, 10)
+    },
     [data.shelterSupplies]
   );
+
+  const volunteerTags = useMemo(
+    () => {
+      return data.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase()))).reverse()
+    },
+    [data.shelterSupplies]
+  )
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
@@ -57,21 +63,41 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         {data.address}
       </h6>
       {data.shelterSupplies.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <Separator className="mt-2" />
-          <p className="text-muted-foreground text-sm md:text-lg font-medium">
-            Precisa urgente de doações de:
-          </p>
-          <div className="flex gap-2 flex-wrap">
-            {tags.map((s, idx) => (
-              <Chip
-                className={getSupplyPriorityProps(s.priority).className}
-                key={idx}
-                label={s.supply.name}
-              />
-            ))}
+        <>
+          <div className="flex flex-col gap-3">
+            <Separator className="mt-2" />
+            <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              Status voluntários:
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {volunteerTags.length == 0 ?
+                <p> Não informado. <i> (Pode ser adicionado ao clicar no abrigo) </i></p>
+                :
+                volunteerTags.map((s, idx) => (
+                  <Chip
+                    className={getSupplyPriorityProps(s.priority).className}
+                    key={idx}
+                    label={s.supply.name}
+                  />
+                ))}
+            </div>
           </div>
-        </div>
+          <div className="flex flex-col gap-3">
+            <Separator className="mt-2" />
+            <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              Necessita urgente de doações de:
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {tags.map((s, idx) => (
+                <Chip
+                  className={getSupplyPriorityProps(s.priority).className}
+                  key={idx}
+                  label={s.supply.name}
+                />
+              ))}
+            </div>
+          </div>
+        </>
       )}
       {data.updatedAt && (
         <small className="text-sm md:text-md font-light text-muted-foreground mt-2">

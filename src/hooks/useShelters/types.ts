@@ -17,7 +17,7 @@ export interface IUseSheltersData {
 }
 
 export interface IUseSheltersDataSupplyData {
-  supply: { name: string };
+  supply: { name: string, supplyCategory: { name: string}};
   priority: number;
 }
 
