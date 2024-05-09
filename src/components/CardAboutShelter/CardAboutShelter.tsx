@@ -24,6 +24,16 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={shelter.address} />
         <InfoRow
+          icon={<PawPrint />}
+          label={
+            check(shelter.petFriendly)
+              ? shelter.petFriendly
+                ? 'O abrigo aceita animais'
+                : 'O abrigo não aceita animais'
+              : 'Não informado se aceita animais'
+          }
+        />
+        <InfoRow
           icon={<HandHeart />}
           label="Pessoas abrigadas:"
           value={
@@ -39,16 +49,6 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
             check(shelter.capacity)
               ? `${shelter.capacity} pessoas`
               : 'Não informado'
-          }
-        />
-        <InfoRow
-          icon={<PawPrint />}
-          label={
-            check(shelter.petFriendly)
-              ? shelter.petFriendly
-                ? 'O abrigo aceita animais'
-                : 'O abrigo não aceita animais'
-              : 'Não informado se aceita animais'
           }
         />
         <InfoRow
