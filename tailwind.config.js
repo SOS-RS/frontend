@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -23,6 +24,11 @@ module.exports = {
         'light-green': 'var(--light-green)',
         'light-orange': 'var(--light-orange)',
         'light-blue': 'var(--light-blue)',
+        'dark-green': 'var(--dark-green)',
+        'dark-red': 'var(--dark-red)',
+        'primary-green': 'var(--green)',
+        'primary-red': 'var(--red)',
+        'primary-yellow': 'var(--yellow)',
         text: 'var(--text)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -106,6 +112,5 @@ module.exports = {
       },
     },
   },
-  // eslint-disable-next-line no-undef
   plugins: [require('tailwindcss-animate')],
 };
