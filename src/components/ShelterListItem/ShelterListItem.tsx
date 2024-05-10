@@ -36,6 +36,8 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     [data.shelterSupplies]
   )
 
+  const navigateToShelterPage = () => navigate(`/abrigo/${data.id}`)
+  
   const donationsTags = useMemo(
     () => {
       return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())) && s.priority === SupplyPriority.Remaining).reverse()
@@ -45,19 +47,17 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
 
   return (
-    <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
+    <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative cursor-pointer" onClick={navigateToShelterPage}>
       <Button
         size="sm"
         variant="ghost"
         className="absolute top-4 right-4"
-        onClick={() => navigate(`/abrigo/${data.id}`)}
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
       <div className="flex items-center gap-1">
         <h3
           className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
-          onClick={() => navigate(`/abrigo/${data.id}`)}
         >
           {data.name}
         </h3>

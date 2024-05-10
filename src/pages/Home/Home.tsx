@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCw, CircleAlert, Search, Loader, ListFilter, LogOutIcon, Heart } from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
@@ -20,6 +20,7 @@ const Home = () => {
     session,
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
+  const loadMoreRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearch] = useThrottle<string>(
     {
@@ -32,7 +33,7 @@ const Home = () => {
           perPage: shelters.perPage,
         };
 
-        search({          
+        search({
           params: params,
         });
       },
@@ -72,11 +73,33 @@ const Home = () => {
       search: searchValue ? searchValue : '',
     };
 
-    search({          
+    search({
       params: params,
     }, true);
 
   }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
+
+
+  useEffect(() => {
+    if (loading) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        handleFetchMore();
+      }
+    });
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [loading, handleFetchMore]);
+
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -141,17 +164,17 @@ const Home = () => {
           </div>
         </div>
         <div className="flex flex-row">
-          <Button variant="ghost" size="sm" 
-                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
-                  onClick={() => setOpenModal(true)}>
+          <Button variant="ghost" size="sm"
+            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            onClick={() => setOpenModal(true)}>
             <ListFilter className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
               Filtros
             </h1>
           </Button>
-          <Button variant="ghost" size="sm" 
-                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
-                  onClick={() => clearSearch()}>
+          <Button variant="ghost" size="sm"
+            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            onClick={() => clearSearch()}>
             <CircleAlert className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
               Limpar Filtros
@@ -169,14 +192,7 @@ const Home = () => {
                 <ShelterListItem key={idx} data={s} />
               ))}
               {hasMore ? (
-                <Button
-                  className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
-                  size="sm"
-                  loading={loading}
-                  onClick={handleFetchMore}
-                >
-                  Carregar mais
-                </Button>
+                <div ref={loadMoreRef} />
               ) : (
                 <p className="text-muted-foreground font-semibold">
                   Não há mais registros
