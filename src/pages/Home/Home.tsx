@@ -37,9 +37,10 @@ const Home = () => {
     {
       throttle: 400,
       callback: (v) => {
-        const params = {
+        const params: Record<string, string> = {
           search: v ? qs.stringify(filterData) : '',
         };
+        setSearchParams(params.search);
         refresh({
           params: params,
         });
