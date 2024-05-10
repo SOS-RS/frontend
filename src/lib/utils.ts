@@ -44,17 +44,17 @@ function getAvailabilityProps(
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',
-        className: 'text-green-600',
+        className: 'bg-primary-green text-white text-xs w-fit px-3 py-1 rounded-full',
       };
     else
       return {
         availability: 'Abrigo lotado',
-        className: 'text-red-400',
+        className: 'bg-primary-red text-white text-xs w-fit px-3 py-1 rounded-full',
       };
   } else
     return {
       availability: 'Consultar disponibilidade',
-      className: 'text-blue-400',
+      className: 'bg-light-yellow text-xs w-fit px-3 py-1 rounded-full',
     };
 }
 

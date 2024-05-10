@@ -161,20 +161,22 @@ const Home = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            className="flex gap-2 items-center [&_svg]:stroke-dark-green"
             onClick={() => setOpenModal(true)}
           >
             <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">Filtros</h1>
+            <h1 className="font-semibold text-[16px] text-dark-green">
+              Filtros
+            </h1>
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            className="flex gap-2 items-center [&_svg]:stroke-dark-green"
             onClick={() => clearSearch()}
           >
             <CircleAlert className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
+            <h1 className="font-semibold text-[16px] text-dark-green">
               Limpar Filtros
             </h1>
           </Button>
@@ -191,7 +193,7 @@ const Home = () => {
               ))}
               {hasMore ? (
                 <Button
-                  className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
+                  className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
                   size="sm"
                   loading={loading}
                   onClick={handleFetchMore}
