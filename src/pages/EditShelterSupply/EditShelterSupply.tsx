@@ -193,19 +193,29 @@ const EditShelterSupply = () => {
             onValueChange={setOpenedGroups}
           >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
-              const items: ISupplyRowItemProps[] = values.map((v) => {
-                const supply = shelterSupplyData[v.id];
-                return {
-                  id: v.id,
-                  name: v.name,
-                  priority: supply?.priority,
-                };
-              });
+              const items: ISupplyRowItemProps[] =
+                values?.map((v) => {
+                  const supply = shelterSupplyData[v.id];
+                  return {
+                    id: v.id,
+                    name: v.name,
+                    priority: supply?.priority,
+                  };
+                }) || [];
+
+              const sortedItems: ISupplyRowItemProps[] = [...items].sort(
+                (a, b) => {
+                  const [first, second] = [a.priority || 0, b.priority || 0];
+
+                  return second - first;
+                }
+              );
+
               return (
                 <SupplyRow
                   key={idx}
                   name={key}
-                  items={items}
+                  items={sortedItems}
                   onClick={handleClickSupplyRow}
                 />
               );
