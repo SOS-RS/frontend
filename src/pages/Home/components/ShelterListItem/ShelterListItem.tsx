@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
@@ -33,6 +33,14 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     return groupShelterSuppliesByTag(data.shelterSupplies);
   }, [data.shelterSupplies]);
 
+  const getChipProps = useCallback((s: IUseSheltersDataSupplyData) => {
+    const { className } = getSupplyPriorityProps(s.priority);
+    return {
+      label: s.supply.name,
+      className,
+    };
+  }, []);
+
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
       <Button size="sm" variant="ghost" className="absolute top-4 right-4">
@@ -60,36 +68,15 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <>
           <ShelterSupplyCategoryRow
             title="Necessita volunários:"
-            tags={tags.NeedVolunteers.map((t) => {
-              const { className } = getSupplyPriorityProps(t.priority);
-              return {
-                ...t,
-                label: t.supply.name,
-                className,
-              };
-            })}
+            tags={tags.NeedVolunteers.map(getChipProps)}
           />
           <ShelterSupplyCategoryRow
             title="Necessita urgente doações de:"
-            tags={tags.NeedDonations.map((t) => {
-              const { className } = getSupplyPriorityProps(t.priority);
-              return {
-                ...t,
-                label: t.supply.name,
-                className,
-              };
-            })}
+            tags={tags.NeedDonations.map(getChipProps)}
           />
           <ShelterSupplyCategoryRow
             title="Sobrando para doações:"
-            tags={tags.RemainingSupplies.map((t) => {
-              const { className } = getSupplyPriorityProps(t.priority);
-              return {
-                ...t,
-                label: t.supply.name,
-                className,
-              };
-            })}
+            tags={tags.RemainingSupplies.map(getChipProps)}
           />
         </>
       )}

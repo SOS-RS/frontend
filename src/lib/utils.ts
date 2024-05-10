@@ -129,7 +129,6 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
 
   data.forEach((shelterSupply) => {
     Object.keys(grouped).forEach((key: string) => {
-      console.log(shelterSupply.supply);
       if (shelterSupply.tags.includes(key as ShelterTagType)) {
         grouped[key as ShelterTagType].push(shelterSupply);
       }

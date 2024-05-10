@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Separator } from '@/components/ui/separator';
 import { IShelterSupplyCategoryRowProps } from './types';
@@ -10,6 +10,8 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   IShelterSupplyCategoryRowProps
 >((props, ref) => {
   const { description, tags, title, className = '', ...rest } = props;
+
+  if (tags.length === 0) return <Fragment />;
 
   return (
     <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
