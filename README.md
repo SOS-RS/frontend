@@ -11,24 +11,17 @@ O objetivo deste aplicativo é facilitar uma resposta rápida e eficiente em sit
 Este frontend foi desenvolvido utilizando as seguintes tecnologias:
 
 - **React**: Uma biblioteca JavaScript para construir interfaces de usuário.
+- **TypeScript**: Um superconjunto de JavaScript que adiciona tipagem estática ao código.
+- **Tailwind CSS**: Um framework CSS para criar designs personalizados sem sair do HTML.
 
-## Funcionalidades e Backlog
+## Rodando o projeto localmente
 
-O app inclui as seguintes funcionalidades:
+**ATENÇÃO: NÃO RODE O PROJETO USANDO A URL DE PROD.** 
 
-- [x] **Cadastro de Itens de suprimentos**: Permite que voluntários se inscrevam para ajudar.
-- [x] **Busca de abrigos**: Gerencia a logística de distribuição de suprimentos para as áreas mais necessitadas.
-- [x] **Alteração de necessidades de abrigos**: Exibe um mapa das áreas afetadas e pontos de coleta de suprimentos.
-- [ ] **Cadastro de abrigos**: Criar tela para cadastro de abrigos (Nome, endereço, capacidade, vagas, aceita pets) e colocar pendende de aprovação.
-- [ ] **Alteração de abrigos**: Pemitir alterar quantidade de vagas disponívies, se aceita pet ou endereço.
-- [ ] **Cadastro de usuários**: Criar tela de cadastro (nome, telefone, senha) e login.
-- [ ] **Filtro por item e por cidade**: Opção de filtrar abrigos por cidade ou que precisam de algum item específico.
-- [ ] **Alterar ordenação**: Trocar a ordenação atual para ordenação por última atualização.
-- [ ] **Adicionar mapa de abrigos**: Criar uma tela com um mapa e todos os abrigos. Verificar a posibilidade de usar geolocation para mostrar a posição do usuário no mapa.
+Após executar os passos abaixo, é importante que você tenha uma instância da API rodando localmente para que o frontend possa se comunicar com ela.
+No repositório https://github.com/SOS-RS/backend você encontra o arquivo docker-compose.dev.yml que pode ser utilizado para subir a API localmente com as instruções no readme.
 
-
-Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
-
+## Como executar
 1. Clone o repositório:
    ```
    git clone https://github.com/seuusuario/projeto-enchentes-frontend.git
@@ -45,7 +38,7 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
    ```
    npm run dev
    ```
-   O app estará disponível em `http://localhost:3000`.
+   O app estará disponível em `http://localhost:5173`.
 
 ## Contribuindo
 

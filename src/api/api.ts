@@ -1,6 +1,7 @@
 import axios, { AxiosRequestHeaders } from 'axios';
 
 const api = axios.create({
+  // JAMAIS USE A URL DE PROD
   baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:4000/',
 });
 
