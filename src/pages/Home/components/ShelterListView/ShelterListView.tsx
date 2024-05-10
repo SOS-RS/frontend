@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
+import { useSearchParams } from 'react-router-dom';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -27,6 +28,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       onClearSearch,
       ...rest
     } = props;
+
+    const [searchParams] = useSearchParams();
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -51,23 +54,23 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
             onClick={onOpenModal}
           >
-            <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">Filtros</h1>
+            <ListFilter className="h-5 w-5 stroke-blue-500" />
+            Filtros
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
-            onClick={onClearSearch}
-          >
-            <CircleAlert className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
+          {searchParams.toString() && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+              onClick={onClearSearch}
+            >
+              <CircleAlert className="h-5 w-5 stroke-blue-500" />
               Limpar Filtros
-            </h1>
-          </Button>
+            </Button>
+          )}
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (

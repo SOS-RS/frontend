@@ -17,6 +17,7 @@ const useShelters = () => {
 
   const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
+      const { search, ...rest } = (config ?? {}).params ?? {};
       if (!append) setLoading(true);
       api
         .get<IServerResponse<any>>('/shelters', {
@@ -24,7 +25,8 @@ const useShelters = () => {
           params: {
             orderBy: 'prioritySum',
             order: 'desc',
-            ...(config.params ?? {}),
+            search: search ?? new URLSearchParams(window.location.search),
+            ...rest,
           },
         })
         .then(({ data }) => {

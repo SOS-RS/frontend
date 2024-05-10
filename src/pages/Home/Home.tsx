@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RotateCw, LogOutIcon } from 'lucide-react';
 import qs from 'qs';
@@ -21,16 +21,18 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
-  const [searchParams, setSearchParams] = useSearchParams();
   const {
     loading: loadingSession,
     refreshSession,
     session,
   } = useContext(SessionContext);
-  const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
-  const [filterData, setFilterData] =
-    useState<IFilterFormProps>(initialFilterData);
+  const [, setSearchParams] = useSearchParams();
+  const [filterData, setFilterData] = useState<IFilterFormProps>({
+    ...initialFilterData,
+    ...qs.parse(new URLSearchParams(window.location.search).toString()),
+  });
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -48,7 +50,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const clearSearch = useCallback(() => {
-    setSearchValue('');
     setSearch('');
     setFilterData(initialFilterData);
     setSearchParams('');
@@ -63,7 +64,6 @@ const Home = () => {
     (values: IFilterFormProps) => {
       setOpenModal(false);
       setFilterData(values);
-      console.log(values);
       const searchQuery = qs.stringify(values, {
         skipNulls: true,
       });
@@ -82,7 +82,7 @@ const Home = () => {
       ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
-      search: searchValue ? searchValue : '',
+      search: qs.stringify(filterData),
     };
 
     refresh(
@@ -91,11 +91,7 @@ const Home = () => {
       },
       true
     );
-  }, [refresh, searchValue, shelters.filters, shelters.page, shelters.perPage]);
-
-  useEffect(() => {
-    console.log(searchParams.toString());
-  }, [searchParams]);
+  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -147,9 +143,9 @@ const Home = () => {
         count={shelters.count}
         data={shelters.results}
         onFetchMoreData={handleFetchMore}
-        searchValue={searchValue}
+        searchValue={filterData.search}
         onSearchValueChange={(v) => {
-          setSearchValue(v);
+          setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
         onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
