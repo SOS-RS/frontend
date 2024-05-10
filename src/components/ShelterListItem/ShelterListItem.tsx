@@ -48,7 +48,6 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <div
         className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent"
       >
-
         <Button size="sm" variant="ghost" className="absolute top-4 right-4">
           <ChevronRight className="h-5 w-5" />
         </Button>
