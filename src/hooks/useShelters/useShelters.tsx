@@ -24,23 +24,6 @@ const useShelters = () => {
     },
   });
 
-  const resetSearch = () => {
-    const params = {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
-      waitingShelterAvailability: false,
-      page: 1,
-      perPage: 20,
-    };
-    search({
-      params: params,
-    });
-  };
-
   const search = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       if (!append) setLoading(true);
@@ -99,9 +82,26 @@ const useShelters = () => {
     [],
   );
 
+  const resetSearch = useCallback(() => {
+    const params = {
+      search: '',
+      priority: undefined,
+      supplies: [],
+      supplyCategories: [],
+      filterAvailableShelter: false,
+      filterUnavailableShelter: false,
+      waitingShelterAvailability: false,
+      page: 1,
+      perPage: 20,
+    };
+    search({
+      params: params,
+    });
+  }, [search]);
+
   useEffect(() => {
     resetSearch();
-  }, []);
+  }, [resetSearch]);
 
   return { data, loading, search, resetSearch };
 };
