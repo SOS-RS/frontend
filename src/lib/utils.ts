@@ -1,3 +1,8 @@
+import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
+import {
+  ShelterTagInfo,
+  ShelterTagType,
+} from '@/pages/Home/components/ShelterListItem/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -114,6 +119,31 @@ function group<T extends Record<string, any>>(
   return data;
 }
 
+function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
+  const initialGroup: ShelterTagInfo<IUseSheltersDataSupplyData[]> = {
+    NeedDonations: [],
+    NeedVolunteers: [],
+    RemainingSupplies: [],
+  };
+  const grouped: ShelterTagInfo<IUseSheltersDataSupplyData[]> = initialGroup;
+
+  data.forEach((shelterSupply) => {
+    Object.keys(grouped).forEach((key: string) => {
+      console.log(shelterSupply.supply);
+      if (shelterSupply.tags.includes(key as ShelterTagType)) {
+        grouped[key as ShelterTagType].push(shelterSupply);
+      }
+    });
+  });
+
+  return Object.entries(grouped).reduce((prev, [category, values]) => {
+    return {
+      ...prev,
+      [category]: values.sort((a, b) => a.priority - b.priority),
+    };
+  }, initialGroup);
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -123,4 +153,5 @@ export {
   colorStatusPriority,
   nameStatusPriority,
   priorityOptions,
+  groupShelterSuppliesByTag,
 };

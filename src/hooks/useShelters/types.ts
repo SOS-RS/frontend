@@ -1,3 +1,5 @@
+import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
+
 export interface IUseSheltersData {
   id: string;
   name: string;
@@ -17,8 +19,12 @@ export interface IUseSheltersData {
 }
 
 export interface IUseSheltersDataSupplyData {
-  supply: { name: string, supplyCategory: { name: string}};
+  supply: {
+    name: string;
+    supplyCategory: { name: string };
+  };
   priority: number;
+  tags: ShelterTagType[];
 }
 
 export interface IUseShelterOptions {

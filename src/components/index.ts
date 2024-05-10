@@ -2,7 +2,7 @@ import { LoadingScreen } from './LoadingScreen';
 import { Header } from './Header';
 import { Alert } from './Alert';
 import { CardAboutShelter } from './CardAboutShelter';
-import { ShelterListItem } from './ShelterListItem';
+import { ShelterListItem } from '../pages/Home/components/ShelterListItem';
 import { NoFoundSearch } from './NoFoundSearch';
 import { CircleStatus } from './CircleStatus';
 import { DialogSelector } from './DialogSelector';

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { CardAboutShelter, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
-import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
+import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
 import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
