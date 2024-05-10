@@ -22,6 +22,10 @@ jobs:
         run: |
           touch .env
           echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env
+          echo VITE_PORT=${{ secrets.VITE_PORT }} >> .env
+          echo VITE_HOTJAR_SITE_ID=${{ secrets.VITE_HOTJAR_SITE_ID }} >> .env
+          echo VITE_HOTJAR_DEBUG=${{ secrets.VITE_HOTJAR_DEBUG }} >> .env
+          echo VITE_HOTJAR_VERSION=${{ secrets.VITE_HOTJAR_VERSION }} >> .env
           cat .env
 
       - run: npm run build
