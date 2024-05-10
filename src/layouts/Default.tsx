@@ -1,5 +1,4 @@
-import { Header } from '@/components';
-import Footer from '@/components/Footer';
+import { Header, Footer } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { ArrowUp, LogOutIcon } from 'lucide-react';

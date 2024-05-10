@@ -9,6 +9,7 @@ import { DialogSelector } from './DialogSelector';
 import { TextField } from './TextField';
 import { Chip } from './Chip';
 import { LoadingIndicator } from './LoadingIndicator';
+import { Footer } from './Footer';
 
 export {
   LoadingScreen,
@@ -22,4 +23,5 @@ export {
   TextField,
   Chip,
   LoadingIndicator,
+  Footer,
 };
