@@ -11,6 +11,8 @@ import { Chip } from './Chip';
 import { Footer } from './Footer';
 import { SearchInput } from './SearchInput';
 import { VerifiedBadge } from './VerifiedBadge';
+import { SelectField } from './SelectField';
+import { Authenticated } from './Authenticated';
 
 export {
   LoadingScreen,
@@ -26,4 +28,6 @@ export {
   Footer,
   VerifiedBadge,
   SearchInput,
+  SelectField,
+  Authenticated,
 };

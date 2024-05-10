@@ -110,7 +110,7 @@ const Home = () => {
         endAdornment={
           <div className="flex gap-2 items-center">
             {session && (
-              <h3 className="text-gray-300 font-thin">
+              <h3 className="text-white font-thin">
                 Bem vindo, {session.name}
               </h3>
             )}

@@ -138,7 +138,7 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   return Object.entries(grouped).reduce((prev, [category, values]) => {
     return {
       ...prev,
-      [category]: values.sort((a, b) => a.priority - b.priority),
+      [category]: values.sort((a, b) => b.priority - a.priority),
     };
   }, initialGroup);
 }
