@@ -207,7 +207,7 @@ const Home = () => {
           )}
         </main>
       </div>
-      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
+      <div className="w-full fixed bottom-0 py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
         <p className="text-white">
           Para cadastrar novos abrigos clique{' '}
           <a
