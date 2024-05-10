@@ -137,7 +137,7 @@ const EditShelterSupply = () => {
               value: `${SupplyPriority.Remaining}`,
             },
             {
-              label: 'Remover item',
+              label: 'Não preciso',
               value: `${SupplyPriority.NotNeeded}`,
             },
           ]}
