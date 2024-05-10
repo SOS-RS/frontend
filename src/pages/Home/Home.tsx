@@ -1,4 +1,12 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   RotateCw,
   CircleAlert,
@@ -9,7 +17,13 @@ import {
   Heart,
 } from 'lucide-react';
 
-import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
+import {
+  Alert,
+  Header,
+  LoadingIndicator,
+  NoFoundSearch,
+  ShelterListItem,
+} from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -87,6 +101,31 @@ const Home = () => {
       true
     );
   }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
+
+  const observerTarget = useRef(null);
+
+  useEffect(() => {
+    const observerTargetCurrent = observerTarget.current;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          handleFetchMore();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerTargetCurrent) {
+      observer.observe(observerTargetCurrent);
+    }
+
+    return () => {
+      if (observerTargetCurrent) {
+        observer.unobserve(observerTargetCurrent);
+      }
+    };
+  }, [observerTarget, handleFetchMore, hasMore]);
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -189,20 +228,15 @@ const Home = () => {
               {shelters.results.map((s, idx) => (
                 <ShelterListItem key={idx} data={s} />
               ))}
-              {hasMore ? (
-                <Button
-                  className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
-                  size="sm"
-                  loading={loading}
-                  onClick={handleFetchMore}
-                >
-                  Carregar mais
-                </Button>
-              ) : (
-                <p className="text-muted-foreground font-semibold">
+              <div ref={observerTarget}></div>
+              {!hasMore && (
+                <p className="text-muted-foreground font-semibold text-center">
                   Não há mais registros
                 </p>
               )}
+              <div className="mx-auto">
+                <LoadingIndicator />
+              </div>
             </Fragment>
           )}
         </main>
