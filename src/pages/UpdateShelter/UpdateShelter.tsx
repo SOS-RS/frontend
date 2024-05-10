@@ -34,7 +34,9 @@ const UpdateShelter = () => {
   } = useFormik<IUpdateShelter>({
     initialValues: {
       shelteredPeople: shelter.shelteredPeople ?? 0,
+      capacity: shelter.capacity ?? 0,
       petFriendly: shelter.petFriendly ?? false,
+      address: shelter.address ?? '',
     },
     enableReinitialize: true,
     validateOnBlur: false,
@@ -42,7 +44,9 @@ const UpdateShelter = () => {
     validateOnMount: false,
     validationSchema: Yup.object().shape({
       shelteredPeople: Yup.number().required('Este campo deve ser preenchido'),
+      capacity: Yup.number().required('Este campo deve ser preenchido'),
       petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+      address: Yup.string().required('Este campo deve ser preenchido'),
     }),
     onSubmit: async (values) => {
       try {
@@ -92,6 +96,13 @@ const UpdateShelter = () => {
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
+            <TextField
+              type="number"
+              label="Capacidade do abrigo"
+              {...getFieldProps('capacity')}
+              error={!!errors.capacity}
+              helperText={errors.capacity}
+            />
             <label className="text-muted-foreground">
               O abrigo aceita animais
             </label>
@@ -109,6 +120,13 @@ const UpdateShelter = () => {
                 <SelectItem value="false">Não</SelectItem>
               </SelectContent>
             </Select>
+            <TextField
+              type="text"
+              label="Endereço do abrigo"
+              {...getFieldProps('address')}
+              error={!!errors.address}
+              helperText={errors.address}
+            />
           </div>
           <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
             <Button

@@ -15,7 +15,7 @@ export interface ICreateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
 
 export type IUpdateShelter = Partial<
-  Pick<IShelter, 'shelteredPeople' | 'petFriendly'>
+  Pick<IShelter, 'shelteredPeople' | 'petFriendly' | 'capacity' | 'address'>
 >;
 
 export interface IFullUpdateShelter
