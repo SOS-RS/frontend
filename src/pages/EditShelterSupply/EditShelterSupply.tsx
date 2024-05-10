@@ -114,19 +114,19 @@ const EditShelterSupply = () => {
   useEffect(() => {
     const { supplyIdToAdd } = location.state ?? {}
     
-    if (!supplyIdToAdd) return
+    if (supplyIdToAdd) {  
+      const findShelterDataSupply = shelterSupplyData[supplyIdToAdd]  
 
-    const findShelterDataSupply = shelterSupplyData[supplyIdToAdd]
+      if (findShelterDataSupply && findShelterDataSupply.supply) {  
+        const { supply, priority } = findShelterDataSupply  
 
-    if (findShelterDataSupply && findShelterDataSupply.supply) {
-      const { supply, priority } = findShelterDataSupply
-
-      handleClickSupplyRow({
-        id: supply?.id,
-        name: supply?.name,
-        priority
-      }) 
-    }
+        handleClickSupplyRow({  
+          id: supply?.id,  
+          name: supply?.name,  
+          priority  
+        }) 
+      }  
+    }  
   }, [handleClickSupplyRow, location.state, shelterSupplyData, supplies])
 
   if (loading) return <LoadingScreen />;
