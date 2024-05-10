@@ -84,7 +84,7 @@ const Shelter = () => {
           <CardAboutShelter shelter={shelter} />
         </div>
         <div className="flex justify-between p-4 items-center">
-          <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
+          <h2 className="font-semibold text-[18px]">Itens do abrigo</h2>
           <div className="flex gap-2 items-center ">
             <Button
               variant="ghost"

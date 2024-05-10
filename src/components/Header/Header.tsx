@@ -12,7 +12,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   } = props;
 
   return (
-    <div
+    <header
       ref={ref}
       className={cn(
         'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full',
@@ -22,7 +22,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     >
       <div className="flex gap-1 items-center">
         {startAdornment}
-        <h3 className="font-medium text-white">{title}</h3>
+        <h1 className="font-medium text-white">{title}</h1>
       </div>
       <div className="flex items-center">
         <a 
@@ -34,7 +34,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         </a>
         <div className="cursor-pointer ">{endAdornment}</div>
       </div>
-    </div>
+    </header>
   );
 });
 

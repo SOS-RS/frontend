@@ -133,53 +133,57 @@ const Home = () => {
           </div>
         }
       />
-      <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Abrigos disponíveis ({shelters.count})
-        </h1>
-        <Alert
-          description={alertDescription}
-          startAdornment={
-            <CircleAlert size={20} className="stroke-light-yellow" />
-          }
-        />
-        <div className="relative">
-          <Input
-            placeholder="Buscar por abrigo ou endereço"
-            className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
-            onChange={(ev) => {
-              setSearchValue(ev.target.value);
-              setSearch(ev.target.value);
-            }}
-            value={searchValue}
+      <main className="p-5 gap-3 flex flex-col w-full max-w-5xl">
+        <section className='gap-3 flex flex-col'>
+          <h2 className="text-[#2f2f2f] font-semibold text-2xl">
+            Abrigos disponíveis ({shelters.count})
+          </h2>
+          <Alert
+            description={alertDescription}
+            startAdornment={
+              <CircleAlert size={20} className="stroke-light-yellow" />
+            }
           />
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <Search name="search" size="20" className="stroke-zinc-300" />
+          <div className="relative">
+            <label htmlFor="search" className='sr-only'>Buscar por abrigo ou endereço</label>
+            <Input
+              placeholder="Buscar por abrigo ou endereço"
+              className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
+              onChange={(ev) => {
+                setSearchValue(ev.target.value);
+                setSearch(ev.target.value);
+              }}
+              value={searchValue}
+              id='search'
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <Search name="search" size="20" className="stroke-zinc-300" />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-row">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
-            onClick={() => setOpenModal(true)}
-          >
-            <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">Filtros</h1>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
-            onClick={() => clearSearch()}
-          >
-            <CircleAlert className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
-              Limpar Filtros
-            </h1>
-          </Button>
-        </div>
-        <main className="flex flex-col gap-4">
+          <div className="flex flex-row">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+              onClick={() => setOpenModal(true)}
+            >
+              <ListFilter className="h-5 w-5" />
+              <p className="font-semibold text-[16px] text-blue-500">Filtros</p>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+              onClick={() => clearSearch()}
+            >
+              <CircleAlert className="h-5 w-5" />
+              <p className="font-semibold text-[16px] text-blue-500">
+                Limpar Filtros
+              </p>
+            </Button>
+          </div>
+        </section>
+        <section className="flex flex-col gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
           ) : shelters.results.length === 0 ? (
@@ -205,9 +209,9 @@ const Home = () => {
               )}
             </Fragment>
           )}
-        </main>
-      </div>
-      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
+        </section>
+      </main>
+      <footer className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
         <p className="text-white">
           Para cadastrar novos abrigos clique{' '}
           <a
@@ -230,7 +234,7 @@ const Home = () => {
           </a>
           <Heart className="h-3 w-3 stroke-white fill-white" />
         </span>
-      </div>
+      </footer>
     </div>
   );
 };

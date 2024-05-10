@@ -45,11 +45,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
 
   return (
-    <div
+    <article
       className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative"
       onClick={() => navigate(`/abrigo/${data.id}`)}
     >
-      <Button size="sm" variant="ghost" className="absolute top-4 right-4">
+      <Button size="sm" variant="ghost" className="absolute top-4 right-4" aria-label='Mais detalhes sobre o abrigo'>
         <ChevronRight className="h-5 w-5" />
       </Button>
       <div className="flex items-center gap-1">
@@ -58,12 +58,12 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         </h3>
         {data.verified && <VerifiedBadge />}
       </div>
-      <h6 className={cn('font-semibold text-md', availabilityClassName)}>
+      <p className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
-      </h6>
-      <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
+      </p>
+      <p className="text-muted-foreground text-sm md:text-lg font-medium">
         {data.address}
-      </h6>
+      </p>
       {data.shelterSupplies.length > 0 && (
         <>
           <div className="flex flex-col gap-3">
@@ -122,7 +122,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
         </small>
       )}
-    </div>
+    </article>
   );
 };
 
