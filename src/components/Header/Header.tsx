@@ -22,7 +22,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     >
       <div className="flex gap-1 items-center">
         {startAdornment}
-        <h3 className="font-medium text-white">{title}</h3>
+        <h3 className="font-medium text-white"><img className="logoHome" src='src\assets\logo-sos-rs-abrigos.webp'></img></h3>
       </div>
       <div className="flex items-center">
         <a 
