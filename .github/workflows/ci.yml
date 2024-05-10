@@ -11,32 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # Check out the source
+      - name: Checkout Source
+        uses: actions/checkout@v4
 
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-
-        env:
-          cache-name: cache-node-modules
+      # Setup node.js
+      - name: "Setup node.js"
+        uses: actions/setup-node@v4
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: "18.x"
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
-
-      - name: NPM install
-        run: |
-          npm install
-      
       - name: Lint & Format
         run: npm run lint
         continue-on-error: true
+
+      - name: NPM install
+        run: npm ci
