@@ -12,7 +12,7 @@ import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/ty
 import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
-import { mapRegularAndChidlrenProtectionSupplies } from '@/lib/mapRegularAndChidlrenProtectionSupplies';
+import { mapRegularAndChildrenProtectionSupplies } from '@/lib/mapRegularAndChildrenProtectionSupplies';
 
 const SUPPLY_PRIORITIES_TO_RENDER = [SupplyPriority.Urgent, SupplyPriority.Needing, SupplyPriority.Remaining];
 
@@ -29,7 +29,7 @@ const Shelter = () => {
       return !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))
     }) ?? []
 
-    const { childrenProtectionSupplies, regularSupplies } = mapRegularAndChidlrenProtectionSupplies(nonVolunteerSupplies);
+    const { childrenProtectionSupplies, regularSupplies } = mapRegularAndChildrenProtectionSupplies(nonVolunteerSupplies);
 
     const groupedChildrenProtectionSupplies = group(childrenProtectionSupplies ?? [], 'priority');
     const groupedRegularSupplies = group(regularSupplies ?? [], 'priority');

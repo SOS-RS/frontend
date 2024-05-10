@@ -3,7 +3,7 @@ import { SupplyPriority } from "@/service/supply/types";
 
 const CHILDREN_PROTECTION_CATEGORY = 'Proteção para crianças';
 
-export function mapRegularAndChidlrenProtectionSupplies(shelterSupplies: IUseShelterDataSupply[]): {
+export function mapRegularAndChildrenProtectionSupplies(shelterSupplies: IUseShelterDataSupply[]): {
   childrenProtectionSupplies: IUseShelterDataSupply[];
   regularSupplies: IUseShelterDataSupply[];
 } {
