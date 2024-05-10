@@ -8,4 +8,5 @@ export interface SuppliesApiSearchProps
   error?: boolean;
   setSelectedSupply: (supply: ISupply) => void;
   helperText?: string;
+  throttle: number;
 }

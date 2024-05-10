@@ -10,23 +10,25 @@ const SuppliesApiSearch = forwardRef<
   React.ElementRef<'input'>,
   SuppliesApiSearchProps
 >((props, ref) => {
-  const { data: supplies, loading } = useSupplies();
+  const { data: supplies } = useSupplies();
+  const { setSelectedSupply, ...rest } = props;
 
   return (
     <ApiSearch<ISupply>
       data={supplies}
-      loading={loading}
       setSelectedItem={(item) => {
         if (item.id) {
           const supply = supplies.find((s) => s.id === item.id);
 
-          return props.setSelectedSupply(supply as ISupply);
+          return setSelectedSupply(supply as ISupply);
         }
 
-        return props.setSelectedSupply(item as ISupply);
+        setSelectedSupply({
+          name: item.name,
+        } as ISupply);
       }}
       ref={ref}
-      {...props}
+      {...rest}
     />
   );
 });
