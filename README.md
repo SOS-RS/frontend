@@ -29,19 +29,21 @@ O app inclui as seguintes funcionalidades:
 
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
 
-1. Clone o repositório:
+1. Faça um fork do repositório.
+
+2. Clone o repositório:
    ```
    git clone https://github.com/seuusuario/projeto-enchentes-frontend.git
    ```
-2. Entre no diretório do projeto:
+3. Entre no diretório do projeto:
    ```
    cd projeto-enchentes-frontend
    ```
-3. Instale as dependências:
+4. Instale as dependências:
    ```
    npm install
    ```
-4. Inicie o servidor de desenvolvimento:
+5. Inicie o servidor de desenvolvimento:
    ```
    npm run dev
    ```
@@ -51,7 +53,7 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
 
 Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhorar o app, por favor:
 
-1. Faça um fork do repositório.
+1. *Lembre-se de TER FEITO* um fork do repositório.
 2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`).
 3. Faça seus commits (`git commit -am 'Adicionando uma nova feature'`).
 4. Faça push para a branch (`git push origin feature/MinhaFeature`).
