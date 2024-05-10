@@ -56,7 +56,6 @@ const EditShelterSupply = () => {
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
-      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,

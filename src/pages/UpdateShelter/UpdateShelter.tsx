@@ -1,28 +1,29 @@
+import { useContext } from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { Header, LoadingScreen, TextField } from '@/components';
+import {
+  Authenticated,
+  Header,
+  LoadingScreen,
+  SelectField,
+  TextField,
+} from '@/components';
 import { Button } from '@/components/ui/button';
-
 import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SessionContext } from '@/contexts';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { shelterId = '-1' } = params;
   const { data: shelter, loading } = useShelter(shelterId);
+  const { session } = useContext(SessionContext);
 
   const {
     errors,
@@ -35,6 +36,12 @@ const UpdateShelter = () => {
     initialValues: {
       shelteredPeople: shelter.shelteredPeople ?? 0,
       petFriendly: shelter.petFriendly ?? false,
+      verified: shelter.verified,
+      address: shelter.address ?? '',
+      capacity: shelter.capacity,
+      contact: shelter.contact ?? '',
+      pix: shelter.pix,
+      name: shelter.name,
     },
     enableReinitialize: true,
     validateOnBlur: false,
@@ -43,10 +50,16 @@ const UpdateShelter = () => {
     validationSchema: Yup.object().shape({
       shelteredPeople: Yup.number().required('Este campo deve ser preenchido'),
       petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+      verified: Yup.bool(),
+      address: Yup.string(),
+      capacity: Yup.string(),
+      pix: Yup.string().nullable(),
+      name: Yup.string(),
     }),
     onSubmit: async (values) => {
       try {
-        await ShelterServices.update(shelterId, values);
+        if (session) await ShelterServices.adminUpdate(shelterId, values);
+        else await ShelterServices.update(shelterId, values);
         toast({
           title: 'Atualização feita com sucesso',
         });
@@ -85,6 +98,33 @@ const UpdateShelter = () => {
             Atualize as informações desejadas sobre o abrigo.
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
+            <Authenticated>
+              <TextField
+                label="Nome do abrigo"
+                {...getFieldProps('name')}
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+              <TextField
+                label="Endereço"
+                {...getFieldProps('address')}
+                error={!!errors.address}
+                helperText={errors.address}
+              />
+              <TextField
+                label="Contato"
+                {...getFieldProps('contact')}
+                error={!!errors.contact}
+                helperText={errors.contact}
+              />
+              <TextField
+                type="number"
+                label="Capacidade total do abrigo"
+                {...getFieldProps('capacity')}
+                error={!!errors.capacity}
+                helperText={errors.capacity}
+              />
+            </Authenticated>
             <TextField
               type="number"
               label="Quantidade de pessoas abrigadas"
@@ -92,23 +132,32 @@ const UpdateShelter = () => {
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
-            <label className="text-muted-foreground">
-              O abrigo aceita animais
-            </label>
-            <Select
+            <SelectField
+              label="O abrigo aceita animais"
               value={values.petFriendly ? 'true' : 'false'}
-              onValueChange={(v) => {
-                setFieldValue('petFriendly', v === 'true');
-              }}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue className="text-muted-foreground" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="true">Sim</SelectItem>
-                <SelectItem value="false">Não</SelectItem>
-              </SelectContent>
-            </Select>
+              onSelectChange={(v) => setFieldValue('petFriendly', v === 'true')}
+              options={[
+                { value: 'true', label: 'Sim' },
+                { value: 'false', label: 'Não' },
+              ]}
+            />
+            <Authenticated>
+              <SelectField
+                label="O abrigo é verificado"
+                value={values.verified ? 'true' : 'false'}
+                onSelectChange={(v) => setFieldValue('verified', v === 'true')}
+                options={[
+                  { value: 'true', label: 'Sim' },
+                  { value: 'false', label: 'Não' },
+                ]}
+              />
+              <TextField
+                label="Pix"
+                {...getFieldProps('pix')}
+                error={!!errors.pix}
+                helperText={errors.pix}
+              />
+            </Authenticated>
           </div>
           <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
             <Button

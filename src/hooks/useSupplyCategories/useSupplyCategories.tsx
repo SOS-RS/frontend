@@ -3,7 +3,10 @@ import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 import { ISupplyCategory } from './types';
 
 const useSupplyCategories = () => {
-  return useFetch<ISupplyCategory[]>(PaginatedQueryPath.SupplyCategories, []);
+  return useFetch<ISupplyCategory[]>(PaginatedQueryPath.SupplyCategories, {
+    initialValue: [],
+    cache: true,
+  });
 };
 
 export { useSupplyCategories };
