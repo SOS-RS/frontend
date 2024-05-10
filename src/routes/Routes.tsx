@@ -22,7 +22,7 @@ const Routes = () => {
         element={<CreateSupply />}
       />
       <Route path="/" element={<Home />} />
-      <Route path="/entrar" element={<SignIn />} />
+      <Route path="/signin" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );
