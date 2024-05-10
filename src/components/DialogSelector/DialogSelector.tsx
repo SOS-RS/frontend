@@ -40,8 +40,8 @@ const DialogSelector = (props: IDialogSelectorProps) => {
           >
             {options.map((option, idx) => (
               <div key={idx} className="flex items-center space-x-2 py-2">
-                <RadioGroupItem value={option.value} id="r1" />
-                <Label htmlFor="r1">{option.label}</Label>
+                <RadioGroupItem value={option.value} id={'r' + idx} />
+                <Label htmlFor={'r' + idx}>{option.label}</Label>
               </div>
             ))}
           </RadioGroup>
