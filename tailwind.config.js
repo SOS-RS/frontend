@@ -29,6 +29,7 @@ module.exports = {
         'primary-green': 'var(--green)',
         'primary-red': 'var(--red)',
         'primary-yellow': 'var(--yellow)',
+        'primary-grey': 'var(--grey)',
         text: 'var(--text)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
