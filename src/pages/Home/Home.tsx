@@ -1,21 +1,21 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import {
-  RotateCw,
   CircleAlert,
-  Search,
-  Loader,
-  ListFilter,
-  LogOutIcon,
   Heart,
+  ListFilter,
+  Loader,
+  LogOutIcon,
+  RotateCw,
+  Search,
 } from 'lucide-react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
-import { Input } from '@/components/ui/input';
-import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { SessionContext } from '@/contexts';
-import { Filter } from './components/Filter';
+import { useShelters, useThrottle } from '@/hooks';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
+import { Filter } from './components/Filter';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -207,7 +207,7 @@ const Home = () => {
           )}
         </main>
       </div>
-      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
+      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600 text-center">
         <p className="text-white">
           Para cadastrar novos abrigos clique{' '}
           <a
@@ -219,17 +219,17 @@ const Home = () => {
           </a>
         </p>
         <span className="text-white hidden md:block">•</span>
-        <span className="text-white flex flex-nowrap gap-2 items-center">
+        <p className="text-white flex gap-1 flex-wrap justify-center">
           Projeto Open Source disponível em{' '}
           <a
-            className="underline hover:text-gray-300 flex"
+            className="underline hover:text-gray-300 flex items-center gap-1"
             href="https://github.com/SOS-RS"
             target="_blank"
           >
             Github
+            <Heart className="h-3 w-3 stroke-white fill-white" />
           </a>
-          <Heart className="h-3 w-3 stroke-white fill-white" />
-        </span>
+        </p>
       </div>
     </div>
   );
