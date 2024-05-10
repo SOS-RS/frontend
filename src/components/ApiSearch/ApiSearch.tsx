@@ -78,10 +78,7 @@ export const ApiSearchFunc = forwardRef(
                   <Ariakit.ComboboxItem
                     key={item.id}
                     onClick={() => {
-                      setSelectedItem({
-                        name: item.name,
-                        id: item.id,
-                      });
+                      setSelectedItem(item);
                       setSearch('');
                     }}
                     className={cn(
