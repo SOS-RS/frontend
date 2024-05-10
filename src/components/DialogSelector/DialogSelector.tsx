@@ -39,16 +39,16 @@ const DialogSelector = (props: IDialogSelectorProps) => {
             onValueChange={(v) => setSelectedItem(v)}
           >
             {options.map((option, idx) => (
-              <div key={idx} className="flex items-center space-x-2 py-2">
-                <RadioGroupItem value={option.value} id="r1" />
-                <Label htmlFor="r1">{option.label}</Label>
+              <div key={idx} className="flex items-center py-2 space-x-2">
+                <RadioGroupItem value={option.value} id={option.value} />
+                <Label htmlFor={option.value}>{option.label}</Label>
               </div>
             ))}
           </RadioGroup>
         </div>
         <DialogFooter>
           <Button
-            className="w-full bg-blue-700 text-white hover:bg-blue-600 active:bg-blue-500"
+            className="w-full text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-500"
             size="sm"
             onClick={() => (onSave ? onSave(selectedItem) : undefined)}
             loading={isSubmitting}
