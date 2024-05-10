@@ -1,6 +1,6 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 import { IHeader } from './types';
-import { cn } from '@/lib/utils';
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
@@ -15,7 +15,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     <div
       ref={ref}
       className={cn(
-        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full',
+        'bg-red-600 flex min-h-[3_rem] max-sm:justify-center justify-between items-center flex-wrap text-white p-3 gap-2 w-full',
         className
       )}
       {...rest}
@@ -25,9 +25,9 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         <h3 className="font-medium text-white">{title}</h3>
       </div>
       <div className="flex items-center">
-        <a 
+        <a
           href="https://forms.gle/2S7L2gR529Dc8P3T9"
-          className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full" 
+          className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
           target="_blank"
         >
           Cadastrar abrigo
