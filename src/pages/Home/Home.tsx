@@ -1,21 +1,21 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import {
-  RotateCw,
   CircleAlert,
-  Search,
-  Loader,
-  ListFilter,
-  LogOutIcon,
   Heart,
+  ListFilter,
+  Loader,
+  LogOutIcon,
+  RotateCw,
+  Search,
 } from 'lucide-react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
-import { Input } from '@/components/ui/input';
-import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { SessionContext } from '@/contexts';
-import { Filter } from './components/Filter';
+import { useShelters, useThrottle } from '@/hooks';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
+import { Filter } from './components/Filter';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -133,7 +133,7 @@ const Home = () => {
           </div>
         }
       />
-      <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
+      <div className="p-5 gap-3 flex flex-1 flex-col w-full max-w-5xl">
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           Abrigos disponíveis ({shelters.count})
         </h1>
@@ -179,7 +179,7 @@ const Home = () => {
             </h1>
           </Button>
         </div>
-        <main className="flex flex-col gap-4">
+        <main className="flex flex-col flex-1 gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
           ) : shelters.results.length === 0 ? (
