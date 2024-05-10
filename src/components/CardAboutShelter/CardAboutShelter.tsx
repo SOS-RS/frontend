@@ -19,7 +19,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   };
 
   return (
-    <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
+    <Card className="flex flex-col gap-2 p-4 bg-primary-grey text-sm">
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={shelter.address} />

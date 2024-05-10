@@ -5,7 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CardAboutShelter, Chip, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps, group } from '@/lib/utils';
+import {
+  cn,
+  getAvailabilityProps,
+  getCategoriesToFilterVolunteers,
+  getSupplyPriorityProps,
+  group,
+} from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
@@ -21,7 +27,15 @@ const Shelter = () => {
   const { data: shelters } = useShelter(id);
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))) ?? [], 'priority');
+    const grouped = group(
+      shelter?.shelterSupplies?.filter(
+        (s) =>
+          !getCategoriesToFilterVolunteers().some((c) =>
+            c.includes(s.supply?.supplyCategory?.name?.toLowerCase())
+          )
+      ) ?? [],
+      'priority'
+    );
     delete grouped[SupplyPriority.NotNeeded];
 
     return Object.entries(grouped)
@@ -33,8 +47,15 @@ const Shelter = () => {
   }, [shelters.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase())) && s.priority > SupplyPriority.Remaining).reverse()
-  }, [shelter.shelterSupplies])
+    return shelter?.shelterSupplies
+      ?.filter(
+        (s) =>
+          getCategoriesToFilterVolunteers().some((c) =>
+            c.includes(s.supply?.supplyCategory?.name?.toLowerCase())
+          ) && s.priority > SupplyPriority.Remaining
+      )
+      .reverse();
+  }, [shelter.shelterSupplies]);
 
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
@@ -72,11 +93,11 @@ const Shelter = () => {
           </h1>
           <Button
             variant="ghost"
-            className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+            className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             onClick={() => navigate(`/abrigo/${id}/atualizar`)}
           >
             Editar abrigo
-            <Pencil size={17} className="stroke-blue-600" />
+            <Pencil size={17} className="stroke-white" />
           </Button>
         </div>
 
@@ -88,30 +109,34 @@ const Shelter = () => {
           <div className="flex gap-2 items-center ">
             <Button
               variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
               onClick={() => navigate(`/abrigo/${id}/items`)}
             >
               Editar itens
-              <Pencil size={17} className="stroke-blue-600" />
+              <Pencil size={17} className="stroke-white" />
             </Button>
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
-
-        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <div className="flex gap-2 items-center">
-              <h3>
-                Voluntários
-              </h3>
+              <h3>Voluntários</h3>
             </div>
             <div className="flex gap-2 flex-wrap">
-              { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (
-                <Chip
-                  className={getSupplyPriorityProps(v.priority).className}
-                  key={idx}
-                  label={v.supply.name}
-                />
-              ))}
+              {volunteerTags.length == 0 ? (
+                <p>
+                  Não informado.{' '}
+                  <i> (Pode ser adicionado ao clicar em Editar itens) </i>
+                </p>
+              ) : (
+                volunteerTags.map((v, idx) => (
+                  <Chip
+                    className={getSupplyPriorityProps(v.priority).className}
+                    key={idx}
+                    label={v.supply.name}
+                  />
+                ))
+              )}
             </div>
           </div>
           {shelterCategories.map((categoryProps, idx) => (
