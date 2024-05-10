@@ -183,7 +183,7 @@ const Home = () => {
           </Button>
         </div>
         <h6 className={'font-semibold text-md'}>Legenda</h6>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap">
           {Object.values(SupplyPriority)
             .filter((value): value is number => typeof value === 'number')
             .map((p, idx) => {
