@@ -27,7 +27,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
       <div className="flex items-center">
         <a
           href="https://forms.gle/2S7L2gR529Dc8P3T9"
-          className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
+          className="bg-primary-green hover:bg-light-green border-2 text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
           target="_blank"
         >
           Cadastrar abrigo
