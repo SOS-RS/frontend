@@ -1,14 +1,21 @@
 import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRowInfo } from '../SupplyRowInfo';
 import { ISupplyRowProps } from './types';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <div className="gap-4 flex flex-col pb-6">
-      <h3 className="font-semibold text-lg">{name}</h3>
-      <div className="flex flex-col">
+    <AccordionItem value={name}>
+      <AccordionTrigger>
+        <h3 className="text-lg font-semibold">{name}</h3>
+      </AccordionTrigger>
+      <AccordionContent className="flex flex-col">
         {items.map((item, idy) => (
           <SupplyRowInfo
             key={idy}
@@ -17,8 +24,8 @@ const SupplyRow = (props: ISupplyRowProps) => {
             onClick={() => (onClick ? onClick(item) : undefined)}
           />
         ))}
-      </div>
-    </div>
+      </AccordionContent>
+    </AccordionItem>
   );
 };
 

@@ -1,18 +1,19 @@
 import { ChevronLeft, PlusCircle } from 'lucide-react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
-import { Button } from '@/components/ui/button';
-import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group } from '@/lib/utils';
-import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { ShelterSupplyServices } from '@/service';
+import { Accordion } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { useShelter, useSupplies, useThrottle } from '@/hooks';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { group } from '@/lib/utils';
+import { ShelterSupplyServices } from '@/service';
+import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { SupplyRow } from './components';
+import { ISupplyRowItemProps } from './components/SupplyRow/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -20,23 +21,38 @@ const EditShelterSupply = () => {
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
-  const [filteredSupplies, setFilteredSupplies] = useState<ISupply[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [, setSearch] = useThrottle<string>(
+  const [openedGroups, setOpenedGroups] = useState<string[]>([]);
+
+  const handleOpen = (suppliesGroups: string[]) => {
+    setOpenedGroups(suppliesGroups);
+  };
+
+  const [search, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: (v) => {
-        if (v) {
-          setFilteredSupplies(
-            supplies.filter((s) =>
-              s.name.toLowerCase().includes(v.toLowerCase())
-            )
-          );
-        } else setFilteredSupplies(supplies);
+        setSearchValue(v);
       },
     },
     [supplies]
   );
+
+  const supplyGroups = useMemo(() => {
+    let result = supplies || [];
+    if (search && searchValue) {
+      const filtered = supplies?.filter((s) =>
+        s.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+
+      handleOpen(filtered.map((f: any) => f.supplyCategory.name));
+
+      result = filtered;
+    }
+
+    return group<ISupply>(result, 'supplyCategory.name');
+  }, [searchValue, supplies, search]);
+
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
@@ -49,14 +65,9 @@ const EditShelterSupply = () => {
       {} as Record<string, IUseShelterDataSupply>
     );
   }, [shelter?.shelterSupplies]);
-  const supplyGroups = useMemo(
-    () => group<ISupply>(filteredSupplies ?? [], 'supplyCategory.name'),
-    [filteredSupplies]
-  );
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
-      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
@@ -103,10 +114,6 @@ const EditShelterSupply = () => {
     [refresh, shelterId, toast]
   );
 
-  useEffect(() => {
-    setFilteredSupplies(supplies);
-  }, [supplies]);
-
   if (loading) return <LoadingScreen />;
 
   return (
@@ -138,7 +145,7 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex flex-col items-center h-screen">
         <Header
           title="Editar Itens"
           className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
@@ -152,7 +159,7 @@ const EditShelterSupply = () => {
             </Button>
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
+        <div className="flex flex-col items-start w-full max-w-5xl gap-3 p-4">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
@@ -169,14 +176,22 @@ const EditShelterSupply = () => {
           <div className="w-full my-2">
             <TextField
               label="Buscar"
-              value={searchValue}
+              value={search || ''}
               onChange={(ev) => {
-                setSearchValue(ev.target.value);
+                if (!ev.target.value) {
+                  handleOpen([]);
+                }
                 setSearch(ev.target.value);
               }}
             />
           </div>
-          <div className="flex flex-col gap-2 w-full my-4">
+
+          <Accordion
+            type="multiple"
+            className="flex flex-col w-full gap-2 my-4"
+            value={openedGroups}
+            onValueChange={setOpenedGroups}
+          >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values.map((v) => {
                 const supply = shelterSupplyData[v.id];
@@ -195,7 +210,7 @@ const EditShelterSupply = () => {
                 />
               );
             })}
-          </div>
+          </Accordion>
         </div>
       </div>
     </Fragment>
