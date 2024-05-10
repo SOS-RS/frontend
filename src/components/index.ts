@@ -8,6 +8,8 @@ import { CircleStatus } from './CircleStatus';
 import { DialogSelector } from './DialogSelector';
 import { TextField } from './TextField';
 import { Chip } from './Chip';
+import { SuppliesApiSearch } from './SuppliesApiSearch';
+import { ApiSearch } from './ApiSearch';
 
 export {
   LoadingScreen,
@@ -20,4 +22,6 @@ export {
   DialogSelector,
   TextField,
   Chip,
+  SuppliesApiSearch,
+  ApiSearch,
 };
