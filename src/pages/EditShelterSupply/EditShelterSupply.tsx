@@ -24,10 +24,6 @@ const EditShelterSupply = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [openedGroups, setOpenedGroups] = useState<string[]>([]);
 
-  const handleOpen = (suppliesGroups: string[]) => {
-    setOpenedGroups(suppliesGroups);
-  };
-
   const [search, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -39,13 +35,17 @@ const EditShelterSupply = () => {
   );
 
   const supplyGroups = useMemo(() => {
-    let result = supplies || [];
+    let result = supplies;
     if (search && searchValue) {
-      const filtered = supplies?.filter((s) =>
+      const filtered = result.filter((s) =>
         s.name.toLowerCase().includes(searchValue.toLowerCase())
       );
 
-      handleOpen(filtered.map((f: any) => f.supplyCategory.name));
+      setOpenedGroups(
+        filtered
+          .filter((c) => !!c.supplyCategory)
+          .map((f: ISupply) => f.supplyCategory!.name)
+      );
 
       result = filtered;
     }
@@ -179,7 +179,7 @@ const EditShelterSupply = () => {
               value={search || ''}
               onChange={(ev) => {
                 if (!ev.target.value) {
-                  handleOpen([]);
+                  setOpenedGroups([]);
                 }
                 setSearch(ev.target.value);
               }}
@@ -193,29 +193,27 @@ const EditShelterSupply = () => {
             onValueChange={setOpenedGroups}
           >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
-              const items: ISupplyRowItemProps[] =
-                values?.map((v) => {
+              const items: ISupplyRowItemProps[] = values
+                .map((v) => {
                   const supply = shelterSupplyData[v.id];
                   return {
                     id: v.id,
                     name: v.name,
                     priority: supply?.priority,
                   };
-                }) || [];
-
-              const sortedItems: ISupplyRowItemProps[] = [...items].sort(
-                (a, b) => {
+                })
+                .sort((a, b) => {
                   const [first, second] = [a.priority || 0, b.priority || 0];
+                  const priorityDiff = second - first;
 
-                  return second - first;
-                }
-              );
+                  return priorityDiff || a.name.localeCompare(b.name);
+                });
 
               return (
                 <SupplyRow
                   key={idx}
                   name={key}
-                  items={sortedItems}
+                  items={items}
                   onClick={handleClickSupplyRow}
                 />
               );
