@@ -33,7 +33,7 @@ const Shelter = () => {
   }, [shelters.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))).reverse()
+    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase())) && s.priority > SupplyPriority.Remaining).reverse()
   }, [shelter.shelterSupplies])
 
   const { availability, className: availabilityClassName } =
