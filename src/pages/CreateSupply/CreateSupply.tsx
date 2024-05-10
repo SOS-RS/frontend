@@ -113,10 +113,11 @@ const CreateSupply = () => {
                   return;
                 }
 
-                setFieldValue('name', supply);
+                setFieldValue('name', supply.name);
               }}
               error={!!errors.name}
               helperText={errors.name}
+              throttle={300}
             />
 
             <div className="flex flex-col w-full">
