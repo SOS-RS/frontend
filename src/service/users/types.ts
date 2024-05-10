@@ -20,5 +20,6 @@ export interface IUpdateUser {
 export interface ICreateUser {
   name: string;
   lastName: string;
+  password: string;
   phone: string;
 }
