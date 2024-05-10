@@ -19,8 +19,8 @@ O app inclui as seguintes funcionalidades:
 - [x] **Cadastro de Itens de suprimentos**: Permite que voluntários se inscrevam para ajudar.
 - [x] **Busca de abrigos**: Gerencia a logística de distribuição de suprimentos para as áreas mais necessitadas.
 - [x] **Alteração de necessidades de abrigos**: Exibe um mapa das áreas afetadas e pontos de coleta de suprimentos.
-- [x] **Alteração de abrigos**: Pemitir alterar quantidade de vagas disponívies, se aceita pet ou endereço.
-- [x] **Filtro por item e por cidade**: Opção de filtrar abrigos por cidade ou que precisam de algum item específico.
+- [x] **Alteração de abrigos**: Permitir alterar a quantidade de vagas disponíveis, se aceita pet ou endereço.
+- [x] **Filtro por item e por cidade**: Opção de filtrar abrigos por cidade ou que precisam de algum item em específico.
 - [ ] **Cadastro de abrigos**: Criar tela para cadastro de abrigos (Nome, endereço, capacidade, vagas, aceita pets) e colocar pendende de aprovação.
 - [ ] **Cadastro de usuários**: Criar tela de cadastro (nome, telefone, senha) e login.
 - [ ] **Alterar ordenação**: Trocar a ordenação atual para ordenação por última atualização.

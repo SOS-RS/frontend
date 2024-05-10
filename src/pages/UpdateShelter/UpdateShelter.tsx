@@ -43,10 +43,14 @@ const UpdateShelter = () => {
     validateOnChange: false,
     validateOnMount: false,
     validationSchema: Yup.object().shape({
-      shelteredPeople: Yup.number().required('Este campo deve ser preenchido'),
-      capacity: Yup.number().required('Este campo deve ser preenchido'),
-      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
-      address: Yup.string().required('Este campo deve ser preenchido'),
+      shelteredPeople: Yup.number().required(
+        'Informe como está a lotação do abrigo'
+      ),
+      capacity: Yup.number().required('É necessário informar a capacidade'),
+      petFriendly: Yup.bool().required('Informe se o abrigo aceita animais'),
+      address: Yup.string().required(
+        'É necessário informar o endereço do abrigo'
+      ),
     }),
     onSubmit: async (values) => {
       try {
