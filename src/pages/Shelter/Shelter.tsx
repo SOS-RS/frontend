@@ -33,7 +33,7 @@ const Shelter = () => {
   }, [shelters.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))).reverse()
+    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase())) && s.priority > SupplyPriority.Remaining).reverse()
   }, [shelter.shelterSupplies])
 
   const { availability, className: availabilityClassName } =
@@ -64,9 +64,7 @@ const Shelter = () => {
           <h1 className="text-[#2f2f2f] font-semibold text-2xl">
             {shelter.name}
           </h1>
-          {shelter.verified && (
-            <VerifiedBadge />
-          )}
+          {shelter.verified && <VerifiedBadge />}
         </div>
         <div className="flex flex-1 items-center justify-between">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
@@ -107,7 +105,7 @@ const Shelter = () => {
               </h3>
             </div>
             <div className="flex gap-2 flex-wrap">
-              {volunteerTags.map((v, idx) => (
+              { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (
                 <Chip
                   className={getSupplyPriorityProps(v.priority).className}
                   key={idx}
