@@ -13,94 +13,47 @@ const useShelters = () => {
     page: 1,
     perPage: 20,
     results: [],
-    filters: {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
-      waitingShelterAvailability: false
-    }
   });
 
-  const resetSearch = () => {
-    const params = {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
-      waitingShelterAvailability: false,
-      page: 1,
-      perPage: 20,      
-    }
-    search({          
-      params: params,
-    });
-  }
-
-  const search = useCallback(
+  const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<any>>(
-          '/shelters/search',
-          {
-            ...config,
-            params: {
-              orderBy: 'prioritySum',
-              order: 'desc',
-              ...(config.params ?? {}),
-            },
-          }
-        )
+        .get<IServerResponse<any>>('/shelters', {
+          ...config,
+          params: {
+            orderBy: 'prioritySum',
+            order: 'desc',
+            ...(config.params ?? {}),
+          },
+        })
         .then(({ data }) => {
           if (append) {
             setData((prev) => ({
               ...prev,
               ...data.data,
               results: [...prev.results, ...data.data.results],
-              filters: {
-                search: '',
-                priority: config.params.priority,
-                supplies: config.params.supplies ?? [],
-                supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
             }));
           } else {
             setData((prev) => ({
               ...prev,
               ...data.data,
               results: [...data.data.results],
-              filters: {
-                search: config.params.search,
-                priority: config.params.priority,
-                supplies: config.params.supplies ?? [],
-                supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
-            }));          
+            }));
           }
         })
         .finally(() => {
-          if(!append) setLoading(false);
+          if (!append) setLoading(false);
         });
     },
     []
   );
 
   useEffect(() => {
-    resetSearch();
-  }, []);
+    refresh();
+  }, [refresh]);
 
-  return { data, loading, search, resetSearch };
+  return { data, loading, refresh };
 };
 
 export { useShelters };

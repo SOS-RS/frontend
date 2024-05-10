@@ -1,17 +1,26 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RotateCw, LogOutIcon } from 'lucide-react';
+import qs from 'query-string';
 
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
-import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 import { ShelterListView } from './components/ShelterListView';
+import { IFilterFormProps } from './components/Filter/types';
+
+const initialFilterData: IFilterFormProps = {
+  search: '',
+  priority: null,
+  supplyCategoryIds: [],
+  supplyIds: [],
+  shelterStatus: [],
+};
 
 const Home = () => {
-  const { data: shelters, loading, search, resetSearch } = useShelters();
+  const { data: shelters, loading, refresh } = useShelters();
   const {
     loading: loadingSession,
     refreshSession,
@@ -19,18 +28,17 @@ const Home = () => {
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [filterData, setFilterData] =
+    useState<IFilterFormProps>(initialFilterData);
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: (v) => {
         const params = {
-          ...shelters.filters,
-          search: v ? v : '',
-          page: shelters.page,
-          perPage: shelters.perPage,
+          search: v ? qs.stringify(filterData, { arrayFormat: 'bracket' }) : '',
         };
 
-        search({
+        refresh({
           params: params,
         });
       },
@@ -41,30 +49,20 @@ const Home = () => {
 
   const clearSearch = useCallback(() => {
     setSearchValue('');
-    resetSearch();
-  }, [resetSearch]);
+    setSearch('');
+    setFilterData(initialFilterData);
+  }, [setSearch]);
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
 
-  const closeModal = () => {
+  const onSubmitFilterForm = useCallback((values: IFilterFormProps) => {
     setOpenModal(false);
-  };
-
-  const handleSearch = useCallback(
-    (values: IUseShelterSearchParams) => {
-      setOpenModal(false);
-      setSearchValue(values.search ?? '');
-      search({
-        params: {
-          ...values,
-        },
-      });
-    },
-    [search]
-  );
+    setFilterData(values);
+    //TODO: logica de buscar no filtro
+  }, []);
 
   const handleFetchMore = useCallback(() => {
     const params = {
@@ -74,22 +72,22 @@ const Home = () => {
       search: searchValue ? searchValue : '',
     };
 
-    search(
+    refresh(
       {
         params: params,
       },
       true
     );
-  }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
+  }, [refresh, searchValue, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
         <Filter
-          handleSearch={handleSearch}
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          filters={shelters.filters}
+          open={isModalOpen}
+          data={filterData}
+          onClose={() => setOpenModal(false)}
+          onSubmit={onSubmitFilterForm}
         />
       )}
       <Header
@@ -105,7 +103,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => search()}
+              onClick={() => refresh()}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />

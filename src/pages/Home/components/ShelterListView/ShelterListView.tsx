@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, Loader, Search } from 'lucide-react';
+import { CircleAlert, ListFilter, Loader } from 'lucide-react';
 
-import { Alert, NoFoundSearch, ShelterListItem } from '@/components';
-
+import {
+  Alert,
+  NoFoundSearch,
+  SearchInput,
+  ShelterListItem,
+} from '@/components';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 
@@ -36,21 +39,14 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             <CircleAlert size={20} className="stroke-light-yellow" />
           }
         />
-        <div className="relative">
-          <Input
-            placeholder="Buscar por abrigo ou endereço"
-            className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
-            onChange={(ev) =>
-              onSearchValueChange
-                ? onSearchValueChange(ev.target.value)
-                : undefined
-            }
-            value={searchValue}
-          />
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <Search name="search" size="20" className="stroke-zinc-300" />
-          </div>
-        </div>
+        <SearchInput
+          value={searchValue}
+          onChange={(ev) =>
+            onSearchValueChange
+              ? onSearchValueChange(ev.target.value ?? '')
+              : undefined
+          }
+        />
         <div className="flex flex-row">
           <Button
             variant="ghost"

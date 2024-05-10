@@ -58,26 +58,34 @@ function getAvailabilityProps(
     };
 }
 
+const priorityOptions: Record<SupplyPriority, string> = {
+  [SupplyPriority.Urgent]: 'Necessita urgente',
+  [SupplyPriority.Needing]: 'Precisa',
+  [SupplyPriority.Remaining]: 'Disponível para doação',
+  [SupplyPriority.NotNeeded]: 'Não preciso',
+};
+
 function getSupplyPriorityProps(priority: SupplyPriority) {
+  const label = priorityOptions[priority];
   switch (priority) {
     case SupplyPriority.NotNeeded:
       return {
-        label: 'Não preciso',
+        label,
         className: 'bg-gray-200',
       };
     case SupplyPriority.Remaining:
       return {
-        label: 'Disponível para doação',
+        label,
         className: 'bg-light-green',
       };
     case SupplyPriority.Needing:
       return {
-        label: 'Precisa',
+        label,
         className: 'bg-light-orange',
       };
     case SupplyPriority.Urgent:
       return {
-        label: 'Precisa Urgentemente',
+        label,
         className: 'bg-light-red',
       };
   }
@@ -114,4 +122,5 @@ export {
   variantStatusPriority,
   colorStatusPriority,
   nameStatusPriority,
+  priorityOptions,
 };
