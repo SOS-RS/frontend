@@ -56,7 +56,6 @@ const EditShelterSupply = () => {
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
-      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
@@ -183,6 +182,7 @@ const EditShelterSupply = () => {
                 return {
                   id: v.id,
                   name: v.name,
+                  quantity: supply?.quantity,
                   priority: supply?.priority,
                 };
               });

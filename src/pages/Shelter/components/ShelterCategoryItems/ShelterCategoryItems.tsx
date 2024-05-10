@@ -2,18 +2,18 @@ import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 import { IShelterCategoryItemsProps } from './types';
-import { getSupplyPriorityProps } from '@/lib/utils';
+import { cn, getSupplyPriorityProps } from '@/lib/utils';
 import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
-  const { priority = SupplyPriority.NotNeeded, tags } = props;
+  const { priority = SupplyPriority.NotNeeded, supplies } = props;
   const [opened, setOpened] = useState<boolean>(false);
-  const maxVisibleTags: number = 10;
-  const visibleTags = useMemo(
-    () => (opened ? tags : tags.slice(0, maxVisibleTags)),
-    [opened, tags]
+  const maxVisibleSupplies: number = 10;
+  const visibleSupplies = useMemo(
+    () => (opened ? supplies : supplies.slice(0, maxVisibleSupplies)),
+    [opened, supplies]
   );
   const { className: circleClassName, label } = useMemo(
     () => getSupplyPriorityProps(priority),
@@ -28,15 +28,22 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
       <div className="flex gap-2 items-center">
         <CircleStatus className={circleClassName} />
         <h3>
-          {label} ({tags.length})
+          {label} ({supplies.length})
         </h3>
       </div>
       <div className="flex gap-2 flex-wrap">
-        {visibleTags.map((tag, idx) => (
-          <Chip className={circleClassName} key={idx} label={tag} />
+        {visibleSupplies.map((supply, idx) => (
+          <div key={idx} className={cn('flex gap-x-1 relative', { 'mr-3': supply.quantity })}>
+            <Chip className={cn(circleClassName, { 'pr-5': supply.quantity })} label={supply.name} />
+            {supply.quantity && (
+              <div className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs font-bold bg-gray-700 text-white rounded-full ring-black flex items-center justify-center w-7 h-6">
+                {supply.quantity > 99 ? '99+' : supply.quantity}
+              </div>
+            )}
+          </div>
         ))}
       </div>
-      {tags.length > maxVisibleTags && (
+      {supplies.length > maxVisibleSupplies && (
         <div>
           <Button
             variant="ghost"

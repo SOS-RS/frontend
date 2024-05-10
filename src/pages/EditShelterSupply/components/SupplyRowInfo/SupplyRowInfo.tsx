@@ -3,9 +3,10 @@ import { useMemo } from 'react';
 import { CircleStatus } from '@/components';
 import { ISupplyRowInfoProps } from './types';
 import { getSupplyPriorityProps } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
-  const { name, priority, onClick } = props;
+  const { name, priority, quantity, onClick } = props;
 
   const { className, label } = useMemo(
     () => getSupplyPriorityProps(priority),
@@ -21,6 +22,9 @@ const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
       <div className="flex justify-end items-center gap-2">
         <CircleStatus className={className} />
         <p className="text-muted-foreground text-nowrap pl-1">{label}</p>
+        {quantity && (
+          <Badge className="bg-gray-700">{quantity}</Badge>
+        )}
       </div>
     </div>
   );

@@ -18,7 +18,6 @@ const Shelter = () => {
   const { id = '-1' } = params;
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
-  const { data: shelters } = useShelter(id);
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
     const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))) ?? [], 'priority');
@@ -28,9 +27,12 @@ const Shelter = () => {
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
-        tags: values.map((v) => v.supply.name),
+        supplies: values.map((v) => ({
+          name: v.supply.name,
+          quantity: v.quantity,
+        })),
       }));
-  }, [shelters.shelterSupplies]);
+  }, [shelter.shelterSupplies]);
 
   const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
     return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))).reverse()
