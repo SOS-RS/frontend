@@ -22,7 +22,7 @@ export const ApiSearchFunc = forwardRef(
     const [filteredItems, setFilteredItems] = useState<T[]>([]);
     const [, setSearch] = useThrottle<string>(
       {
-        throttle: throttle,
+        throttle,
         callback: (v) => {
           if (v) {
             setFilteredItems(
