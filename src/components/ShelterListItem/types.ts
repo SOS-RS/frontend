@@ -7,4 +7,5 @@ export interface IShelterAvailabilityProps {
 
 export interface IShelterListItemProps {
   data: IUseSheltersData;
+  onClick?: () => void;
 }

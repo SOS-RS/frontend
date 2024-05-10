@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 import { IShelterListItemProps, IShelterAvailabilityProps } from './types';
-import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps } from '@/lib/utils';
+import {
+  cn,
+  getAvailabilityProps,
+  getCategoriesToFilterVolunteers,
+  getSupplyPriorityProps,
+} from '@/lib/utils';
 import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
@@ -12,7 +17,7 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
-  const { data } = props;
+  const { data, onClick } = props;
   const { capacity, shelteredPeople } = data;
   const navigate = useNavigate();
   const { availability, className: availabilityClassName } =
@@ -21,28 +26,38 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       [capacity, shelteredPeople]
     );
 
-  const tags = useMemo(
-    () => {
-      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase()))  && !(s.priority === SupplyPriority.Remaining))
-        .sort((a, b) => b.priority - a.priority).slice(0, 10)
-    },
-    [data.shelterSupplies]
-  );
+  const tags = useMemo(() => {
+    return data.shelterSupplies
+      ?.filter(
+        (s) =>
+          !getCategoriesToFilterVolunteers().some((c) =>
+            c.includes(s.supply?.supplyCategory?.name.toLowerCase())
+          ) && !(s.priority === SupplyPriority.Remaining)
+      )
+      .sort((a, b) => b.priority - a.priority)
+      .slice(0, 10);
+  }, [data.shelterSupplies]);
 
-  const volunteerTags = useMemo(
-    () => {
-      return data.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase()))).reverse()
-    },
-    [data.shelterSupplies]
-  )
+  const volunteerTags = useMemo(() => {
+    return data.shelterSupplies
+      ?.filter((s) =>
+        getCategoriesToFilterVolunteers().some((c) =>
+          c.includes(s.supply?.supplyCategory?.name.toLowerCase())
+        )
+      )
+      .reverse();
+  }, [data.shelterSupplies]);
 
-  const donationsTags = useMemo(
-    () => {
-      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())) && s.priority === SupplyPriority.Remaining).reverse()
-    },
-    [data.shelterSupplies]
-  )
-
+  const donationsTags = useMemo(() => {
+    return data.shelterSupplies
+      ?.filter(
+        (s) =>
+          !getCategoriesToFilterVolunteers().some((c) =>
+            c.includes(s.supply?.supplyCategory?.name.toLowerCase())
+          ) && s.priority === SupplyPriority.Remaining
+      )
+      .reverse();
+  }, [data.shelterSupplies]);
 
   return (
     <div
@@ -53,7 +68,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         <ChevronRight className="h-5 w-5" />
       </Button>
       <div className="flex items-center gap-1">
-        <h3 className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500">
+        <h3
+          className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
+          onClick={onClick}
+        >
           {data.name}
         </h3>
         {data.verified && <VerifiedBadge />}
@@ -72,16 +90,21 @@ const ShelterListItem = (props: IShelterListItemProps) => {
               Necessita voluntários:
             </p>
             <div className="flex gap-2 flex-wrap">
-              {volunteerTags.length == 0 ?
-                <p> Não informado. <i> (Pode ser adicionado ao clicar no abrigo) </i></p>
-                :
+              {volunteerTags.length == 0 ? (
+                <p>
+                  {' '}
+                  Não informado.{' '}
+                  <i> (Pode ser adicionado ao clicar no abrigo) </i>
+                </p>
+              ) : (
                 volunteerTags.map((s, idx) => (
                   <Chip
                     className={getSupplyPriorityProps(s.priority).className}
                     key={idx}
                     label={s.supply.name}
                   />
-                ))}
+                ))
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -113,7 +136,6 @@ const ShelterListItem = (props: IShelterListItemProps) => {
                 />
               ))}
             </div>
-
           </div>
         </>
       )}

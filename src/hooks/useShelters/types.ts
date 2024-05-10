@@ -21,12 +21,6 @@ export interface IUseSheltersDataSupplyData {
   priority: number;
 }
 
-export interface IUseShelterSearchParams {
-  priority: number | undefined;
-  supplies: string[] | undefined;
-  supplyCategories: number[] | undefined;
-  search: string | undefined;
-  filterAvailableShelter: boolean;
-  filterUnavailableShelter: boolean;
-  waitingShelterAvailability: boolean;
+export interface IUseShelterOptions {
+  cache?: boolean;
 }
