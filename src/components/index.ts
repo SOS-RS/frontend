@@ -8,6 +8,7 @@ import { CircleStatus } from './CircleStatus';
 import { DialogSelector } from './DialogSelector';
 import { TextField } from './TextField';
 import { Chip } from './Chip';
+import { Footer } from './Footer';
 
 export {
   LoadingScreen,
@@ -20,4 +21,5 @@ export {
   DialogSelector,
   TextField,
   Chip,
+  Footer,
 };

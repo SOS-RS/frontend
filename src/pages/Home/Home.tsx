@@ -1,8 +1,8 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCw, LogOutIcon, Heart } from 'lucide-react';
+import { RotateCw, LogOutIcon } from 'lucide-react';
 
-import { Header } from '@/components';
+import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
@@ -127,46 +127,23 @@ const Home = () => {
           </div>
         }
       />
-      <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
-        <ShelterListView
-          loading={loading}
-          count={shelters.count}
-          data={shelters.results}
-          onFetchMoreData={handleFetchMore}
-          searchValue={searchValue}
-          onSearchValueChange={(v) => {
-            setSearchValue(v);
-            setSearch(v);
-          }}
-          onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
-          hasMoreItems={hasMore}
-          className="flex-1 p-0 md:p-4"
-        />
-      </div>
-      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600">
-        <p className="text-white">
-          Para cadastrar novos abrigos clique{' '}
-          <a
-            href="https://forms.gle/2S7L2gR529Dc8P3T9"
-            className="underline hover:text-gray-300"
-            target="_blank"
-          >
-            aqui
-          </a>
-        </p>
-        <span className="text-white hidden md:block">•</span>
-        <span className="text-white flex flex-nowrap gap-2 items-center">
-          Projeto Open Source disponível em{' '}
-          <a
-            className="underline hover:text-gray-300 flex"
-            href="https://github.com/SOS-RS"
-            target="_blank"
-          >
-            Github
-          </a>
-          <Heart className="h-3 w-3 stroke-white fill-white" />
-        </span>
-      </div>
+      <ShelterListView
+        loading={loading}
+        count={shelters.count}
+        data={shelters.results}
+        onFetchMoreData={handleFetchMore}
+        searchValue={searchValue}
+        onSearchValueChange={(v) => {
+          setSearchValue(v);
+          setSearch(v);
+        }}
+        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
+        hasMoreItems={hasMore}
+        onOpenModal={() => setOpenModal(true)}
+        onClearSearch={clearSearch}
+        className="flex-1 p-4 max-w-4xl"
+      />
+      <Footer />
     </div>
   );
 };

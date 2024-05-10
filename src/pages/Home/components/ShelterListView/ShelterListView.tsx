@@ -20,11 +20,13 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       onFetchMoreData,
       onSelectShelter,
       className = '',
+      onOpenModal,
+      onClearSearch,
       ...rest
     } = props;
 
     return (
-      <div>
+      <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           Abrigos disponíveis ({count})
         </h1>
@@ -54,7 +56,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             variant="ghost"
             size="sm"
             className="flex gap-2 items-center [&_svg]:stroke-blue-500"
-            onClick={() => setOpenModal(true)}
+            onClick={onOpenModal}
           >
             <ListFilter className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">Filtros</h1>
@@ -63,7 +65,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             variant="ghost"
             size="sm"
             className="flex gap-2 items-center [&_svg]:stroke-blue-500"
-            onClick={() => clearSearch()}
+            onClick={onClearSearch}
           >
             <CircleAlert className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
@@ -71,11 +73,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </h1>
           </Button>
         </div>
-        <main
-          ref={ref}
-          className={cn(className, 'flex flex-col gap-4')}
-          {...rest}
-        >
+        <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
           ) : data.length === 0 ? (
