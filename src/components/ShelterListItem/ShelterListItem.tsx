@@ -69,7 +69,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           <div className="flex flex-col gap-3">
             <Separator className="mt-2" />
             <p className="text-muted-foreground text-sm md:text-lg font-medium">
-              Status voluntários:
+              Necessita voluntários:
             </p>
             <div className="flex gap-2 flex-wrap">
               {volunteerTags.length == 0 ?
