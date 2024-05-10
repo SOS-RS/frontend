@@ -16,7 +16,7 @@ function useFetch<T = any>(path: string, initialValue?: T) {
         .then(({ data }) => setData(data.data))
         .finally(() => setLoading(false));
     },
-    [path]
+    [path],
   );
 
   useEffect(() => {

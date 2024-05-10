@@ -12,14 +12,14 @@ const CircleStatus = React.forwardRef<HTMLDivElement, ICircleStatus>(
         ref={ref}
         className={cn(
           `w-${size} h-${size} bg-orange-500 rounded-md`,
-          className
+          className,
         )}
         {...rest}
       >
         <span></span>
       </div>
     );
-  }
+  },
 );
 
 export { CircleStatus };

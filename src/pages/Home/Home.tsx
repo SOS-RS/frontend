@@ -45,7 +45,7 @@ const Home = () => {
         });
       },
     },
-    []
+    [],
   );
 
   const clearSearch = () => {
@@ -55,7 +55,7 @@ const Home = () => {
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
-    [shelters.page, shelters.perPage, shelters.count]
+    [shelters.page, shelters.perPage, shelters.count],
   );
 
   const closeModal = () => {
@@ -84,7 +84,7 @@ const Home = () => {
       {
         params: params,
       },
-      true
+      true,
     );
   }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
 

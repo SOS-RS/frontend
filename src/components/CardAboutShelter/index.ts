@@ -1,3 +1,3 @@
-import { CardAboutShelter } from "./CardAboutShelter";
+import { CardAboutShelter } from './CardAboutShelter';
 
 export { CardAboutShelter };

@@ -29,13 +29,13 @@ const EditShelterSupply = () => {
         if (v) {
           setFilteredSupplies(
             supplies.filter((s) =>
-              s.name.toLowerCase().includes(v.toLowerCase())
-            )
+              s.name.toLowerCase().includes(v.toLowerCase()),
+            ),
           );
         } else setFilteredSupplies(supplies);
       },
     },
-    [supplies]
+    [supplies],
   );
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -46,12 +46,12 @@ const EditShelterSupply = () => {
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
       (prev, current) => ({ ...prev, [current.supply.id]: current }),
-      {} as Record<string, IUseShelterDataSupply>
+      {} as Record<string, IUseShelterDataSupply>,
     );
   }, [shelter?.shelterSupplies]);
   const supplyGroups = useMemo(
     () => group<ISupply>(filteredSupplies ?? [], 'supplyCategory.name'),
-    [filteredSupplies]
+    [filteredSupplies],
   );
 
   const handleClickSupplyRow = useCallback(
@@ -100,7 +100,7 @@ const EditShelterSupply = () => {
         },
       });
     },
-    [refresh, shelterId, toast]
+    [refresh, shelterId, toast],
   );
 
   useEffect(() => {
