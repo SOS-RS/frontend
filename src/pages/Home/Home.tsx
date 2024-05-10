@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon } from 'lucide-react';
+import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
 import qs from 'qs';
 
 import { Footer, Header } from '@/components';
@@ -53,7 +53,8 @@ const Home = () => {
     setSearch('');
     setFilterData(initialFilterData);
     setSearchParams('');
-  }, [setSearch, setSearchParams]);
+    refresh();
+  }, [refresh, setSearch, setSearchParams]);
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
@@ -112,6 +113,17 @@ const Home = () => {
                 Bem vindo, {session.name}
               </h3>
             )}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
+              onClick={() =>
+                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
+              }
+            >
+              <PlusIcon className="h-5 w-5 stroke-white" />
+              Cadastrar abrigo
+            </Button>
             <Button
               loading={loading}
               variant="ghost"

@@ -2,26 +2,24 @@ import { useMemo } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { CardAboutShelter, Chip, Header, LoadingScreen } from '@/components';
+import { CardAboutShelter, Header, LoadingScreen } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, getCategoriesToFilterVolunteers, getSupplyPriorityProps, group } from '@/lib/utils';
+import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import { IShelterCategoryItemsProps } from './components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
 const Shelter = () => {
   const params = useParams();
   const { id = '-1' } = params;
   const navigate = useNavigate();
   const { data: shelter, loading } = useShelter(id ?? '-1');
-  const { data: shelters } = useShelter(id);
 
   const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase()))) ?? [], 'priority');
+    const grouped = group(shelter?.shelterSupplies ?? [], 'priority');
     delete grouped[SupplyPriority.NotNeeded];
 
     return Object.entries(grouped)
@@ -30,11 +28,7 @@ const Shelter = () => {
         priority: +key,
         tags: values.map((v) => v.supply.name),
       }));
-  }, [shelters.shelterSupplies]);
-
-  const volunteerTags: IUseShelterDataSupply[] = useMemo(() => {
-    return shelter?.shelterSupplies?.filter((s) => getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name?.toLowerCase())) && s.priority > SupplyPriority.Remaining).reverse()
-  }, [shelter.shelterSupplies])
+  }, [shelter?.shelterSupplies]);
 
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
@@ -97,26 +91,11 @@ const Shelter = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
-
-        <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center">
-              <h3>
-                Voluntários
-              </h3>
-            </div>
-            <div className="flex gap-2 flex-wrap">
-              { volunteerTags.length == 0 ? <p>Não informado. <i> (Pode ser adicionado ao clicar em Editar itens) </i></p> : volunteerTags.map((v, idx) => (
-                <Chip
-                  className={getSupplyPriorityProps(v.priority).className}
-                  key={idx}
-                  label={v.supply.name}
-                />
-              ))}
-            </div>
+          <div className="flex flex-col gap-3">
+            {shelterCategories.map((categoryProps, idx) => (
+              <ShelterCategoryItems key={idx} {...categoryProps} />
+            ))}
           </div>
-          {shelterCategories.map((categoryProps, idx) => (
-            <ShelterCategoryItems key={idx} {...categoryProps} />
-          ))}
         </div>
       </div>
     </div>

@@ -29,7 +29,8 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           params: {
             orderBy: 'prioritySum',
             order: 'desc',
-            search: search ?? new URLSearchParams(window.location.search),
+            search:
+              search ?? new URLSearchParams(window.location.search).toString(),
             ...rest,
           },
         })
