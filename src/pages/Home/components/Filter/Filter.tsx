@@ -37,12 +37,7 @@ const Filter = (props: IFilterProps) => {
     validationSchema: Yup.object().shape({
       search: Yup.string(),
     }),
-    onSubmit: (values) => {
-      onSubmit({
-        ...values,
-        priority: values.priority ? +values.priority : null,
-      });
-    },
+    onSubmit,
   });
 
   const handleToggleShelterStatus = useCallback(
@@ -112,7 +107,12 @@ const Filter = (props: IFilterProps) => {
                     label: el.name,
                     value: el.id,
                   }))}
-                  onChange={(v) => setFieldValue('supplyCategoryIds', v)}
+                  onChange={(v) =>
+                    setFieldValue(
+                      'supplyCategoryIds',
+                      v.map((s) => s.value)
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -121,13 +121,17 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  defaultValue={null}
                   isMulti
                   options={supplies.map((el: ISupply) => ({
                     label: el.name,
                     value: el.id,
                   }))}
-                  onChange={(v) => setFieldValue('supplyIds', v)}
+                  onChange={(v) =>
+                    setFieldValue(
+                      'supplyIds',
+                      v.map((s) => s.value)
+                    )
+                  }
                 />
               </div>
             </div>

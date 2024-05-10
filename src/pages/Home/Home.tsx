@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RotateCw, LogOutIcon } from 'lucide-react';
-import qs from 'query-string';
+import qs from 'qs';
 
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
@@ -36,7 +36,7 @@ const Home = () => {
       throttle: 400,
       callback: (v) => {
         const params = {
-          search: v ? qs.stringify(filterData, { arrayFormat: 'bracket' }) : '',
+          search: v ? qs.stringify(filterData) : '',
         };
         refresh({
           params: params,
@@ -51,7 +51,8 @@ const Home = () => {
     setSearchValue('');
     setSearch('');
     setFilterData(initialFilterData);
-  }, [setSearch]);
+    setSearchParams('');
+  }, [setSearch, setSearchParams]);
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
@@ -63,11 +64,13 @@ const Home = () => {
       setOpenModal(false);
       setFilterData(values);
       console.log(values);
-      const search = qs.stringify(values, { arrayFormat: 'bracket' });
-      setSearchParams(search);
+      const searchQuery = qs.stringify(values, {
+        skipNulls: true,
+      });
+      setSearchParams(searchQuery);
       refresh({
         params: {
-          search,
+          search: searchQuery,
         },
       });
     },
