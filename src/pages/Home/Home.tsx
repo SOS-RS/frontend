@@ -1,5 +1,5 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RotateCw, LogOutIcon } from 'lucide-react';
 import qs from 'query-string';
 
@@ -21,6 +21,7 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     loading: loadingSession,
     refreshSession,
@@ -37,7 +38,6 @@ const Home = () => {
         const params = {
           search: v ? qs.stringify(filterData, { arrayFormat: 'bracket' }) : '',
         };
-
         refresh({
           params: params,
         });
@@ -58,11 +58,21 @@ const Home = () => {
     [shelters.page, shelters.perPage, shelters.count]
   );
 
-  const onSubmitFilterForm = useCallback((values: IFilterFormProps) => {
-    setOpenModal(false);
-    setFilterData(values);
-    //TODO: logica de buscar no filtro
-  }, []);
+  const onSubmitFilterForm = useCallback(
+    (values: IFilterFormProps) => {
+      setOpenModal(false);
+      setFilterData(values);
+      console.log(values);
+      const search = qs.stringify(values, { arrayFormat: 'bracket' });
+      setSearchParams(search);
+      refresh({
+        params: {
+          search,
+        },
+      });
+    },
+    [refresh, setSearchParams]
+  );
 
   const handleFetchMore = useCallback(() => {
     const params = {
@@ -79,6 +89,10 @@ const Home = () => {
       true
     );
   }, [refresh, searchValue, shelters.filters, shelters.page, shelters.perPage]);
+
+  useEffect(() => {
+    console.log(searchParams.toString());
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col h-screen items-center">

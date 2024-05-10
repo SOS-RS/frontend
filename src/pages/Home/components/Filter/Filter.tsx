@@ -20,7 +20,7 @@ import {
   ShelterAvailabilityStatus,
 } from './types';
 import { priorityOptions } from '@/lib/utils';
-import { ISupply } from '@/service/supply/types';
+import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { useCallback } from 'react';
 
 const Filter = (props: IFilterProps) => {
@@ -37,7 +37,12 @@ const Filter = (props: IFilterProps) => {
     validationSchema: Yup.object().shape({
       search: Yup.string(),
     }),
-    onSubmit,
+    onSubmit: (values) => {
+      onSubmit({
+        ...values,
+        priority: values.priority ? +values.priority : null,
+      });
+    },
   });
 
   const handleToggleShelterStatus = useCallback(
@@ -88,11 +93,12 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  defaultValue={values.priority}
                   options={Object.entries(priorityOptions).map(
                     ([priority, label]) => ({ label, value: priority } as any)
                   )}
-                  onChange={(v) => setFieldValue('priority', v)}
+                  onChange={(
+                    v: { label: string; value: SupplyPriority } | null
+                  ) => setFieldValue('priority', v?.value)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
