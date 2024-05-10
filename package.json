@@ -34,6 +34,7 @@
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
     "tailwind-merge": "^2.3.0",
+    "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
     "yup": "^1.4.0",
     "zod": "^3.23.6"

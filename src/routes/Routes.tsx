@@ -9,6 +9,7 @@ import {
   SignIn,
   UpdateShelter,
 } from '@/pages';
+import { DefaultLayout } from '@/layouts';
 
 const Routes = () => {
   return (
@@ -21,7 +22,9 @@ const Routes = () => {
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
       />
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<DefaultLayout />}>
+        <Route index element={<Home />} />
+      </Route>
       <Route path="/entrar" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>

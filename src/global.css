@@ -75,7 +75,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border scrollbar-thin;
     @apply text-text;
     font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased !important;
