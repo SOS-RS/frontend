@@ -1,7 +1,6 @@
 import { ChevronLeft, PlusCircle } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-
 import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
@@ -141,11 +140,10 @@ const EditShelterSupply = () => {
       <div className="flex flex-col h-screen items-center">
         <Header
           title="Editar Itens"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
           startAdornment={
             <Button
               variant="ghost"
-              className="[&_svg]:stroke-blue-500"
+              className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
               onClick={() => navigate(`/abrigo/${shelterId}`)}
             >
               <ChevronLeft size={20} />
@@ -160,10 +158,10 @@ const EditShelterSupply = () => {
           </p>
           <Button
             variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
+            className="bg-primary-green hover:bg-light-green border-2 text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
           >
-            <PlusCircle />
+            <PlusCircle className="stroke-white" />
             Cadastrar novo item
           </Button>
           <div className="w-full my-2">

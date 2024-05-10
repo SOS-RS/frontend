@@ -2,7 +2,6 @@ import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
 import { Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 
@@ -67,11 +66,10 @@ const UpdateShelter = () => {
     <div className="flex flex-col h-screen items-center">
       <Header
         title="Atualização cadastral"
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
         startAdornment={
           <Button
             variant="ghost"
-            className="[&_svg]:stroke-blue-500"
+            className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
             onClick={() => navigate(-1)}
           >
             <ChevronLeft size={20} />
@@ -114,7 +112,7 @@ const UpdateShelter = () => {
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="bg-primary-green hover:bg-light-green border-2 text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             >
               Atualizar
             </Button>
