@@ -190,7 +190,7 @@ const Home = () => {
               const { label, className } = getSupplyPriorityProps(p);
               return (
                 <Chip
-                  key={idx}
+                  key={`subtitle-item-${idx}`}
                   label={label}
                   className={`${className} w-fit`}
                 />
