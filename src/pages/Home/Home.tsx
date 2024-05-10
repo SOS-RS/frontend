@@ -16,6 +16,9 @@ import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
+import { SupplyPriority } from '@/service/supply/types';
+import { getSupplyPriorityProps } from '@/lib/utils';
+import { Chip } from '@/components/Chip';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -179,6 +182,22 @@ const Home = () => {
             </h1>
           </Button>
         </div>
+        <h6 className={'font-semibold text-md'}>Legenda</h6>
+        <div className="flex flex-row gap-2">
+          {Object.values(SupplyPriority)
+            .filter((value): value is number => typeof value === 'number')
+            .map((p, idx) => {
+              const { label, className } = getSupplyPriorityProps(p);
+              return (
+                <Chip
+                  key={idx}
+                  label={label}
+                  className={`${className} w-fit`}
+                />
+              );
+            })}
+        </div>
+
         <main className="flex flex-col gap-4">
           {loading ? (
             <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
