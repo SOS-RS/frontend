@@ -7,7 +7,7 @@ export interface ApiSearchProps<T>
   setSelectedItem: (name: ISearchableObject) => void;
   helperText?: string;
   data: T[];
-  loading: boolean;
+  throttle: number;
 }
 
 export interface ISearchableObject {
