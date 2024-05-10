@@ -1,14 +1,15 @@
-import { Routes as Switch, Route, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
 import {
   CreateShelter,
   CreateSupply,
+  EditShelterSupply,
   Home,
   Shelter,
-  EditShelterSupply,
   SignIn,
   UpdateShelter,
 } from '@/pages';
+import { SignUp } from '@/pages/SignUp';
 
 const Routes = () => {
   return (
@@ -23,6 +24,7 @@ const Routes = () => {
       />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
+      <Route path="/registrar" element={<SignUp />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );
