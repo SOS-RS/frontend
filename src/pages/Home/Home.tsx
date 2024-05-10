@@ -16,6 +16,8 @@ import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
+import { Map } from '@/components/Map';
+import { Marker, Popup } from 'react-leaflet';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -186,6 +188,13 @@ const Home = () => {
             <NoFoundSearch />
           ) : (
             <Fragment>
+              <div>
+                <Map>
+                  <Marker position={[-30.04914, -51.1955]}>
+                    <Popup>Abrigo Simers</Popup>
+                  </Marker>
+                </Map>
+              </div>
               {shelters.results.map((s, idx) => (
                 <ShelterListItem key={idx} data={s} />
               ))}
