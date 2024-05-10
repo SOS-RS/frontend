@@ -20,42 +20,22 @@ const useShelters = () => {
       supplyCategories: [],
       filterAvailableShelter: false,
       filterUnavailableShelter: false,
-      waitingShelterAvailability: false
-    }
-  });
-
-  const resetSearch = () => {
-    const params = {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
       waitingShelterAvailability: false,
-      page: 1,
-      perPage: 20,      
-    }
-    search({          
-      params: params,
-    });
-  }
+    },
+  });
 
   const search = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<any>>(
-          '/shelters/search',
-          {
-            ...config,
-            params: {
-              orderBy: 'prioritySum',
-              order: 'desc',
-              ...(config.params ?? {}),
-            },
-          }
-        )
+        .get<IServerResponse<any>>('/shelters/search', {
+          ...config,
+          params: {
+            orderBy: 'prioritySum',
+            order: 'desc',
+            ...(config.params ?? {}),
+          },
+        })
         .then(({ data }) => {
           if (append) {
             setData((prev) => ({
@@ -67,10 +47,13 @@ const useShelters = () => {
                 priority: config.params.priority,
                 supplies: config.params.supplies ?? [],
                 supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
+                filterAvailableShelter:
+                  config.params.filterAvailableShelter ?? false,
+                filterUnavailableShelter:
+                  config.params.filterUnavailableShelter ?? false,
+                waitingShelterAvailability:
+                  config.params.waitingShelterAvailability ?? false,
+              },
             }));
           } else {
             setData((prev) => ({
@@ -82,23 +65,43 @@ const useShelters = () => {
                 priority: config.params.priority,
                 supplies: config.params.supplies ?? [],
                 supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
-            }));          
+                filterAvailableShelter:
+                  config.params.filterAvailableShelter ?? false,
+                filterUnavailableShelter:
+                  config.params.filterUnavailableShelter ?? false,
+                waitingShelterAvailability:
+                  config.params.waitingShelterAvailability ?? false,
+              },
+            }));
           }
         })
         .finally(() => {
-          if(!append) setLoading(false);
+          if (!append) setLoading(false);
         });
     },
-    []
+    [],
   );
+
+  const resetSearch = useCallback(() => {
+    const params = {
+      search: '',
+      priority: undefined,
+      supplies: [],
+      supplyCategories: [],
+      filterAvailableShelter: false,
+      filterUnavailableShelter: false,
+      waitingShelterAvailability: false,
+      page: 1,
+      perPage: 20,
+    };
+    search({
+      params: params,
+    });
+  }, [search]);
 
   useEffect(() => {
     resetSearch();
-  }, []);
+  }, [resetSearch]);
 
   return { data, loading, search, resetSearch };
 };

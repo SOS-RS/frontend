@@ -16,7 +16,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
       ref={ref}
       className={cn(
         'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full',
-        className
+        className,
       )}
       {...rest}
     >
@@ -25,9 +25,9 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         <h3 className="font-medium text-white">{title}</h3>
       </div>
       <div className="flex items-center">
-        <a 
+        <a
           href="https://forms.gle/2S7L2gR529Dc8P3T9"
-          className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full" 
+          className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
           target="_blank"
         >
           Cadastrar abrigo

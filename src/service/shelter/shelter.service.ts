@@ -19,24 +19,24 @@ const ShelterServices = {
   },
   getOne: async (id: string): Promise<IShelter> => {
     const { data } = await api.get<IServerResponse<IShelter>>(
-      `/shelters/${id}`
+      `/shelters/${id}`,
     );
     return data.data;
   },
   update: async (
     id: string,
-    payload: IUpdateShelter
+    payload: IUpdateShelter,
   ): Promise<IServerResponse> => {
     const { data } = await api.put<IServerResponse>(`/shelters/${id}`, payload);
     return data;
   },
   adminUpdate: async (
     id: string,
-    payload: IFullUpdateShelter
+    payload: IFullUpdateShelter,
   ): Promise<IServerResponse> => {
     const { data } = await api.put<IServerResponse>(
       `/shelters/${id}/admin`,
-      payload
+      payload,
     );
     return data;
   },

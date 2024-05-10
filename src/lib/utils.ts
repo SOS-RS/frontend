@@ -38,7 +38,7 @@ function nameStatusPriority(priority: SupplyPriority) {
 
 function getAvailabilityProps(
   capacity?: number | null,
-  shelteredPeople?: number | null
+  shelteredPeople?: number | null,
 ) {
   if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
@@ -88,26 +88,29 @@ function getObjectValue<T>(obj: T, path: string, sep = '.'): any {
     .split(sep)
     .reduce(
       (acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined),
-      obj as Record<string, any>
+      obj as Record<string, any>,
     );
 }
 
 function group<T extends Record<string, any>>(
   arr: Array<T>,
   groupBy: string,
-  sep = '.'
+  sep = '.',
 ): { [key: string]: Array<T> } {
-  const data = arr.reduce((prev, current) => {
-    const key: string = getObjectValue(current, groupBy, sep);
-    if (prev[key]) return { ...prev, [key]: [...prev[key], current] };
-    return { ...prev, [key]: [current] };
-  }, {} as { [key: string]: Array<T> });
+  const data = arr.reduce(
+    (prev, current) => {
+      const key: string = getObjectValue(current, groupBy, sep);
+      if (prev[key]) return { ...prev, [key]: [...prev[key], current] };
+      return { ...prev, [key]: [current] };
+    },
+    {} as { [key: string]: Array<T> },
+  );
 
   return data;
 }
 
 function getCategoriesToFilterVolunteers(): string[] {
-  return ['voluntariado', 'especialistas e profissionais']
+  return ['voluntariado', 'especialistas e profissionais'];
 }
 
 export {

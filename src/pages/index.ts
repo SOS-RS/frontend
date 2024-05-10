@@ -16,5 +16,5 @@ export {
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  Filter,
 };

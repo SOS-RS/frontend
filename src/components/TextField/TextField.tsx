@@ -38,7 +38,7 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 export { TextField };

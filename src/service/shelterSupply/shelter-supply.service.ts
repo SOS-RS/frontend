@@ -6,11 +6,11 @@ const ShelterSupplyServices = {
   update: async (
     shelterId: string,
     supplyId: string,
-    payload: IUpdateShelterSupply
+    payload: IUpdateShelterSupply,
   ): Promise<IServerResponse> => {
     const { data } = await api.put(
       `/shelter/supplies/${shelterId}/${supplyId}`,
-      payload
+      payload,
     );
     return data;
   },

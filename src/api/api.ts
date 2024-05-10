@@ -20,7 +20,7 @@ api.interceptors.response.use(
       localStorage.removeItem('token');
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export { api };

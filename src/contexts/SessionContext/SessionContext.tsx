@@ -8,7 +8,7 @@ const SessionContext = createContext({} as ISessionContext);
 
 const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(
-    !!window.localStorage.getItem('token')
+    !!window.localStorage.getItem('token'),
   );
   const [session, setSession] = useState<ISession | null>(null);
 
