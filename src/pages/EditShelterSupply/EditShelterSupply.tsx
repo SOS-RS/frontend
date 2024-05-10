@@ -1,5 +1,5 @@
 import { ChevronLeft, PlusCircle } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
@@ -16,6 +16,7 @@ import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
+  const location = useLocation()
   const { shelterId = '-1' } = useParams();
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
@@ -66,6 +67,9 @@ const EditShelterSupply = () => {
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            if (location.state?.supplyIdToAdd) {
+              navigate('.', { state: null });
+            }
             refresh();
           };
 
@@ -99,12 +103,30 @@ const EditShelterSupply = () => {
         },
       });
     },
-    [refresh, shelterId, toast]
+    [location.state, navigate, refresh, shelterId, toast]
   );
 
   useEffect(() => {
     setFilteredSupplies(supplies);
   }, [supplies]);
+
+  useEffect(() => {
+    const { supplyIdToAdd } = location.state ?? {}
+    
+    if (supplyIdToAdd) {  
+      const findShelterDataSupply = shelterSupplyData[supplyIdToAdd]  
+
+      if (findShelterDataSupply && findShelterDataSupply.supply) {  
+        const { supply, priority } = findShelterDataSupply  
+
+        handleClickSupplyRow({  
+          id: supply?.id,  
+          name: supply?.name,  
+          priority  
+        }) 
+      }  
+    }  
+  }, [handleClickSupplyRow, location.state, shelterSupplyData, supplies])
 
   if (loading) return <LoadingScreen />;
 
