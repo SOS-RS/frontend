@@ -7,6 +7,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     endAdornment,
     startAdornment,
     title,
+    showButtonRegisterShelter = true,
     className = '',
     ...rest
   } = props;
@@ -24,14 +25,15 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         {startAdornment}
         <h3 className="font-medium text-white">{title}</h3>
       </div>
-      <div className="flex items-center">
-        <a 
-          href="https://forms.gle/2S7L2gR529Dc8P3T9"
-          className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full" 
-          target="_blank"
-        >
-          Cadastrar abrigo
-        </a>
+      <div className="flex items-center gap-x-3">
+        {showButtonRegisterShelter && (
+          <a
+            href="/abrigo/cadastrar"
+            className="bg-white hover:bg-rose-50 text-red-600 font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
+          >
+            Cadastrar abrigo
+          </a>
+        )}
         <div className="cursor-pointer ">{endAdornment}</div>
       </div>
     </div>

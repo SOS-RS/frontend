@@ -1,7 +1,8 @@
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, CircleAlert } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMask } from '@react-input/mask';
 
 import {
   Select,
@@ -10,15 +11,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Header, TextField } from '@/components';
+import { Alert, Header, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { ICreateShelter } from '@/service/shelter/types';
 import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
-import { withAuth } from '@/hocs';
 
-const CreateShelterComponent = () => {
+const CreateShelter = () => {
+  const inputRefMaskPhone = useMask({
+    mask: '(__) _____-____ ',
+    replacement: { _: /\d/ },
+  });
   const navigate = useNavigate();
+
+  const alertDescription = 'O cadastro ficará pendente até ser aprovado.';
 
   const {
     errors,
@@ -51,14 +57,16 @@ const CreateShelterComponent = () => {
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
       petFriendly: Yup.bool().nullable(),
-      contact: Yup.string().nullable(),
+      contact: Yup.string()
+        .min(15, 'O valor mínimo para este campo é 15')
+        .nullable(),
       pix: Yup.string().nullable(),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
         await ShelterServices.create(values);
         toast({
-          title: 'Cadastro feita com sucesso',
+          title: 'Cadastro feito com sucesso!',
         });
         resetForm();
       } catch (err: any) {
@@ -76,6 +84,7 @@ const CreateShelterComponent = () => {
       <Header
         title="Cadastrar novo abrigo"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+        showButtonRegisterShelter={false}
         startAdornment={
           <Button
             variant="ghost"
@@ -106,6 +115,7 @@ const CreateShelterComponent = () => {
               helperText={errors.address}
             />
             <TextField
+              ref={inputRefMaskPhone}
               label="Contato"
               {...getFieldProps('contact')}
               error={!!errors.contact}
@@ -151,6 +161,12 @@ const CreateShelterComponent = () => {
               helperText={errors.pix}
             />
           </div>
+          <Alert
+            description={alertDescription}
+            startAdornment={
+              <CircleAlert size={20} className="stroke-light-yellow" />
+            }
+          />
           <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
             <Button
               loading={isSubmitting}
@@ -165,7 +181,5 @@ const CreateShelterComponent = () => {
     </div>
   );
 };
-
-const CreateShelter = withAuth(CreateShelterComponent);
 
 export { CreateShelter };
