@@ -33,7 +33,16 @@ const UpdateShelterFullComponent = () => {
     setFieldValue,
     values,
   } = useFormik<IFullUpdateShelter>({
-    initialValues: shelter,
+    initialValues: {
+      name: shelter.name,
+      address: shelter.address,
+      shelteredPeople: shelter.shelteredPeople,
+      capacity: shelter.capacity,
+      petFriendly: !!shelter.petFriendly,
+      contact: shelter.contact,
+      pix: shelter.pix,
+      verified: !!shelter.verified,
+    },
     enableReinitialize: true,
     validateOnBlur: false,
     validateOnChange: false,
