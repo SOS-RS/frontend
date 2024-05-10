@@ -8,7 +8,6 @@ import {
   LogOutIcon,
   Heart,
 } from 'lucide-react';
-
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
 import { useShelters, useThrottle } from '@/hooks';
@@ -16,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
+import { SupplyRank } from './components/SupplyRank';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -143,6 +143,7 @@ const Home = () => {
             <CircleAlert size={20} className="stroke-light-yellow" />
           }
         />
+        <SupplyRank />
         <div className="relative">
           <Input
             placeholder="Buscar por abrigo ou endereço"
