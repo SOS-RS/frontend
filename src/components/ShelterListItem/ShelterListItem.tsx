@@ -43,6 +43,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     [data.shelterSupplies]
   )
 
+
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
       <Button
@@ -119,6 +120,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
                 />
               ))}
             </div>
+
           </div>
         </>
       )}
