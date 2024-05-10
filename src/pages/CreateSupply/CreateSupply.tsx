@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { CircleStatus, Header, LoadingScreen, TextField } from '@/components';
+import { CircleStatus, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useSupplyCategories } from '@/hooks';
+import { useSupplies, useSupplyCategories } from '@/hooks';
 import {
   Select,
   SelectContent,
@@ -18,13 +18,15 @@ import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { ShelterSupplyServices, SupplyServices } from '@/service';
 import { ICreateShelterSupply } from '@/service/shelterSupply/types';
+import { SearchableInput } from '@/components/SearchableInput';
 
 const CreateSupply = () => {
   const navigate = useNavigate();
   const { shelterId = '-1' } = useParams();
   const { toast } = useToast();
   const { data: supplyCategories, loading } = useSupplyCategories();
-
+  const { data: supplies } = useSupplies();
+  
   const {
     errors,
     getFieldProps,
@@ -99,12 +101,20 @@ const CreateSupply = () => {
             prioridade
           </p>
           <div className="flex flex-col gap-6 w-full mt-6">
-            <TextField
-              label="Nome do item"
-              {...getFieldProps('name')}
-              error={!!errors.name}
-              helperText={errors.name}
-            />
+          <SearchableInput
+            label="Nome do item"
+            data={supplies.map((supply) => ({
+              label: supply.name,
+              value: supply.name,
+              id: supply.id
+            }))}
+            onClickSuggestion={(supply) => {
+              navigate(`/abrigo/${shelterId}/items`, { state: { supplyIdToAdd: supply.id } })
+            }}
+            {...getFieldProps('name')}
+            errorMessage={errors["name"]}
+            throttle={300}
+          />              
             <div className="flex flex-col w-full">
               <label className="text-muted-foreground">Categoria</label>
               <Select
