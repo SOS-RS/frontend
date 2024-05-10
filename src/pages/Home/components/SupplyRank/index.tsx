@@ -7,7 +7,7 @@ export const SupplyRank = () => {
 
   return (
     <div className="my-2">
-      <h2 className="text-[#2f2f2f] font-semibold text-xl">
+      <h2 className="text-[#2f2f2f] font-semibold text-xl pb-2">
         Confira quais itens os abrigos mais necessitam:
       </h2>
       {loading ? (
