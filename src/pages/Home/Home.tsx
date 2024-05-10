@@ -1,5 +1,13 @@
 import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import { RotateCw, CircleAlert, Search, Loader, ListFilter, LogOutIcon, Heart } from 'lucide-react';
+import {
+  RotateCw,
+  CircleAlert,
+  Search,
+  Loader,
+  ListFilter,
+  LogOutIcon,
+  Heart,
+} from 'lucide-react';
 
 import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
 import { Input } from '@/components/ui/input';
@@ -32,7 +40,7 @@ const Home = () => {
           perPage: shelters.perPage,
         };
 
-        search({          
+        search({
           params: params,
         });
       },
@@ -43,7 +51,7 @@ const Home = () => {
   const clearSearch = () => {
     setSearchValue('');
     resetSearch();
-  }
+  };
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
@@ -52,17 +60,17 @@ const Home = () => {
 
   const closeModal = () => {
     setOpenModal(false);
-  }
+  };
 
   const handleSearch = (values: IUseShelterSearchParams) => {
     setOpenModal(false);
     setSearchValue(values.search ?? '');
     search({
       params: {
-        ...values
-      }
+        ...values,
+      },
     });
-  }
+  };
 
   const handleFetchMore = useCallback(() => {
     const params = {
@@ -72,15 +80,24 @@ const Home = () => {
       search: searchValue ? searchValue : '',
     };
 
-    search({          
-      params: params,
-    }, true);
-
+    search(
+      {
+        params: params,
+      },
+      true
+    );
   }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
-      {isModalOpen && <Filter handleSearch={handleSearch} isModalOpen={isModalOpen} closeModal={closeModal} filters={shelters.filters} />}
+      {isModalOpen && (
+        <Filter
+          handleSearch={handleSearch}
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          filters={shelters.filters}
+        />
+      )}
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
@@ -141,17 +158,21 @@ const Home = () => {
           </div>
         </div>
         <div className="flex flex-row">
-          <Button variant="ghost" size="sm" 
-                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
-                  onClick={() => setOpenModal(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            onClick={() => setOpenModal(true)}
+          >
             <ListFilter className="h-5 w-5" />
-            <h1 className="font-semibold text-[16px] text-blue-500">
-              Filtros
-            </h1>
+            <h1 className="font-semibold text-[16px] text-blue-500">Filtros</h1>
           </Button>
-          <Button variant="ghost" size="sm" 
-                  className="flex gap-2 items-center [&_svg]:stroke-blue-500" 
-                  onClick={() => clearSearch()}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex gap-2 items-center [&_svg]:stroke-blue-500"
+            onClick={() => clearSearch()}
+          >
             <CircleAlert className="h-5 w-5" />
             <h1 className="font-semibold text-[16px] text-blue-500">
               Limpar Filtros
