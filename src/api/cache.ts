@@ -1,4 +1,5 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import qs from 'qs';
 
 function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
   if (
@@ -6,15 +7,16 @@ function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
     config.url &&
     config.headers['x-app-cache'] === 'true'
   ) {
-    const cache = localStorage.getItem(config.url);
+    const url = config.url + '?' + qs.stringify(config.params);
+    const cache = localStorage.getItem(url);
     if (cache) {
       const { data, timestamp } = JSON.parse(cache);
       const ttl = 1000 * 60 * 5; // 5 minutes
       if (new Date().getTime() - timestamp >= ttl) {
-        console.log(`cache - expirado - ${config.url}`);
-        localStorage.removeItem(config.url);
+        console.log(`cache - expirado - ${url}`);
+        localStorage.removeItem(url);
       } else {
-        console.log(`cache - ok - ${config.url}`);
+        console.log(`cache - ok - ${url}`);
         return data;
       }
     }
@@ -23,6 +25,7 @@ function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
 }
 
 function handleCacheResponse(resp: AxiosResponse<any, any>) {
+  const url = resp.config.url + '?' + qs.stringify(resp.config.params);
   if (
     resp.config.method === 'get' &&
     resp.config.url &&
@@ -32,7 +35,7 @@ function handleCacheResponse(resp: AxiosResponse<any, any>) {
   ) {
     const { data, headers, status, statusText } = resp;
     localStorage.setItem(
-      resp.config.url,
+      url,
       JSON.stringify({
         data: { data, headers, status, statusText },
         timestamp: new Date().getTime(),

@@ -20,3 +20,7 @@ export interface IUseSheltersDataSupplyData {
   supply: { name: string };
   priority: number;
 }
+
+export interface IUseShelterOptions {
+  cache?: boolean;
+}

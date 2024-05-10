@@ -20,7 +20,7 @@ const initialFilterData: IFilterFormProps = {
 };
 
 const Home = () => {
-  const { data: shelters, loading, refresh } = useShelters();
+  const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const {
     loading: loadingSession,
     refreshSession,
