@@ -207,9 +207,9 @@ const Home = () => {
           )}
         </main>
       </div>
-      <div className="w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 flex gap-3 justify-center flex-wrap items-center bg-red-600 text-center">
+      <div className="w-full flex-col md:flex-row py-3 px-2 md-p4 flex gap-3justify-center gap-2 flex-wrap items-center bg-red-600 text-center">
         <p className="text-white">
-          Para cadastrar novos abrigos clique{' '}
+          Cadastre novos abrigos{' '}
           <a
             href="https://forms.gle/2S7L2gR529Dc8P3T9"
             className="underline hover:text-gray-300"
@@ -220,7 +220,7 @@ const Home = () => {
         </p>
         <span className="text-white hidden md:block">•</span>
         <p className="text-white flex gap-1 flex-wrap justify-center">
-          Projeto Open Source disponível em{' '}
+          Colabore em{' '}
           <a
             className="underline hover:text-gray-300 flex items-center gap-1"
             href="https://github.com/SOS-RS"
