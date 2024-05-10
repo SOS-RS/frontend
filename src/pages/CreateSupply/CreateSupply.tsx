@@ -3,7 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { CircleStatus, Header, LoadingScreen, TextField } from '@/components';
+import {
+  SuppliesApiSearch,
+  CircleStatus,
+  Header,
+  LoadingScreen,
+} from '@/components';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useSupplyCategories } from '@/hooks';
@@ -99,19 +104,32 @@ const CreateSupply = () => {
             prioridade
           </p>
           <div className="flex flex-col gap-6 w-full mt-6">
-            <TextField
+            <SuppliesApiSearch
               label="Nome do item"
-              {...getFieldProps('name')}
+              setSelectedSupply={(supply) => {
+                if (supply.id) {
+                  setFieldValue('name', supply.name);
+                  setFieldValue('supplyCategoryId', supply.supplyCategory?.id);
+                  return;
+                }
+
+                setFieldValue('name', supply.name);
+              }}
               error={!!errors.name}
               helperText={errors.name}
+              throttle={300}
             />
+
             <div className="flex flex-col w-full">
               <label className="text-muted-foreground">Categoria</label>
               <Select
                 onValueChange={(v) => {
                   setFieldValue('supplyCategoryId', v);
                 }}
-                defaultValue={`${values.supplyCategoryId}`}
+                value={
+                  getFieldProps('supplyCategoryId').value ??
+                  `${values.supplyCategoryId}`
+                }
               >
                 <SelectTrigger className="w-full">
                   <SelectValue

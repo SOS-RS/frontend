@@ -7,6 +7,12 @@ export enum SupplyPriority {
 
 export interface ISupply {
   id: string;
+  
+  supplyCategory?: {
+    id: string;
+    name: string;
+  };
+
   supplyCategoryId: string;
   name: string;
   createdAt: string;
