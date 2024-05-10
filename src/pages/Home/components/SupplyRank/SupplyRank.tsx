@@ -17,7 +17,7 @@ export const SupplyRank = () => {
           {supplyRankRows.map((rankRow, idx) => (
             <Chip
               className={'bg-light-red'}
-              key={supply-rank-`${idx}`}
+              key={`supply-rank-${idx}`}
               label={`${rankRow.name} (${rankRow.amount})`}
             />
           ))}
