@@ -9,6 +9,7 @@ import { Separator } from '../ui/separator';
 import { Chip } from '../Chip';
 import { Button } from '../ui/button';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
+import { SupplyPriority } from '@/service/supply/types';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
@@ -22,7 +23,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   const tags = useMemo(
     () => {
-      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())))
+      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase()))  && !(s.priority === SupplyPriority.Remaining))
         .sort((a, b) => b.priority - a.priority).slice(0, 10)
     },
     [data.shelterSupplies]
@@ -34,6 +35,14 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     },
     [data.shelterSupplies]
   )
+
+  const donationsTags = useMemo(
+    () => {
+      return data.shelterSupplies?.filter((s) => !getCategoriesToFilterVolunteers().some(c => c.includes(s.supply?.supplyCategory?.name.toLowerCase())) && s.priority === SupplyPriority.Remaining).reverse()
+    },
+    [data.shelterSupplies]
+  )
+
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
@@ -96,6 +105,22 @@ const ShelterListItem = (props: IShelterListItemProps) => {
                 />
               ))}
             </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <Separator className="mt-2" />
+            <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              Sobrando, para doações:
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {donationsTags.map((s, idx) => (
+                <Chip
+                  className={getSupplyPriorityProps(s.priority).className}
+                  key={idx}
+                  label={s.supply.name}
+                />
+              ))}
+            </div>
+
           </div>
         </>
       )}
