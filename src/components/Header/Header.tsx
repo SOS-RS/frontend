@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
 
@@ -37,7 +38,6 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         <div className="flex items-center">
           <div className="cursor-pointer">{endAdornment}</div>
         </div>
-      </div>
     </div>
   );
 });
