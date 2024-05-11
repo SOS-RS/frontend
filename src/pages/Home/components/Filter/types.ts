@@ -13,7 +13,10 @@ export interface IFilterFormProps {
   supplyCategoryIds: string[];
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
+<<<<<<< HEAD
   cities: string[];
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 }
 
 export interface IFilterFormikProps {
@@ -22,7 +25,10 @@ export interface IFilterFormikProps {
   supplyCategories: ISelectField[];
   supplies: ISelectField[];
   shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
+<<<<<<< HEAD
   cities: string[];
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 }
 
 export interface IFilterProps {

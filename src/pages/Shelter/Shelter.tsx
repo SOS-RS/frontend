@@ -22,7 +22,10 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
+<<<<<<< HEAD
 import { format } from 'date-fns';
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const Shelter = () => {
   const params = useParams();
@@ -38,11 +41,15 @@ const Shelter = () => {
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
+<<<<<<< HEAD
         tags: values.map((v) => ({
           label: v.supply.name,
           value: v.supply.id,
           quantity: v.quantity,
         })),
+=======
+        tags: values.map((v) => ({ label: v.supply.name, value: v.supply.id })),
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       }));
   }, [shelter?.shelterSupplies]);
   const { availability, className: availabilityClassName } =
@@ -59,8 +66,11 @@ const Shelter = () => {
     );
   }, []);
 
+<<<<<<< HEAD
   const updatedAtDate = shelter.updatedAt ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
 
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
   const handleUpdateMany = useCallback(() => {
     setLoadingUpdateMany(true);
     ShelterSupplyServices.updateMany(
@@ -167,6 +177,19 @@ const Shelter = () => {
             Atualizado em {updatedAtDate}
           </small>
         </div>
+        <Authenticated role="DistributionCenter">
+          <div className="flex w-full p-4">
+            <Button
+              className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
+              size="sm"
+              disabled={loadingUpdateMany || selectedTags.length === 0}
+              loading={loadingUpdateMany}
+              onClick={handleUpdateMany}
+            >
+              Atender pedido
+            </Button>
+          </div>
+        </Authenticated>
       </div>
     </div>
   );

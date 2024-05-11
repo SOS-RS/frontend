@@ -12,13 +12,17 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+<<<<<<< HEAD
   DialogFooter,
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import {
   IFilterFormikProps,
   IFilterProps,
+<<<<<<< HEAD
   ISelectField,
   ShelterAvailabilityStatus,
 } from './types';
@@ -26,6 +30,12 @@ import { priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
+=======
+  ShelterAvailabilityStatus,
+} from './types';
+import { priorityOptions } from '@/lib/utils';
+import { ISupply, SupplyPriority } from '@/service/supply/types';
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -58,6 +68,7 @@ const Filter = (props: IFilterProps) => {
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
+<<<<<<< HEAD
       {} as Record<string, IUseSuppliesData>
     );
   }, [supplies]);
@@ -72,6 +83,18 @@ const Filter = (props: IFilterProps) => {
               value: data.priority,
             }
           : null,
+=======
+      {} as Record<string, ISupply>
+    );
+  }, [supplies]);
+  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
+    {
+      initialValues: {
+        priority: {
+          value: data.priority ?? SupplyPriority.Urgent,
+          label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
+        },
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         search: data.search,
         shelterStatus: data.shelterStatus.map((s) => ({
           label: ShelterAvailabilityStatusMapped[s],
@@ -94,6 +117,7 @@ const Filter = (props: IFilterProps) => {
         search: Yup.string(),
       }),
       onSubmit: (values) => {
+<<<<<<< HEAD
         const {
           priority,
           search,
@@ -102,18 +126,26 @@ const Filter = (props: IFilterProps) => {
           supplyCategories,
           cities,
         } = values;
+=======
+        const { priority, search, shelterStatus, supplies, supplyCategories } =
+          values;
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         onSubmit({
           priority: priority?.value ? +priority.value : null,
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
+<<<<<<< HEAD
           cities,
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         });
       },
     }
   );
 
+<<<<<<< HEAD
   const supplyOptions = useMemo(() => {
     return supplies
       .filter((v) => {
@@ -145,6 +177,23 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue, values.shelterStatus]
   );
 
+=======
+  const handleToggleShelterStatus = useCallback(
+    (checked: boolean, status: ShelterAvailabilityStatus) => {
+      setFieldValue(
+        'shelterStatus',
+        checked
+          ? [
+              ...values.shelterStatus,
+              { label: ShelterAvailabilityStatusMapped[status], value: status },
+            ]
+          : values.shelterStatus.filter((s) => s.value !== status)
+      );
+    },
+    [setFieldValue, values.shelterStatus]
+  );
+
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
   return (
@@ -166,6 +215,7 @@ const Filter = (props: IFilterProps) => {
               />
             </div>
             <Separator className="mt-2" />
+<<<<<<< HEAD
             <CitiesFilter
               cities={values.cities}
               setCities={(cities: string[]) => {
@@ -175,6 +225,12 @@ const Filter = (props: IFilterProps) => {
             <Separator className="mt-2" />
             <div className="flex flex-col gap-2 w-full my-4">
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
+=======
+            <div className="flex flex-col gap-2 w-full my-4">
+              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+                Busca avançada
+              </p>
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
                 Você pode buscar pelo item que os abrigos precisam urgentemente
                 de doação ou por itens que os abrigos tem disponibilidade para
@@ -186,6 +242,7 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
+<<<<<<< HEAD
                   value={values.priority}
                   options={Object.entries(priorityOpts).map(
                     ([priority, label]) =>
@@ -193,6 +250,17 @@ const Filter = (props: IFilterProps) => {
                         label,
                         value: +priority,
                       } as ISelectField<SupplyPriority>)
+=======
+                  value={{
+                    label:
+                      priorityOpts[
+                        values.priority?.value ?? SupplyPriority.Urgent
+                      ],
+                    value: values.priority?.value ?? SupplyPriority.Needing,
+                  }}
+                  options={Object.entries(priorityOpts).map(
+                    ([priority, label]) => ({ label, value: +priority } as any)
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
                   )}
                   onChange={(v) => {
                     const newValue = {
@@ -211,12 +279,19 @@ const Filter = (props: IFilterProps) => {
                   value={values.supplyCategories}
                   placeholder="Selecione"
                   isMulti
+<<<<<<< HEAD
                   options={supplyCategories
                     .map((el: ISupplyCategory) => ({
                       label: el.name,
                       value: el.id,
                     }))
                     .sort((a, b) => a.label.localeCompare(b.label))}
+=======
+                  options={supplyCategories.map((el: ISupplyCategory) => ({
+                    label: el.name,
+                    value: el.id,
+                  }))}
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
                   onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
@@ -228,7 +303,14 @@ const Filter = (props: IFilterProps) => {
                   placeholder="Selecione"
                   isMulti
                   value={values.supplies}
+<<<<<<< HEAD
                   options={supplyOptions}
+=======
+                  options={supplies.map((el: ISupply) => ({
+                    label: el.name,
+                    value: el.id,
+                  }))}
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
                   onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
@@ -287,8 +369,12 @@ const Filter = (props: IFilterProps) => {
                 </label>
               </div>
             </div>
+<<<<<<< HEAD
           </div>
           <DialogFooter className="sticky bg-white -bottom-6">
+=======
+
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"
@@ -297,7 +383,11 @@ const Filter = (props: IFilterProps) => {
                 Filtrar resultados
               </Button>
             </div>
+<<<<<<< HEAD
           </DialogFooter>
+=======
+          </div>
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         </form>
       </DialogContent>
     </Dialog>

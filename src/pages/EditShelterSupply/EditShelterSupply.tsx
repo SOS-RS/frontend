@@ -14,7 +14,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
+<<<<<<< HEAD
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();

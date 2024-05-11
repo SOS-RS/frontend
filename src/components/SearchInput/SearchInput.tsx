@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 const SearchInput = React.forwardRef<HTMLDivElement, ISearchInputProps>(
   (props, ref) => {
+<<<<<<< HEAD
     const {
       value,
       onChange,
@@ -14,12 +15,19 @@ const SearchInput = React.forwardRef<HTMLDivElement, ISearchInputProps>(
       placeholder = 'Buscar por abrigo ou endereço',
       ...rest
     } = props;
+=======
+    const { value, onChange, className, ...rest } = props;
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
     return (
       <div ref={ref} className={cn(className, 'relative')} {...rest}>
         <Input
           value={value}
+<<<<<<< HEAD
           placeholder={placeholder}
+=======
+          placeholder="Buscar por abrigo ou endereço"
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
           className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
           onChange={onChange}
         />

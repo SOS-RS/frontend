@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { RotateCw } from 'lucide-react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { RotateCw, PlusIcon } from 'lucide-react';
 import qs from 'qs';
+
 import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { Filter, ShelterListView } from './components';
+import { Filter } from './components/Filter';
+import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
@@ -14,6 +16,7 @@ const initialFilterData: IFilterFormProps = {
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
+
   cities: [],
 };
 
@@ -32,15 +35,14 @@ const Home = () => {
       throttle: 400,
       callback: () => {
         const params = new URLSearchParams(qs.stringify(filterData));
-
         setSearchParams(params);
-        refresh({
-          params: params,
-        });
+        refresh({ params });
       },
     },
-    []
+    [filterData]
   );
+
+  const navigate = useNavigate();
 
   const clearSearch = useCallback(() => {
     setSearch('');
@@ -106,7 +108,6 @@ const Home = () => {
   }, []);
 
 
-
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
@@ -123,6 +124,17 @@ const Home = () => {
         endAdornment={
           <div className="flex gap-2 items-center">
             <Button
+              variant="ghost"
+              size="sm"
+              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
+              onClick={() =>
+                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
+              }
+            >
+              <PlusIcon className="h-5 w-5 stroke-white" />
+              Cadastrar abrigo
+            </Button>
+            <Button
               loading={loading}
               variant="ghost"
               size="sm"
@@ -131,10 +143,10 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-          </div>
+          </div >
         }
       />
-      <ShelterListView
+      < ShelterListView
         loading={loading}
         count={shelters.count}
         data={shelters.results}
@@ -160,13 +172,14 @@ const Home = () => {
             },
           });
         }}
+        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
         className="flex-1 p-4 max-w-4xl"
       />
       <Footer />
-    </div>
+    </div >
   );
 };
 

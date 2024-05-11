@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { useContext, useEffect } from 'react';
 import { ChevronLeft, Loader } from 'lucide-react';
+=======
+import { useContext } from 'react';
+import { ChevronLeft } from 'lucide-react';
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import ReactSelect from 'react-select';
@@ -18,11 +23,14 @@ import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
 import { SessionContext } from '@/contexts';
 import { clearCache } from '@/api/cache';
+<<<<<<< HEAD
 import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
 import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
 import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -30,7 +38,10 @@ const UpdateShelter = () => {
   const { shelterId = '-1' } = params;
   const { data: shelter, loading } = useShelter(shelterId);
   const { session } = useContext(SessionContext);
+<<<<<<< HEAD
   const isAuthenticated = useAuthRoles('Staff');
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
   const {
     errors,
@@ -50,22 +61,40 @@ const UpdateShelter = () => {
       capacity: shelter.capacity,
       contact: shelter.contact ?? '',
       pix: shelter.pix,
+<<<<<<< HEAD
       street: shelter.street ?? '',
       neighbourhood: shelter.neighbourhood ?? '',
       city: shelter.city ?? '',
       streetNumber: shelter.streetNumber,
       zipCode: shelter.zipCode ?? '',
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       name: shelter.name,
     },
     enableReinitialize: true,
     validateOnBlur: false,
     validateOnChange: false,
     validateOnMount: false,
+<<<<<<< HEAD
     validationSchema: session ? FullUpdateShelterSchema : UpdateShelterSchema,
     onSubmit: async (values) => {
       try {
         if (isAuthenticated)
           await ShelterServices.adminUpdate(shelterId, values);
+=======
+    validationSchema: Yup.object().shape({
+      shelteredPeople: Yup.number().nullable(),
+      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+      verified: Yup.bool(),
+      address: Yup.string(),
+      capacity: Yup.string().nullable(),
+      pix: Yup.string().nullable(),
+      name: Yup.string(),
+    }),
+    onSubmit: async (values) => {
+      try {
+        if (session) await ShelterServices.adminUpdate(shelterId, values);
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         else await ShelterServices.update(shelterId, values);
         toast({
           title: 'Atualização feita com sucesso',
@@ -130,6 +159,7 @@ const UpdateShelter = () => {
                 helperText={errors.name}
               />
               <TextField
+<<<<<<< HEAD
                 label="CEP"
                 {...getFieldProps('zipCode')}
                 error={!!errors.zipCode}
@@ -183,6 +213,8 @@ const UpdateShelter = () => {
                 )}
               </div>
               <TextField
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
                 label="Endereço"
                 {...getFieldProps('address')}
                 error={!!errors.address}

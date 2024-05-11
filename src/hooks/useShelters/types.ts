@@ -30,7 +30,10 @@ export interface IUseSheltersDataSupplyData {
   };
   priority: number;
   tags: ShelterTagType[];
+<<<<<<< HEAD
   quantity?: number | null;
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 }
 
 export interface IUseShelterOptions {

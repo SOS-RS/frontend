@@ -28,6 +28,10 @@
     "formik": "^2.4.6",
     "lucide-react": "^0.378.0",
     "qs": "^6.12.1",
+<<<<<<< HEAD
+=======
+    "react": "^18.2.0",
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-input-mask": "^2.0.4",
@@ -41,6 +45,10 @@
   "devDependencies": {
     "@types/node": "^20.12.8",
     "@types/qs": "^6.9.15",
+<<<<<<< HEAD
+=======
+    "@types/react": "^18.2.66",
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
     "@types/react-dom": "^18.2.22",
     "@types/react-input-mask": "^3.0.5",
     "@types/react": "^18.2.66",

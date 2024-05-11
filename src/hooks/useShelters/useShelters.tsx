@@ -27,7 +27,11 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           ...config,
           headers,
           params: {
+<<<<<<< HEAD
             orderBy: 'updatedAt',
+=======
+            orderBy: 'prioritySum',
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
             order: 'desc',
             search:
               search ?? new URLSearchParams(window.location.search).toString(),

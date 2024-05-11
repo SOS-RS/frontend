@@ -76,22 +76,38 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
     case SupplyPriority.NotNeeded:
       return {
         label,
+<<<<<<< HEAD
         className: 'bg-gray-200 text-gray-800',
+=======
+        className: 'bg-gray-200',
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       };
     case SupplyPriority.Remaining:
       return {
         label,
+<<<<<<< HEAD
         className: 'bg-light-green text-green-800',
+=======
+        className: 'bg-light-green',
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       };
     case SupplyPriority.Needing:
       return {
         label,
+<<<<<<< HEAD
         className: 'bg-light-orange text-orange-800',
+=======
+        className: 'bg-light-orange',
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       };
     case SupplyPriority.Urgent:
       return {
         label,
+<<<<<<< HEAD
         className: 'bg-light-red text-red-800',
+=======
+        className: 'bg-light-red',
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
       };
   }
 }
@@ -141,6 +157,7 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
       [category]: values.sort((a, b) => b.priority - a.priority),
     };
   }, initialGroup);
+<<<<<<< HEAD
 }
 
 function removeDuplicatesByField(
@@ -153,6 +170,8 @@ function removeDuplicatesByField(
       if (prev.some((p) => p[key] === current[key])) return prev;
       else return [...prev, current];
     }, []);
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 }
 
 export {
@@ -165,5 +184,8 @@ export {
   nameStatusPriority,
   priorityOptions,
   groupShelterSuppliesByTag,
+<<<<<<< HEAD
   removeDuplicatesByField,
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 };

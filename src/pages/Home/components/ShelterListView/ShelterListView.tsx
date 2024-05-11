@@ -65,6 +65,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </div>
           ))}
         </div>
+
         <div className="flex flex-row">
           <Button
             variant="ghost"
@@ -90,12 +91,14 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <LoadingSkeleton amountItems={4} />
+
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
             <Fragment>
               {data.map((s, idx) => (
                 <ShelterListItem key={idx} data={s} />
+
               ))}
               {hasMoreItems ? (
                 <Button
@@ -114,7 +117,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </Fragment>
           )}
         </main>
-      </div>
+      </div >
     );
   }
 );

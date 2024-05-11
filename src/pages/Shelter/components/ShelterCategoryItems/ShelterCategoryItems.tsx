@@ -8,7 +8,10 @@ import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 import { SessionContext } from '@/contexts';
+<<<<<<< HEAD
 import { Badge } from '@/components/ui/badge';
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const {
@@ -53,7 +56,11 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
         </h3>
       </div>
       <div className="flex gap-2 flex-wrap">
+<<<<<<< HEAD
         {visibleSupplies.map((tag, idx) => {
+=======
+        {visibleTags.map((tag, idx) => {
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
           const tagProps =
             session &&
             ['DistributionCenter', 'Admin'].includes(session.accessLevel)
@@ -69,6 +76,7 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
               : {
                   className: circleClassName,
                 };
+<<<<<<< HEAD
           return (
             <div
               key={idx}
@@ -85,6 +93,9 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
               )}
             </div>
           );
+=======
+          return <Chip key={idx} label={tag.label} {...tagProps} />;
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         })}
       </div>
 

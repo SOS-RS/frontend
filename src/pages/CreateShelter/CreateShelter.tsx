@@ -20,11 +20,14 @@ import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { withAuth } from '@/hocs';
 import { clearCache } from '@/api/cache';
+<<<<<<< HEAD
 import { hardCodedRsCities } from './hardcodedCities';
 import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { checkAndFormatAddress } from '@/components/CardAboutShelter';
 import { IUseShelterData } from '@/hooks/useShelter/types';
+=======
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -76,8 +79,12 @@ const CreateShelterComponent = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
+<<<<<<< HEAD
         const address = checkAndFormatAddress(values as IUseShelterData);
         await ShelterServices.create({ ...values, address });
+=======
+        await ShelterServices.create(values);
+>>>>>>> 3d3f437 (merge: develop -> master (#91))
         clearCache(false);
         toast({
           title: 'Cadastro feita com sucesso',
