@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import Select from 'react-select';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -15,31 +16,60 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {
-  IFilterFormProps,
+  IFilterFormikProps,
   IFilterProps,
   ShelterAvailabilityStatus,
 } from './types';
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
-import { useCallback } from 'react';
 
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
+  const mappedSupplyCategories = useMemo(() => {
+    return supplyCategories.reduce(
+      (prev, current) => ({ ...prev, [current.id]: current }),
+      {} as Record<string, ISupplyCategory>
+    );
+  }, [supplyCategories]);
+  const mappedSupplies = useMemo(() => {
+    return supplies.reduce(
+      (prev, current) => ({ ...prev, [current.id]: current }),
+      {} as Record<string, ISupply>
+    );
+  }, [supplies]);
   console.log('data>>', data);
-  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormProps>({
-    initialValues: data,
-    enableReinitialize: true,
-    validateOnChange: false,
-    validateOnBlur: false,
-    validateOnMount: false,
-    validationSchema: Yup.object().shape({
-      search: Yup.string(),
-    }),
-    onSubmit,
-  });
+  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
+    {
+      initialValues: {
+        priority: data.priority,
+        search: data.search,
+        shelterStatus: Object.entries(priorityOptions)
+          .filter(([priority]) =>
+            data.shelterStatus.includes(priority as ShelterAvailabilityStatus)
+          )
+          .map(([priority, value]) => ({ label, value: priority } as any)),
+        supplyCategoryIds: data.supplyCategoryIds.map((id) => ({
+          label: mappedSupplyCategories[id].name,
+          value: id,
+        })),
+        supplyIds: data.supplyIds.map((id) => ({
+          value: mappedSupplies[id].name,
+          label: id,
+        })),
+      },
+      enableReinitialize: true,
+      validateOnChange: false,
+      validateOnBlur: false,
+      validateOnMount: false,
+      validationSchema: Yup.object().shape({
+        search: Yup.string(),
+      }),
+      onSubmit,
+    }
+  );
 
   const handleToggleShelterStatus = useCallback(
     (checked: boolean, value: ShelterAvailabilityStatus) => {
@@ -89,12 +119,13 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
+                  value={values.shelterStatus}
                   options={Object.entries(priorityOptions).map(
                     ([priority, label]) => ({ label, value: priority } as any)
                   )}
                   onChange={(
                     v: { label: string; value: SupplyPriority } | null
-                  ) => setFieldValue('priority', v?.value)}
+                  ) => setFieldValue('priority', v)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
