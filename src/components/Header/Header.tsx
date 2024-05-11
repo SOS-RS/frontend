@@ -34,7 +34,9 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
             Cadastrar abrigo
           </a>
         )}
-        <div className="cursor-pointer ">{endAdornment}</div>
+        <div className="flex items-center">
+          <div className="cursor-pointer">{endAdornment}</div>
+        </div>
       </div>
     </div>
   );
