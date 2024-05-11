@@ -42,33 +42,32 @@ const Home = () => {
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
-  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  const [markers, setMarkers] = useState<MarkerData[]>([
+    {
+      position: [-30.04914, -51.1955],
+      label: 'Abrigo Simers',
+    },
+  ]);
+  const [userMarker, setUserMarker] = useState<MarkerData | null>();
   const [mapCenter, setMapCenter] = useState<LatLngExpression>([
     -30.033081, -51.256996,
   ]);
   const [mapZoom, setMapZoom] = useState<number>(9);
 
   useEffect(() => {
-    setMarkers((previous) => [
-      ...previous,
-      {
-        position: [-30.04914, -51.1955],
-        label: 'Abrigo Simers',
-      },
-    ]);
+    const { latitude, longitude } = location;
+    if (latitude && longitude) {
+      setUserMarker({
+        position: [latitude, longitude],
+        label: 'Você está aqui',
+      });
 
-    if (success) {
-      const { latitude, longitude } = location;
-      if (latitude && longitude) {
-        setMarkers((previous) => [
-          ...previous,
-          { position: [latitude, longitude], label: 'Você está aqui' },
-        ]);
+      if (success) {
         setMapCenter([latitude, longitude]);
         setMapZoom(15);
       }
     }
-  }, [success]);
+  }, [success, location]);
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -234,6 +233,11 @@ const Home = () => {
                       <Popup>{v.label}</Popup>
                     </Marker>
                   ))}
+                  {userMarker?.position ? (
+                    <Marker position={userMarker.position}>
+                      <Popup>{userMarker.label}</Popup>
+                    </Marker>
+                  ) : null}
                 </Map>
               </div>
               {shelters.results.map((s, idx) => (
