@@ -12,6 +12,7 @@ import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { clearCache } from '@/api/cache';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -55,7 +56,6 @@ const EditShelterSupply = () => {
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
-      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
@@ -66,6 +66,7 @@ const EditShelterSupply = () => {
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            clearCache(false);
             refresh();
           };
 

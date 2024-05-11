@@ -5,6 +5,16 @@ export interface IShelterAvailabilityProps {
   className: string;
 }
 
+export type ShelterTagType =
+  | 'NeedVolunteers'
+  | 'NeedDonations'
+  | 'RemainingSupplies';
+
+export type ShelterTagInfo<T = any> = {
+  [key in ShelterTagType]: T;
+};
+
 export interface IShelterListItemProps {
   data: IUseSheltersData;
+  onClick?: () => void;
 }

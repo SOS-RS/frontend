@@ -16,6 +16,7 @@ import { ICreateShelter } from '@/service/shelter/types';
 import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { withAuth } from '@/hocs';
+import { clearCache } from '@/api/cache';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const CreateShelterComponent = () => {
       address: '',
       shelteredPeople: 0,
       capacity: 0,
+      verified: false,
       petFriendly: false,
       contact: null,
       pix: null,
@@ -57,6 +59,7 @@ const CreateShelterComponent = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await ShelterServices.create(values);
+        clearCache(false);
         toast({
           title: 'Cadastro feita com sucesso',
         });
@@ -79,7 +82,7 @@ const CreateShelterComponent = () => {
         startAdornment={
           <Button
             variant="ghost"
-            className="[&_svg]:stroke-blue-500"
+            className="bg-primary-green hover:bg-light-green border-2 text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
             onClick={() => navigate('/')}
           >
             <ChevronLeft size={20} />
