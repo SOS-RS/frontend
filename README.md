@@ -21,7 +21,7 @@ Este projeto é o frontend de um aplicativo destinado a auxiliar na organizaçã
 - [Funcionalidades e Backlog](#backlog)
 - [Guia de Instalação](#installation)
 - [Iniciando o Projeto](#start)
-- [Contribua](#contribute)
+- [Como contribuir](#contribute)
 - [Colaboradores](#collaborators)
 - [Licença](#license)
 
@@ -95,15 +95,21 @@ npm run dev
 
 O app estará disponível em `http://localhost:5173`.
 
-## 👍 Contribua <a name="contribute"/>
+## 👍 Como contribuir <a name="contribute"/>
 
 Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhorar o app, por favor:
 
 1. Faça um fork do repositório.
 2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`).
-3. Faça seus commits (`git commit -m "feat: My new feature"`).
+3. Faça seus commits (`git commit -m "feat: Minha nova feature"`).
 4. Faça push para a branch (`git push origin feature/MinhaFeature`).
 5. Abra um Pull Request.
+
+**Canal no Discord**
+
+Estamos organizando nossas discussões no Discord.
+
+Link de convite: https://discord.gg/w5QJ7KsZ
 
 ## 🤝 Colaboradores <a name="collaborators"/>
 
@@ -216,6 +222,14 @@ Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença signif
          <img src="https://avatars.githubusercontent.com/u/62250734?v=4" width="100px;" alt="Felipe Monteiro Profile Picture"/><br>
          <sub>
             <b>Felipe Monteiro</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/decofma" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/74271823?v=4" width="100px;" alt="André Ferraz Profile Picture"/><br>
+         <sub>
+            <b>André Ferraz</b>
          </sub>
          </a>
       </td>
