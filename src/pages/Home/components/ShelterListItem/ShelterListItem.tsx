@@ -70,7 +70,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       {data.shelterSupplies.length > 0 && (
         <>
           <ShelterSupplyCategoryRow
-            title="Necessita volunários:"
+            title="Necessita voluntários:"
             tags={tags.NeedVolunteers.map(getChipProps)}
           />
           <ShelterSupplyCategoryRow
