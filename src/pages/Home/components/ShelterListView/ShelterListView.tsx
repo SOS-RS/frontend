@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, Loader } from 'lucide-react';
+import { CircleAlert, ListFilter, ListOrdered, Loader } from 'lucide-react';
 
 import {
   Alert,
@@ -24,7 +24,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       onFetchMoreData,
       onSelectShelter,
       className = '',
-      onOpenModal,
+      onOpenFilterModal,
+      onOpenSortModal,
       onClearSearch,
       ...rest
     } = props;
@@ -55,10 +56,19 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             variant="ghost"
             size="sm"
             className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
-            onClick={onOpenModal}
+            onClick={onOpenFilterModal}
           >
             <ListFilter className="h-5 w-5 stroke-blue-500" />
             Filtros
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+            onClick={onOpenSortModal}
+          >
+            <ListOrdered className="h-5 w-5 stroke-blue-500" />
+            Ordenar
           </Button>
           {searchParams.toString() && (
             <Button

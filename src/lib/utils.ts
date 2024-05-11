@@ -3,6 +3,7 @@ import {
   ShelterTagInfo,
   ShelterTagType,
 } from '@/pages/Home/components/ShelterListItem/types';
+import { SortBy, SortOrder } from '@/pages/Home/components/Sort/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -143,6 +144,18 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   }, initialGroup);
 }
 
+const sortByOptions: Record<SortBy, string> = {
+  [SortBy.Name]: 'Nome',
+  [SortBy.CreatedAt]: 'Data de criação',
+  [SortBy.UpdatedAt]: 'Data de atualização',
+  [SortBy.Priority]: 'Prioridade',
+};
+
+const sortOrderOptions = {
+  [SortOrder.Asc]: 'Crescente',
+  [SortOrder.Desc]: 'Decrescente',
+};
+
 export {
   cn,
   getAvailabilityProps,
@@ -152,5 +165,7 @@ export {
   colorStatusPriority,
   nameStatusPriority,
   priorityOptions,
+  sortByOptions,
+  sortOrderOptions,
   groupShelterSuppliesByTag,
 };

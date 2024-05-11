@@ -8,8 +8,10 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
+import { Sort } from './components/Sort';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
+import { ISortFormProps, SortBy, SortOrder } from './components/Sort/types';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -19,6 +21,11 @@ const initialFilterData: IFilterFormProps = {
   shelterStatus: [],
 };
 
+const initialSortData: ISortFormProps = {
+  orderBy: SortBy.Name,
+  order: SortOrder.Asc,
+};
+
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const {
@@ -26,10 +33,15 @@ const Home = () => {
     refreshSession,
     session,
   } = useContext(SessionContext);
-  const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [isFilterModalOpen, setOpenFilterModal] = useState<boolean>(false);
+  const [isSortModalOpen, setOpenSortModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
     ...initialFilterData,
+    ...qs.parse(new URLSearchParams(window.location.search).toString()),
+  });
+  const [sortData, setSortData] = useState<ISortFormProps>({
+    ...initialSortData,
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
 
@@ -37,8 +49,9 @@ const Home = () => {
     {
       throttle: 400,
       callback: (v) => {
+        const seachData = { ...filterData, ...sortData };
         const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
+          search: v ? qs.stringify(seachData) : '',
         };
         setSearchParams(params.search);
         refresh({
@@ -64,9 +77,10 @@ const Home = () => {
 
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
-      setOpenModal(false);
+      setOpenFilterModal(false);
       setFilterData(values);
-      const searchQuery = qs.stringify(values, {
+      const searchData = { ...sortData, ...values };
+      const searchQuery = qs.stringify(searchData, {
         skipNulls: true,
       });
       setSearchParams(searchQuery);
@@ -76,7 +90,25 @@ const Home = () => {
         },
       });
     },
-    [refresh, setSearchParams]
+    [refresh, sortData, setSearchParams]
+  );
+
+  const onSubmitSortForm = useCallback(
+    (values: ISortFormProps) => {
+      setOpenSortModal(false);
+      setSortData(values);
+      const searchData = { ...filterData, ...values };
+      const searchQuery = qs.stringify(searchData, {
+        skipNulls: true,
+      });
+      setSearchParams(searchQuery);
+      refresh({
+        params: {
+          search: searchQuery,
+        },
+      });
+    },
+    [refresh, filterData, setSearchParams]
   );
 
   const handleFetchMore = useCallback(() => {
@@ -97,12 +129,20 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen items-center">
-      {isModalOpen && (
+      {isFilterModalOpen && (
         <Filter
-          open={isModalOpen}
+          open={isFilterModalOpen}
           data={filterData}
-          onClose={() => setOpenModal(false)}
+          onClose={() => setOpenFilterModal(false)}
           onSubmit={onSubmitFilterForm}
+        />
+      )}
+      {isSortModalOpen && (
+        <Sort
+          open={isSortModalOpen}
+          data={sortData}
+          onClose={() => setOpenSortModal(false)}
+          onSubmit={onSubmitSortForm}
         />
       )}
       <Header
@@ -163,7 +203,8 @@ const Home = () => {
         }}
         onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
-        onOpenModal={() => setOpenModal(true)}
+        onOpenFilterModal={() => setOpenFilterModal(true)}
+        onOpenSortModal={() => setOpenSortModal(true)}
         onClearSearch={clearSearch}
         className="flex-1 p-4 max-w-4xl"
       />

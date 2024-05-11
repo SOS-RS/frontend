@@ -22,15 +22,20 @@ const useShelters = (options: IUseShelterOptions = {}) => {
       const headers = config.headers ?? {};
       if (cache) headers['x-app-cache'] = 'true';
       if (!append) setLoading(true);
+
+      const resolvedSearch = search ?? new URLSearchParams(window.location.search).toString()
+      const resolvedQueryParams = resolvedSearch ? new URLSearchParams(resolvedSearch) : null;
+      const order = resolvedQueryParams?.get('order') ?? 'desc';
+      const orderBy = resolvedQueryParams?.get('orderBy') ?? 'prioritySum';
+
       api
         .get<IServerResponse<any>>('/shelters', {
           ...config,
           headers,
           params: {
-            orderBy: 'prioritySum',
-            order: 'desc',
-            search:
-              search ?? new URLSearchParams(window.location.search).toString(),
+            orderBy,
+            order,
+            search: resolvedSearch,
             ...rest,
           },
         })

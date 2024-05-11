@@ -7,7 +7,8 @@ export interface IShelterListViewProps
   loading?: boolean;
   searchValue?: string;
   hasMoreItems?: boolean;
-  onOpenModal?: () => void;
+  onOpenFilterModal?: () => void;
+  onOpenSortModal?: () => void;
   onClearSearch?: () => void;
   onSearchValueChange?: (v: string) => void;
   onFetchMoreData?: () => void;
