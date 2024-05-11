@@ -1,7 +1,8 @@
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, CircleAlert } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMask } from '@react-input/mask';
 
 import {
   Select,
@@ -10,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Header, TextField } from '@/components';
+import { Alert, Header, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { ICreateShelter } from '@/service/shelter/types';
 import { toast } from '@/components/ui/use-toast';
@@ -19,7 +20,13 @@ import { withAuth } from '@/hocs';
 import { clearCache } from '@/api/cache';
 
 const CreateShelterComponent = () => {
+  const inputRefMaskPhone = useMask({
+    mask: '(__) _____-____ ',
+    replacement: { _: /\d/ },
+  });
   const navigate = useNavigate();
+
+  const alertDescription = 'O cadastro ficará pendente até ser aprovado.';
 
   const {
     errors,
@@ -53,7 +60,9 @@ const CreateShelterComponent = () => {
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
       petFriendly: Yup.bool().nullable(),
-      contact: Yup.string().nullable(),
+      contact: Yup.string()
+        .min(15, 'Por favor forneça um número de telefone válido')
+        .nullable(),
       pix: Yup.string().nullable(),
     }),
     onSubmit: async (values, { resetForm }) => {
@@ -61,7 +70,7 @@ const CreateShelterComponent = () => {
         await ShelterServices.create(values);
         clearCache(false);
         toast({
-          title: 'Cadastro feita com sucesso',
+          title: 'Cadastro feito com sucesso!',
         });
         resetForm();
       } catch (err: any) {
@@ -79,6 +88,7 @@ const CreateShelterComponent = () => {
       <Header
         title="Cadastrar novo abrigo"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+        showButtonRegisterShelter={false}
         startAdornment={
           <Button
             variant="ghost"
@@ -109,6 +119,7 @@ const CreateShelterComponent = () => {
               helperText={errors.address}
             />
             <TextField
+              ref={inputRefMaskPhone}
               label="Contato"
               {...getFieldProps('contact')}
               error={!!errors.contact}
@@ -154,11 +165,17 @@ const CreateShelterComponent = () => {
               helperText={errors.pix}
             />
           </div>
+          <Alert
+            description={alertDescription}
+            startAdornment={
+              <CircleAlert size={20} className="stroke-light-yellow" />
+            }
+          />
           <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="flex gap-2 text-white font-medium text-lg bg-red-600 hover:bg-red-700 w-full"
             >
               Cadastrar
             </Button>
