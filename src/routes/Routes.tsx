@@ -13,7 +13,7 @@ import {
 const Routes = () => {
   return (
     <Switch>
-      <Route path="/abrigo/:id" element={<Shelter />} />
+      <Route path="/abrigo/:shelterId" element={<Shelter />} />
       <Route path="/abrigo/:shelterId/atualizar" element={<UpdateShelter />} />
       <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
       <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />

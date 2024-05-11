@@ -1,5 +1,5 @@
 export interface IInfoRowProps extends React.ComponentPropsWithoutRef<'div'> {
-  label: string;
+  label: React.ReactNode;
   value?: string;
   icon: React.ReactNode;
 }
