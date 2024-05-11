@@ -37,11 +37,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {label}
           </span>
           <span className="md:flex">{ValueComp}</span>
-          {children ? (
-            children
-          ) : (
-            null
-          )}
+          {children}
         </div>
       </div>
     );
