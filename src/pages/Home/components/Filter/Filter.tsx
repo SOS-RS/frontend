@@ -120,13 +120,13 @@ const Filter = (props: IFilterProps) => {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="rounded-md overflow-y-scroll max-h-[90vh]">
         <DialogHeader>
-          <DialogTitle className="text-base font-medium">
-            Faça sua busca:
+          <DialogTitle className="text-xl text-left mb-0 leading-none">
+            Faça sua busca
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
-            <div className="flex flex-col gap-2 w-full my-4">
+            <div className="flex flex-col gap-2 w-full mt-4 mb-8">
               <SearchInput
                 value={values.search}
                 onChange={(ev) =>
@@ -134,18 +134,24 @@ const Filter = (props: IFilterProps) => {
                 }
               />
             </div>
-            <Separator className="mt-2" />
+            <Separator className="mb-4" />
             <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+              <h2 className="text-muted-foreground text-md md:text-lg font-semibold">
                 Busca avançada
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-md mb-6">
+                Você pode buscar pelo{' '}
+                <span className="underline">
+                  item que os abrigos precisam urgentemente de doação
+                </span>{' '}
+                ou por{' '}
+                <span className="underline">
+                  itens que os abrigos tem disponibilidade para doar
+                </span>
+                .
               </p>
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Você pode buscar pelo item que os abrigos precisam urgentemente
-                de doação ou por itens que os abrigos tem disponibilidade para
-                doar.
-              </p>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+              <div className="flex flex-col gap-1 w-full mb-4">
+                <label className="text-muted-foreground text-sm md:text-md font-bold mb-2">
                   Status do item no abrigo
                 </label>
                 <Select
@@ -169,8 +175,8 @@ const Filter = (props: IFilterProps) => {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+              <div className="flex flex-col gap-1 w-full mb-4">
+                <label className="text-muted-foreground text-sm md:text-md font-bold mb-2">
                   Categoria
                 </label>
                 <Select
@@ -185,7 +191,7 @@ const Filter = (props: IFilterProps) => {
                 />
               </div>
               <div className="flex flex-col w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                <label className="text-muted-foreground text-sm md:text-md font-bold mb-2">
                   Itens
                 </label>
                 <Select
@@ -200,16 +206,16 @@ const Filter = (props: IFilterProps) => {
                 />
               </div>
             </div>
-            <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+            <Separator className="my-6" />
+            <div className="flex flex-col gap-2 w-full">
+              <p className="text-muted-foreground text-md md:text-lg font-semibold mb-3">
                 Status do abrigo
               </p>
               <div>
-                <label className="flex items-center mb-4">
+                <label className="flex items-center mb-2">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
@@ -217,14 +223,16 @@ const Filter = (props: IFilterProps) => {
                       (s) => s.value === 'available'
                     )}
                   />
-                  Abrigo Disponivel
+                  <span className="font-normal ml-3 text-sm">
+                    Abrigo Disponivel
+                  </span>
                 </label>
               </div>
               <div>
-                <label className="flex items-center mb-4">
+                <label className="flex items-center mb-2">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(
                         ev.target.checked,
@@ -235,14 +243,17 @@ const Filter = (props: IFilterProps) => {
                       (s) => s.value === 'unavailable'
                     )}
                   />
-                  Abrigo Indisponível
+
+                  <span className="font-normal ml-3 text-sm">
+                    Abrigo Indisponível
+                  </span>
                 </label>
               </div>
               <div>
                 <label className="flex items-center mb-4">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
@@ -250,7 +261,9 @@ const Filter = (props: IFilterProps) => {
                       (s) => s.value === 'waiting'
                     )}
                   />
-                  Sem informação de disponibilidade
+                  <span className="font-normal ml-3 text-sm">
+                    Sem informação de disponibilidade
+                  </span>
                 </label>
               </div>
             </div>
@@ -258,9 +271,9 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+                className="flex gap-2 text-white font-bold text-lg bg-blue-500 hover:bg-blue-600 w-full"
               >
-                Filtrar resultados
+                Procurar
               </Button>
             </div>
           </div>
