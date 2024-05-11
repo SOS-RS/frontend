@@ -14,6 +14,7 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
       className,
       error,
       helperText,
+      value = '',
       ...rest
     } = props;
 
@@ -29,6 +30,7 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
           ref={ref}
           name={name}
           className={cn(error ? 'border-[1px] border-red-600' : '', className)}
+          value={value}
           {...rest}
         />
         {helperText && (
