@@ -1,4 +1,3 @@
-import { ISupplyCategory } from '@/hooks/useSupplyCategories/types';
 import { SupplyPriority } from '@/service/supply/types';
 
 export type ShelterAvailabilityStatus = 'available' | 'unavailable' | 'waiting';
@@ -18,10 +17,10 @@ export interface IFilterFormProps {
 
 export interface IFilterFormikProps {
   search: string;
-  priority: SupplyPriority | null;
-  supplyCategoryIds: ISelectField[];
-  supplyIds: ISelectField[];
-  shelterStatus: ShelterAvailabilityStatus[];
+  priority: ISelectField<SupplyPriority> | null;
+  supplyCategories: ISelectField[];
+  supplies: ISelectField[];
+  shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
 }
 
 export interface IFilterProps {

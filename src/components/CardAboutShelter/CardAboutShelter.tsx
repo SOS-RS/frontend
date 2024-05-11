@@ -30,11 +30,11 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
             check(shelter.petFriendly) ? (
               shelter.petFriendly ? (
                 <p>
-                  O abrigo <b className="text-green-600">aceita</b> animais
+                  O abrigo <b>aceita</b> animais
                 </p>
               ) : (
                 <p>
-                  O abrigo <b className="text-red-600">não</b> aceita animais
+                  O abrigo <b>não</b> aceita animais
                 </p>
               )
             ) : (

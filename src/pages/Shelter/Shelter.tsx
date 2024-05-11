@@ -60,7 +60,7 @@ const Shelter = () => {
           </h1>
           {shelter.verified && <VerifiedBadge />}
         </div>
-        <div className="flex flex-1 items-center justify-between">
+        <div className="flex flex-1 items-center justify-between pr-4">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
           </h1>

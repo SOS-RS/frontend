@@ -23,6 +23,23 @@ import {
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 
+const ShelterAvailabilityStatusMapped: Record<
+  ShelterAvailabilityStatus,
+  string
+> = {
+  available: 'Abrigo Disponivel',
+  unavailable: 'Abrigo Indisponivel',
+  waiting: 'Sem informação de disponibilidade',
+};
+
+const priorityOpts = Object.entries(priorityOptions).reduce(
+  (prev, [priority, label]) =>
+    priority === `${SupplyPriority.NotNeeded}`
+      ? prev
+      : { ...prev, [priority]: label },
+  {} as Record<SupplyPriority, string>
+);
+
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
@@ -40,19 +57,25 @@ const Filter = (props: IFilterProps) => {
       {} as Record<string, ISupply>
     );
   }, [supplies]);
-  console.log('data>>', data);
   const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
     {
       initialValues: {
-        priority: data.priority,
+        priority: {
+          value: data.priority ?? SupplyPriority.Urgent,
+          label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
+        },
         search: data.search,
-        supplyCategoryIds: data.supplyCategoryIds.map((id) => ({
-          label: mappedSupplyCategories[id].name,
+        shelterStatus: data.shelterStatus.map((s) => ({
+          label: ShelterAvailabilityStatusMapped[s],
+          value: s,
+        })),
+        supplyCategories: data.supplyCategoryIds.map((id) => ({
+          label: mappedSupplyCategories[id]?.name,
           value: id,
         })),
-        supplyIds: data.supplyIds.map((id) => ({
-          value: mappedSupplies[id].name,
-          label: id,
+        supplies: data.supplyIds.map((id) => ({
+          value: id,
+          label: mappedSupplies[id]?.name,
         })),
       },
       enableReinitialize: true,
@@ -62,17 +85,30 @@ const Filter = (props: IFilterProps) => {
       validationSchema: Yup.object().shape({
         search: Yup.string(),
       }),
-      onSubmit,
+      onSubmit: (values) => {
+        const { priority, search, shelterStatus, supplies, supplyCategories } =
+          values;
+        onSubmit({
+          priority: priority?.value ? +priority.value : null,
+          search,
+          shelterStatus: shelterStatus.map((s) => s.value),
+          supplyCategoryIds: supplyCategories.map((s) => s.value),
+          supplyIds: supplies.map((s) => s.value),
+        });
+      },
     }
   );
 
   const handleToggleShelterStatus = useCallback(
-    (checked: boolean, value: ShelterAvailabilityStatus) => {
+    (checked: boolean, status: ShelterAvailabilityStatus) => {
       setFieldValue(
         'shelterStatus',
         checked
-          ? [...values.shelterStatus, value]
-          : values.shelterStatus.filter((s) => s !== value)
+          ? [
+              ...values.shelterStatus,
+              { label: ShelterAvailabilityStatusMapped[status], value: status },
+            ]
+          : values.shelterStatus.filter((s) => s.value !== status)
       );
     },
     [setFieldValue, values.shelterStatus]
@@ -114,13 +150,23 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={values.shelterStatus}
-                  options={Object.entries(priorityOptions).map(
-                    ([priority, label]) => ({ label, value: priority } as any)
+                  value={{
+                    label:
+                      priorityOpts[
+                        values.priority?.value ?? SupplyPriority.Urgent
+                      ],
+                    value: values.priority?.value ?? SupplyPriority.Needing,
+                  }}
+                  options={Object.entries(priorityOpts).map(
+                    ([priority, label]) => ({ label, value: +priority } as any)
                   )}
-                  onChange={(
-                    v: { label: string; value: SupplyPriority } | null
-                  ) => setFieldValue('priority', v)}
+                  onChange={(v) => {
+                    const newValue = {
+                      ...v,
+                      value: v ? +v.value : SupplyPriority.Urgent,
+                    };
+                    setFieldValue('priority', newValue);
+                  }}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
@@ -128,18 +174,14 @@ const Filter = (props: IFilterProps) => {
                   Categoria
                 </label>
                 <Select
+                  value={values.supplyCategories}
                   placeholder="Selecione"
                   isMulti
                   options={supplyCategories.map((el: ISupplyCategory) => ({
                     label: el.name,
                     value: el.id,
                   }))}
-                  onChange={(v) =>
-                    setFieldValue(
-                      'supplyCategoryIds',
-                      v.map((s) => s.value)
-                    )
-                  }
+                  onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -149,16 +191,12 @@ const Filter = (props: IFilterProps) => {
                 <Select
                   placeholder="Selecione"
                   isMulti
+                  value={values.supplies}
                   options={supplies.map((el: ISupply) => ({
                     label: el.name,
                     value: el.id,
                   }))}
-                  onChange={(v) =>
-                    setFieldValue(
-                      'supplyIds',
-                      v.map((s) => s.value)
-                    )
-                  }
+                  onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
             </div>
@@ -175,7 +213,9 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
-                    defaultChecked={values.shelterStatus.includes('available')}
+                    defaultChecked={values.shelterStatus.some(
+                      (s) => s.value === 'available'
+                    )}
                   />
                   Abrigo Disponivel
                 </label>
@@ -191,8 +231,8 @@ const Filter = (props: IFilterProps) => {
                         'unavailable'
                       )
                     }
-                    defaultChecked={values.shelterStatus.includes(
-                      'unavailable'
+                    defaultChecked={values.shelterStatus.some(
+                      (s) => s.value === 'unavailable'
                     )}
                   />
                   Abrigo Indisponível
@@ -206,9 +246,11 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
-                    defaultChecked={values.shelterStatus.includes('waiting')}
+                    defaultChecked={values.shelterStatus.some(
+                      (s) => s.value === 'waiting'
+                    )}
                   />
-                  Aguardando disponibilidade
+                  Sem informação de disponibilidade
                 </label>
               </div>
             </div>
