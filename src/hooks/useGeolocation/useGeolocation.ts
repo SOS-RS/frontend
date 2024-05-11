@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 
+const metersToPixels = (meters: number, latitude: number, zoom: number) => {
+  const earthCircumference = 40075017;
+  const metersPerPixel =
+    (earthCircumference * Math.cos((latitude * Math.PI) / 180)) /
+    Math.pow(2, zoom + 8);
+  return meters / metersPerPixel;
+};
+
 function useGeolocation() {
   const [loading, setLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -30,7 +38,7 @@ function useGeolocation() {
     };
   }, []);
 
-  return { location, loading, success: isSuccess };
+  return { location, loading, success: isSuccess, metersToPixels };
 }
 
 export { useGeolocation };
