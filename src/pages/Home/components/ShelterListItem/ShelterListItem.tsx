@@ -43,23 +43,29 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
-      <Button size="sm" variant="ghost" className="absolute top-4 right-4">
-        <ChevronRight
-          className="h-5 w-5"
+      <div className="inline-flex justify-between">
+        <div
+          className="flex flex-row items-center gap-1"
           onClick={() => navigate(`/abrigo/${data.id}`)}
-        />
-      </Button>
-      <div
-        className="flex items-center gap-1"
-        onClick={() => navigate(`/abrigo/${data.id}`)}
-      >
-        <h3
-          className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
-          onClick={onClick}
         >
-          {data.name}
-        </h3>
-        {data.verified && <VerifiedBadge />}
+          <h3
+            className="font-semibold text-lg h-full hover:cursor-pointer hover:text-slate-500"
+            onClick={onClick}
+          >
+            {data.name}
+          </h3>
+          {data.verified && (
+            <div className="h-full pt-1">
+              <VerifiedBadge />
+            </div>
+          )}
+        </div>
+        <Button size="sm" variant="ghost" className="">
+          <ChevronRight
+            className="h-5 w-5"
+            onClick={() => navigate(`/abrigo/${data.id}`)}
+          />
+        </Button>
       </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
