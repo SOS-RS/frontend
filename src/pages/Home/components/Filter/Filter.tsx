@@ -46,11 +46,6 @@ const Filter = (props: IFilterProps) => {
       initialValues: {
         priority: data.priority,
         search: data.search,
-        shelterStatus: Object.entries(priorityOptions)
-          .filter(([priority]) =>
-            data.shelterStatus.includes(priority as ShelterAvailabilityStatus)
-          )
-          .map(([priority, value]) => ({ label, value: priority } as any)),
         supplyCategoryIds: data.supplyCategoryIds.map((id) => ({
           label: mappedSupplyCategories[id].name,
           value: id,
