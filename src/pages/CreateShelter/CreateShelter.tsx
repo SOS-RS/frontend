@@ -16,8 +16,9 @@ import { Button } from '@/components/ui/button';
 import { ICreateShelter } from '@/service/shelter/types';
 import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
+import { withAuth } from '@/hocs';
 
-const CreateShelter = () => {
+const CreateShelterComponent = () => {
   const inputRefMaskPhone = useMask({
     mask: '(__) _____-____ ',
     replacement: { _: /\d/ },
@@ -58,7 +59,7 @@ const CreateShelter = () => {
         .nullable(),
       petFriendly: Yup.bool().nullable(),
       contact: Yup.string()
-        .min(15, 'O valor mínimo para este campo é 15')
+        .min(15, 'Por favor forneça um número de telefone válido')
         .nullable(),
       pix: Yup.string().nullable(),
     }),
@@ -171,7 +172,7 @@ const CreateShelter = () => {
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="flex gap-2 text-white font-medium text-lg bg-red-600 hover:bg-red-700 w-full"
             >
               Cadastrar
             </Button>
@@ -181,5 +182,7 @@ const CreateShelter = () => {
     </div>
   );
 };
+
+const CreateShelter = withAuth(CreateShelterComponent);
 
 export { CreateShelter };
