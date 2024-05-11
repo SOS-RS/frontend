@@ -20,35 +20,15 @@ const useShelters = (options: IUseShelterOptions = {}) => {
   const fetchAllShelters = useCallback(async () => {
     try {
       setLoading(true);
-      const resultsPerPage = 100;
-      let page = 1;
-      let allShelters: IUseSheltersData[] = [];
-      let totalPages = 0;
+      const response = await api.get<IServerResponse<any>>('/shelters/all', {
+        params: {
+          orderBy: 'prioritySum',
+          order: 'desc',
+        },
+      });
+      const { results } = response.data.data;
 
-      while (true) {
-        const response = await api.get<IServerResponse<any>>('/shelters', {
-          params: {
-            orderBy: 'prioritySum',
-            order: 'desc',
-            perPage: resultsPerPage,
-            page,
-          },
-        });
-
-        const { results, count } = response.data.data;
-        
-        allShelters = [...allShelters, ...results];
-
-        if (page === 1) totalPages = Math.ceil(count / resultsPerPage);
-
-        if (page === totalPages) {
-          break;
-        }
-
-
-        page++;
-      }
-      setAllSheltersData(allShelters);
+      setAllSheltersData(results);
 
     } catch (error) {
       console.error('Error getting all shelters:', error);
