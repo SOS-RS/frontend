@@ -8,6 +8,7 @@ import {
   EditShelterSupply,
   SignIn,
   UpdateShelter,
+  MapComponent
 } from '@/pages';
 
 const Routes = () => {
@@ -24,6 +25,7 @@ const Routes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/map" element={<MapComponent />} />      
     </Switch>
   );
 };

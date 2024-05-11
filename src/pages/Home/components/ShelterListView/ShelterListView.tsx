@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, Loader } from 'lucide-react';
+import { CircleAlert, ListFilter, Loader, MapIcon } from 'lucide-react';
 
 import {
   Alert,
@@ -10,7 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -28,6 +28,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       onClearSearch,
       ...rest
     } = props;
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
 
@@ -59,6 +60,15 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           >
             <ListFilter className="h-5 w-5 stroke-blue-500" />
             Filtros
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+            onClick={() => navigate('/map')}
+          >
+            <MapIcon className="h-5 w-5 stroke-blue-500" />
+            Mapa
           </Button>
           {searchParams.toString() && (
             <Button

@@ -7,7 +7,7 @@ import { IPaginatedResponse } from '../usePaginatedQuery/types';
 import { IUseShelterOptions, IUseSheltersData } from './types';
 
 const useShelters = (options: IUseShelterOptions = {}) => {
-  const { cache } = options;
+  const { cache, getAllShelters } = options;
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IPaginatedResponse<IUseSheltersData>>({
     count: 0,
@@ -15,7 +15,51 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     perPage: 20,
     results: [],
   });
+  const [allSheltersData, setAllSheltersData] = useState<IUseSheltersData[]>([]);
 
+  const fetchAllShelters = useCallback(async () => {
+    try {
+      setLoading(true);
+      const resultsPerPage = 100;
+      let page = 1;
+      let allShelters: IUseSheltersData[] = [];
+      let totalPages = 0;
+
+      while (true) {
+        const response = await api.get<IServerResponse<any>>('/shelters', {
+          params: {
+            orderBy: 'prioritySum',
+            order: 'desc',
+            perPage: resultsPerPage,
+            page,
+          },
+        });
+
+        const { results, count } = response.data.data;
+        
+        allShelters = [...allShelters, ...results];
+
+        if (page === 1) totalPages = Math.ceil(count / resultsPerPage);
+
+        if (page === totalPages) {
+          break;
+        }
+
+
+        page++;
+      }
+      setAllSheltersData(allShelters);
+
+    } catch (error) {
+      console.error('Error getting all shelters:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+
+
+  
   const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
@@ -57,10 +101,15 @@ const useShelters = (options: IUseShelterOptions = {}) => {
   );
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    
+    if (getAllShelters) {
+      fetchAllShelters()
+    } else {
+      refresh();
+    }
+  }, [fetchAllShelters, getAllShelters, refresh]);
 
-  return { data, loading, refresh };
+  return { data, loading, refresh, allSheltersData };
 };
 
 export { useShelters };
