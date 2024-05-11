@@ -17,6 +17,7 @@ Este frontend foi desenvolvido utilizando as seguintes tecnologias:
 - [**React**](https://react.dev/): Uma biblioteca JavaScript para construir interfaces de usuário.
 - [**Vite**](https://vitejs.dev/guide/): Uma ferramenta de build com servidor de desenvolvimento.
 - [**Tailwind CSS**](https://tailwindcss.com/docs/installation): Framework CSS baseado em classes utilitárias.
+- [**shadcn/ui**](https://ui.shadcn.com/docs): Coleção de componentes reutilizáveis, baseado em Tailwind.
 
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
 
