@@ -101,7 +101,7 @@ Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhor
 
 1. Faça um fork do repositório.
 2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`).
-3. Faça seus commits (`git commit -m "feat: Minha nova feature"`).
+3. Faça seus commits (`git commit -m 'Adicionando uma nova feature'`).
 4. Faça push para a branch (`git push origin feature/MinhaFeature`).
 5. Abra um Pull Request.
 
