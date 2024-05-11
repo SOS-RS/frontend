@@ -7,11 +7,13 @@ export interface IAuthRequest {
   password: string;
 }
 
+export type AccessLevel = 'User' | 'Staff' | 'DistributionCenter' | 'Admin';
+
 export interface ISession {
   id: string;
   name: string;
   login: string;
   phone: string;
-  accessLevel: string;
+  accessLevel: AccessLevel;
   createdAt: string;
 }

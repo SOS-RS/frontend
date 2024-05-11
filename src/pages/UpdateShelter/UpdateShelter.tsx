@@ -100,7 +100,7 @@ const UpdateShelter = () => {
             Atualize as informações desejadas sobre o abrigo.
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
-            <Authenticated>
+            <Authenticated role="Staff">
               <TextField
                 label="Nome do abrigo"
                 {...getFieldProps('name')}
@@ -143,7 +143,7 @@ const UpdateShelter = () => {
                 { value: 'false', label: 'Não' },
               ]}
             />
-            <Authenticated>
+            <Authenticated role="Staff">
               <SelectField
                 label="O abrigo é verificado"
                 value={values.verified ? 'true' : 'false'}
