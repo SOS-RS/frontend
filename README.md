@@ -115,120 +115,124 @@ Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhor
 Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
 
 <table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/fagundesjg" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/29789354?v=4" width="100px;" alt="José Geraldo D. F. Profile Picture"/><br>
-        <sub>
-          <b>José Geraldo D. F.</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/maneljr" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/82223180?v=4" width="100px;" alt="Manoel Farias Profile Picture"/><br>
-        <sub>
-          <b>Manoel Farias</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/MatheusDubin" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/46721495?v=4" width="100px;" alt="Matheus Dubin Da Silveira Profile Picture"/><br>
-        <sub>
-          <b>Matheus Dubin Da Silveira</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/rhuam" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/17427907?v=4" width="100px;" alt="Rhuam Sena Profile Picture"/><br>
-        <sub>
-          <b>Rhuam Sena</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/AlbuquerqueRafaelBruno" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/127885867?v=4" width="100px;" alt="Rafael Albuquerque Profile Picture"/><br>
-        <sub>
-          <b>Rafael Albuquerque</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/alexiadorneles" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/19597184?v=4" width="100px;" alt="Aléxia Dorneles Profile Picture"/><br>
-        <sub>
-          <b>Aléxia Dorneles</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/lucianomlima" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/1580205?v=4" width="100px;" alt="Luciano Lima Profile Picture"/><br>
-        <sub>
-          <b>Luciano Lima</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/eli-rlima" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/38770741?v=4" width="100px;" alt="Elivelton Rodrigues Profile Picture"/><br>
-        <sub>
-          <b>Elivelton Rodrigues</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/luccas-specht" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/40741571?v=4" width="100px;" alt="Luccas Specht Profile Picture"/><br>
-        <sub>
-          <b>Luccas Specht</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/brunowzz" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/94939630?v=4" width="100px;" alt="Bruno Vinícius Barreiras de Oliveira Profile Picture"/><br>
-        <sub>
-          <b>Bruno Vinícius Barreiras de Oliveira</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/giggio" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/334958?v=4" width="100px;" alt="Giovanni Bassi Profile Picture"/><br>
-        <sub>
-          <b>Giovanni Bassi</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/filipepacheco" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/17347774?v=4" width="100px;" alt="Filipe Pacheco de Fraga Profile Picture"/><br>
-        <sub>
-          <b>Filipe Pacheco de Fraga</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/felipee-monteiro" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/62250734?v=4" width="100px;" alt="Felipe Monteiro Profile Picture"/><br>
-        <sub>
-          <b>Felipe Monteiro</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/fernandogatto" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/45057940?v=4" width="100px;" alt="Fernando Gatto Profile Picture"/><br>
-        <sub>
-          <b>Fernando Gatto</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
+   <tr>
+      <td align="center">
+         <a href="https://github.com/fagundesjg" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/29789354?v=4" width="100px;" alt="José Geraldo D. F. Profile Picture"/><br>
+         <sub>
+            <b>José Geraldo D. F.</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/maneljr" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/82223180?v=4" width="100px;" alt="Manoel Farias Profile Picture"/><br>
+         <sub>
+            <b>Manoel Farias</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/MatheusDubin" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/46721495?v=4" width="100px;" alt="Matheus Dubin Da Silveira Profile Picture"/><br>
+         <sub>
+            <b>Matheus Dubin Da Silveira</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/rhuam" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/17427907?v=4" width="100px;" alt="Rhuam Sena Profile Picture"/><br>
+         <sub>
+            <b>Rhuam Sena</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/AlbuquerqueRafaelBruno" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/127885867?v=4" width="100px;" alt="Rafael Albuquerque Profile Picture"/><br>
+         <sub>
+            <b>Rafael Albuquerque</b>
+         </sub>
+         </a>
+      </td>
+   </tr>
+   <tr>
+      <td align="center">
+         <a href="https://github.com/alexiadorneles" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/19597184?v=4" width="100px;" alt="Aléxia Dorneles Profile Picture"/><br>
+         <sub>
+            <b>Aléxia Dorneles</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/lucianomlima" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/1580205?v=4" width="100px;" alt="Luciano Lima Profile Picture"/><br>
+         <sub>
+            <b>Luciano Lima</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/eli-rlima" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/38770741?v=4" width="100px;" alt="Elivelton Rodrigues Profile Picture"/><br>
+         <sub>
+            <b>Elivelton Rodrigues</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/luccas-specht" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/40741571?v=4" width="100px;" alt="Luccas Specht Profile Picture"/><br>
+         <sub>
+            <b>Luccas Specht</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/brunowzz" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/94939630?v=4" width="100px;" alt="Bruno Vinícius Barreiras de Oliveira Profile Picture"/><br>
+         <sub>
+            <b>Bruno Vinícius Barreiras de Oliveira</b>
+         </sub>
+         </a>
+      </td>
+   </tr>
+   <tr>
+      <td align="center">
+         <a href="https://github.com/giggio" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/334958?v=4" width="100px;" alt="Giovanni Bassi Profile Picture"/><br>
+         <sub>
+            <b>Giovanni Bassi</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/filipepacheco" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/17347774?v=4" width="100px;" alt="Filipe Pacheco de Fraga Profile Picture"/><br>
+         <sub>
+            <b>Filipe Pacheco de Fraga</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/felipee-monteiro" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/62250734?v=4" width="100px;" alt="Felipe Monteiro Profile Picture"/><br>
+         <sub>
+            <b>Felipe Monteiro</b>
+         </sub>
+         </a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/fernandogatto" target="_blank">
+         <img src="https://avatars.githubusercontent.com/u/45057940?v=4" width="100px;" alt="Fernando Gatto Profile Picture"/><br>
+         <sub>
+            <b>Fernando Gatto</b>
+         </sub>
+         </a>
+      </td>
+   </tr>
 </table>
 
 ## 📃 Licença <a name="license"/>
