@@ -1,16 +1,11 @@
 <h1 align="center">
-  <img
-    alt="SOS RS"
-    title="SOS RS"
-    src="https://avatars.githubusercontent.com/u/168995149?s=200&v=4"
-    width="150"
-  />
+  SOS Rio Grande do Sul
 </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-005CFE?style=for-the-badge&logo=react" alt="React">
+  <img src="https://img.shields.io/badge/React-blue?style=flat&logo=react" alt="React">
 
-  <img src="https://img.shields.io/badge/typescript-D4FAFF?style=for-the-badge&logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/typescript-D4FAFF?style=flat&&logo=typescript" alt="TypeScript">
 
   <img src="https://img.shields.io/github/forks/SOS-RS/frontend?color=00875F" alt="Forks">
 
