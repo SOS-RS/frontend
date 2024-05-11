@@ -22,7 +22,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
-        <InfoRow className="items-center" icon={<Home />} label={`${shelter.address}`}>
+        <InfoRow icon={<Home />} label={`${shelter.address}`}>
           <a
             href={`https://maps.google.com/?q=${encodeURI(shelter.address)}`}
             target="_blank"
