@@ -16,15 +16,19 @@ function checkCacheHasExpired(
   return new Date().getTime() - timestamp >= ttl;
 }
 
-function clearExpiredCache() {
-  log('cache - checando caches expirados...');
+function clearCache(onlyExpired: boolean = true) {
+  log(
+    onlyExpired
+      ? 'cache - checando caches expirados...'
+      : 'cache - limpando cache...'
+  );
   Object.keys(localStorage)
     .filter((key: string) => key.startsWith('cache:'))
     .forEach((key) => {
       const data = localStorage.getItem(key);
       if (data) {
         const { timestamp } = JSON.parse(data);
-        if (checkCacheHasExpired(timestamp)) {
+        if (!onlyExpired || checkCacheHasExpired(timestamp)) {
           localStorage.removeItem(key);
         }
       }
@@ -74,6 +78,6 @@ function handleCacheResponse(resp: AxiosResponse<any, any>) {
   }
 }
 
-clearExpiredCache();
+clearCache();
 
-export { handleCacheResponse, getCacheRequestData };
+export { handleCacheResponse, getCacheRequestData, clearCache };

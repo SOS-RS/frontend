@@ -28,6 +28,7 @@ const Filter = (props: IFilterProps) => {
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
+  console.log('data>>', data);
   const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormProps>({
     initialValues: data,
     enableReinitialize: true,
