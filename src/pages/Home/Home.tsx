@@ -42,12 +42,7 @@ const Home = () => {
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
-  const [markers, setMarkers] = useState<MarkerData[]>([
-    {
-      position: [-30.04914, -51.1955],
-      label: 'Abrigo Simers',
-    },
-  ]);
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
   const [userMarker, setUserMarker] = useState<MarkerData | null>();
   const [mapCenter, setMapCenter] = useState<LatLngExpression>([
     -30.033081, -51.256996,
@@ -69,6 +64,18 @@ const Home = () => {
       }
     }
   }, [success, location]);
+
+  useEffect(() => {
+    if (shelters.results.length) {
+      const markers: MarkerData[] = shelters.results
+        .filter((value) => value.latitude && value.longitude)
+        .map((value) => ({
+          position: [parseFloat(value.latitude!), parseFloat(value.longitude!)],
+          label: value.name,
+        }));
+      setMarkers(markers);
+    }
+  }, [shelters]);
 
   const [, setSearch] = useThrottle<string>(
     {
