@@ -1,21 +1,5 @@
-import {
-  // Fragment,
-  useCallback,
-  useContext,
-  // useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import {
-  RotateCw,
-  // CircleAlert,
-  // Search,
-  // Loader,
-  // ListFilter,
-  LogOutIcon,
-  PlusIcon,
-  // Heart,
-} from 'lucide-react';
+import { useCallback, useContext, useMemo, useState } from 'react';
+import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
 
@@ -24,13 +8,6 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
-// import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
-// import { Map } from '@/components/Map';
-// import { Marker, Popup, CircleMarker } from 'react-leaflet';
-// import { useGeolocation } from '@/hooks/useGeolocation';
-// import { MarkerData } from './types';
-// import { LatLngExpression } from 'leaflet';
-// import { UserLocationControl } from '@/components/UserLocationControl';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
 
@@ -43,7 +20,6 @@ const initialFilterData: IFilterFormProps = {
 };
 
 const Home = () => {
-  // const { location, success, metersToPixels } = useGeolocation();
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const {
     loading: loadingSession,
