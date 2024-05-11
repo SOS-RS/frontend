@@ -1,24 +1,18 @@
-export interface ISupplyOptionsSelect {
-    id: string;
-    name: string;
-    supplyCategory: {
-        id: string;
-        name: string;
-    };
-    createdAt: Date;
-    updatedAt: Date | null;
+import { SupplyPriority } from '@/service/supply/types';
+
+export type ShelterAvailabilityStatus = 'available' | 'unavailable' | 'waiting';
+
+export interface IFilterFormProps {
+  search: string;
+  priority: SupplyPriority | null;
+  supplyCategoryIds: string[];
+  supplyIds: string[];
+  shelterStatus: ShelterAvailabilityStatus[];
 }
 
-export interface IComplexSelectGroupedData {
-    label: string;
-    options: IComplexSelectData[]
-}
-
-export interface IComplexSelectData {
-    label: string;
-    value: string;
-}
-
-export interface IAdvancedFilterProps {
-    
+export interface IFilterProps {
+  onSubmit: (values: IFilterFormProps) => void;
+  data: IFilterFormProps;
+  open: true;
+  onClose: () => void;
 }

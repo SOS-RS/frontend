@@ -28,6 +28,7 @@
     "formik": "^2.4.6",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.378.0",
+    "qs": "^6.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@types/leaflet": "^1.9.12",
     "@types/node": "^20.12.8",
+    "@types/qs": "^6.9.15",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-input-mask": "^3.0.5",

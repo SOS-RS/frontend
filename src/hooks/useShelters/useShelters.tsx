@@ -4,103 +4,63 @@ import { AxiosRequestConfig } from 'axios';
 import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
-import { IUseSheltersData } from './types';
+import { IUseShelterOptions, IUseSheltersData } from './types';
 
-const useShelters = () => {
+const useShelters = (options: IUseShelterOptions = {}) => {
+  const { cache } = options;
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IPaginatedResponse<IUseSheltersData>>({
     count: 0,
     page: 1,
     perPage: 20,
     results: [],
-    filters: {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
-      waitingShelterAvailability: false
-    }
   });
 
-  const resetSearch = () => {
-    const params = {
-      search: '',
-      priority: undefined,
-      supplies: [],
-      supplyCategories: [],
-      filterAvailableShelter: false,
-      filterUnavailableShelter: false,
-      waitingShelterAvailability: false,
-      page: 1,
-      perPage: 20,      
-    }
-    search({          
-      params: params,
-    });
-  }
-
-  const search = useCallback(
+  const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
+      const { search, ...rest } = (config ?? {}).params ?? {};
+      const headers = config.headers ?? {};
+      if (cache) headers['x-app-cache'] = 'true';
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<any>>(
-          '/shelters/search',
-          {
-            ...config,
-            params: {
-              orderBy: 'prioritySum',
-              order: 'desc',
-              ...(config.params ?? {}),
-            },
-          }
-        )
+        .get<IServerResponse<any>>('/shelters', {
+          ...config,
+          headers,
+          params: {
+            orderBy: 'prioritySum',
+            order: 'desc',
+            search:
+              search ?? new URLSearchParams(window.location.search).toString(),
+            ...rest,
+          },
+        })
         .then(({ data }) => {
           if (append) {
             setData((prev) => ({
               ...prev,
               ...data.data,
               results: [...prev.results, ...data.data.results],
-              filters: {
-                search: '',
-                priority: config.params.priority,
-                supplies: config.params.supplies ?? [],
-                supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
             }));
           } else {
             setData((prev) => ({
               ...prev,
               ...data.data,
               results: [...data.data.results],
-              filters: {
-                search: config.params.search,
-                priority: config.params.priority,
-                supplies: config.params.supplies ?? [],
-                supplyCategories: config.params.supplyCategories ?? [],
-                filterAvailableShelter: config.params.filterAvailableShelter ?? false,
-                filterUnavailableShelter: config.params.filterUnavailableShelter ?? false,
-                waitingShelterAvailability: config.params.waitingShelterAvailability ?? false,
-              }
-            }));          
+            }));
           }
         })
         .finally(() => {
-          if(!append) setLoading(false);
+          if (!append) setLoading(false);
         });
     },
     []
   );
 
   useEffect(() => {
-    resetSearch();
-  }, []);
+    refresh();
+  }, [refresh]);
 
-  return { data, loading, search, resetSearch };
+  return { data, loading, refresh };
 };
 
 export { useShelters };
