@@ -80,7 +80,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
         />
       </div>
-    </Card >
+    </Card>
   );
 };
 
