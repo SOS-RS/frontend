@@ -24,7 +24,7 @@ import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 import { Map } from '@/components/Map';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker, Popup, CircleMarker } from 'react-leaflet';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MarkerData } from './types';
 import { LatLngExpression } from 'leaflet';
@@ -34,7 +34,7 @@ const alertDescription =
 
 const Home = () => {
   const { data: shelters, loading, search, resetSearch } = useShelters();
-  const { location, success } = useGeolocation();
+  const { location, success, metersToPixels } = useGeolocation();
   const {
     loading: loadingSession,
     refreshSession,
@@ -55,11 +55,12 @@ const Home = () => {
   const [mapZoom, setMapZoom] = useState<number>(9);
 
   useEffect(() => {
-    const { latitude, longitude } = location;
+    const { latitude, longitude, accuracy } = location;
     if (latitude && longitude) {
       setUserMarker({
         position: [latitude, longitude],
         label: 'Você está aqui',
+        accuracy: metersToPixels(accuracy ?? 1, latitude, mapZoom),
       });
 
       if (success) {
@@ -234,9 +235,15 @@ const Home = () => {
                     </Marker>
                   ))}
                   {userMarker?.position ? (
-                    <Marker position={userMarker.position}>
-                      <Popup>{userMarker.label}</Popup>
-                    </Marker>
+                    <Fragment>
+                      <Marker position={userMarker.position}>
+                        <Popup>{userMarker.label}</Popup>
+                      </Marker>
+                      <CircleMarker
+                        center={userMarker.position}
+                        radius={userMarker.accuracy ?? 1}
+                      />
+                    </Fragment>
                   ) : null}
                 </Map>
               </div>
