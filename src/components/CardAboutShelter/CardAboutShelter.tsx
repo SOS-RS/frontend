@@ -59,13 +59,15 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
               : 'Não informado'
           }
         />
-        <InfoRow
-          icon={<Smartphone />}
-          label="Contato:"
-          value={
-            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
-          }
-        />
+        {Boolean(shelter?.contact) && (
+          <InfoRow
+            icon={<Smartphone />}
+            label="Contato:"
+            value={
+              check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+            }
+          />
+        )}
         <InfoRow
           icon={<Landmark />}
           label="Chave Pix:"
