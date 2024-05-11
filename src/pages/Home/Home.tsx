@@ -116,12 +116,12 @@ const Home = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full border-2  gap-2"
+              className="bg-light-green hover:bg-primary-green text-black  hover:text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full shadow gap-2"
               onClick={() =>
                 window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
               }
             >
-              <PlusIcon className="h-5 w-5 stroke-white" />
+              <PlusIcon className="h-5 w-5 stroke-black" />
               Cadastrar abrigo
             </Button>
             <Button
