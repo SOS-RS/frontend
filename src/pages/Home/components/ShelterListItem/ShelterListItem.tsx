@@ -44,7 +44,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   return (
     <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
       <Button size="sm" variant="ghost" className="absolute top-4 right-4">
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight
+          className="h-5 w-5"
+          onClick={() => navigate(`/abrigo/${data.id}`)}
+        />
       </Button>
       <div
         className="flex items-center gap-1"

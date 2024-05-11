@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
-import { getCacheRequestData, handleCacheResponse } from './cache';
+import { clearCache, getCacheRequestData, handleCacheResponse } from './cache';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:4000/',
@@ -31,6 +31,7 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
+      clearCache(false);
       localStorage.removeItem('token');
     }
     return Promise.reject(error);
