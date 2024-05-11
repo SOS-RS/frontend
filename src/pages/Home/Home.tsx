@@ -28,6 +28,7 @@ import { Marker, Popup, CircleMarker } from 'react-leaflet';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MarkerData } from './types';
 import { LatLngExpression } from 'leaflet';
+import { UserLocationControl } from '@/components/UserLocationControl';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
@@ -236,6 +237,11 @@ const Home = () => {
             <Fragment>
               <div>
                 <Map center={mapCenter} zoom={mapZoom}>
+                  <UserLocationControl
+                    position="topright"
+                    location={location}
+                    disabled={!location.latitude || !location.longitude}
+                  />
                   {markers.map((v) => (
                     <Marker position={v.position}>
                       <Popup>{v.label}</Popup>
