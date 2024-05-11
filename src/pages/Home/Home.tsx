@@ -1,4 +1,11 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   RotateCw,
   CircleAlert,
@@ -18,12 +25,16 @@ import { Filter } from './components/Filter';
 import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 import { Map } from '@/components/Map';
 import { Marker, Popup } from 'react-leaflet';
+import { useGeolocation } from '@/hooks/useGeolocation';
+import { MarkerData } from './types';
+import { LatLngExpression } from 'leaflet';
 
 const alertDescription =
   'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
 
 const Home = () => {
   const { data: shelters, loading, search, resetSearch } = useShelters();
+  const { location, success } = useGeolocation();
   const {
     loading: loadingSession,
     refreshSession,
@@ -31,6 +42,34 @@ const Home = () => {
   } = useContext(SessionContext);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  const [mapCenter, setMapCenter] = useState<LatLngExpression>([
+    -30.033081, -51.256996,
+  ]);
+  const [mapZoom, setMapZoom] = useState<number>(9);
+
+  useEffect(() => {
+    setMarkers((previous) => [
+      ...previous,
+      {
+        position: [-30.04914, -51.1955],
+        label: 'Abrigo Simers',
+      },
+    ]);
+
+    if (success) {
+      const { latitude, longitude } = location;
+      if (latitude && longitude) {
+        setMarkers((previous) => [
+          ...previous,
+          { position: [latitude, longitude], label: 'Você está aqui' },
+        ]);
+        setMapCenter([latitude, longitude]);
+        setMapZoom(15);
+      }
+    }
+  }, [success]);
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -189,10 +228,12 @@ const Home = () => {
           ) : (
             <Fragment>
               <div>
-                <Map>
-                  <Marker position={[-30.04914, -51.1955]}>
-                    <Popup>Abrigo Simers</Popup>
-                  </Marker>
+                <Map center={mapCenter} zoom={mapZoom}>
+                  {markers.map((v) => (
+                    <Marker position={v.position}>
+                      <Popup>{v.label}</Popup>
+                    </Marker>
+                  ))}
                 </Map>
               </div>
               {shelters.results.map((s, idx) => (
