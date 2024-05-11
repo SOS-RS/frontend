@@ -28,7 +28,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
             target="_blank"
             className="text-blue-500 break-all cursor-pointer hover:underline"
           >
-            Abrir no Google Maps
+            Ver no Google Maps
           </a>
         </InfoRow>
         <InfoRow
