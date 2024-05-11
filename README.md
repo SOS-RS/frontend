@@ -31,11 +31,11 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
 
 1. Clone o repositório:
    ```
-   git clone https://github.com/seuusuario/projeto-enchentes-frontend.git
+   git clone https://github.com/seuusuario/frontend.git
    ```
 2. Entre no diretório do projeto:
    ```
-   cd projeto-enchentes-frontend
+   cd frontend
    ```
 3. Instale as dependências:
    ```
