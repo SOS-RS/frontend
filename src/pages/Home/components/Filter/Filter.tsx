@@ -146,7 +146,7 @@ const Filter = (props: IFilterProps) => {
                 </span>{' '}
                 ou por{' '}
                 <span className="underline">
-                  itens que os abrigos tem disponibilidade para doar
+                  itens que os abrigos têm disponibilidade para doar
                 </span>
                 .
               </p>
