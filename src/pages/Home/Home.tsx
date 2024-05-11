@@ -126,6 +126,17 @@ const Home = () => {
               Cadastrar abrigo
             </Button>
             <Button
+              variant="ghost"
+              size="sm"
+              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
+              onClick={() =>
+                window.open('https://softartworks.github.io/doacoestransparentes.github.io/', '_blank')
+              }
+            >
+              <PlusIcon className="h-5 w-5 stroke-white" />
+              Transparência
+            </Button>
+            <Button
               loading={loading}
               variant="ghost"
               size="sm"
