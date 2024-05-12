@@ -16,6 +16,7 @@ import { ICreateShelter } from '@/service/shelter/types';
 import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { withAuth } from '@/hocs';
+import { clearCache } from '@/api/cache';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const CreateShelterComponent = () => {
       address: '',
       shelteredPeople: 0,
       capacity: 0,
+      verified: false,
       petFriendly: false,
       contact: null,
       pix: null,
@@ -57,6 +59,7 @@ const CreateShelterComponent = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await ShelterServices.create(values);
+        clearCache(false);
         toast({
           title: 'Cadastro feita com sucesso',
         });

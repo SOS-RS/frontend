@@ -1,4 +1,9 @@
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { IUseShelterDataSupply, IUseSheltersDataSupplyData } from '@/hooks/useShelter/types';
+import {
+  ShelterTagInfo,
+  ShelterTagType,
+} from '@/pages/Home/components/ShelterListItem/types';
+import { ITagItem } from '@/pages/Shelter/components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -59,26 +64,34 @@ function getAvailabilityProps(
     };
 }
 
+const priorityOptions: Record<SupplyPriority, string> = {
+  [SupplyPriority.Urgent]: 'Necessita urgente',
+  [SupplyPriority.Needing]: 'Precisa',
+  [SupplyPriority.Remaining]: 'Disponível para doação',
+  [SupplyPriority.NotNeeded]: 'Não preciso',
+};
+
 function getSupplyPriorityProps(priority: SupplyPriority) {
+  const label = priorityOptions[priority];
   switch (priority) {
     case SupplyPriority.NotNeeded:
       return {
-        label: 'Não preciso',
+        label,
         className: 'bg-gray-200',
       };
     case SupplyPriority.Remaining:
       return {
-        label: 'Disponível para doação',
+        label,
         className: 'bg-light-green',
       };
     case SupplyPriority.Needing:
       return {
-        label: 'Precisa',
+        label,
         className: 'bg-light-orange',
       };
     case SupplyPriority.Urgent:
       return {
-        label: 'Precisa Urgentemente',
+        label,
         className: 'bg-light-red',
       };
   }
@@ -107,22 +120,43 @@ function group<T extends Record<string, any>>(
   return data;
 }
 
-function getCategoriesToFilterVolunteers(): string[] {
-  return ['voluntariado', 'especialistas e profissionais']
+function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
+  const initialGroup: ShelterTagInfo<IUseSheltersDataSupplyData[]> = {
+    NeedDonations: [],
+    NeedVolunteers: [],
+    RemainingSupplies: [],
+  };
+  const grouped: ShelterTagInfo<IUseSheltersDataSupplyData[]> = initialGroup;
+
+  data.forEach((shelterSupply) => {
+    Object.keys(grouped).forEach((key: string) => {
+      if (shelterSupply.tags.includes(key as ShelterTagType)) {
+        grouped[key as ShelterTagType].push(shelterSupply);
+      }
+    });
+  });
+
+  return Object.entries(grouped).reduce((prev, [category, values]) => {
+    return {
+      ...prev,
+      [category]: values.sort((a, b) => b.priority - a.priority),
+    };
+  }, initialGroup);
 }
 
-function getTagsListName(tags: IUseShelterDataSupply[] = []): string[] {
-  return tags.map(({ supply }) => supply.name);
+function getTags(tags: IUseShelterDataSupply[] = []): ITagItem[] {
+  return tags.map(({ supply }) => ({ label: supply.name, value: supply.id }));
 }
 
 export {
   cn,
   getAvailabilityProps,
-  getTagsListName,
+  getTags,
   group,
   getSupplyPriorityProps,
   variantStatusPriority,
   colorStatusPriority,
   nameStatusPriority,
-  getCategoriesToFilterVolunteers,
+  priorityOptions,
+  groupShelterSuppliesByTag,
 };

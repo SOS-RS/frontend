@@ -14,6 +14,18 @@ const ShelterSupplyServices = {
     );
     return data;
   },
+  updateMany: async (
+    shelterId: string,
+    supplyIds: string[]
+  ): Promise<IServerResponse> => {
+    const { data } = await api.put(
+      `/shelter/supplies/${shelterId}/supplies/many`,
+      {
+        ids: supplyIds,
+      }
+    );
+    return data;
+  },
   create: async (payload: ICreateShelterSupply): Promise<IServerResponse> => {
     const { data } = await api.post('/shelter/supplies', payload);
     return data;
