@@ -53,9 +53,6 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           }
         />
         <div className="flex flex-wrap gap-1 items-center">
-          {/* <p className="text-muted-foreground text-sm md:text-md font-medium">
-            Cidades filtradas:
-          </p> */}
           {filterData.cities?.map((item) => {
             return (
               <>

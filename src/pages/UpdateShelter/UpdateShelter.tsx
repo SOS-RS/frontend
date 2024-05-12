@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { useContext, useEffect } from 'react';
+import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +20,7 @@ import { IUpdateShelter } from '@/service/shelter/types';
 import { SessionContext } from '@/contexts';
 import { clearCache } from '@/api/cache';
 import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
+import { useDebouncedValue, useViaCep } from '@/hooks';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const UpdateShelter = () => {
     handleSubmit,
     setFieldValue,
     values,
+    touched,
   } = useFormik<IUpdateShelter>({
     initialValues: {
       shelteredPeople: shelter.shelteredPeople,
@@ -59,16 +61,16 @@ const UpdateShelter = () => {
       shelteredPeople: Yup.number().nullable(),
       petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
       verified: Yup.bool(),
-      address: Yup.string(),
+      address: Yup.string().nullable(),
       capacity: Yup.string().nullable(),
       pix: Yup.string().nullable(),
       name: Yup.string(),
-      street: Yup.string().nullable(),
-      neighbourhood: Yup.string().nullable(),
-      city: Yup.string().nullable(),
+      street: Yup.string().required('Este campo deve ser preenchido'),
+      neighbourhood: Yup.string().required('Este campo deve ser preenchido'),
+      city: Yup.string().required('Este campo deve ser preenchido'),
       streetNumber: Yup.string()
         .min(0, 'O valor mínimo para este campo é 1')
-        .nullable(),
+        .required('Este campo deve ser preenchido'),
       zipCode: Yup.string().nullable(),
     }),
     onSubmit: async (values) => {
@@ -89,6 +91,21 @@ const UpdateShelter = () => {
       }
     },
   });
+  const debouncedZipcode = useDebouncedValue(
+    touched?.zipCode ? values?.zipCode ?? '' : '',
+    500
+  );
+
+  const { data: cepData, loading: isLoadingZipCodeData } =
+    useViaCep(debouncedZipcode);
+
+  useEffect(() => {
+    if (!cepData) return;
+
+    if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
+    if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
+    if (cepData.localidade) setFieldValue('city', cepData.localidade);
+  }, [cepData, setFieldValue]);
 
   if (loading) return <LoadingScreen />;
 
@@ -122,7 +139,16 @@ const UpdateShelter = () => {
                 helperText={errors.name}
               />
               <TextField
-                label="Rua/avenida"
+                label="CEP"
+                {...getFieldProps('zipCode')}
+                error={!!errors.zipCode}
+                helperText={errors.zipCode}
+              />
+              {Boolean(isLoadingZipCodeData) && (
+                <Loader className="animate-spin h-15 w-15 stroke-black" />
+              )}
+              <TextField
+                label="Logradouro (Rua/avenida)"
                 {...getFieldProps('street')}
                 error={!!errors.street}
                 helperText={errors.street}
@@ -163,33 +189,6 @@ const UpdateShelter = () => {
                   <p className={'text-red-600 text-sm'}>{errors.city}</p>
                 )}
               </div>
-              <TextField
-                label="CEP"
-                {...getFieldProps('zipCode')}
-                error={!!errors.zipCode}
-                helperText={errors.zipCode}
-              />
-              {/* <SelectField
-                label="Cidade"
-                value={values.city ?? ''}
-                onSelectChange={(v) => {
-                  setFieldValue('city', v);
-                }}
-                options={hardCodedRsCities.map((item) => ({
-                  value: item,
-                  label: item,
-                }))}
-                defaultValue={values.city ?? ''}
-              />
-              {errors.city && (
-                <p className={'text-red-600 text-sm'}>{errors.city}</p>
-              )} */}
-              {/* <TextField
-                  label="Cidade do abrigo"
-                  {...getFieldProps('city')}
-                  error={!!errors.city}
-                  helperText={errors.city}
-                /> */}
               <TextField
                 label="Endereço"
                 {...getFieldProps('address')}

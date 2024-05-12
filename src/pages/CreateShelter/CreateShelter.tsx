@@ -138,7 +138,7 @@ const CreateShelterComponent = () => {
               <Loader className="animate-spin h-15 w-15 stroke-black" />
             )}
             <TextField
-              label="Logradouro(Rua/avenida)"
+              label="Logradouro (Rua/avenida)"
               {...getFieldProps('street')}
               error={!!errors.street}
               helperText={errors.street}
@@ -179,12 +179,6 @@ const CreateShelterComponent = () => {
                 <p className={'text-red-600 text-sm'}>{errors.city}</p>
               )}
             </div>
-            {/* <TextField
-              label="Cidade do abrigo"
-              {...getFieldProps('city')}
-              error={!!errors.city}
-              helperText={errors.city}
-            /> */}
             <TextField
               label="Contato"
               {...getFieldProps('contact')}
