@@ -17,6 +17,7 @@ import { ShelterServices } from '@/service';
 import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
 import { SessionContext } from '@/contexts';
+import { clearCache } from '@/api/cache';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const UpdateShelter = () => {
     values,
   } = useFormik<IUpdateShelter>({
     initialValues: {
-      shelteredPeople: shelter.shelteredPeople ?? 0,
+      shelteredPeople: shelter.shelteredPeople,
       petFriendly: shelter.petFriendly ?? false,
       verified: shelter.verified,
       address: shelter.address ?? '',
@@ -48,11 +49,11 @@ const UpdateShelter = () => {
     validateOnChange: false,
     validateOnMount: false,
     validationSchema: Yup.object().shape({
-      shelteredPeople: Yup.number().required('Este campo deve ser preenchido'),
+      shelteredPeople: Yup.number().nullable(),
       petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
       verified: Yup.bool(),
       address: Yup.string(),
-      capacity: Yup.string(),
+      capacity: Yup.string().nullable(),
       pix: Yup.string().nullable(),
       name: Yup.string(),
     }),
@@ -63,6 +64,7 @@ const UpdateShelter = () => {
         toast({
           title: 'Atualização feita com sucesso',
         });
+        clearCache(false);
         navigate(`/abrigo/${shelterId}`);
       } catch (err: any) {
         toast({
@@ -98,7 +100,7 @@ const UpdateShelter = () => {
             Atualize as informações desejadas sobre o abrigo.
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
-            <Authenticated>
+            <Authenticated role="Staff">
               <TextField
                 label="Nome do abrigo"
                 {...getFieldProps('name')}
@@ -141,7 +143,7 @@ const UpdateShelter = () => {
                 { value: 'false', label: 'Não' },
               ]}
             />
-            <Authenticated>
+            <Authenticated role="Staff">
               <SelectField
                 label="O abrigo é verificado"
                 value={values.verified ? 'true' : 'false'}
