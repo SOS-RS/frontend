@@ -4,6 +4,7 @@ export interface IUseSheltersData {
   id: string;
   name: string;
   address: string;
+  city?: string;
   pix?: string | null;
   shelteredPeople?: number | null;
   capacity?: number | null;

@@ -2,6 +2,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ReactSelect from 'react-select';
 
 import {
   Select,
@@ -10,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+
 import { Header, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { ICreateShelter } from '@/service/shelter/types';
@@ -17,6 +19,7 @@ import { toast } from '@/components/ui/use-toast';
 import { ShelterServices } from '@/service';
 import { withAuth } from '@/hocs';
 import { clearCache } from '@/api/cache';
+import { hardCodedRsCities } from './hardcodedCities';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -31,6 +34,7 @@ const CreateShelterComponent = () => {
   } = useFormik<ICreateShelter>({
     initialValues: {
       name: '',
+      city: '',
       address: '',
       shelteredPeople: 0,
       capacity: 0,
@@ -52,6 +56,7 @@ const CreateShelterComponent = () => {
       capacity: Yup.number()
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
+      city: Yup.string().nullable(),
       petFriendly: Yup.bool().nullable(),
       contact: Yup.string().nullable(),
       pix: Yup.string().nullable(),
@@ -102,6 +107,37 @@ const CreateShelterComponent = () => {
               error={!!errors.name}
               helperText={errors.name}
             />
+            <div className="flex flex-col gap-1 w-full">
+              <label className="text-muted-foreground">Cidade</label>
+              <ReactSelect
+                name="city"
+                placeholder="Cidade"
+                value={{
+                  label: values.city,
+                  value: values.city,
+                }}
+                options={hardCodedRsCities.map((item) => ({
+                  value: item,
+                  label: item,
+                }))}
+                onChange={(v) => {
+                  console.log({ v });
+                  setFieldValue('city', v?.value);
+                }}
+                className={`w-full ${
+                  errors.city ? 'border-[1px] border-red-600 rounded-md' : ''
+                }`}
+              />
+              {errors.city && (
+                <p className={'text-red-600 text-sm'}>{errors.city}</p>
+              )}
+            </div>
+            {/* <TextField
+              label="Cidade do abrigo"
+              {...getFieldProps('city')}
+              error={!!errors.city}
+              helperText={errors.city}
+            /> */}
             <TextField
               label="Endereço do abrigo"
               {...getFieldProps('address')}

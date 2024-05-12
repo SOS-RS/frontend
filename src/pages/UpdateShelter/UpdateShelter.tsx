@@ -3,6 +3,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ReactSelect from 'react-select';
 
 import {
   Authenticated,
@@ -18,6 +19,7 @@ import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
 import { SessionContext } from '@/contexts';
 import { clearCache } from '@/api/cache';
+import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -42,6 +44,7 @@ const UpdateShelter = () => {
       capacity: shelter.capacity,
       contact: shelter.contact ?? '',
       pix: shelter.pix,
+      city: shelter.city ?? '',
       name: shelter.name,
     },
     enableReinitialize: true,
@@ -56,6 +59,7 @@ const UpdateShelter = () => {
       capacity: Yup.string().nullable(),
       pix: Yup.string().nullable(),
       name: Yup.string(),
+      city: Yup.string().nullable(),
     }),
     onSubmit: async (values) => {
       try {
@@ -77,6 +81,7 @@ const UpdateShelter = () => {
   });
 
   if (loading) return <LoadingScreen />;
+  console.log({ values, shelter });
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -107,6 +112,52 @@ const UpdateShelter = () => {
                 error={!!errors.name}
                 helperText={errors.name}
               />
+              <div className="flex flex-col gap-1 w-full">
+                <label className="text-muted-foreground">Cidade</label>
+                <ReactSelect
+                  name="city"
+                  placeholder="Cidade"
+                  value={{
+                    label: values.city,
+                    value: values.city,
+                  }}
+                  options={hardCodedRsCities.map((item) => ({
+                    value: item,
+                    label: item,
+                  }))}
+                  onChange={(v) => {
+                    console.log({ v });
+                    setFieldValue('city', v?.value);
+                  }}
+                  className={`w-full ${
+                    errors.city ? 'border-[1px] border-red-600 rounded-md' : ''
+                  }`}
+                />
+                {errors.city && (
+                  <p className={'text-red-600 text-sm'}>{errors.city}</p>
+                )}
+              </div>
+              {/* <SelectField
+                label="Cidade"
+                value={values.city ?? ''}
+                onSelectChange={(v) => {
+                  setFieldValue('city', v);
+                }}
+                options={hardCodedRsCities.map((item) => ({
+                  value: item,
+                  label: item,
+                }))}
+                defaultValue={values.city ?? ''}
+              />
+              {errors.city && (
+                <p className={'text-red-600 text-sm'}>{errors.city}</p>
+              )} */}
+              {/* <TextField
+                  label="Cidade do abrigo"
+                  {...getFieldProps('city')}
+                  error={!!errors.city}
+                  helperText={errors.city}
+                /> */}
               <TextField
                 label="Endereço"
                 {...getFieldProps('address')}

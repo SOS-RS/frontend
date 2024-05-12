@@ -5,6 +5,7 @@ import {
   PawPrint,
   Landmark,
   Smartphone,
+  Building,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
@@ -22,7 +23,10 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
-        <InfoRow icon={<Home />} label={shelter.address} />
+        {Boolean(shelter.city) && (
+          <InfoRow icon={<Home />} label={shelter.address} />
+        )}
+        <InfoRow icon={<Building />} label={shelter.city} />
         <InfoRow
           icon={<PawPrint />}
           label={

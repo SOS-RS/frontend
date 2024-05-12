@@ -57,7 +57,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
           onClick={onClick}
         >
-          {data.name}
+          {data.name} - {Boolean(data.city) && <>{data.city}</>}
         </h3>
         {data.verified && <VerifiedBadge />}
       </div>
