@@ -11,6 +11,9 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { SupplyPriority } from '@/service/supply/types';
+import { getSupplyPriorityProps } from '@/lib/utils';
+import { Chip } from '@/components/Chip';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -71,6 +74,22 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               Limpar Filtros
             </Button>
           )}
+        </div>
+        <h6 className={'font-semibold text-md'}>Legenda</h6>
+        <div className="flex flex-row gap-2 flex-wrap">
+          {Object.values(SupplyPriority)
+            .filter((value): value is number => typeof value === 'number')
+            .reverse()
+            .map((p, idx) => {
+              const { label, className } = getSupplyPriorityProps(p);
+              return (
+                <Chip
+                  key={`subtitle-item-${idx}`}
+                  label={label}
+                  className={`${className} w-fit`}
+                />
+              );
+            })}
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
