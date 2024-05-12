@@ -75,7 +75,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
-            <LoadingSkeleton amountItems={10}/>
+            <LoadingSkeleton amountItems={4}/>
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
