@@ -21,7 +21,7 @@ export const CitiesFilter = ({
     value: item,
   }));
   const options: ISelectField<string>[] = data.map((item) => ({
-    label: item.city,
+    label: `(${item.sheltersCount}) ${item.city}`,
     value: item.city,
   }));
 
