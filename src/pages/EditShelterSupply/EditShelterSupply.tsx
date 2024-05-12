@@ -16,7 +16,6 @@ import { ISupplyRowItemProps } from './components/SupplyRow/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 
-
 const EditShelterSupply = () => {
   const navigate = useNavigate();
   const { shelterId = '-1' } = useParams();
@@ -52,7 +51,10 @@ const EditShelterSupply = () => {
       result = filtered;
     }
 
-    return group<ISupply>(result, 'supplyCategory.name');
+    const grouped = group<ISupply>(result, 'supplyCategory.name');
+    const sorted = Object.fromEntries(Object.entries(grouped).sort());
+
+    return sorted;
   }, [searchValue, supplies, search]);
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);

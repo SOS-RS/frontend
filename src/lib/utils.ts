@@ -116,15 +116,7 @@ function group<T extends Record<string, any>>(
     return { ...prev, [key]: [current] };
   }, {} as { [key: string]: Array<T> });
 
-  const keys = Object.keys(data).sort();
-
-  const sortedObject: Record<string, Array<T>> = {};
-
-  keys.forEach((key) => {
-    sortedObject[key] = data[key];
-  });
-
-  return sortedObject;
+  return data;
 }
 
 function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
