@@ -38,14 +38,15 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     return {
       label: s.supply.name,
       className,
+      priority: s.priority,
     };
   }, []);
 
   return (
-    <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative">
+    <div className="relative flex flex-col w-full gap-1 p-4 border-2 rounded-md border-border">
       <Button size="sm" variant="ghost" className="absolute top-4 right-4">
         <ChevronRight
-          className="h-5 w-5"
+          className="w-5 h-5"
           onClick={() => navigate(`/abrigo/${data.id}`)}
         />
       </Button>
@@ -54,7 +55,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         onClick={() => navigate(`/abrigo/${data.id}`)}
       >
         <h3
-          className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
+          className="text-lg font-semibold hover:cursor-pointer hover:text-slate-500"
           onClick={onClick}
         >
           {data.name}
@@ -64,7 +65,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
         {availability}
       </h6>
-      <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
+      <h6 className="text-sm font-medium text-muted-foreground md:text-lg">
         {data.address}
       </h6>
       {data.shelterSupplies.length > 0 && (
@@ -84,7 +85,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         </>
       )}
       {data.updatedAt && (
-        <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+        <small className="mt-2 text-sm font-light md:text-md text-muted-foreground">
           Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
         </small>
       )}

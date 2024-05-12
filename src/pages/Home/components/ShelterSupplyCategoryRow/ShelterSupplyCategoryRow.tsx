@@ -3,7 +3,8 @@ import React, { Fragment } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { IShelterSupplyCategoryRowProps } from './types';
 import { Chip } from '@/components';
-import { cn } from '@/lib/utils';
+import { cn, nameStatusPriority } from '@/lib/utils';
+import WithTooltip from '@/components/ui/with-tooltip';
 
 const ShelterSupplyCategoryRow = React.forwardRef<
   HTMLDivElement,
@@ -16,13 +17,15 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   return (
     <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
       <Separator className="mt-2" />
-      <p className="text-muted-foreground text-sm md:text-lg font-medium">
+      <p className="text-sm font-medium text-muted-foreground md:text-lg">
         {title}
       </p>
       {description && <p>{description}</p>}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {tags.map((s, idx) => (
-          <Chip key={idx} {...s} />
+          <WithTooltip key={idx} content={nameStatusPriority(s.priority) || ''}>
+            <Chip {...s} />
+          </WithTooltip>
         ))}
       </div>
     </div>

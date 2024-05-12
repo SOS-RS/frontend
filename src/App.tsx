@@ -1,20 +1,20 @@
-import { Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Routes } from './routes/Routes';
-import { SessionProvider } from './contexts';
 import { Toaster } from './components/ui/toaster';
+import { TooltipProvider } from './components/ui/tooltip';
+import { SessionProvider } from './contexts';
+import { Routes } from './routes/Routes';
 
 const App = () => {
   return (
-    <Fragment>
+    <TooltipProvider>
       <Toaster />
       <BrowserRouter>
         <SessionProvider>
           <Routes />
         </SessionProvider>
       </BrowserRouter>
-    </Fragment>
+    </TooltipProvider>
   );
 };
 

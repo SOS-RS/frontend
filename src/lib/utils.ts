@@ -35,8 +35,8 @@ const colorStatusPriority = (priority: SupplyPriority) => {
  * deprecated
  */
 function nameStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
-  if (priority === SupplyPriority.Urgent) return 'Precisa';
+  if (priority === SupplyPriority.Needing) return 'Precisa';
+  if (priority === SupplyPriority.Urgent) return 'Precisa Urgentemente';
   if (priority === SupplyPriority.NotNeeded) return 'Não preciso';
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
 }
@@ -138,7 +138,10 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   return Object.entries(grouped).reduce((prev, [category, values]) => {
     return {
       ...prev,
-      [category]: values.sort((a, b) => b.priority - a.priority),
+      [category]: values.sort(
+        (a, b) =>
+          b.priority - a.priority || a.supply.name.localeCompare(b.supply.name)
+      ),
     };
   }, initialGroup);
 }
