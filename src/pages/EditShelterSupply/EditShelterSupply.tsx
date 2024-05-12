@@ -8,12 +8,14 @@ import { Accordion } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { group } from '@/lib/utils';
 import { ShelterSupplyServices } from '@/service';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { SupplyRow } from './components';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { clearCache } from '@/api/cache';
+
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -78,6 +80,7 @@ const EditShelterSupply = () => {
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            clearCache(false);
             refresh();
           };
 

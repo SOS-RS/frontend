@@ -4,6 +4,7 @@ export interface IShelter {
   pix?: string | null;
   address: string;
   petFriendly?: boolean | null;
+  verified: boolean;
   shelteredPeople?: number | null;
   capacity?: number | null;
   contact?: string | null;
@@ -14,9 +15,7 @@ export interface IShelter {
 export interface ICreateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
 
-export type IUpdateShelter = Partial<
-  Pick<IShelter, 'shelteredPeople' | 'petFriendly'>
->;
+export type IUpdateShelter = Partial<ICreateShelter>;
 
 export interface IFullUpdateShelter
   extends Omit<IShelter, 'id' | 'createdAt' | 'updatedAt'> {}
