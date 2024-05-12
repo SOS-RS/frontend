@@ -34,7 +34,11 @@ const CreateShelterComponent = () => {
   } = useFormik<ICreateShelter>({
     initialValues: {
       name: '',
+      street: '',
+      neighbourhood: '',
       city: '',
+      streetNumber: null,
+      zipCode: '',
       address: '',
       shelteredPeople: 0,
       capacity: 0,
@@ -56,8 +60,13 @@ const CreateShelterComponent = () => {
       capacity: Yup.number()
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
+      street: Yup.string().nullable(),
+      neighbourhood: Yup.string().nullable(),
       city: Yup.string().nullable(),
-      petFriendly: Yup.bool().nullable(),
+      streetNumber: Yup.string()
+        .min(0, 'O valor mínimo para este campo é 1')
+        .nullable(),
+      zipCode: Yup.string().nullable(),
       contact: Yup.string().nullable(),
       pix: Yup.string().nullable(),
     }),
@@ -107,6 +116,24 @@ const CreateShelterComponent = () => {
               error={!!errors.name}
               helperText={errors.name}
             />
+            <TextField
+              label="Rua/avenida"
+              {...getFieldProps('street')}
+              error={!!errors.street}
+              helperText={errors.street}
+            />
+            <TextField
+              label="Número"
+              {...getFieldProps('streetNumber')}
+              error={!!errors.streetNumber}
+              helperText={errors.streetNumber}
+            />
+            <TextField
+              label="Bairro"
+              {...getFieldProps('neighbourhood')}
+              error={!!errors.neighbourhood}
+              helperText={errors.neighbourhood}
+            />
             <div className="flex flex-col gap-1 w-full">
               <label className="text-muted-foreground">Cidade</label>
               <ReactSelect
@@ -121,7 +148,6 @@ const CreateShelterComponent = () => {
                   label: item,
                 }))}
                 onChange={(v) => {
-                  console.log({ v });
                   setFieldValue('city', v?.value);
                 }}
                 className={`w-full ${
@@ -132,6 +158,12 @@ const CreateShelterComponent = () => {
                 <p className={'text-red-600 text-sm'}>{errors.city}</p>
               )}
             </div>
+            <TextField
+              label="CEP"
+              {...getFieldProps('zipCode')}
+              error={!!errors.zipCode}
+              helperText={errors.zipCode}
+            />
             {/* <TextField
               label="Cidade do abrigo"
               {...getFieldProps('city')}

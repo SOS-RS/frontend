@@ -2,7 +2,11 @@ export interface IShelter {
   id: string;
   name: string;
   pix?: string | null;
+  street?: string;
+  neighbourhood?: string;
   city?: string;
+  streetNumber?: string | null;
+  zipCode?: string;
   address: string;
   petFriendly?: boolean | null;
   verified: boolean;
