@@ -1,6 +1,6 @@
 import Select from 'react-select';
 
-import { useShelterCities } from '@/hooks/useShelterCIties';
+import { useShelterCities } from '@/hooks';
 import { ISelectField } from './types';
 
 interface CitiesFilterInterface<S> {
