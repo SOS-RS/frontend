@@ -1,4 +1,5 @@
-import { ChevronLeft } from 'lucide-react';
+import { useEffect } from 'react';
+import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +21,7 @@ import { ShelterServices } from '@/service';
 import { withAuth } from '@/hocs';
 import { clearCache } from '@/api/cache';
 import { hardCodedRsCities } from './hardcodedCities';
+import { useDebouncedValue, useViaCep } from '@/hooks';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -39,7 +41,6 @@ const CreateShelterComponent = () => {
       city: '',
       streetNumber: null,
       zipCode: '',
-      address: '',
       shelteredPeople: 0,
       capacity: 0,
       verified: false,
@@ -53,20 +54,19 @@ const CreateShelterComponent = () => {
     validateOnMount: false,
     validationSchema: Yup.object().shape({
       name: Yup.string().required('Este campo deve ser preenchido'),
-      address: Yup.string().required('Este campo deve ser preenchido'),
       shelteredPeople: Yup.number()
         .min(0, 'O valor mínimo para este campo é 0')
         .nullable(),
       capacity: Yup.number()
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
-      street: Yup.string().nullable(),
-      neighbourhood: Yup.string().nullable(),
-      city: Yup.string().nullable(),
+      street: Yup.string().required('Este campo deve ser preenchido'),
+      neighbourhood: Yup.string().required('Este campo deve ser preenchido'),
+      city: Yup.string().required('Este campo deve ser preenchido'),
       streetNumber: Yup.string()
         .min(0, 'O valor mínimo para este campo é 1')
-        .nullable(),
-      zipCode: Yup.string().nullable(),
+        .required('Este campo deve ser preenchido'),
+      zipCode: Yup.string().required('Este campo deve ser preenchido'),
       contact: Yup.string().nullable(),
       pix: Yup.string().nullable(),
     }),
@@ -87,6 +87,18 @@ const CreateShelterComponent = () => {
       }
     },
   });
+  const debouncedZipcode = useDebouncedValue(values?.zipCode ?? '', 500);
+
+  const { data: cepData, loading: isLoadingZipCodeData } =
+    useViaCep(debouncedZipcode);
+
+  useEffect(() => {
+    if (!cepData) return;
+
+    if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
+    if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
+    if (cepData.localidade) setFieldValue('city', cepData.localidade);
+  }, [cepData, setFieldValue]);
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -117,7 +129,16 @@ const CreateShelterComponent = () => {
               helperText={errors.name}
             />
             <TextField
-              label="Rua/avenida"
+              label="CEP"
+              {...getFieldProps('zipCode')}
+              error={!!errors.zipCode}
+              helperText={errors.zipCode}
+            />
+            {Boolean(isLoadingZipCodeData) && (
+              <Loader className="animate-spin h-15 w-15 stroke-black" />
+            )}
+            <TextField
+              label="Logradouro(Rua/avenida)"
               {...getFieldProps('street')}
               error={!!errors.street}
               helperText={errors.street}
@@ -158,24 +179,12 @@ const CreateShelterComponent = () => {
                 <p className={'text-red-600 text-sm'}>{errors.city}</p>
               )}
             </div>
-            <TextField
-              label="CEP"
-              {...getFieldProps('zipCode')}
-              error={!!errors.zipCode}
-              helperText={errors.zipCode}
-            />
             {/* <TextField
               label="Cidade do abrigo"
               {...getFieldProps('city')}
               error={!!errors.city}
               helperText={errors.city}
             /> */}
-            <TextField
-              label="Endereço do abrigo"
-              {...getFieldProps('address')}
-              error={!!errors.address}
-              helperText={errors.address}
-            />
             <TextField
               label="Contato"
               {...getFieldProps('contact')}
