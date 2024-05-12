@@ -1,14 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { cva } from 'class-variance-authority';
 
 import { IShelterCategoryItemsProps } from './types';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
+import { SessionContext } from '@/contexts';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
-  const { priority = SupplyPriority.NotNeeded, tags } = props;
+  const {
+    priority = SupplyPriority.NotNeeded,
+    tags,
+    onSelectTag,
+    selectedTags = [],
+  } = props;
+  const { session } = useContext(SessionContext);
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleTags: number = 10;
   const visibleTags = useMemo(
@@ -23,6 +31,18 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const Icon = opened ? ChevronUp : ChevronDown;
   const btnLabel = opened ? 'Ver menos' : 'Ver todos';
 
+  const variants = cva('cursor-pointer', {
+    variants: {
+      variant: {
+        selected: 'border-4 border-blue-300',
+        default: 'border-4 border-gray-100',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  });
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-2 items-center">
@@ -32,9 +52,24 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
         </h3>
       </div>
       <div className="flex gap-2 flex-wrap">
-        {visibleTags.map((tag, idx) => (
-          <Chip className={circleClassName} key={idx} label={tag} />
-        ))}
+        {visibleTags.map((tag, idx) => {
+          const tagProps =
+            session &&
+            ['DistributionCenter', 'Admin'].includes(session.accessLevel)
+              ? {
+                  onClick: () => (onSelectTag ? onSelectTag(tag) : undefined),
+                  className: variants({
+                    className: circleClassName,
+                    variant: selectedTags.includes(tag)
+                      ? 'selected'
+                      : 'default',
+                  }),
+                }
+              : {
+                  className: circleClassName,
+                };
+          return <Chip key={idx} label={tag.label} {...tagProps} />;
+        })}
       </div>
       {tags.length > maxVisibleTags && (
         <div>

@@ -1,16 +1,9 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import {
-  RotateCw,
-  CircleAlert,
-  Search,
-  Loader,
-  ListFilter,
-  LogOutIcon,
-  Heart,
-} from 'lucide-react';
+import { useCallback, useContext, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
+import qs from 'qs';
 
-import { Alert, Header, NoFoundSearch, ShelterListItem } from '@/components';
-import { Input } from '@/components/ui/input';
+import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
@@ -19,86 +12,102 @@ import { IUseShelterSearchParams } from '@/hooks/useShelters/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { Chip } from '@/components/Chip';
+import { ShelterListView } from './components/ShelterListView';
+import { IFilterFormProps } from './components/Filter/types';
 
-const alertDescription =
-  'Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações.';
+
+const initialFilterData: IFilterFormProps = {
+  search: '',
+  priority: null,
+  supplyCategoryIds: [],
+  supplyIds: [],
+  shelterStatus: [],
+};
 
 const Home = () => {
-  const { data: shelters, loading, search, resetSearch } = useShelters();
+  const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const {
     loading: loadingSession,
     refreshSession,
     session,
   } = useContext(SessionContext);
-  const [searchValue, setSearchValue] = useState<string>('');
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [, setSearchParams] = useSearchParams();
+  const [filterData, setFilterData] = useState<IFilterFormProps>({
+    ...initialFilterData,
+    ...qs.parse(new URLSearchParams(window.location.search).toString()),
+  });
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: (v) => {
-        const params = {
-          ...shelters.filters,
-          search: v ? v : '',
-          page: shelters.page,
-          perPage: shelters.perPage,
+        const params: Record<string, string> = {
+          search: v ? qs.stringify(filterData) : '',
         };
-
-        search({
+        setSearchParams(params.search);
+        refresh({
           params: params,
         });
       },
     },
     []
   );
+  const navigate = useNavigate();
 
-  const clearSearch = () => {
-    setSearchValue('');
-    resetSearch();
-  };
+  const clearSearch = useCallback(() => {
+    setSearch('');
+    setFilterData(initialFilterData);
+    setSearchParams('');
+    refresh();
+  }, [refresh, setSearch, setSearchParams]);
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
 
-  const closeModal = () => {
-    setOpenModal(false);
-  };
-
-  const handleSearch = (values: IUseShelterSearchParams) => {
-    setOpenModal(false);
-    setSearchValue(values.search ?? '');
-    search({
-      params: {
-        ...values,
-      },
-    });
-  };
+  const onSubmitFilterForm = useCallback(
+    (values: IFilterFormProps) => {
+      setOpenModal(false);
+      setFilterData(values);
+      const searchQuery = qs.stringify(values, {
+        skipNulls: true,
+      });
+      setSearchParams(searchQuery);
+      refresh({
+        params: {
+          search: searchQuery,
+        },
+      });
+    },
+    [refresh, setSearchParams]
+  );
 
   const handleFetchMore = useCallback(() => {
     const params = {
       ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
-      search: searchValue ? searchValue : '',
+      search: qs.stringify(filterData),
     };
 
-    search(
+    refresh(
       {
         params: params,
       },
       true
     );
-  }, [search, searchValue, shelters.filters, shelters.page, shelters.perPage]);
+  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
         <Filter
-          handleSearch={handleSearch}
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          filters={shelters.filters}
+          open={isModalOpen}
+          data={filterData}
+          onClose={() => setOpenModal(false)}
+          onSubmit={onSubmitFilterForm}
         />
       )}
       <Header
@@ -106,15 +115,26 @@ const Home = () => {
         endAdornment={
           <div className="flex gap-2 items-center">
             {session && (
-              <h3 className="text-gray-300 font-thin">
+              <h3 className="text-white font-thin">
                 Bem vindo, {session.name}
               </h3>
             )}
             <Button
+              variant="ghost"
+              size="sm"
+              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
+              onClick={() =>
+                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
+              }
+            >
+              <PlusIcon className="h-5 w-5 stroke-white" />
+              Cadastrar abrigo
+            </Button>
+            <Button
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => clearSearch()}
+              onClick={() => refresh()}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
@@ -136,6 +156,7 @@ const Home = () => {
           </div>
         }
       />
+
       <div className="p-5 gap-3 flex flex-col w-full max-w-5xl">
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           Abrigos disponíveis ({shelters.count})
@@ -250,6 +271,25 @@ const Home = () => {
           <Heart className="h-3 w-3 stroke-white fill-white" />
         </span>
       </div>
+
+      <ShelterListView
+        loading={loading}
+        count={shelters.count}
+        data={shelters.results}
+        onFetchMoreData={handleFetchMore}
+        searchValue={filterData.search}
+        onSearchValueChange={(v) => {
+          setFilterData((prev) => ({ ...prev, search: v }));
+          setSearch(v);
+        }}
+        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
+        hasMoreItems={hasMore}
+        onOpenModal={() => setOpenModal(true)}
+        onClearSearch={clearSearch}
+        className="flex-1 p-4 max-w-4xl"
+      />
+      <Footer />
+
     </div>
   );
 };
