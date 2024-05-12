@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, Loader } from 'lucide-react';
+import { CircleAlert, ListFilter, Loader, X } from 'lucide-react';
 
 import {
   Alert,
@@ -21,11 +21,13 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
+      onCitiesChange,
       onFetchMoreData,
       onSelectShelter,
       className = '',
       onOpenModal,
       onClearSearch,
+      filterData,
       ...rest
     } = props;
 
@@ -50,6 +52,31 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               : undefined
           }
         />
+        <div className="flex flex-wrap gap-1 items-center">
+          {/* <p className="text-muted-foreground text-sm md:text-md font-medium">
+            Cidades filtradas:
+          </p> */}
+          {filterData.cities?.map((item) => {
+            return (
+              <>
+                <div
+                  className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+                  key={item}
+                  // onClick={onOpenModal}
+                  onClick={() =>
+                    onCitiesChange
+                      ? onCitiesChange(
+                          filterData.cities.filter((it) => it !== item)
+                        )
+                      : undefined
+                  }
+                >
+                  <span className="pr-1">{item}</span> <X className="h-4 w-4" />
+                </div>
+              </>
+            );
+          })}
+        </div>
         <div className="flex flex-row">
           <Button
             variant="ghost"

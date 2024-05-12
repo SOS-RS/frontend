@@ -22,6 +22,7 @@ import {
 } from './types';
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
+import CitiesFilter from './CitiesFilter';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -60,6 +61,7 @@ const Filter = (props: IFilterProps) => {
   const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
     {
       initialValues: {
+        cities: data.cities ?? [],
         priority: {
           value: data.priority ?? SupplyPriority.Urgent,
           label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
@@ -86,14 +88,21 @@ const Filter = (props: IFilterProps) => {
         search: Yup.string(),
       }),
       onSubmit: (values) => {
-        const { priority, search, shelterStatus, supplies, supplyCategories } =
-          values;
+        const {
+          priority,
+          search,
+          shelterStatus,
+          supplies,
+          supplyCategories,
+          cities,
+        } = values;
         onSubmit({
           priority: priority?.value ? +priority.value : null,
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
+          cities: cities,
         });
       },
     }
@@ -135,10 +144,15 @@ const Filter = (props: IFilterProps) => {
               />
             </div>
             <Separator className="mt-2" />
+            <CitiesFilter
+              cities={values.cities}
+              setCities={(cities: string[]) => {
+                setFieldValue('cities', cities);
+              }}
+            />
+            <Separator className="mt-2" />
             <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Busca avançada
-              </p>
+              <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
                 Você pode buscar pelo item que os abrigos precisam urgentemente
                 de doação ou por itens que os abrigos tem disponibilidade para

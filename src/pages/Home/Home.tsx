@@ -17,6 +17,7 @@ const initialFilterData: IFilterFormProps = {
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
+  cities: [],
 };
 
 const Home = () => {
@@ -155,12 +156,16 @@ const Home = () => {
         loading={loading}
         count={shelters.count}
         data={shelters.results}
+        filterData={filterData}
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
+        onCitiesChange={(v) =>
+          setFilterData((prev) => ({ ...prev, cities: v }))
+        }
         onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
