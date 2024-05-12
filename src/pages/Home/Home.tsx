@@ -163,9 +163,21 @@ const Home = () => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
-        onCitiesChange={(v) =>
-          setFilterData((prev) => ({ ...prev, cities: v }))
-        }
+        onCitiesChange={(v) => {
+          setFilterData((prev) => ({ ...prev, cities: v }));
+          const searchQuery = qs.stringify(
+            { ...filterData, cities: v },
+            {
+              skipNulls: true,
+            }
+          );
+          setSearchParams(searchQuery);
+          refresh({
+            params: {
+              search: searchQuery,
+            },
+          });
+        }}
         onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
