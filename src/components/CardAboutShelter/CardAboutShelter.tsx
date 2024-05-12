@@ -24,7 +24,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={`${shelter.address}`}>
           <a
-            href={`https://maps.google.com/?q=${encodeURI(shelter.address)}`}
+            href={`https://maps.google.com/?q=${encodeURIComponent(shelter.address)}`}
             target="_blank"
             className="text-blue-500 break-all cursor-pointer hover:underline"
           >
