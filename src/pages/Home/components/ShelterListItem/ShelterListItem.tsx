@@ -20,7 +20,7 @@ import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import { ShelterSupplyCategoryRow } from '../ShelterSupplyCategoryRow';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
-  const { data } = props;
+  const { data, onClick } = props;
   const { capacity, shelteredPeople } = data;
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
@@ -41,7 +41,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   }, []);
 
   return (
-    <Link to={`/abrigo/${data.id}`}>
+    <Link to={`/abrigo/${data.id}`} target="_blank">
       <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
         <Button size="sm" variant="ghost" className="absolute top-4 right-4">
           <ChevronRight
@@ -52,7 +52,8 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           className="flex items-center gap-1"
         >
           <h3
-            className="font-semibold text-lg"
+            className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
+            onClick={onClick}
           >
             {data.name}
           </h3>
