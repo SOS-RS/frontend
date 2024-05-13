@@ -102,7 +102,7 @@ const Filter = (props: IFilterProps) => {
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
-          cities: cities,
+          cities,
         });
       },
     }

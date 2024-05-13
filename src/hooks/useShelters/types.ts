@@ -3,8 +3,12 @@ import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
 export interface IUseSheltersData {
   id: string;
   name: string;
-  address: string;
+  street?: string;
+  neighbourhood?: string;
   city?: string;
+  streetNumber?: string | null;
+  zipCode?: string;
+  address: string;
   pix?: string | null;
   shelteredPeople?: number | null;
   capacity?: number | null;

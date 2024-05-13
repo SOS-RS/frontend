@@ -18,6 +18,7 @@ import { Button } from '../../../../components/ui/button';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import { ShelterSupplyCategoryRow } from '../ShelterSupplyCategoryRow';
+import { checkAndFormatAddress } from '@/components/CardAboutShelter';
 
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data, onClick } = props;
@@ -57,7 +58,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
           onClick={onClick}
         >
-          {data.name} - {Boolean(data.city) && <>{data.city}</>}
+          {data.name}
         </h3>
         {data.verified && <VerifiedBadge />}
       </div>
@@ -65,7 +66,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         {availability}
       </h6>
       <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
-        {data.address}
+        {checkAndFormatAddress(data)}
       </h6>
       {data.shelterSupplies.length > 0 && (
         <>

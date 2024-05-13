@@ -6,21 +6,13 @@ import {
   Landmark,
   Smartphone,
   Building,
+  MapPinned,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
 import { ICardAboutShelter } from './types';
 import { InfoRow } from './components';
-
-const formatShelterAddressFields = (shelter: ICardAboutShelter['shelter']) => {
-  const fields = [];
-  if (shelter.street) fields.push(shelter.street);
-  if (shelter.streetNumber) fields.push(shelter.streetNumber);
-  if (shelter.neighbourhood) fields.push(shelter.neighbourhood);
-  if (shelter.zipCode) fields.push(shelter.zipCode);
-
-  return fields.join(', ');
-};
+import { checkAndFormatAddress } from './utils';
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
@@ -28,9 +20,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
   };
-  const formatAddress =
-    shelter.address ??
-    `${formatShelterAddressFields(shelter)} - ${shelter.city}`;
+  const formatAddress = checkAndFormatAddress(shelter, false);
 
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
@@ -38,7 +28,10 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={formatAddress} />
         {Boolean(shelter.city) && (
-          <InfoRow icon={<Building />} label={shelter.city} />
+          <InfoRow icon={<Building />} label="Cidade:" value={shelter.city} />
+        )}
+        {Boolean(shelter.zipCode) && (
+          <InfoRow icon={<MapPinned />} label="CEP:" value={shelter.zipCode} />
         )}
         <InfoRow
           icon={<PawPrint />}

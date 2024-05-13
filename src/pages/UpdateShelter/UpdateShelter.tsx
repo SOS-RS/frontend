@@ -21,6 +21,7 @@ import { SessionContext } from '@/contexts';
 import { clearCache } from '@/api/cache';
 import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
 import { useDebouncedValue, useViaCep } from '@/hooks';
+import { cn } from '@/lib/utils';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -166,7 +167,9 @@ const UpdateShelter = () => {
                 helperText={errors.neighbourhood}
               />
               <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground">Cidade</label>
+                <label className="text-muted-foreground" htmlFor="city">
+                  Cidade
+                </label>
                 <ReactSelect
                   name="city"
                   placeholder="Cidade"
@@ -181,9 +184,9 @@ const UpdateShelter = () => {
                   onChange={(v) => {
                     setFieldValue('city', v?.value);
                   }}
-                  className={`w-full ${
-                    errors.city ? 'border-[1px] border-red-600 rounded-md' : ''
-                  }`}
+                  className={cn('w-full', {
+                    'border-[1px] border-red-600 rounded-md': errors.city,
+                  })}
                 />
                 {errors.city && (
                   <p className={'text-red-600 text-sm'}>{errors.city}</p>
