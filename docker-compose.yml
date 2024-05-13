@@ -1,0 +1,13 @@
+services:
+  sos-rs-front:
+    container_name: sos-rs-front
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+    - path: .env
+      required: true 
+    ports:
+      - '5172:80'
+      - '5173:443'    
