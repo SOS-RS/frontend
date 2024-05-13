@@ -48,7 +48,7 @@ const DialogSelector = (props: IDialogSelectorProps) => {
         </div>
         <DialogFooter>
           <Button
-            className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
+            className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full"
             size="sm"
             onClick={() => (onSave ? onSave(selectedItem) : undefined)}
             loading={isSubmitting}

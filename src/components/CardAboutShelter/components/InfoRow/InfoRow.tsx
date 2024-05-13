@@ -9,9 +9,8 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     const ValueComp = !value ? (
       <Fragment />
     ) : isLink ? (
-      <a
-        className="text-dark-green break-all cursor-pointer hover:underline"
-        onClick={() => window.open(value, '_blank')}
+      <a href={value} target='_blank'
+        className="text-btn-base break-all cursor-pointer hover:underline"
       >
         {value}
       </a>

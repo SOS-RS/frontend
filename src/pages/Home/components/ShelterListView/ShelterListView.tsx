@@ -32,8 +32,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     const [searchParams] = useSearchParams();
 
     return (
-      <div className={cn(className, 'flex flex-col gap-2')}>
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+      <div className={cn(className, 'flex flex-col gap-2 mt-20 mb-8')}>
+        <h1 className="text-[#2f2f2f] font-semibold text-2xl pb-4">
           Abrigos disponíveis ({count})
         </h1>
         <Alert
@@ -50,24 +50,24 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               : undefined
           }
         />
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-2 py-3">
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center text-dark-green hover:dark-green active:text-dark-green"
+            className="group flex gap-2 items-center text-black hover:btn-hover hover:text-btn-hover active:btn-hover border-[1px] border-input"
             onClick={onOpenModal}
           >
-            <ListFilter className="h-5 w-5 stroke-dark-green" />
+            <ListFilter className="h-5 w-5" />
             Filtros
           </Button>
           {searchParams.toString() && (
             <Button
               variant="ghost"
               size="sm"
-              className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+              className="group flex gap-2 items-center text-black hover:btn-hover hover:text-btn-hover active:btn-hover border-[1px] border-input" 
               onClick={onClearSearch}
             >
-              <CircleAlert className="h-5 w-5 stroke-blue-500" />
+              <CircleAlert className="h-5 w-5" />
               Limpar Filtros
             </Button>
           )}

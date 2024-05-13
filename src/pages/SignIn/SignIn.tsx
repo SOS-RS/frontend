@@ -46,7 +46,7 @@ const SignInComponent = () => {
     });
 
   return (
-    <div className="flex h-screen justify-center items-center bg-slate-50 p-4">
+    <div className="flex min-h-screen justify-center items-center bg-slate-50 p-4">
       <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10 bg-white max-h-[600px] rounded-md shadow-sm">
         <form onSubmit={handleSubmit} className="contents">
           <div className="justify-center flex flex-col md:justify-normal">

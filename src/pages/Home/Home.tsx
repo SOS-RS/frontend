@@ -95,7 +95,7 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col min-h-screen max-w-full items-center">
       {isModalOpen && (
         <Filter
           open={isModalOpen}
@@ -114,14 +114,13 @@ const Home = () => {
               </h3>
             )}
             <Button
-              variant="ghost"
               size="sm"
-              className="bg-light-green hover:bg-primary-green text-black  hover:text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full shadow gap-2"
+              className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full shadow gap-2"
               onClick={() =>
                 window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
               }
             >
-              <PlusIcon className="h-5 w-5 stroke-black" />
+              <PlusIcon className="h-5 w-5 stroke-black group-hover:stroke-white transition-colors" />
               Cadastrar abrigo
             </Button>
             <Button
@@ -129,9 +128,8 @@ const Home = () => {
               variant="ghost"
               size="sm"
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
             >
-              <RotateCw size={20} className="stroke-white" />
+              <RotateCw size={20}  />
             </Button>
             {session && (
               <Button
@@ -142,9 +140,8 @@ const Home = () => {
                   localStorage.removeItem('token');
                   refreshSession();
                 }}
-                className="disabled:bg-red-500 hover:bg-red-400"
               >
-                <LogOutIcon size={20} className="stroke-white" />
+                <LogOutIcon size={20}  />
               </Button>
             )}
           </div>

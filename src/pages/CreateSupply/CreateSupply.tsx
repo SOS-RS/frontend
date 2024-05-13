@@ -79,21 +79,20 @@ const CreateSupply = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col min-h-screen max-w-full items-center">
       <Header
         title="Cadastrar novo item"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
         startAdornment={
           <Button
             variant="ghost"
-            className="[&_svg]:stroke-blue-500"
             onClick={() => navigate(-1)}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={20}  />
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full pt-20">
         <form className="contents" onSubmit={handleSubmit}>
           <h6 className="text-2xl font-semibold">Cadastrar novo item</h6>
           <p className="text-muted-foreground">
@@ -178,7 +177,7 @@ const CreateSupply = () => {
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="flex gap-2 font-medium text-lg w-full"
             >
               Salvar
             </Button>

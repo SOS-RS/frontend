@@ -257,7 +257,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"
-                className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
+                className="bg-btn-base hover:bg-btn-hover text-black hover:text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
               >
                 Filtrar resultados
               </Button>
