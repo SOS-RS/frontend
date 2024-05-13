@@ -17,7 +17,7 @@ const Footer = React.forwardRef<
         className
       )}
     >
-      <p className="text-white">
+      <p className="text-white max-sm:grid max-sm:place-items-center transition-all">
         Para cadastrar novos abrigos clique{' '}
         <a
           href="https://forms.gle/2S7L2gR529Dc8P3T9"
@@ -28,7 +28,7 @@ const Footer = React.forwardRef<
         </a>
       </p>
       <span className="text-white hidden md:block">•</span>
-      <span className="text-white flex flex-nowrap gap-2 items-center">
+      <span className="text-white flex flex-nowrap gap-2 items-center max-sm:grid max-sm:place-items-center transition-all">
         Projeto Open Source disponível em{' '}
         <a
           className="underline hover:text-gray-300 flex"

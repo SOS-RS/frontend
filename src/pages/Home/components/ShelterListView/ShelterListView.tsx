@@ -33,7 +33,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+        <h1 className="text-[#2f2f2f] font-semibold text-2xl max-sm:text-center">
           Abrigos disponíveis ({count})
         </h1>
         <Alert
