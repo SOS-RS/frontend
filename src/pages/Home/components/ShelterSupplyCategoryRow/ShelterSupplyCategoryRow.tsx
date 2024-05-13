@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { IShelterSupplyCategoryRowProps } from './types';
 import { Chip } from '@/components';
-import { cn, getSupplyPriorityProps } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import WithTooltip from '@/components/ui/with-tooltip';
 
 const ShelterSupplyCategoryRow = React.forwardRef<
@@ -23,10 +23,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
       {description && <p>{description}</p>}
       <div className="flex flex-wrap gap-2">
         {tags.map((s, idx) => (
-          <WithTooltip
-            key={idx}
-            content={getSupplyPriorityProps(s.priority).label}
-          >
+          <WithTooltip key={idx} content={s.priority}>
             <Chip {...s} />
           </WithTooltip>
         ))}
