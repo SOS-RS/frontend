@@ -49,6 +49,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
         {statusHamburguer ? <span className='hidden transition-all'></span> : <span className='w-full h-1 rounded bg-neutral-100 scale-90 transition-all'></span>}
         {statusHamburguer ? <span className='w-full h-1 rounded transition-all bg-neutral-100 -rotate-45 -translate-y-2 scale-110'></span> : <span className='w-full h-1 rounded bg-neutral-100 transition-all'></span>}
     </div>
+    </header>
   );
 });
 
