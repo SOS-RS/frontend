@@ -161,7 +161,6 @@ const Home = () => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
-        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
