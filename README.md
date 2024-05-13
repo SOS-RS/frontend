@@ -5,6 +5,7 @@ Este projeto é o frontend de um aplicativo destinado a auxiliar na organizaçã
 ## Acesso à Aplicação
 
 [SOS Rio Grande do Sul](https://sos-rs.com/)
+[Discord](https://discord.gg/eJTuannsd6)
 
 ## Sobre o Projeto
 
