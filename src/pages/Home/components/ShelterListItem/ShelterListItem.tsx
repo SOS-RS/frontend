@@ -52,8 +52,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           className="flex items-center gap-1"
         >
           <h3
-            className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
-            onClick={onClick}
+            className="font-semibold text-lg"
           >
             {data.name}
           </h3>
