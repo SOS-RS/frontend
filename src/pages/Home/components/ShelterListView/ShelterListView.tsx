@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { SupplyRank } from '../SupplyRank';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -41,6 +42,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             <CircleAlert size={20} className="stroke-light-yellow" />
           }
         />
+        <SupplyRank />
         <SearchInput
           value={searchValue}
           onChange={(ev) =>
