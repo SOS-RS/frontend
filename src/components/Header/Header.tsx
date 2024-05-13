@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
+import { BurgerMenu } from '../BurgerMenu';
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
@@ -21,6 +22,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
       )}
       {...rest}
     >
+      <BurgerMenu></BurgerMenu>
       <div className="flex gap-1 items-center">
         {startAdornment}
         <h3 className="font-medium text-white">{title}</h3>
