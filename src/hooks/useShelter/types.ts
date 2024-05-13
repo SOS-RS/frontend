@@ -5,7 +5,7 @@ export interface IUseShelterData {
   pix?: string | null;
   shelteredPeople?: number | null;
   capacity?: number | null;
-  contact?: string | null;
+  contact: string;
   petFriendly?: boolean | null;
   prioritySum: number;
   verified: boolean;

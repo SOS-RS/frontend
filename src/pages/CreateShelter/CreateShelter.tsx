@@ -36,7 +36,7 @@ const CreateShelterComponent = () => {
       capacity: 0,
       verified: false,
       petFriendly: false,
-      contact: null,
+      contact: '',
       pix: null,
     },
     enableReinitialize: true,
@@ -53,7 +53,7 @@ const CreateShelterComponent = () => {
         .min(1, 'O valor mínimo para este campo é 1')
         .nullable(),
       petFriendly: Yup.bool().nullable(),
-      contact: Yup.string().nullable(),
+      contact: Yup.string().required('Este campo deve ser preenchido'),
       pix: Yup.string().nullable(),
     }),
     onSubmit: async (values, { resetForm }) => {
