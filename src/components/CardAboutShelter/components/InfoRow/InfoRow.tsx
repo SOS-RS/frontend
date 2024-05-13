@@ -4,7 +4,7 @@ import { IInfoRowProps } from './types';
 
 const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
   (props, ref) => {
-    const { icon, label, value, className = '', ...rest } = props;
+    const { icon, label, value, clipboardButton = false, className = '', ...rest } = props;
     const isLink = value?.startsWith('http');
     const ValueComp = !value ? (
       <Fragment />
@@ -35,7 +35,18 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
           <span className={cn('font-normal', value ? 'text-nowrap' : '')}>
             {label}
           </span>
-          <span className="md:flex">{ValueComp}</span>
+          <span className="md:flex">
+            {ValueComp}
+            {clipboardButton && (
+              <div
+                className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
+                onClick={() => navigator.clipboard.writeText(value)}
+              >
+                copiar
+              </div>
+            )}
+          </span>
+
         </div>
       </div>
     );

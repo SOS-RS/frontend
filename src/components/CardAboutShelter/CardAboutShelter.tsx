@@ -65,11 +65,13 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={
             check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
           }
+          clipboardButton={check(shelter.contact)}
         />
         <InfoRow
           icon={<Landmark />}
           label="Chave Pix:"
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+          clipboardButton={check(shelter.pix)}
         />
       </div>
     </Card>
