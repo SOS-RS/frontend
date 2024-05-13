@@ -1,13 +1,18 @@
 {
   "name": "frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:compose": "docker compose up -d"
+  },
+  "engines": {
+    "npm": ">=10.5.2",
+    "node": ">=20.13.1"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -21,6 +26,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@vitejs/plugin-react": "^3.6.0",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -40,7 +46,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
-    "@types/node": "^20.12.8",
+    "@types/node": "^20.12.11",
     "@types/qs": "^6.9.15",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -56,5 +62,8 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.17.2"
   }
 }
