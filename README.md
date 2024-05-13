@@ -40,6 +40,25 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
    ```
    O app estará disponível em `http://localhost:5173`.
 
+
+## Docker compose
+
+Para iniciar o frontend com docker compose, siga os passos abaixo:
+
+   
+1. Instalar e configurar o docker compose conforme [documentação] (https://docs.docker.com/compose/install/linux/);
+
+2. Executar o seguinte comando na raiz do projeto:
+   ```bash
+   docker compose up -d
+   ```
+   ou    
+
+   ```bash
+   npm run docker:compose
+   ```
+O app estará disponível em `http://localhost:5172` e `https://localhost:5173`.   
+
 ## Contribuindo
 
 Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhorar o app, por favor:
