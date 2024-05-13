@@ -22,7 +22,6 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       hasMoreItems = false,
       onSearchValueChange,
       onFetchMoreData,
-      onSelectShelter,
       className = '',
       onOpenModal,
       onClearSearch,
