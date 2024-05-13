@@ -36,7 +36,7 @@ export function ShareButton() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-3 items-center gap-4">
-            <Button variant="outline" onClick={copyToClipboard}>
+            <Button variant="outline" onClick={copyToClipboard} asChild>
               <Label htmlFor="url" className="text-right">
                 Copiar link
               </Label>
@@ -50,18 +50,22 @@ export function ShareButton() {
             />
           </div>
           <div className="grid grid-cols-3 items-center gap-4">
-            <a
-              href={`https://wa.me/?text=${window.location.href}`}
-              target="_blank"
-            >
-              <Button>WhatsApp</Button>
-            </a>
-            <a
-              href={`https://telegram.me/share/url?url=${window.location.href}`}
-              target="_blank"
-            >
-              <Button>Telegram</Button>
-            </a>
+            <Button asChild>
+              <a
+                href={`https://wa.me/?text=${window.location.href}`}
+                target="_blank"
+              >
+                WhatsApp
+              </a>
+            </Button>
+            <Button asChild>
+              <a
+                href={`https://telegram.me/share/url?url=${window.location.href}`}
+                target="_blank"
+              >
+                <Button>Telegram</Button>
+              </a>
+            </Button>
           </div>
         </div>
       </DialogContent>
