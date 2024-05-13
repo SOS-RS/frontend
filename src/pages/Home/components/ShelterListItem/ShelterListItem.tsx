@@ -70,11 +70,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       {data.shelterSupplies.length > 0 && (
         <>
           <ShelterSupplyCategoryRow
-            title="Necessita voluntários:"
+            title="Necessita de voluntários:"
             tags={tags.NeedVolunteers.map(getChipProps)}
           />
           <ShelterSupplyCategoryRow
-            title="Necessita urgente doações de:"
+            title="Necessita urgente de doações de:"
             tags={tags.NeedDonations.map(getChipProps)}
           />
           <ShelterSupplyCategoryRow
