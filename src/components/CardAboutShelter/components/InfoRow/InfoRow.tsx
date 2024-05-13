@@ -4,7 +4,7 @@ import { IInfoRowProps } from './types';
 
 const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
   (props, ref) => {
-    const { icon, label, value, className = '', ...rest } = props;
+    const { icon, label, value, className = '', children, ...rest } = props;
     const isLink = value?.startsWith('http');
     const ValueComp = !value ? (
       <Fragment />
@@ -36,6 +36,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {label}
           </span>
           <span className="md:flex">{ValueComp}</span>
+          {children}
         </div>
       </div>
     );
