@@ -16,7 +16,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     <div
       ref={ref}
       className={cn(
-        'shadow-sm bg-white flex h-[56px] justify-between items-center text-black p-3 gap-2 w-full absolute z-10',
+        'shadow-sm bg-white flex h-[56px] justify-between items-center text-black p-3 gap-2 w-full fixed z-10',
         className
       )}
       {...rest}
