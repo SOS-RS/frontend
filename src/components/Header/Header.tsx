@@ -8,6 +8,8 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     endAdornment,
     startAdornment,
     title,
+    handleStatusHamburguer,
+    statusHamburguer,
     className = '',
     ...rest
   } = props;
