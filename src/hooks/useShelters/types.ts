@@ -1,3 +1,5 @@
+import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
+
 export interface IUseSheltersData {
   id: string;
   name: string;
@@ -17,17 +19,15 @@ export interface IUseSheltersData {
 }
 
 export interface IUseSheltersDataSupplyData {
-  supply: { name: string, supplyCategory: { name: string}};
+  supply: {
+    name: string;
+    supplyCategory: { name: string };
+  };
   priority: number;
+  tags: ShelterTagType[];
   quantity?: number | null;
 }
 
-export interface IUseShelterSearchParams {
-  priority: number | undefined;
-  supplies: string[] | undefined;
-  supplyCategories: number[] | undefined;
-  search: string | undefined;
-  filterAvailableShelter: boolean;
-  filterUnavailableShelter: boolean;
-  waitingShelterAvailability: boolean;
+export interface IUseShelterOptions {
+  cache?: boolean;
 }

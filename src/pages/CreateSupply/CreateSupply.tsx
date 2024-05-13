@@ -18,6 +18,7 @@ import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { ShelterSupplyServices, SupplyServices } from '@/service';
 import { ICreateShelterSupply } from '@/service/shelterSupply/types';
+import { clearCache } from '@/api/cache';
 
 const CreateSupply = () => {
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const CreateSupply = () => {
           quantity: Number(values.quantity) || null,
           shelterId,
         });
+        clearCache(false);
         toast({
           title: 'Item cadastrado com sucesso',
         });

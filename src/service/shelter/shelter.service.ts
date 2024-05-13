@@ -1,12 +1,7 @@
 import { api } from '../../api';
 
 import { IServerResponse } from '@/types';
-import {
-  ICreateShelter,
-  IFullUpdateShelter,
-  IShelter,
-  IUpdateShelter,
-} from './types';
+import { ICreateShelter, IShelter, IUpdateShelter } from './types';
 
 const ShelterServices = {
   create: async (payload: ICreateShelter): Promise<IServerResponse> => {
@@ -32,7 +27,7 @@ const ShelterServices = {
   },
   adminUpdate: async (
     id: string,
-    payload: IFullUpdateShelter
+    payload: IUpdateShelter
   ): Promise<IServerResponse> => {
     const { data } = await api.put<IServerResponse>(
       `/shelters/${id}/admin`,
