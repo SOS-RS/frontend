@@ -2,7 +2,6 @@ import React from 'react';
 
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
-import { BurgerMenu } from '../BurgerMenu';
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
@@ -16,13 +15,13 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   return (
     <div
       ref={ref}
+      style={{ zIndex: 60 }}
       className={cn(
         'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full',
         className
       )}
       {...rest}
     >
-      <BurgerMenu></BurgerMenu>
       <div className="flex gap-1 items-center">
         {startAdornment}
         <h3 className="font-medium text-white">{title}</h3>

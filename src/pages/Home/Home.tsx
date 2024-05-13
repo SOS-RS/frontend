@@ -10,6 +10,7 @@ import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
+import { BurgerMenu } from '@/components/BurgerMenu';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -107,6 +108,7 @@ const Home = () => {
       )}
       <Header
         title="SOS Rio Grande do Sul"
+        startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
             {session && (
@@ -114,17 +116,6 @@ const Home = () => {
                 Bem vindo, {session.name}
               </h3>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
-              onClick={() =>
-                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
-              }
-            >
-              <PlusIcon className="h-5 w-5 stroke-white" />
-              Cadastrar abrigo
-            </Button>
             <Button
               loading={loading}
               variant="ghost"
