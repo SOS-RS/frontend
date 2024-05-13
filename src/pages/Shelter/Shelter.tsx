@@ -12,7 +12,7 @@ import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
 import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ShelterCategoryItems } from './components';
+import { ShelterCategoryItems, ShareButton } from './components';
 import {
   IShelterCategoryItemsProps,
   ITagItem,
@@ -102,6 +102,8 @@ const Shelter = () => {
             {shelter.name}
           </h1>
           {shelter.verified && <VerifiedBadge />}
+
+          <ShareButton />
         </div>
         <div className="flex items-center justify-between pr-4">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
