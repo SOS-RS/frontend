@@ -6,8 +6,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
-    - path: .env
-      required: true 
+    - ./.env
+
     ports:
       - '5172:80'
       - '5173:443'    

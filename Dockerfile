@@ -2,8 +2,8 @@ FROM node:20.13.1-alpine AS builder
 WORKDIR /app
 RUN apk update
 RUN npm install -g npm@10.7.0
-RUN npm install -g typescript
-RUN npm install -g vite
+RUN npm install -g typescript@5.4.5
+RUN npm install -g vite@5.2.11
 
 COPY package.json package-lock.json ./
 RUN npm install 
