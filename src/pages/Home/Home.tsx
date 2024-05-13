@@ -8,6 +8,7 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
+
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
 
@@ -151,6 +152,7 @@ const Home = () => {
           </div>
         }
       />
+
       <ShelterListView
         loading={loading}
         count={shelters.count}
