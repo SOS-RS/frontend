@@ -2,6 +2,11 @@
 
 Este projeto é o frontend de um aplicativo destinado a auxiliar na organização e distribuição de suprimentos, além de coordenar voluntários durante os alagamentos no Rio Grande do Sul. A aplicação visa conectar pessoas afetadas pelas enchentes com recursos essenciais e voluntários dispostos a ajudar.
 
+## Acesso à Aplicação
+
+[SOS Rio Grande do Sul](https://sos-rs.com/)
+[Discord](https://discord.gg/eJTuannsd6)
+
 ## Sobre o Projeto
 
 O objetivo deste aplicativo é facilitar uma resposta rápida e eficiente em situações de emergência causadas por enchentes, promovendo a colaboração e o apoio mútuo entre a comunidade e organizações de ajuda.
@@ -10,7 +15,10 @@ O objetivo deste aplicativo é facilitar uma resposta rápida e eficiente em sit
 
 Este frontend foi desenvolvido utilizando as seguintes tecnologias:
 
-- **React**: Uma biblioteca JavaScript para construir interfaces de usuário.
+- [**React**](https://react.dev/): Uma biblioteca JavaScript para construir interfaces de usuário.
+- [**Vite**](https://vitejs.dev/guide/): Uma ferramenta de build com servidor de desenvolvimento.
+- [**Tailwind CSS**](https://tailwindcss.com/docs/installation): Framework CSS baseado em classes utilitárias.
+- [**shadcn/ui**](https://ui.shadcn.com/docs): Coleção de componentes reutilizáveis, baseado em Tailwind.
 
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
 
