@@ -19,6 +19,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        'btn-base': 'var(--btn-base)',
+        'btn-hover': 'var(--btn-hover)',
+        'btn-disabled': 'var(--btn-disabled)',
         'light-yellow': 'var(--light-yellow)',
         'light-red': 'var(--light-red)',
         'light-green': 'var(--light-green)',

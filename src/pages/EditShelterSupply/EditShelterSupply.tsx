@@ -138,31 +138,29 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex flex-col h-screen max-w-full items-center">
         <Header
           title="Editar Itens"
           startAdornment={
             <Button
               variant="ghost"
-              className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
               onClick={() => navigate(`/abrigo/${shelterId}`)}
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20}  />
             </Button>
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
+        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start pt-20">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
             selecionado
           </p>
           <Button
-            variant="ghost"
-            className="bg-primary-green hover:bg-light-green border-2 text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
+            className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
           >
-            <PlusCircle className="stroke-white" />
+            <PlusCircle className="stroke-black group-hover:stroke-white transition-colors" />
             Cadastrar novo item
           </Button>
           <div className="w-full my-2">

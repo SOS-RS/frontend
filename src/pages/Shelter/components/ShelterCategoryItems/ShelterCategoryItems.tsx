@@ -79,10 +79,10 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
             className="flex gap-2 items-center"
             onClick={() => setOpened((v) => !v)}
           >
-            <span className="text-lg font-normal text-dark-green">
+            <span className="text-lg font-normal text-black">
               {btnLabel}
             </span>
-            <Icon className="h-5 w-5 stroke-dark-green" />
+            <Icon className="h-5 w-5 stroke-black transition-colors" />
           </Button>
         </div>
       )}

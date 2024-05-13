@@ -81,21 +81,21 @@ const Shelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col min-h-screen max-w-full items-center">
       <Header
         title={shelter.name}
         startAdornment={
           <Button
             size="sm"
             variant="ghost"
-            className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
+            className="[&_svg]:stroke-black"
             onClick={() => navigate('/')}
           >
             <ChevronLeft size={20} />
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
+      <div className="p-4 flex flex-col max-w-5xl w-full h-full pt-20">
         <div className="flex items-center gap-1">
           <h1 className="text-[#2f2f2f] font-semibold text-2xl">
             {shelter.name}
@@ -107,12 +107,11 @@ const Shelter = () => {
             {availability}
           </h1>
           <Button
-            variant="ghost"
-            className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
+            className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
           >
             Editar abrigo
-            <Pencil size={17} className="stroke-white" />
+            <Pencil size={17} className="stroke-black group-hover:stroke-white transition-colors" />
           </Button>
         </div>
         <div className="p-4">
@@ -122,12 +121,11 @@ const Shelter = () => {
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
           <div className="flex gap-2 items-center ">
             <Button
-              variant="ghost"
-              className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
+              className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
               onClick={() => navigate(`/abrigo/${shelterId}/items`)}
             >
               Editar itens
-              <Pencil size={17} className="stroke-white" />
+              <Pencil size={17} className="stroke-black group-hover:stroke-white transition-colors" />
             </Button>
           </div>
         </div>
