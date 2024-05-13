@@ -29,4 +29,5 @@ export interface IUseSheltersDataSupplyData {
 
 export interface IUseShelterOptions {
   cache?: boolean;
+  getAllShelters?: boolean;
 }

@@ -7,6 +7,7 @@ import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
 import { Filter } from './Home/components/Filter';
+import { MapComponent } from './Map';
 
 export {
   SignIn,
@@ -16,5 +17,6 @@ export {
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  Filter,
+  MapComponent
 };

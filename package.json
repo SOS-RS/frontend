@@ -26,12 +26,14 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "formik": "^2.4.6",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.378.0",
     "qs": "^6.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-input-mask": "^2.0.4",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
     "tailwind-merge": "^2.3.0",
@@ -40,6 +42,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.12",
     "@types/node": "^20.12.8",
     "@types/qs": "^6.9.15",
     "@types/react": "^18.2.66",

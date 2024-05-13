@@ -7,7 +7,7 @@ import { IPaginatedResponse } from '../usePaginatedQuery/types';
 import { IUseShelterOptions, IUseSheltersData } from './types';
 
 const useShelters = (options: IUseShelterOptions = {}) => {
-  const { cache } = options;
+  const { cache, getAllShelters } = options;
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IPaginatedResponse<IUseSheltersData>>({
     count: 0,
@@ -15,7 +15,31 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     perPage: 20,
     results: [],
   });
+  const [allSheltersData, setAllSheltersData] = useState<IUseSheltersData[]>([]);
 
+  const fetchAllShelters = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get<IServerResponse<any>>('/shelters/all', {
+        params: {
+          orderBy: 'prioritySum',
+          order: 'desc',
+        },
+      });
+      const { results } = response.data.data;
+
+      setAllSheltersData(results);
+
+    } catch (error) {
+      console.error('Error getting all shelters:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+
+
+  
   const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
@@ -57,10 +81,15 @@ const useShelters = (options: IUseShelterOptions = {}) => {
   );
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    
+    if (getAllShelters) {
+      fetchAllShelters()
+    } else {
+      refresh();
+    }
+  }, [fetchAllShelters, getAllShelters, refresh]);
 
-  return { data, loading, refresh };
+  return { data, loading, refresh, allSheltersData };
 };
 
 export { useShelters };
