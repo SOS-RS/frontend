@@ -23,22 +23,31 @@ Este frontend foi desenvolvido utilizando as seguintes tecnologias:
 Para executar o frontend do aplicativo em seu ambiente local, siga os passos abaixo:
 
 1. Clone o repositório:
-   ```
+   ```bash
    git clone https://github.com/SOS-RS/frontend
    ```
 2. Entre no diretório do projeto:
-   ```
+   ```bash
    cd frontend
+   ```   
+3. Copie o arquivo `.env.example` de exemplo:
+   ```bash
+   cp .env.example .env 
+   ```     
+4. Configure as versões do node e npm com [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating):
+   ```bash
+   nvm install
+   nvm use
    ```
-3. Instale as dependências:
-   ```
+5. Instale as dependências:
+   ```bash
    npm install
    ```
-4. Inicie o servidor de desenvolvimento:
-   ```
+6. Inicie o servidor de desenvolvimento:
+   ```bash
    npm run dev
    ```
-   O app estará disponível em `http://localhost:5173`.
+   O app estará disponível em `https://localhost:5173`.
 
 
 ## Docker compose
@@ -48,7 +57,12 @@ Para iniciar o frontend com docker compose, siga os passos abaixo:
    
 1. Instalar e configurar o docker compose conforme [documentação] (https://docs.docker.com/compose/install/linux/);
 
-2. Executar o seguinte comando na raiz do projeto:
+2. Copie o arquivo `.env` de exemplo:
+   ```bash
+   cp .env.example .env 
+   ```     
+
+3. Executar o seguinte comando na raiz do projeto:
    ```bash
    docker compose up -d
    ```
