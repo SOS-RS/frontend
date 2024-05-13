@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
 import qs from 'qs';
 
@@ -48,7 +48,6 @@ const Home = () => {
     },
     []
   );
-  const navigate = useNavigate();
 
   const clearSearch = useCallback(() => {
     setSearch('');
@@ -161,7 +160,6 @@ const Home = () => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
-        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
