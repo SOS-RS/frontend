@@ -32,6 +32,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
       text-white flex
         items-center
         justify-start
+        text-nowrap
         max-sm:text-sm
         ">{title}</h3>
       </div>
