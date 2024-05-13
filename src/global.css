@@ -4,10 +4,6 @@
 
 @layer base {
   :root {
-    --btn-base: #9DACFF;
-    --btn-hover: #6457A6;
-    --btn-disabled: #6457a660;
-
     --light-yellow: #f9cf8d;
     --light-red: #f69f9d;
     --light-green: #9cd487;
@@ -20,6 +16,10 @@
     --yellow: #fff500;
     --grey: #eeeeee;
     --text: #2f2f2f;
+
+    --btn-base: var(--light-green);
+    --btn-hover: var(--dark-green);
+    --btn-disabled: var(--green);
 
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;

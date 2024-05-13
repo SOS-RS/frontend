@@ -129,7 +129,7 @@ const Home = () => {
               size="sm"
               onClick={() => refresh()}
             >
-              <RotateCw size={20}  />
+              <RotateCw size={20} className="stroke-white" />
             </Button>
             {session && (
               <Button
@@ -141,7 +141,7 @@ const Home = () => {
                   refreshSession();
                 }}
               >
-                <LogOutIcon size={20}  />
+                <LogOutIcon size={20} />
               </Button>
             )}
           </div>

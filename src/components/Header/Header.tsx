@@ -16,17 +16,17 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     <div
       ref={ref}
       className={cn(
-        'shadow-sm bg-white flex h-[56px] justify-between items-center text-black p-3 gap-2 w-full fixed z-10',
+        'shadow-sm bg-primary-red  flex h-[56px] justify-between items-center p-3 gap-2 w-full fixed z-10',
         className
       )}
       {...rest}
     >
       <div className="flex gap-1 items-center pl-2">
         {startAdornment}
-        <h3 className="font-medium">{title}</h3>
+        <h3 className="font-medium text-white">{title}</h3>
       </div>
       <div className="flex items-center">
-        <div className="cursor-pointer ">{endAdornment}</div>
+        <div className="cursor-pointe">{endAdornment}</div>
       </div>
     </div>
   );

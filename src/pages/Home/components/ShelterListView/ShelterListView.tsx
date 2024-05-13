@@ -54,7 +54,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           <Button
             variant="ghost"
             size="sm"
-            className="group flex gap-2 items-center text-black hover:btn-hover hover:text-btn-hover active:btn-hover border-[1px] border-input"
+            className="group flex gap-2 items-center bg-btn-base hover:btn-hover hover:text-black active:btn-hover border-[1px] border-input"
             onClick={onOpenModal}
           >
             <ListFilter className="h-5 w-5" />
@@ -64,7 +64,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             <Button
               variant="ghost"
               size="sm"
-              className="group flex gap-2 items-center text-black hover:btn-hover hover:text-btn-hover active:btn-hover border-[1px] border-input" 
+              className="group flex gap-2 items-center bg-btn-base hover:btn-hover hover:text-black active:btn-hover border-[1px] border-input"
               onClick={onClearSearch}
             >
               <CircleAlert className="h-5 w-5" />
