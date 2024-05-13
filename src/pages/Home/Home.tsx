@@ -33,8 +33,7 @@ const Home = () => {
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
 
-  const [status, setStatus] = useState(false)
-
+  
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -51,7 +50,7 @@ const Home = () => {
     []
   );
   const navigate = useNavigate();
-
+  
   const clearSearch = useCallback(() => {
     setSearch('');
     setFilterData(initialFilterData);
@@ -63,7 +62,7 @@ const Home = () => {
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
-
+  
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
       setOpenModal(false);
@@ -80,7 +79,7 @@ const Home = () => {
     },
     [refresh, setSearchParams]
   );
-
+  
   const handleFetchMore = useCallback(() => {
     const params = {
       ...shelters.filters,
@@ -88,7 +87,7 @@ const Home = () => {
       perPage: shelters.perPage,
       search: qs.stringify(filterData),
     };
-
+    
     refresh(
       {
         params: params,
@@ -97,15 +96,14 @@ const Home = () => {
     );
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
-  const handleStatusHamburguer = () => setStatus(prev => !prev)
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
         <Filter
-          open={isModalOpen}
-          data={filterData}
-          onClose={() => setOpenModal(false)}
-          onSubmit={onSubmitFilterForm}
+        open={isModalOpen}
+        data={filterData}
+        onClose={() => setOpenModal(false)}
+        onSubmit={onSubmitFilterForm}
         />
       )}
       <Header
@@ -153,8 +151,6 @@ const Home = () => {
             )}
           </div>
         }
-        statusHamburguer={status}
-        handleStatusHamburguer={handleStatusHamburguer}
       />
       <ShelterListView
         loading={loading}

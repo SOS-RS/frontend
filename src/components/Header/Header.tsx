@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
 
@@ -7,11 +7,15 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     endAdornment,
     startAdornment,
     title,
-    handleStatusHamburguer,
-    statusHamburguer,
     className = '',
     ...rest
   } = props;
+
+
+
+
+  const [statusHamburguer, setStatus] = useState(false)
+  const handleStatusHamburguer = () => setStatus(prev => !prev)
 
   return (
     <header
