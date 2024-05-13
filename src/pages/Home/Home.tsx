@@ -109,7 +109,7 @@ const Home = () => {
       <Header
         title="SOS Rio Grande do Sul"
         endAdornment={
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center max-sm:grid">
             {session && (
               <h3 className="text-white font-thin">
                 Bem vindo, {session.name}
