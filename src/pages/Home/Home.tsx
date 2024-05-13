@@ -33,6 +33,8 @@ const Home = () => {
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
 
+  const [status, setStatus] = useState(false)
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -95,6 +97,7 @@ const Home = () => {
     );
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
+  const handleStatusHamburguer = () => setStatus(prev => !prev)
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
@@ -150,6 +153,8 @@ const Home = () => {
             )}
           </div>
         }
+        statusHamburguer={status}
+        handleStatusHamburguer={handleStatusHamburguer}
       />
       <ShelterListView
         loading={loading}
