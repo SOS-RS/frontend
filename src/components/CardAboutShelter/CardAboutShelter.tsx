@@ -26,11 +26,19 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
         <InfoRow
           icon={<PawPrint />}
           label={
-            check(shelter.petFriendly)
-              ? shelter.petFriendly
-                ? 'O abrigo aceita animais'
-                : 'O abrigo não aceita animais'
-              : 'Não informado se aceita animais'
+            check(shelter.petFriendly) ? (
+              shelter.petFriendly ? (
+                <p>
+                  O abrigo <b>aceita</b> animais
+                </p>
+              ) : (
+                <p>
+                  O abrigo <b>não</b> aceita animais
+                </p>
+              )
+            ) : (
+              <b>Não informado se aceita animais</b>
+            )
           }
         />
         <InfoRow
@@ -57,11 +65,13 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={
             check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
           }
+          clipboardButton={check(shelter.contact)}
         />
         <InfoRow
           icon={<Landmark />}
           label="Chave Pix:"
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+          clipboardButton={check(shelter.pix)}
         />
       </div>
     </Card>
