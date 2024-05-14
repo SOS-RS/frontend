@@ -49,23 +49,19 @@ export function ShareButton() {
               ref={urlRef}
             />
           </div>
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Button asChild>
-              <a
-                href={`https://wa.me/?text=${window.location.href}`}
-                target="_blank"
-              >
-                WhatsApp
-              </a>
-            </Button>
-            <Button asChild>
-              <a
-                href={`https://telegram.me/share/url?url=${window.location.href}`}
-                target="_blank"
-              >
-                <Button>Telegram</Button>
-              </a>
-            </Button>
+          <div className="mt-4 gap-5 flex">
+            <a
+              href={`https://wa.me/?text=${window.location.href}`}
+              target="_blank"
+            >
+              <img alt="WhatsApp" src="/whatsapp.png" width="64" />
+            </a>
+            <a
+              href={`https://telegram.me/share/url?url=${window.location.href}`}
+              target="_blank"
+            >
+              <img alt="Telegram" src="/telegram.png" width="64" />
+            </a>
           </div>
         </div>
       </DialogContent>
