@@ -3,22 +3,15 @@ import { IBurgerMenu, IPartnerLink } from './types';
 import {
   CircleHelp,
   CirclePlus,
-  //DoorClosed,
   DoorOpen,
   Link as LinkIcon,
   Menu,
-  //User,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BurgerMenu = (props: IBurgerMenu) => {
   const { session } = props;
-  const partnerLinks: IPartnerLink[] = [
-    // {
-    //   name: "Example",
-    //   url: "https://example.com",
-    // },
-  ];
+  const partnerLinks: IPartnerLink[] = [];
   return (
     <Sheet>
       <SheetTrigger>
