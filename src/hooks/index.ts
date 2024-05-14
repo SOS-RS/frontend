@@ -5,6 +5,7 @@ import { useThrottle } from './useThrottle';
 import { useShelter } from './useShelter';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
+import { useGeolocation } from './useGeolocation';
 
 export {
   useShelters,
@@ -14,4 +15,5 @@ export {
   useShelter,
   useSupplyCategories,
   useSupplies,
+  useGeolocation,
 };
