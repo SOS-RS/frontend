@@ -37,7 +37,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
           </span>
           <span className="md:flex">
             {ValueComp}
-            {clipboardButton && (
+            {clipboardButton && value && (
               <div
                 className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
                 onClick={() => navigator.clipboard.writeText(value)}
