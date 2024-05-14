@@ -3,11 +3,11 @@ import { IBurgerMenu, IPartnerLink } from './types';
 import {
   CircleHelp,
   CirclePlus,
-  DoorClosed,
+  //DoorClosed,
   DoorOpen,
   Link as LinkIcon,
   Menu,
-  User,
+  //User,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
