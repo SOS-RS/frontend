@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext } from 'react';
 import { DoorOpen, Menu } from 'lucide-react';
 
 import { SessionServices } from '@/service';
@@ -31,11 +31,15 @@ const BurgerMenu = () => {
       <SheetContent side="left" className="pt-[96px] flex flex-col">
         <div className="flex flex-col gap-4">
           {session && (
-            <div className="inline-flex items-center text-semibold">
-              Olá, {session.name}
-            </div>
+            <Fragment>
+              <div className="inline-flex items-center text-semibold">
+                Olá, {session.name}
+              </div>
+              <Separator />
+            </Fragment>
           )}
-          <Separator />
+
+          <BurguerMenuItem label="Sobre nós" link="/sobre" icon="Info" />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
@@ -47,14 +51,19 @@ const BurgerMenu = () => {
             icon="CircleHelp"
           />
           <Separator />
-          {partners.map((partner, idx) => (
-            <BurguerMenuItem
-              key={idx}
-              label={partner.name}
-              link={partner.link}
-              icon={partner.iconName}
-            />
-          ))}
+          {partners.length > 0 && (
+            <Fragment>
+              <span>Parcerias</span>
+              {partners.map((partner, idx) => (
+                <BurguerMenuItem
+                  key={idx}
+                  label={partner.name}
+                  link={partner.link}
+                  icon={partner.iconName}
+                />
+              ))}
+            </Fragment>
+          )}
         </div>
         {session && (
           <div className="mt-auto">
