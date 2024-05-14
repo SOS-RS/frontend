@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
 import qs from 'qs';
@@ -33,7 +33,7 @@ const Home = () => {
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
 
-  
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -50,7 +50,7 @@ const Home = () => {
     []
   );
   const navigate = useNavigate();
-  
+
   const clearSearch = useCallback(() => {
     setSearch('');
     setFilterData(initialFilterData);
@@ -62,7 +62,7 @@ const Home = () => {
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
-  
+
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
       setOpenModal(false);
@@ -79,7 +79,7 @@ const Home = () => {
     },
     [refresh, setSearchParams]
   );
-  
+
   const handleFetchMore = useCallback(() => {
     const params = {
       ...shelters.filters,
@@ -87,7 +87,7 @@ const Home = () => {
       perPage: shelters.perPage,
       search: qs.stringify(filterData),
     };
-    
+
     refresh(
       {
         params: params,
@@ -120,21 +120,22 @@ const Home = () => {
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
         <Filter
-        open={isModalOpen}
-        data={filterData}
-        onClose={() => setOpenModal(false)}
-        onSubmit={onSubmitFilterForm}
+          open={isModalOpen}
+          data={filterData}
+          onClose={() => setOpenModal(false)}
+          onSubmit={onSubmitFilterForm}
         />
       )}
       <Header
         title={windowSize.width <= 434 ? "SOS RS" : "SOS Rio Grande do Sul"}
         endAdornment={
-          <div className="flex gap-2 items-center max-sm:grid">
+          <div className="flex gap-2 items-center transition-all max-[300px]:w-auto">
             {session && (
               <h3 className="text-white font-thin">
                 Bem vindo, {session.name}
               </h3>
             )}
+
             <Button
               variant="ghost"
               size="sm"
