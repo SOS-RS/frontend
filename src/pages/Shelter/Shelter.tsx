@@ -9,8 +9,6 @@ import {
   LoadingScreen,
 } from '@/components';
 import { useShelter } from '@/hooks';
-import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import {
@@ -19,9 +17,14 @@ import {
 } from './components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { ShelterSupplyServices } from '@/service';
-import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
+import { useToast } from '@/components/ui/use-toast';
+import { mapRegularAndChildrenProtectionSupplies } from '@/lib/mapRegularAndChildrenProtectionSupplies';
+import { ShelterSupplyServices } from '@/service';
+import { getTags, getAvailabilityProps, cn, group } from '@/lib/utils';
+import { IShelterAvailabilityProps } from '../Home/components/ShelterListItem/types';
+
+const SUPPLY_PRIORITIES_TO_RENDER = [SupplyPriority.Urgent, SupplyPriority.Needing, SupplyPriority.Remaining];
 
 const Shelter = () => {
   const params = useParams();
@@ -29,17 +32,28 @@ const Shelter = () => {
   const navigate = useNavigate();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const [selectedTags, setSelectedTags] = useState<ITagItem[]>([]);
-  const shelterCategories: IShelterCategoryItemsProps[] = useMemo(() => {
-    const grouped = group(shelter?.shelterSupplies ?? [], 'priority');
-    delete grouped[SupplyPriority.NotNeeded];
 
-    return Object.entries(grouped)
-      .sort(([a], [b]) => (+a > +b ? -1 : 1))
-      .map(([key, values]) => ({
-        priority: +key,
-        tags: values.map((v) => ({ label: v.supply.name, value: v.supply.id })),
-      }));
+  const shelterCategoriesItems: IShelterCategoryItemsProps[] = useMemo(() => {
+    if (!shelter?.shelterSupplies?.length) return [];
+
+    const { childrenProtectionSupplies, regularSupplies } = mapRegularAndChildrenProtectionSupplies(shelter?.shelterSupplies);
+
+    const groupedChildrenProtectionSupplies = group(childrenProtectionSupplies ?? [], 'priority');
+    const groupedRegularSupplies = group(regularSupplies ?? [], 'priority');
+    const supplyTagsByPriority: Array<{ priority: SupplyPriority; tags: ITagItem[] }> = [];
+
+    SUPPLY_PRIORITIES_TO_RENDER.forEach((priority) => {
+      const childrenProtectionTags = getTags(groupedChildrenProtectionSupplies[priority]);
+      const regularTags = getTags(groupedRegularSupplies[priority]);
+
+      const tags = [...childrenProtectionTags, ...regularTags];
+
+      if (tags.length) supplyTagsByPriority.push({ priority, tags });
+    });
+
+    return supplyTagsByPriority;
   }, [shelter?.shelterSupplies]);
+
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(shelter?.capacity, shelter?.shelteredPeople),
@@ -133,7 +147,7 @@ const Shelter = () => {
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
-          {shelterCategories.map((categoryProps, idx) => (
+          {shelterCategoriesItems.map((categoryProps, idx) => (
             <ShelterCategoryItems
               onSelectTag={handleSelectTag}
               selectedTags={selectedTags}
@@ -141,7 +155,7 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
-        </div>
+        </div >
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button
@@ -156,7 +170,7 @@ const Shelter = () => {
           </div>
         </Authenticated>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -1,8 +1,9 @@
-import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
+import { IUseShelterDataSupply, IUseSheltersDataSupplyData } from '@/hooks/useShelter/types';
 import {
   ShelterTagInfo,
   ShelterTagType,
 } from '@/pages/Home/components/ShelterListItem/types';
+import { ITagItem } from '@/pages/Shelter/components/ShelterCategoryItems/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -143,9 +144,14 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   }, initialGroup);
 }
 
+function getTags(tags: IUseShelterDataSupply[] = []): ITagItem[] {
+  return tags.map(({ supply }) => ({ label: supply.name, value: supply.id }));
+}
+
 export {
   cn,
   getAvailabilityProps,
+  getTags,
   group,
   getSupplyPriorityProps,
   variantStatusPriority,
