@@ -193,6 +193,7 @@ const EditShelterSupply = () => {
                   key={idx}
                   name={key}
                   items={items}
+                  filtered={searchValue != ''}
                   onClick={handleClickSupplyRow}
                 />
               );
