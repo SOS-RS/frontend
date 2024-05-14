@@ -108,7 +108,7 @@ const Home = () => {
       )}
       <Header
         title="SOS Rio Grande do Sul"
-        startAdornment={<BurgerMenu />}
+        startAdornment={<BurgerMenu session={session} />}
         endAdornment={
           <div className="flex gap-2 items-center">
             {session && (
