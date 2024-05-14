@@ -3,15 +3,21 @@ import { IBurgerMenu, IPartnerLink } from './types';
 import {
   CircleHelp,
   CirclePlus,
+  DoorClosed,
   DoorOpen,
   Link as LinkIcon,
   Menu,
+  User,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BurgerMenu = (props: IBurgerMenu) => {
   const { session } = props;
   const partnerLinks: IPartnerLink[] = [];
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  };
   return (
     <Sheet>
       <SheetTrigger>
@@ -20,15 +26,19 @@ const BurgerMenu = (props: IBurgerMenu) => {
       <SheetContent side={'left'} className="pt-[96px] flex flex-col">
         <div className="flex">
           <ul className="flex flex-col text-base">
-            {
-              //TODO: Uncomment after implementing authentication/login
-              /* {session
-              ? <li className="inline-flex items-center mb-5"><User className="mr-2" />Olá, {session.name}</li>
-              : <Link to={"/signin"} className="hover:font-semibold">
-                <li className="inline-flex items-center mb-5"><DoorClosed className="mr-2" />Entrar</li>
+            {session ? (
+              <li className="inline-flex items-center mb-5">
+                <User className="mr-2" />
+                Olá, {session.name}
+              </li>
+            ) : (
+              <Link to={'/entrar'} className="hover:font-semibold">
+                <li className="inline-flex items-center mb-5">
+                  <DoorClosed className="mr-2" />
+                  Entrar
+                </li>
               </Link>
-            } */
-            }
+            )}
             <Link
               to={'https://forms.gle/2S7L2gR529Dc8P3T9'}
               target="_blank"
@@ -73,11 +83,12 @@ const BurgerMenu = (props: IBurgerMenu) => {
         </div>
         {session && (
           <div className="mt-auto mb-8">
-            <Link to={'/logout'} className="hover:font-semibold">
-              <span className="inline-flex items-center">
-                <DoorOpen className="mr-2" /> Sair
-              </span>
-            </Link>
+            <span
+              className="inline-flex items-center hover:font-semibold cursor-pointer"
+              onClick={logout}
+            >
+              <DoorOpen className="mr-2" /> Sair
+            </span>
           </div>
         )}
       </SheetContent>
