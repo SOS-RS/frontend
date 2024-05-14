@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon } from 'lucide-react';
+import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
 import qs from 'qs';
 
 import { Footer, Header } from '@/components';
