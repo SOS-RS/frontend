@@ -54,13 +54,13 @@ export function ShareButton() {
               href={`https://wa.me/?text=${window.location.href}`}
               target="_blank"
             >
-              <img alt="WhatsApp" src="/whatsapp.png" width="64" />
+              <img alt="WhatsApp" src="/whatsapp.svg" width="64" />
             </a>
             <a
               href={`https://telegram.me/share/url?url=${window.location.href}`}
               target="_blank"
             >
-              <img alt="Telegram" src="/telegram.png" width="64" />
+              <img alt="Telegram" src="/telegram.svg" width="64" />
             </a>
           </div>
         </div>
