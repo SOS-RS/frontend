@@ -36,6 +36,7 @@ const EditShelterSupply = () => {
         if (v) {
           setFilteredSupplies(
             supplies.filter((s) =>
+<<<<<<< HEAD
               s.name
                 .toLowerCase()
                 .normalize('NFD')
@@ -46,6 +47,10 @@ const EditShelterSupply = () => {
                     .normalize('NFD')
                     .replace(/[\u0300-\u036f]/g, '')
                 )
+=======
+              s.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .includes(v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
+>>>>>>> 4e0d9c0 (Release 0.0.1 (#135))
             )
           );
         } else setFilteredSupplies(supplies);

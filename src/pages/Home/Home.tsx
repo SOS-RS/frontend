@@ -1,14 +1,14 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { RotateCw, PlusIcon } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { Filter } from './components/Filter';
-import { ShelterListView } from './components/ShelterListView';
+import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
+
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -41,8 +41,6 @@ const Home = () => {
     },
     [filterData]
   );
-
-  const navigate = useNavigate();
 
   const clearSearch = useCallback(() => {
     setSearch('');
@@ -131,7 +129,6 @@ const Home = () => {
                 window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
               }
             >
-              <PlusIcon className="h-5 w-5 stroke-white" />
               Cadastrar abrigo
             </Button>
             <Button
@@ -146,7 +143,7 @@ const Home = () => {
           </div >
         }
       />
-      < ShelterListView
+      <ShelterListView
         loading={loading}
         count={shelters.count}
         data={shelters.results}
@@ -172,7 +169,6 @@ const Home = () => {
             },
           });
         }}
-        onSelectShelter={(s) => navigate(`/abrigo/${s.id}`)}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}

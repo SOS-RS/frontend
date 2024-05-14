@@ -92,13 +92,14 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           {loading ? (
             <LoadingSkeleton amountItems={4} />
 
+
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
             <Fragment>
               {data.map((s, idx) => (
-                <ShelterListItem key={idx} data={s} />
 
+                <ShelterListItem key={idx} data={s} />
               ))}
               {hasMoreItems ? (
                 <Button
