@@ -30,7 +30,7 @@ const BurgerMenu = (props: IBurgerMenu) => {
             {
               //TODO: Uncomment after implementing authentication/login
               /* {session
-              ? <li className="inline-flex items-center mb-5"><User className="mr-2" />Olá, Fulano</li>
+              ? <li className="inline-flex items-center mb-5"><User className="mr-2" />Olá, {session.name}</li>
               : <Link to={"/signin"} className="hover:font-semibold">
                 <li className="inline-flex items-center mb-5"><DoorClosed className="mr-2" />Entrar</li>
               </Link>
