@@ -1,6 +1,17 @@
-import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
+export enum ShelterCategory {
+  Shelter = 'Shelter',
+  DistributionCenter = 'DistributionCenter',
+}
 
-export interface IUseSheltersData {
+export enum SupplyMeasure {
+  Unit = 'Unit',
+  Kg = 'Kg',
+  Litters = 'Litters',
+  Box = 'Box',
+  Piece = 'Piece',
+}
+
+export interface IUseShelterData {
   id: string;
   name: string;
   street?: string;
@@ -18,24 +29,29 @@ export interface IUseSheltersData {
   verified: boolean;
   latitude?: string | null;
   longitude?: string | null;
+  shelterSupplies: IUseShelterDataSupply[];
+  category: ShelterCategory;
+  actived: boolean;
   createdAt: string;
   updatedAt?: string | null;
-  shelterSupplies: IUseSheltersDataSupplyData[];
 }
 
-export interface IUseSheltersDataSupplyData {
-  supply: {
-    name: string;
-    supplyCategory: { name: string };
-  };
+export interface IUseShelterDataSupply {
   priority: number;
-  tags: ShelterTagType[];
-<<<<<<< HEAD
   quantity?: number | null;
-=======
->>>>>>> 3d3f437 (merge: develop -> master (#91))
+  supply: IUseShelterDataSupplyData;
 }
 
-export interface IUseShelterOptions {
-  cache?: boolean;
+export interface IUseShelterDataSupplyData {
+  id: string;
+  name: string;
+  measure: SupplyMeasure;
+  supplyCategory: IUseShelterDataSupplyCategory;
+  createdAt: string;
+  updatedAt?: string | null;
+}
+
+export interface IUseShelterDataSupplyCategory {
+  id: string;
+  name: string;
 }
