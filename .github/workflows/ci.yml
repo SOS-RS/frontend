@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  lint-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the source
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      # Setup node.js
+      - name: "Setup node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
+
+      - name: Lint & Format
+        run: npm run lint
+        continue-on-error: true
+
+      - name: NPM install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
