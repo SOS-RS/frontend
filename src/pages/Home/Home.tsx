@@ -62,7 +62,6 @@ const Home = () => {
 
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
-      console.log({ values });
       setOpenModal(false);
       setFilterData(values);
       const searchQuery = qs.stringify(values, {
@@ -157,12 +156,7 @@ const Home = () => {
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
-          console.log('antes', { filterData });
-          setFilterData((prev) => {
-            const aa = { ...prev, search: v };
-            console.log('depois', aa);
-            return aa;
-          });
+          setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
         hasMoreItems={hasMore}
