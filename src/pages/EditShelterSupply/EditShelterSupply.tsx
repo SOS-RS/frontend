@@ -13,6 +13,7 @@ import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { clearCache } from '@/api/cache';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ const EditShelterSupply = () => {
         if (v) {
           setFilteredSupplies(
             supplies.filter((s) =>
-              s.name.toLowerCase().includes(v.toLowerCase())
+              s.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .includes(v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
             )
           );
         } else setFilteredSupplies(supplies);
@@ -66,6 +68,7 @@ const EditShelterSupply = () => {
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            clearCache(false);
             refresh();
           };
 
