@@ -36,11 +36,10 @@ const Home = () => {
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
-        };
-        setSearchParams(params.search);
+      callback: () => {
+        const params = new URLSearchParams(qs.stringify(filterData));
+
+        setSearchParams(params);
         refresh({
           params: params,
         });
@@ -63,6 +62,7 @@ const Home = () => {
 
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
+      console.log({ values });
       setOpenModal(false);
       setFilterData(values);
       const searchQuery = qs.stringify(values, {
@@ -157,7 +157,12 @@ const Home = () => {
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
-          setFilterData((prev) => ({ ...prev, search: v }));
+          console.log('antes', { filterData });
+          setFilterData((prev) => {
+            const aa = { ...prev, search: v };
+            console.log('depois', aa);
+            return aa;
+          });
           setSearch(v);
         }}
         hasMoreItems={hasMore}
