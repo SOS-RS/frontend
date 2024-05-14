@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, Loader } from 'lucide-react';
+import { CircleAlert, ListFilter } from 'lucide-react';
 
 import {
   Alert,
@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -73,7 +74,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
-            <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
+            <LoadingSkeleton amountItems={4}/>
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
