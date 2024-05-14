@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { Footer, Header } from '@/components';
@@ -22,11 +22,7 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
@@ -110,11 +106,6 @@ const Home = () => {
         startAdornment={<BurgerMenu session={session} />}
         endAdornment={
           <div className="flex gap-2 items-center">
-            {session && (
-              <h3 className="text-white font-thin">
-                Bem vindo, {session.name}
-              </h3>
-            )}
             <Button
               loading={loading}
               variant="ghost"
@@ -124,20 +115,6 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-            {session && (
-              <Button
-                loading={loadingSession}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  refreshSession();
-                }}
-                className="disabled:bg-red-500 hover:bg-red-400"
-              >
-                <LogOutIcon size={20} className="stroke-white" />
-              </Button>
-            )}
           </div>
         }
       />
