@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { RotateCw, LogOutIcon } from 'lucide-react';
 import qs from 'qs';
-
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
-import { useSearchParams } from 'react-router-dom';
+import { BurgerMenu } from '@/components/BurgerMenu';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -135,17 +135,6 @@ const Home = () => {
               </h3>
             )}
 
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
-              onClick={() =>
-                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
-              }
-            >
-              <PlusIcon className="h-5 w-5 stroke-white" />
-              Cadastrar abrigo
-            </Button>
             <Button
               loading={loading}
               variant="ghost"
