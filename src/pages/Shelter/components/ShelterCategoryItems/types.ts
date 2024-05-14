@@ -1,6 +1,6 @@
 import { SupplyPriority } from '@/service/supply/types';
 
-export interface ISupplyItem {
+export interface ITagItem {
   label: string;
   value: string;
   quantity? : number | null;
@@ -8,7 +8,7 @@ export interface ISupplyItem {
 
 export interface IShelterCategoryItemsProps {
   priority?: SupplyPriority;
-  tags: ISupplyItem[];
-  selectedTags?: ISupplyItem[];
-  onSelectTag?: (v: ISupplyItem) => void;
+  tags: ITagItem[];
+  selectedTags?: ITagItem[];
+  onSelectTag?: (v: ITagItem) => void;
 }

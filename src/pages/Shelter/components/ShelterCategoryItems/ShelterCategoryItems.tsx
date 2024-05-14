@@ -15,14 +15,13 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
     tags,
     onSelectTag,
     selectedTags = [],
-    supplies,
   } = props;
   const { session } = useContext(SessionContext);
   const [opened, setOpened] = useState<boolean>(false);
   const maxVisibleSupplies: number = 10;
   const visibleSupplies = useMemo(
-    () => (opened ? supplies : supplies.slice(0, maxVisibleSupplies)),
-    [opened, supplies]
+    () => (opened ? tags : tags.slice(0, maxVisibleSupplies)),
+    [opened, tags]
   );
   const { className: circleClassName, label } = useMemo(
     () => getSupplyPriorityProps(priority),
@@ -49,30 +48,39 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
       <div className="flex gap-2 items-center">
         <CircleStatus className={circleClassName} />
         <h3>
-          {label} ({supplies.length})
+          {label} ({tags.length})
         </h3>
       </div>
       <div className="flex gap-2 flex-wrap">
-        {visibleSupplies.map((supply, idx) => {
+        {visibleSupplies.map((tag, idx) => {
           const tagProps =
             session &&
             ['DistributionCenter', 'Admin'].includes(session.accessLevel)
               ? {
-                  onClick: () => (onSelectTag ? onSelectTag(supply) : undefined),
-                  className: variants({
-                    className: circleClassName,
-                    variant: selectedTags.includes(supply)
-                      ? 'selected'
-                      : 'default',
-                  }),
-                }
-              : {
+                onClick: () => (onSelectTag ? onSelectTag(tag) : undefined),
+                className: variants({
                   className: circleClassName,
-                };
-          return <Chip key={idx} label={supply.name} quantity={supply.quantity} {...tagProps} />;
+                  variant: selectedTags.includes(tag)
+                    ? 'selected'
+                    : 'default',
+                }),
+              }
+              : {
+                className: circleClassName,
+              };
+          return <div key={idx} className={cn('flex gap-x-1 relative', { 'mr-3': tag.quantity })}>
+            <Chip key={idx} label={tag.label} {...tagProps} />
+            {tag.quantity && (
+              <div
+                className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs font-bold bg-gray-700 text-white rounded-full ring-black flex items-center justify-center w-7 h-6">
+                {tag.quantity > 99 ? '99+' : tag.quantity}
+              </div>
+            )}
+          </div>;
         })}
       </div>
-      {supplies.length > maxVisibleSupplies && (
+
+      {tags.length > maxVisibleSupplies && (
         <div>
           <Button
             variant="ghost"
