@@ -17,7 +17,9 @@ const BurgerMenu = (props: IBurgerMenu) => {
   ]
   return (
     <Sheet>
-      <SheetTrigger><Menu color="white" className="ml-2 mr-2" /></SheetTrigger>
+      <SheetTrigger >
+        <Menu color="white" className="ml-2 mr-2" />
+      </SheetTrigger>
       <SheetContent side={"left"} className="pt-[96px] flex flex-col">
         <div className="flex">
           <ul className="flex flex-col text-base">
