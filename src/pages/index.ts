@@ -1,6 +1,7 @@
 import { SignIn } from './SignIn';
 
 import { Home } from './Home';
+import { Dashboard } from './Dashboard';
 import { Shelter } from './Shelter';
 import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
@@ -16,5 +17,6 @@ export {
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  Filter,
+  Dashboard,
 };

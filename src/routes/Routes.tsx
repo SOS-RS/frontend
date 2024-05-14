@@ -8,6 +8,7 @@ import {
   EditShelterSupply,
   SignIn,
   UpdateShelter,
+  Dashboard,
 } from '@/pages';
 
 const Routes = () => {
@@ -21,6 +22,7 @@ const Routes = () => {
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
       />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="*" element={<Navigate to="/" />} />

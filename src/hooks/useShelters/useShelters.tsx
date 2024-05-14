@@ -5,6 +5,7 @@ import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
 import { IUseShelterOptions, IUseSheltersData } from './types';
+import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 
 const useShelters = (options: IUseShelterOptions = {}) => {
   const { cache } = options;
@@ -23,7 +24,7 @@ const useShelters = (options: IUseShelterOptions = {}) => {
       if (cache) headers['x-app-cache'] = 'true';
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<any>>('/shelters', {
+        .get<IServerResponse<any>>(PaginatedQueryPath.Shelters, {
           ...config,
           headers,
           params: {
