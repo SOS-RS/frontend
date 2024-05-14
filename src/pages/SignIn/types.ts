@@ -1,10 +1,9 @@
-import { z } from "zod";
+import * as Yup from 'yup';
 
-const signInFormSchema = z
-  .object({
-    login: z.string().min(1, "Este campo deve ser preenchido"),
-    password: z.string().min(1, "Este campo deve ser preenchido"),
-  })
-  .strict();
+const validationSchema = Yup.object().shape({
+  login: Yup.string().min(1, "Este campo deve ser preenchido"),
+  password: Yup.string().min(1, "Este campo deve ser preenchido"),
+});
 
-export { signInFormSchema };
+
+export { validationSchema };
