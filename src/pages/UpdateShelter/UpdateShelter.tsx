@@ -38,6 +38,7 @@ const UpdateShelter = () => {
     setFieldValue,
     values,
     touched,
+    setErrors,
   } = useFormik<IUpdateShelter>({
     initialValues: {
       shelteredPeople: shelter.shelteredPeople,
@@ -106,7 +107,9 @@ const UpdateShelter = () => {
     if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
     if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
     if (cepData.localidade) setFieldValue('city', cepData.localidade);
-  }, [cepData, setFieldValue]);
+
+    setErrors({});
+  }, [cepData, setFieldValue, setErrors]);
 
   if (loading) return <LoadingScreen />;
 

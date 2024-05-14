@@ -34,6 +34,7 @@ const CreateShelterComponent = () => {
     setFieldValue,
     handleSubmit,
     values,
+    setErrors,
   } = useFormik<ICreateShelter>({
     initialValues: {
       name: '',
@@ -99,7 +100,8 @@ const CreateShelterComponent = () => {
     if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
     if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
     if (cepData.localidade) setFieldValue('city', cepData.localidade);
-  }, [cepData, setFieldValue]);
+    setErrors({});
+  }, [cepData, setFieldValue, setErrors]);
 
   return (
     <div className="flex flex-col h-screen items-center">
