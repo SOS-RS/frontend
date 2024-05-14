@@ -127,7 +127,7 @@ const Home = () => {
         />
       )}
       <Header
-        title="SOS Rio Grande do Sul"
+        title={windowSize.width <= 434 ? "SOS RS" : "SOS Rio Grande do Sul"}
         endAdornment={
           <div className="flex gap-2 items-center max-sm:grid">
             {session && (
