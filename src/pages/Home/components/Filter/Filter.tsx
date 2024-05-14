@@ -180,7 +180,7 @@ const Filter = (props: IFilterProps) => {
                   options={supplyCategories.map((el: ISupplyCategory) => ({
                     label: el.name,
                     value: el.id,
-                  }))}
+                  })).sort((a, b) => a.label.localeCompare(b.label))}
                   onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
@@ -195,7 +195,7 @@ const Filter = (props: IFilterProps) => {
                   options={supplies.map((el: ISupply) => ({
                     label: el.name,
                     value: el.id,
-                  }))}
+                  })).sort((a, b) => a.label.localeCompare(b.label))}
                   onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
