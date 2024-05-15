@@ -13,6 +13,7 @@ import { SearchInput } from './SearchInput';
 import { VerifiedBadge } from './VerifiedBadge';
 import { SelectField } from './SelectField';
 import { Authenticated } from './Authenticated';
+import { BurgerMenu } from './BurgerMenu';
 
 export {
   LoadingScreen,
@@ -30,4 +31,5 @@ export {
   SearchInput,
   SelectField,
   Authenticated,
+  BurgerMenu,
 };
