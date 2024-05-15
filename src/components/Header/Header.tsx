@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
@@ -12,16 +12,6 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     className = '',
     ...rest
   } = props;
-
-  const navigate = useNavigate();
-
-  const handleBackHome = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      e.preventDefault();
-      navigate('/');
-    },
-    [navigate]
-  );
 
   return (
     <div
@@ -34,9 +24,9 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     >
       <div className="flex gap-1 items-center">
         {startAdornment}
-        <a className="font-medium text-white" href="/" onClick={handleBackHome}>
+        <Link className="font-medium text-white" to="/">
           {title}
-        </a>
+        </Link>
       </div>
       <div className="flex items-center">
         <div className="cursor-pointer ">{endAdornment}</div>
