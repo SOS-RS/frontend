@@ -1,11 +1,10 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
@@ -21,11 +20,6 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
@@ -127,14 +121,9 @@ const Home = () => {
       )}
       <Header
         title={windowSize.width <= 434 ? "SOS RS" : "SOS Rio Grande do Sul"}
+        startAdornment={<BurgerMenu />}
         endAdornment={
-          <div className="flex gap-2 items-center transition-all max-[300px]:w-auto">
-            {session && (
-              <h3 className="text-white font-thin">
-                Bem vindo, {session.name}
-              </h3>
-            )}
-
+          <div className="flex gap-2 items-center">
             <Button
               loading={loading}
               variant="ghost"
@@ -144,20 +133,6 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-            {session && (
-              <Button
-                loading={loadingSession}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  refreshSession();
-                }}
-                className="disabled:bg-red-500 hover:bg-red-400"
-              >
-                <LogOutIcon size={20} className="stroke-white" />
-              </Button>
-            )}
           </div>
         }
       />
