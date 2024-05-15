@@ -86,6 +86,34 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             Atualizado em {updatedAtDate}
         </small>
       </div>
+      <h6 className={cn('font-semibold text-md', availabilityClassName)}>
+        {availability}
+      </h6>
+      <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
+        {data.address}
+      </h6>
+      {data.shelterSupplies.length > 0 && (
+        <>
+          <ShelterSupplyCategoryRow
+            title="Necessita de voluntários:"
+            tags={tags.NeedVolunteers.map(getChipProps)}
+          />
+          <ShelterSupplyCategoryRow
+            title="Necessita urgente de doações de:"
+            tags={tags.NeedDonations.map(getChipProps)}
+          />
+          <ShelterSupplyCategoryRow
+            title="Sobrando para doações:"
+            tags={tags.RemainingSupplies.map(getChipProps)}
+          />
+        </>
+      )}
+      {data.updatedAt && (
+        <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+          Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
+        </small>
+      )}
+    </div>
     </Link>
   );
 };
