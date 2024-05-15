@@ -8,6 +8,7 @@ import {
   MapPinned,
   Link,
   UsersRound,
+  UsersRound,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
