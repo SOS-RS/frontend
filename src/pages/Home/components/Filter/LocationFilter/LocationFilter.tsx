@@ -6,7 +6,7 @@ import { Slider } from '@/components/ui/slider';
 import { useGeolocation } from '@/hooks';
 import { ILocationFilter } from './types';
 
-const MAX_PROXIMITY_IN_METERS = 200_000;
+const MAX_PROXIMITY_IN_METERS = 50_000;
 const PROXIMITY_INTERVAL_IN_METERS = 500;
 
 const LocationFilter = ({
