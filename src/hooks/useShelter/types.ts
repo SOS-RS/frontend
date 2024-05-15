@@ -23,6 +23,7 @@ export interface IUseShelterData {
 
 export interface IUseShelterDataSupply {
   priority: number;
+  quantity?: number | null;
   supply: IUseShelterDataSupplyData;
 }
 
