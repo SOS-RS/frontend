@@ -3,6 +3,11 @@ import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
 export interface IUseSheltersData {
   id: string;
   name: string;
+  street?: string;
+  neighbourhood?: string;
+  city?: string;
+  streetNumber?: string | null;
+  zipCode?: string;
   address: string;
   pix?: string | null;
   shelteredPeople?: number | null;
@@ -25,6 +30,7 @@ export interface IUseSheltersDataSupplyData {
   };
   priority: number;
   tags: ShelterTagType[];
+  quantity?: number | null;
 }
 
 export interface IUseShelterOptions {

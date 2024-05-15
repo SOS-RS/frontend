@@ -10,6 +10,7 @@ export interface IDialogSelectorProps {
   options: IDialogSelectorItemProps[];
   value: string;
   isSubmitting?: boolean;
-  onSave?: (value: string) => void;
+  onSave?: (value: string, newQuantity: number) => void;
   onClose?: () => void;
+  quantity: number;
 }
