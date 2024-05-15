@@ -6,6 +6,7 @@ import { useShelter } from './useShelter';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
 import { usePartners } from './usePartners';
+import { useGithubContributors } from './useGithubContributors';
 
 export {
   useShelters,
@@ -16,4 +17,5 @@ export {
   useSupplyCategories,
   useSupplies,
   usePartners,
+  useGithubContributors,
 };

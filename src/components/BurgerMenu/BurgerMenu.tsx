@@ -47,7 +47,7 @@ const BurgerMenu = () => {
           )}
           <BurguerMenuItem
             label="Sobre nós"
-            link="/sobre"
+            link="/sobre-nos"
             icon={<Info className="w-4 h-4" />}
           />
           <BurguerMenuItem

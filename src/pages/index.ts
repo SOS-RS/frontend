@@ -7,6 +7,7 @@ import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
 import { PrivacyPolicy } from './PrivacyPolicy';
+import { AboutUs } from './AboutUs';
 
 export {
   SignIn,
@@ -17,4 +18,5 @@ export {
   CreateShelter,
   UpdateShelter,
   PrivacyPolicy,
+  AboutUs,
 };

@@ -9,6 +9,7 @@ import {
   SignIn,
   UpdateShelter,
   PrivacyPolicy,
+  AboutUs,
 } from '@/pages';
 
 const Routes = () => {
@@ -25,6 +26,7 @@ const Routes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+      <Route path="/sobre-nos" element={<AboutUs />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );

@@ -4,12 +4,12 @@ const PrivacyPolicy = () => {
   return (
     <div className="flex flex-col h-screen items-center">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
-      <div className="flex flex-col gap-4 p-4 max-w-4xl [&_*]:text-zinc-500 pb-8">
+      <div className="w-full flex flex-col gap-4 p-4 max-w-4xl [&_*]:text-zinc-500 pb-8">
         <h3 className="text-4xl pt-4 font-bold !text-zinc-900">
           Política de privacidade
         </h3>
         <p className="text-justify text-md">
-          Ao entrar para o <b>SOS RS</b>, você nos confia uma série de
+          Ao entrar para o <b>SOS RS 🛟</b>, você nos confia uma série de
           informações. E nós cuidamos e protegemos essas informações, para você.
           Aqui você vai entender quais informações coletamos e o porquê de
           fazermos isso. E, ainda, como você pode atualizar, acompanhar ou, até
@@ -24,7 +24,7 @@ const PrivacyPolicy = () => {
           deles.
         </p>
         <p className="text-justify text-md">
-          O <b>SOS RS</b> declara manter sigilo e confidencialidade sobre os
+          O <b>SOS RS 🛟</b> declara manter sigilo e confidencialidade sobre os
           dados pessoais cadastrados, mas, como a plataforma é alimentada por
           toda a comunidade, não nos responsabilizamos pela:
         </p>
@@ -44,8 +44,8 @@ const PrivacyPolicy = () => {
         <p className="text-justify text-md">
           Coletamos apenas informações imprescindíveis para desempenhar nosso
           propósito. As informações coletadas e como essas informações são
-          utilizadas dependem de como e do quanto você utiliza o <b>SOS RS</b>.
-          Armazenamos as informações que coletamos.
+          utilizadas dependem de como e do quanto você utiliza o <b>SOS RS 🛟</b>
+          . Armazenamos as informações que coletamos.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
           Itens que você cria ou nos fornece
@@ -101,7 +101,7 @@ const PrivacyPolicy = () => {
           solicitação governamental ou judicial não abusiva.
         </p>
         <p className="text-justify text-md">
-          Se o <b>SOS RS</b> realizar fusão, aquisição ou venda, continuará a
+          Se o <b>SOS RS 🛟</b> realizar fusão, aquisição ou venda, continuará a
           garantir a confidencialidade das suas informações pessoais e avisará
           os afetados antes que as informações sejam transferidas ou submetidas
           a uma política de privacidade diferente.
@@ -131,7 +131,7 @@ const PrivacyPolicy = () => {
         </h5>
         <p className="text-justify text-md">
           Nossos desenvolvedores permitem solicitar a exclusão dos seus dados
-          pessoais, enviando um e-mail para <i>rhuam.estevam@doc9.com.br</i>.
+          pessoais, enviando um e-mail para <b>contato@sos-rs.com</b>.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
           Retenção de suas informações e compliance
@@ -143,7 +143,7 @@ const PrivacyPolicy = () => {
         </p>
         <p className="text-justify text-md">
           Eventualmente os dados serão descartados após o encerramento do
-          propósito do <b>SOS RS</b>. A nossa política de exclusão garante que
+          propósito do <b>SOS RS 🛟</b>. A nossa política de exclusão garante que
           os dados fornecidos sejam removidos de forma segura e completa dos
           nossos servidores. Para manter as suas informações protegidas em caso
           de exclusão acidental, pode haver um espaço de tempo entre o momento
@@ -162,8 +162,8 @@ const PrivacyPolicy = () => {
           Dados de contato
         </h5>
         <p className="text-justify text-md">
-          Entre em contato conosco em caso de dúvidas, pelo e-mail
-          rhuam.estevam@doc9.com Você também pode travar contato com a
+          Entre em contato conosco em caso de dúvidas, pelo e-mail{' '}
+          <b>contato@sos-rs.com</b>. Você também pode travar contato com a
           autoridade local de proteção de dados, se possuir dúvidas sobre seus
           direitos de acordo com a legislação brasileira.
         </p>
@@ -171,7 +171,7 @@ const PrivacyPolicy = () => {
           Quando esta política se aplica e alterações
         </h5>
         <p className="text-justify text-md">
-          Esta Política de Privacidade se aplica ao <b>SOS RS</b>. Nos
+          Esta Política de Privacidade se aplica ao <b>SOS RS 🛟</b>. Nos
           reservamos ao direito de alterar este documento periodicamente, porém
           não reduziremos seus direitos nesta Política de Privacidade, sem seu
           consentimento e aviso prévio.
