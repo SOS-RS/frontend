@@ -76,22 +76,22 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
     case SupplyPriority.NotNeeded:
       return {
         label,
-        className: 'bg-gray-200',
+        className: 'bg-gray-200 text-gray-800',
       };
     case SupplyPriority.Remaining:
       return {
         label,
-        className: 'bg-light-green',
+        className: 'bg-light-green text-green-800',
       };
     case SupplyPriority.Needing:
       return {
         label,
-        className: 'bg-light-orange',
+        className: 'bg-light-orange text-orange-800',
       };
     case SupplyPriority.Urgent:
       return {
         label,
-        className: 'bg-light-red',
+        className: 'bg-light-red text-red-800',
       };
   }
 }

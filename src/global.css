@@ -5,10 +5,10 @@
 @layer base {
   :root {
     --light-yellow: #f9cf8d;
-    --light-red: #f69f9d;
-    --light-green: #9cd487;
-    --light-orange: #f8b993;
-    --light-blue: #a2d2dc;
+    --light-red: #ffcaca;
+    --light-green: #b7eba4;
+    --light-orange: #ffcfb1;
+    --light-blue: #080909;
     --text: #2f2f2f;
 
     --background: 0 0% 100%;
