@@ -1,15 +1,15 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
+import { BurgerMenu } from '@/components/BurgerMenu';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -22,11 +22,6 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
@@ -37,11 +32,10 @@ const Home = () => {
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
-        };
-        setSearchParams(params.search);
+      callback: () => {
+        const params = new URLSearchParams(qs.stringify(filterData));
+
+        setSearchParams(params);
         refresh({
           params: params,
         });
@@ -107,24 +101,9 @@ const Home = () => {
       )}
       <Header
         title="SOS Rio Grande do Sul"
+        startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
-            {session && (
-              <h3 className="text-white font-thin">
-                Bem vindo, {session.name}
-              </h3>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
-              onClick={() =>
-                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
-              }
-            >
-              <PlusIcon className="h-5 w-5 stroke-white" />
-              Cadastrar abrigo
-            </Button>
             <Button
               loading={loading}
               variant="ghost"
@@ -134,20 +113,6 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-            {session && (
-              <Button
-                loading={loadingSession}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  refreshSession();
-                }}
-                className="disabled:bg-red-500 hover:bg-red-400"
-              >
-                <LogOutIcon size={20} className="stroke-white" />
-              </Button>
-            )}
           </div>
         }
       />

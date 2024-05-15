@@ -8,6 +8,7 @@ import { useDebouncedValue } from './useDebouncedValue';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
 import { useViaCep } from './useViaCep';
+import { usePartners } from './usePartners';
 
 export {
   useShelters,
@@ -20,4 +21,5 @@ export {
   useSupplyCategories,
   useSupplies,
   useViaCep,
+  usePartners,
 };
