@@ -49,13 +49,17 @@ const UpdateShelter = () => {
     validateOnChange: false,
     validateOnMount: false,
     validationSchema: Yup.object().shape({
-      shelteredPeople: Yup.number().nullable(),
-      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
-      verified: Yup.bool(),
-      address: Yup.string(),
-      capacity: Yup.string().nullable(),
+      name: Yup.string().required('Este campo deve ser preenchido'),
+      address: Yup.string().required('Este campo deve ser preenchido'),
+      shelteredPeople: Yup.number()
+        .min(0, 'O valor mínimo para este campo é 0')
+        .nullable(),
+      capacity: Yup.number()
+        .min(1, 'O valor mínimo para este campo é 1')
+        .nullable(),
+      petFriendly: Yup.bool().nullable(),
+      contact: Yup.string().required('Este campo deve ser preenchido'),
       pix: Yup.string().nullable(),
-      name: Yup.string(),
     }),
     onSubmit: async (values) => {
       try {

@@ -7,7 +7,7 @@ export interface IShelter {
   verified: boolean;
   shelteredPeople?: number | null;
   capacity?: number | null;
-  contact?: string | null;
+  contact: string;
   createdAt: string;
   updatedAt?: string | null;
 }
