@@ -49,7 +49,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
               {data.name}
             </h3>
             {data.verified && (
-              <div className="h-full pt-1">
+              <div className="h-full pt-1 shrink-0">
                 <VerifiedBadge />
               </div>
             )}

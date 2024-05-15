@@ -8,15 +8,19 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     endAdornment,
     startAdornment,
     title,
-    className = '',
+    className,
     ...rest
   } = props;
 
   return (
     <div
       ref={ref}
-      className={cn(
-        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[60]',
+      className={cn([
+        'bg-red-600 text-white',
+        'flex justify-between items-center gap-2',
+        'fixed top-0 z-[100]',
+        'p-3 h-[56px] w-full'
+      ],
         className
       )}
       {...rest}
