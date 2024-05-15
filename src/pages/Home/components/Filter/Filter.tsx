@@ -117,7 +117,6 @@ const Filter = (props: IFilterProps) => {
   const supplyOptions = useMemo(() => {
     return supplies
       .filter((v) => {
-        console.log({ categories: values.supplyCategories, value: v });
         return values.supplyCategories.length > 0
           ? values.supplyCategories.some(
               (categoryItem) => categoryItem.value === v.supplyCategory.id
