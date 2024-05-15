@@ -31,11 +31,10 @@ const Home = () => {
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
-        };
-        setSearchParams(params.search);
+      callback: () => {
+        const params = new URLSearchParams(qs.stringify(filterData));
+
+        setSearchParams(params);
         refresh({
           params: params,
         });
