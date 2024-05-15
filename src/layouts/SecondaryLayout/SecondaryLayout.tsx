@@ -1,10 +1,12 @@
 import { Header } from '@/components';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 
 type SecondaryLayoutProps = {
   header: {
     title: string;
+    className?: string;
   };
   onBackClick?: () => void;
   children: React.ReactNode;
@@ -18,7 +20,10 @@ const SecondaryLayout = ({
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+        className={cn(
+          'bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border',
+          header.className
+        )}
         title={header.title}
         startAdornment={
           <Button

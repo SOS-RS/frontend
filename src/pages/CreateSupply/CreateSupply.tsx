@@ -1,12 +1,10 @@
-import { ChevronLeft } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { CircleStatus, Header, LoadingScreen, TextField } from '@/components';
+import { clearCache } from '@/api/cache';
+import { CircleStatus, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import { useShelter, useSupplies, useSupplyCategories } from '@/hooks';
 import {
   Select,
   SelectContent,
@@ -14,14 +12,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
+import { useToast } from '@/components/ui/use-toast';
+import { useShelter, useSupplies, useSupplyCategories } from '@/hooks';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { SecondaryLayout } from '@/layouts';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { ShelterSupplyServices, SupplyServices } from '@/service';
 import { ICreateShelterSupply } from '@/service/shelterSupply/types';
-import { clearCache } from '@/api/cache';
-import { Fragment } from 'react/jsx-runtime';
-import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 import { useState } from 'react';
+import { Fragment } from 'react/jsx-runtime';
 import { ModalCreateSupply } from './components';
 
 const CreateSupply = () => {
@@ -55,11 +55,18 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string()
-      .matches(/^[a-zA-ZÀ-ÿ0-9\s]*$/, "O nome não deve conter caracteres especiais")
-      .test('min-letters', 'O nome deve conter pelo menos 3 letras', value => {
-        const letterCount = (value?.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
-        return letterCount >= 3;
-      })
+        .matches(
+          /^[a-zA-ZÀ-ÿ0-9\s]*$/,
+          'O nome não deve conter caracteres especiais'
+        )
+        .test(
+          'min-letters',
+          'O nome deve conter pelo menos 3 letras',
+          (value) => {
+            const letterCount = (value?.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
+            return letterCount >= 3;
+          }
+        )
         .min(3, 'Insira no mínimo 3 caracteres')
         .required('Este campo deve ser preenchido'),
       quantity: Yup.number()
@@ -113,7 +120,7 @@ const CreateSupply = () => {
       : [];
 
   const renderSupplies = (element: IUseSuppliesData, key: number) => {
-        if (values.name.length < 3 || key > 30) return <></>;
+    if (values.name.length < 3 || key > 30) return <></>;
 
     return (
       <Fragment key={key}>
@@ -162,20 +169,10 @@ const CreateSupply = () => {
           onClose={() => setModalOpened(false)}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
-        <Header
-          title="Cadastrar novo item"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
-          startAdornment={
-            <Button
-              variant="ghost"
-              className="[&_svg]:stroke-blue-500"
-              onClick={() => navigate(-1)}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-          }
-        />
+      <SecondaryLayout
+        header={{ title: 'Cadastrar novo abrigo' }}
+        onBackClick={() => navigate(-1)}
+      >
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
           <form className="contents" onSubmit={handleSubmit}>
             <h6 className="text-2xl font-semibold">Cadastrar novo item</h6>
@@ -289,7 +286,7 @@ const CreateSupply = () => {
             </div>
           </form>
         </div>
-      </div>
+      </SecondaryLayout>
     </Fragment>
   );
 };

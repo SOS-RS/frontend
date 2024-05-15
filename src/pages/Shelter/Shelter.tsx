@@ -1,5 +1,5 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -8,11 +8,19 @@ import {
   Chip,
   DonationCart,
   DonationCartIcon,
-  Header,
   LoadingScreen,
-  SearchInput,
+  SearchInput
 } from '@/components';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { DonationCartContext } from '@/contexts';
 import { useShelter } from '@/hooks';
+import {
+  IUseShelterDataSupply,
+  ShelterCategory,
+} from '@/hooks/useShelter/types';
+import { MainLayout } from '@/layouts';
 import {
   cn,
   getAvailabilityProps,
@@ -20,17 +28,9 @@ import {
   group,
   normalizedCompare,
 } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import {
-  IUseShelterDataSupply,
-  ShelterCategory,
-} from '@/hooks/useShelter/types';
-import { IShelterAvailabilityProps } from '../Home/components/ShelterListItem/types';
 import { SupplyPriority } from '@/service/supply/types';
+import { IShelterAvailabilityProps } from '../Home/components/ShelterListItem/types';
 import { ShelterCategoryList } from './components';
-import { Separator } from '@/components/ui/separator';
-import { DonationCartContext } from '@/contexts';
 import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
 
 const defaultPriorities: SupplyPriority[] = [
@@ -109,10 +109,10 @@ const Shelter = () => {
         opened={opened}
         onClose={toggleOpened}
       />
-      <div className="flex flex-col h-screen items-center">
-        <Header
-          title={shelter.name}
-          startAdornment={
+      <MainLayout
+        header={{
+          title: shelter.name,
+          startAdornment: (
             <Button
               size="sm"
               variant="ghost"
@@ -121,11 +121,12 @@ const Shelter = () => {
             >
               <ChevronLeft size={20} />
             </Button>
-          }
-          endAdornment={
+          ),
+          endAdornment: (
             <DonationCartIcon quantity={carts[shelterId]?.length} />
-          }
-        />
+          ),
+        }}
+      >
         <div className="p-4 flex flex-col max-w-5xl w-full h-full gap-2">
           <div className="flex items-center gap-1">
             <h1 className="text-[#2f2f2f] font-semibold text-2xl">
@@ -219,7 +220,7 @@ const Shelter = () => {
               })}
           </div>
         </div>
-      </div>
+      </MainLayout>
     </Fragment>
   );
 };
