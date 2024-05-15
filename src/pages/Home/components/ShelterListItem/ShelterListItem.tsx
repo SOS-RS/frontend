@@ -27,6 +27,8 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       () => getAvailabilityProps(capacity, shelteredPeople),
       [capacity, shelteredPeople]
     );
+  const address = encodeURIComponent(data.address);
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${address}`;
 
   const tags: ShelterTagInfo<IUseSheltersDataSupplyData[]> = useMemo(() => {
     return groupShelterSuppliesByTag(data.shelterSupplies);
@@ -94,6 +96,9 @@ const ShelterListItem = (props: IShelterListItemProps) => {
       <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
         {data.address}
       </h6>
+      <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm md:text-lg font-medium">
+        Ver no Google Maps
+      </a>  
       {data.shelterSupplies.length > 0 && (
         <>
           <ShelterSupplyCategoryRow
