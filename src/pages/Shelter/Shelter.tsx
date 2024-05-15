@@ -96,17 +96,19 @@ const Shelter = () => {
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
+      <div className="p-4 flex flex-col max-w-5xl w-full h-full">
         <div className="flex items-center gap-1">
           <h1 className="text-[#2f2f2f] font-semibold text-2xl">
             {shelter.name}
           </h1>
           {shelter.verified && <VerifiedBadge />}
         </div>
+
         <div className="flex items-center justify-between pr-4">
-          <h1 className={cn(availabilityClassName, 'font-semibold')}>
+          <h2 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
-          </h1>
+          </h2>
+
           <Button
             variant="ghost"
             className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
@@ -116,9 +118,11 @@ const Shelter = () => {
             <Pencil size={17} className="stroke-blue-600" />
           </Button>
         </div>
-        <div className="p-4">
+
+        <div className="py-4">
           <CardAboutShelter shelter={shelter} />
         </div>
+
         <div className="flex justify-between p-4 items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
           <div className="flex gap-2 items-center ">

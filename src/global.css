@@ -81,9 +81,7 @@
     -webkit-font-smoothing: antialiased !important;
   }
   body {
-    @apply bg-background text-foreground;
-    margin: 0;
-    padding: 0;
+    @apply m-0 bg-background p-0 text-foreground pt-14;
   }
 
   #root {
