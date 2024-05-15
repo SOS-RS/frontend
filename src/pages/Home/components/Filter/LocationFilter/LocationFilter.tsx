@@ -100,6 +100,37 @@ const LocationFilter = ({
                   {error && <p className={'text-red-600 text-sm'}>{error}</p>}
                 </div>
               )}
+              <div className="flex flex-row gap-2 w-full my-2 items-center justify-center">
+                <Button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    const newValue = Math.max(
+                      +normalizedRadiusMeters - PROXIMITY_INTERVAL_IN_METERS,
+                      0
+                    );
+                    setFieldValue('geolocation.radiusInMeters', newValue);
+                  }}
+                  className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
+                >
+                  -
+                </Button>
+                <span className="w-2/6 justify-center flex">
+                  {normalizedRadiusMeters / 1000} km
+                </span>
+                <Button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    const newValue = Math.min(
+                      +normalizedRadiusMeters + PROXIMITY_INTERVAL_IN_METERS,
+                      MAX_PROXIMITY_IN_METERS
+                    );
+                    setFieldValue('geolocation.radiusInMeters', newValue);
+                  }}
+                  className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
+                >
+                  +
+                </Button>
+              </div>
               <Slider
                 max={MAX_PROXIMITY_IN_METERS}
                 step={PROXIMITY_INTERVAL_IN_METERS}
@@ -114,37 +145,6 @@ const LocationFilter = ({
                 name="geolocation.radiusInMeters"
                 className=""
               />
-            </div>
-            <div className="flex flex-row gap-2 w-full my-2 items-center justify-center">
-              <Button
-                onClick={(event) => {
-                  event.preventDefault();
-                  const newValue = Math.max(
-                    +normalizedRadiusMeters - PROXIMITY_INTERVAL_IN_METERS,
-                    0
-                  );
-                  setFieldValue('geolocation.radiusInMeters', newValue);
-                }}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
-              >
-                -
-              </Button>
-              <span className="w-2/6 justify-center flex">
-                {normalizedRadiusMeters / 1000} km
-              </span>
-              <Button
-                onClick={(event) => {
-                  event.preventDefault();
-                  const newValue = Math.min(
-                    +normalizedRadiusMeters + PROXIMITY_INTERVAL_IN_METERS,
-                    MAX_PROXIMITY_IN_METERS
-                  );
-                  setFieldValue('geolocation.radiusInMeters', newValue);
-                }}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
-              >
-                +
-              </Button>
             </div>
           </>
         )}
