@@ -14,7 +14,7 @@ const SessionServices = {
     const { data } = await api.get<IServerResponse<ISession>>('/sessions');
     return data.data;
   },
-  delete: async (): Promise<ISession> => {
+  logout: async (): Promise<ISession> => {
     const { data } = await api.delete<IServerResponse<ISession>>('/sessions');
     return data.data;
   },
