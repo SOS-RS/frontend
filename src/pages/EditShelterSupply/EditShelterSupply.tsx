@@ -185,6 +185,7 @@ const EditShelterSupply = () => {
                 return {
                   id: v.id,
                   name: v.name,
+                  quantity: supply?.quantity,
                   priority: supply?.priority,
                 };
               });

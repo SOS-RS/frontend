@@ -12,6 +12,8 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -23,6 +25,7 @@ import {
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import LocationFilter from './LocationFilter/LocationFilter';
+import CitiesFilter from './CitiesFilter';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -61,6 +64,7 @@ const Filter = (props: IFilterProps) => {
   const { handleSubmit, values, setFieldValue, errors } =
     useFormik<IFilterFormikProps>({
       initialValues: {
+        cities: data.cities ?? [],
         priority: {
           value: data.priority ?? SupplyPriority.Urgent,
           label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
@@ -102,6 +106,7 @@ const Filter = (props: IFilterProps) => {
           supplies,
           supplyCategories,
           geolocation,
+          cities,
         } = values;
         onSubmit({
           priority: priority?.value ? +priority.value : null,
@@ -110,6 +115,7 @@ const Filter = (props: IFilterProps) => {
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
           geolocation,
+          cities,
         });
       },
     });
@@ -140,143 +146,155 @@ const Filter = (props: IFilterProps) => {
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
-            <div className="flex flex-col gap-2 w-full my-4">
-              <SearchInput
-                value={values.search}
-                onChange={(ev) =>
-                  setFieldValue('search', ev.target.value ?? '')
-                }
+          <DialogDescription>
+            <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
+              <div className="flex flex-col gap-2 w-full my-4">
+                <SearchInput
+                  value={values.search}
+                  onChange={(ev) =>
+                    setFieldValue('search', ev.target.value ?? '')
+                  }
+                />
+              </div>
+              <Separator className="mt-2" />
+              <LocationFilter
+                geolocationFormValues={values?.geolocation}
+                geolocationValues={data?.geolocation}
+                setFieldValue={setFieldValue}
+                error={errors.geolocation?.radiusInMeters}
               />
-            </div>
-            <Separator className="mt-2" />
-            <LocationFilter
-              geolocationFormValues={values?.geolocation}
-              geolocationValues={data?.geolocation}
-              setFieldValue={setFieldValue}
-              error={errors.geolocation?.radiusInMeters}
-            />
-            <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Busca avançada
-              </p>
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Você pode buscar pelo item que os abrigos precisam urgentemente
-                de doação ou por itens que os abrigos tem disponibilidade para
-                doar.
-              </p>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                  Status do item no abrigo
-                </label>
-                <Select
-                  placeholder="Selecione"
-                  value={{
-                    label:
-                      priorityOpts[
-                        values.priority?.value ?? SupplyPriority.Urgent
-                      ],
-                    value: values.priority?.value ?? SupplyPriority.Needing,
-                  }}
-                  options={Object.entries(priorityOpts).map(
-                    ([priority, label]) => ({ label, value: +priority } as any)
-                  )}
-                  onChange={(v) => {
-                    const newValue = {
-                      ...v,
-                      value: v ? +v.value : SupplyPriority.Urgent,
-                    };
-                    setFieldValue('priority', newValue);
-                  }}
-                />
-              </div>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                  Categoria
-                </label>
-                <Select
-                  value={values.supplyCategories}
-                  placeholder="Selecione"
-                  isMulti
-                  options={supplyCategories.map((el: ISupplyCategory) => ({
-                    label: el.name,
-                    value: el.id,
-                  }))}
-                  onChange={(v) => setFieldValue('supplyCategories', v)}
-                />
-              </div>
-              <div className="flex flex-col w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                  Itens
-                </label>
-                <Select
-                  placeholder="Selecione"
-                  isMulti
-                  value={values.supplies}
-                  options={supplies.map((el: ISupply) => ({
-                    label: el.name,
-                    value: el.id,
-                  }))}
-                  onChange={(v) => setFieldValue('supplies', v)}
-                />
-              </div>
-            </div>
-            <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Status do abrigo
-              </p>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'available')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'available'
+              <Separator className="mt-2" />
+              <CitiesFilter
+                cities={values.cities}
+                setCities={(cities: string[]) => {
+                  setFieldValue('cities', cities);
+                }}
+              />
+              <Separator className="mt-2" />
+              <div className="flex flex-col gap-2 w-full my-4">
+                <p className="text-sm md:text-lg font-medium">Busca avançada</p>
+                <p className="text-muted-foreground text-sm md:text-lg font-medium">
+                  Você pode buscar pelo item que os abrigos precisam
+                  urgentemente de doação ou por itens que os abrigos tem
+                  disponibilidade para doar.
+                </p>
+                <div className="flex flex-col gap-1 w-full">
+                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                    Status do item no abrigo
+                  </label>
+                  <Select
+                    placeholder="Selecione"
+                    value={{
+                      label:
+                        priorityOpts[
+                          values.priority?.value ?? SupplyPriority.Urgent
+                        ],
+                      value: values.priority?.value ?? SupplyPriority.Needing,
+                    }}
+                    options={Object.entries(priorityOpts).map(
+                      ([priority, label]) =>
+                        ({ label, value: +priority } as any)
                     )}
+                    onChange={(v) => {
+                      const newValue = {
+                        ...v,
+                        value: v ? +v.value : SupplyPriority.Urgent,
+                      };
+                      setFieldValue('priority', newValue);
+                    }}
                   />
-                  Abrigo Disponivel
-                </label>
+                </div>
+                <div className="flex flex-col gap-1 w-full">
+                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                    Categoria
+                  </label>
+                  <Select
+                    value={values.supplyCategories}
+                    placeholder="Selecione"
+                    isMulti
+                    options={supplyCategories.map((el: ISupplyCategory) => ({
+                      label: el.name,
+                      value: el.id,
+                    }))}
+                    onChange={(v) => setFieldValue('supplyCategories', v)}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                    Itens
+                  </label>
+                  <Select
+                    placeholder="Selecione"
+                    isMulti
+                    value={values.supplies}
+                    options={supplies.map((el: ISupply) => ({
+                      label: el.name,
+                      value: el.id,
+                    }))}
+                    onChange={(v) => setFieldValue('supplies', v)}
+                  />
+                </div>
               </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(
-                        ev.target.checked,
-                        'unavailable'
-                      )
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'unavailable'
-                    )}
-                  />
-                  Abrigo Indisponível
-                </label>
-              </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'waiting')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'waiting'
-                    )}
-                  />
-                  Sem informação de disponibilidade
-                </label>
+              <Separator className="mt-2" />
+              <div className="flex flex-col gap-2 w-full my-4">
+                <p className="text-muted-foreground text-sm md:text-lg font-medium">
+                  Status do abrigo
+                </p>
+                <div>
+                  <label className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={(ev) =>
+                        handleToggleShelterStatus(
+                          ev.target.checked,
+                          'available'
+                        )
+                      }
+                      defaultChecked={values.shelterStatus.some(
+                        (s) => s.value === 'available'
+                      )}
+                    />
+                    Abrigo Disponivel
+                  </label>
+                </div>
+                <div>
+                  <label className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={(ev) =>
+                        handleToggleShelterStatus(
+                          ev.target.checked,
+                          'unavailable'
+                        )
+                      }
+                      defaultChecked={values.shelterStatus.some(
+                        (s) => s.value === 'unavailable'
+                      )}
+                    />
+                    Abrigo Indisponível
+                  </label>
+                </div>
+                <div>
+                  <label className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={(ev) =>
+                        handleToggleShelterStatus(ev.target.checked, 'waiting')
+                      }
+                      defaultChecked={values.shelterStatus.some(
+                        (s) => s.value === 'waiting'
+                      )}
+                    />
+                    Sem informação de disponibilidade
+                  </label>
+                </div>
               </div>
             </div>
-
+          </DialogDescription>
+          <DialogFooter className="sticky bg-white -bottom-6">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"
@@ -285,7 +303,7 @@ const Filter = (props: IFilterProps) => {
                 Filtrar resultados
               </Button>
             </div>
-          </div>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

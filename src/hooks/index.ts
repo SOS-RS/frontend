@@ -3,9 +3,12 @@ import { useFetch } from './useFetch';
 import { usePaginatedQuery } from './usePaginatedQuery';
 import { useThrottle } from './useThrottle';
 import { useShelter } from './useShelter';
+import { useShelterCities } from './useShelterCities';
+import { useDebouncedValue } from './useDebouncedValue';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
 import { useGeolocation } from './useGeolocation';
+import { useViaCep } from './useViaCep';
 import { usePartners } from './usePartners';
 
 export {
@@ -14,8 +17,11 @@ export {
   usePaginatedQuery,
   useThrottle,
   useShelter,
+  useShelterCities,
+  useDebouncedValue,
   useSupplyCategories,
   useSupplies,
   useGeolocation,
+  useViaCep,
   usePartners,
 };

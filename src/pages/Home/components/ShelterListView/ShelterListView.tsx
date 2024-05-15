@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter } from 'lucide-react';
+import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
   Alert,
@@ -22,10 +22,12 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
+      onCitiesChange,
       onFetchMoreData,
       className = '',
       onOpenModal,
       onClearSearch,
+      filterData,
       ...rest
     } = props;
 
@@ -50,6 +52,25 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               : undefined
           }
         />
+        <div className="flex flex-wrap gap-1 items-center">
+          {filterData.cities?.map((item) => {
+            return (
+              <>
+                <div
+                  className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+                  key={item}
+                  onClick={() =>
+                    onCitiesChange?.(
+                      filterData.cities.filter((it) => it !== item)
+                    )
+                  }
+                >
+                  <span className="pr-1">{item}</span> <X className="h-4 w-4" />
+                </div>
+              </>
+            );
+          })}
+        </div>
         <div className="flex flex-row">
           <Button
             variant="ghost"
@@ -74,16 +95,13 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
-            <LoadingSkeleton amountItems={4}/>
+            <LoadingSkeleton amountItems={4} />
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
             <Fragment>
               {data.map((s, idx) => (
-                <ShelterListItem
-                  key={idx}
-                  data={s}
-                />
+                <ShelterListItem key={idx} data={s} />
               ))}
               {hasMoreItems ? (
                 <Button
