@@ -6,7 +6,7 @@ import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
-import { Filter } from './Home/components/Filter';
+import { PrivacyPolicy } from './PrivacyPolicy';
 
 export {
   SignIn,
@@ -16,5 +16,5 @@ export {
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  PrivacyPolicy,
 };

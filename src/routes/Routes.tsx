@@ -8,6 +8,7 @@ import {
   EditShelterSupply,
   SignIn,
   UpdateShelter,
+  PrivacyPolicy,
 } from '@/pages';
 
 const Routes = () => {
@@ -23,6 +24,7 @@ const Routes = () => {
       />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
+      <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );

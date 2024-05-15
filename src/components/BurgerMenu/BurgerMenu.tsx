@@ -62,7 +62,7 @@ const BurgerMenu = () => {
           />
           <BurguerMenuItem
             label="Política de Privacidade"
-            link="/politica-privacidade"
+            link="/politica-de-privacidade"
             icon={<Info className="w-4 h-4" />}
           />
           <Separator />
