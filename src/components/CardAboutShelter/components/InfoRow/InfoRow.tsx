@@ -12,7 +12,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
       <a href={value} target='_blank'
         className="text-blue-500 break-all cursor-pointer hover:underline"
       >
-        Ir
+        Ver no Google Maps
       </a>
     ) : (
       <h1 className="font-semibold">{value}</h1>
