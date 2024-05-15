@@ -1,3 +1,1 @@
-import { SecondaryLayout } from "./SecondaryLayout";
-
-export { SecondaryLayout };
+export { SecondaryLayout } from "./SecondaryLayout";

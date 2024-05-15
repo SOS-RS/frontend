@@ -1,4 +1,2 @@
-import { MainLayout } from './MainLayout';
-import { SecondaryLayout } from './SecondaryLayout';
-
-export { MainLayout, SecondaryLayout };
+export { MainLayout } from './MainLayout';
+export { SecondaryLayout } from './SecondaryLayout';
