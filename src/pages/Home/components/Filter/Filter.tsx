@@ -22,6 +22,7 @@ import {
 } from './types';
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
+import LocationFilter from './LocationFilter/LocationFilter';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -57,8 +58,8 @@ const Filter = (props: IFilterProps) => {
       {} as Record<string, ISupply>
     );
   }, [supplies]);
-  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
-    {
+  const { handleSubmit, values, setFieldValue, errors } =
+    useFormik<IFilterFormikProps>({
       initialValues: {
         priority: {
           value: data.priority ?? SupplyPriority.Urgent,
@@ -77,6 +78,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
+        geolocation: data.geolocation,
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -84,20 +86,33 @@ const Filter = (props: IFilterProps) => {
       validateOnMount: false,
       validationSchema: Yup.object().shape({
         search: Yup.string(),
+        geolocation: Yup.object()
+          .shape({
+            radiusInMeters: Yup.number().positive(
+              'Raio em metros deve ser um número positivo'
+            ),
+          })
+          .nullable(),
       }),
       onSubmit: (values) => {
-        const { priority, search, shelterStatus, supplies, supplyCategories } =
-          values;
+        const {
+          priority,
+          search,
+          shelterStatus,
+          supplies,
+          supplyCategories,
+          geolocation,
+        } = values;
         onSubmit({
           priority: priority?.value ? +priority.value : null,
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
+          geolocation,
         });
       },
-    }
-  );
+    });
 
   const handleToggleShelterStatus = useCallback(
     (checked: boolean, status: ShelterAvailabilityStatus) => {
@@ -134,6 +149,13 @@ const Filter = (props: IFilterProps) => {
                 }
               />
             </div>
+            <Separator className="mt-2" />
+            <LocationFilter
+              geolocationFormValues={values?.geolocation}
+              geolocationValues={data?.geolocation}
+              setFieldValue={setFieldValue}
+              error={errors.geolocation?.radiusInMeters}
+            />
             <Separator className="mt-2" />
             <div className="flex flex-col gap-2 w-full my-4">
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
