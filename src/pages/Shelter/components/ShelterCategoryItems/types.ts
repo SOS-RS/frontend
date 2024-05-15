@@ -3,6 +3,7 @@ import { SupplyPriority } from '@/service/supply/types';
 export interface ITagItem {
   label: string;
   value: string;
+  quantity? : number | null;
 }
 
 export interface IShelterCategoryItemsProps {

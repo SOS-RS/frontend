@@ -1,15 +1,15 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
+import { BurgerMenu } from '@/components/BurgerMenu';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -17,15 +17,11 @@ const initialFilterData: IFilterFormProps = {
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
+  cities: [],
 };
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
@@ -37,11 +33,10 @@ const Home = () => {
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
-        };
-        setSearchParams(params.search);
+      callback: () => {
+        const params = new URLSearchParams(qs.stringify(filterData));
+
+        setSearchParams(params);
         refresh({
           params: params,
         });
@@ -125,7 +120,7 @@ const Home = () => {
           onSubmit={onSubmitFilterForm}
         />
       )}
-      <Header
+    <Header
         title={windowSize.width <= 434 ? "SOS RS" : "SOS Rio Grande do Sul"}
         endAdornment={
           <div className="flex gap-2 items-center transition-all max-[300px]:w-auto">
