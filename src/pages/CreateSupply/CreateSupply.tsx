@@ -1,12 +1,10 @@
-import { ChevronLeft } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { CircleStatus, Header, LoadingScreen, TextField } from '@/components';
+import { clearCache } from '@/api/cache';
+import { CircleStatus, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import { useSupplyCategories } from '@/hooks';
 import {
   Select,
   SelectContent,
@@ -14,11 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
+import { useToast } from '@/components/ui/use-toast';
+import { useSupplyCategories } from '@/hooks';
+import { SecondaryLayout } from '@/layouts';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { ShelterSupplyServices, SupplyServices } from '@/service';
 import { ICreateShelterSupply } from '@/service/shelterSupply/types';
-import { clearCache } from '@/api/cache';
+import { ICreateSupply, SupplyPriority } from '@/service/supply/types';
 
 const CreateSupply = () => {
   const navigate = useNavigate();
@@ -47,7 +47,10 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string().required('Este campo deve ser preenchido'),
-      quantity: Yup.number().typeError('Insira um valor númerico').moreThan(0, 'O valor tem que ser maior do que 0').optional(),
+      quantity: Yup.number()
+        .typeError('Insira um valor númerico')
+        .moreThan(0, 'O valor tem que ser maior do que 0')
+        .optional(),
       priority: Yup.string().required('Este campo deve ser preenchido'),
       supplyCategoryId: Yup.string().required('Este campo deve ser preenchido'),
     }),
@@ -81,21 +84,11 @@ const CreateSupply = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
-      <Header
-        title="Cadastrar novo item"
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
-        startAdornment={
-          <Button
-            variant="ghost"
-            className="[&_svg]:stroke-blue-500"
-            onClick={() => navigate(-1)}
-          >
-            <ChevronLeft size={20} />
-          </Button>
-        }
-      />
-      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+    <SecondaryLayout
+      header={{ title: 'Cadastrar novo item' }}
+      onBackClick={() => navigate(-1)}
+    >
+      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
         <form className="contents" onSubmit={handleSubmit}>
           <h6 className="text-2xl font-semibold">Cadastrar novo item</h6>
           <p className="text-muted-foreground">
@@ -193,7 +186,7 @@ const CreateSupply = () => {
           </div>
         </form>
       </div>
-    </div>
+    </SecondaryLayout>
   );
 };
 

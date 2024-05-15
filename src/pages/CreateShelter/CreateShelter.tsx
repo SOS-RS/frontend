@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { ChevronLeft, Loader } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { Loader } from 'lucide-react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactSelect from 'react-select';
+import * as Yup from 'yup';
 
 import {
   Select,
@@ -13,18 +13,19 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { Header, TextField } from '@/components';
-import { Button } from '@/components/ui/button';
-import { ICreateShelter } from '@/service/shelter/types';
-import { toast } from '@/components/ui/use-toast';
-import { ShelterServices } from '@/service';
-import { withAuth } from '@/hocs';
 import { clearCache } from '@/api/cache';
-import { hardCodedRsCities } from './hardcodedCities';
-import { useDebouncedValue, useViaCep } from '@/hooks';
-import { cn } from '@/lib/utils';
+import { TextField } from '@/components';
 import { checkAndFormatAddress } from '@/components/CardAboutShelter';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { withAuth } from '@/hocs';
+import { useDebouncedValue, useViaCep } from '@/hooks';
 import { IUseShelterData } from '@/hooks/useShelter/types';
+import { SecondaryLayout } from '@/layouts';
+import { cn } from '@/lib/utils';
+import { ShelterServices } from '@/service';
+import { ICreateShelter } from '@/service/shelter/types';
+import { hardCodedRsCities } from './hardcodedCities';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -107,21 +108,11 @@ const CreateShelterComponent = () => {
   }, [cepData, setFieldValue, setErrors]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
-      <Header
-        title="Cadastrar novo abrigo"
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
-        startAdornment={
-          <Button
-            variant="ghost"
-            className="[&_svg]:stroke-blue-500"
-            onClick={() => navigate('/')}
-          >
-            <ChevronLeft size={20} />
-          </Button>
-        }
-      />
-      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+    <SecondaryLayout
+      header={{ title: 'Cadastrar novo abrigo' }}
+      onBackClick={() => navigate('/')}
+    >
+      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
         <form className="contents" onSubmit={handleSubmit}>
           <h6 className="text-2xl font-semibold">Cadastrar novo abrigo</h6>
           <p className="text-muted-foreground">
@@ -244,7 +235,7 @@ const CreateShelterComponent = () => {
           </div>
         </form>
       </div>
-    </div>
+    </SecondaryLayout>
   );
 };
 

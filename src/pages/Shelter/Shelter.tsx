@@ -1,27 +1,23 @@
-import { useCallback, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
+import { useCallback, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  Authenticated,
-  CardAboutShelter,
-  Header,
-  LoadingScreen,
-} from '@/components';
-import { useShelter } from '@/hooks';
-import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, group } from '@/lib/utils';
+import { clearCache } from '@/api/cache';
+import { Authenticated, CardAboutShelter, LoadingScreen } from '@/components';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { useShelter } from '@/hooks';
+import { MainLayout } from '@/layouts';
+import { cn, getAvailabilityProps, group } from '@/lib/utils';
+import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
+import { ShelterSupplyServices } from '@/service';
+import { SupplyPriority } from '@/service/supply/types';
 import { ShelterCategoryItems } from './components';
 import {
   IShelterCategoryItemsProps,
   ITagItem,
 } from './components/ShelterCategoryItems/types';
-import { SupplyPriority } from '@/service/supply/types';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { ShelterSupplyServices } from '@/service';
-import { useToast } from '@/components/ui/use-toast';
-import { clearCache } from '@/api/cache';
 
 const Shelter = () => {
   const params = useParams();
@@ -86,10 +82,10 @@ const Shelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
-      <Header
-        title={shelter.name}
-        startAdornment={
+    <MainLayout
+      header={{
+        title: shelter.name,
+        startAdornment: (
           <Button
             size="sm"
             variant="ghost"
@@ -98,9 +94,10 @@ const Shelter = () => {
           >
             <ChevronLeft size={20} />
           </Button>
-        }
-      />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
+        ),
+      }}
+    >
+      <div className="p-4 flex flex-col max-w-5xl w-full">
         <div className="flex items-center gap-1">
           <h1 className="text-[#2f2f2f] font-semibold text-2xl">
             {shelter.name}
@@ -160,7 +157,7 @@ const Shelter = () => {
           </div>
         </Authenticated>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

@@ -1,15 +1,15 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
+import { useCallback, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { Footer, Header } from '@/components';
-import { useShelters, useThrottle } from '@/hooks';
-import { Button } from '@/components/ui/button';
-import { Filter } from './components/Filter';
-import { ShelterListView } from './components/ShelterListView';
-import { IFilterFormProps } from './components/Filter/types';
 import { BurgerMenu } from '@/components/BurgerMenu';
+import { Button } from '@/components/ui/button';
+import { useShelters, useThrottle } from '@/hooks';
+import { MainLayout } from '@/layouts';
+import { Filter } from './components/Filter';
+import { IFilterFormProps } from './components/Filter/types';
+import { ShelterListView } from './components/ShelterListView';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -90,19 +90,11 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
-      {isModalOpen && (
-        <Filter
-          open={isModalOpen}
-          data={filterData}
-          onClose={() => setOpenModal(false)}
-          onSubmit={onSubmitFilterForm}
-        />
-      )}
-      <Header
-        title="SOS Rio Grande do Sul"
-        startAdornment={<BurgerMenu />}
-        endAdornment={
+    <MainLayout
+      header={{
+        title: 'SOS Rio Grande do Sul',
+        startAdornment: <BurgerMenu />,
+        endAdornment: (
           <div className="flex gap-2 items-center">
             <Button
               loading={loading}
@@ -114,8 +106,17 @@ const Home = () => {
               <RotateCw size={20} className="stroke-white" />
             </Button>
           </div>
-        }
-      />
+        ),
+      }}
+    >
+      {isModalOpen && (
+        <Filter
+          open={isModalOpen}
+          data={filterData}
+          onClose={() => setOpenModal(false)}
+          onSubmit={onSubmitFilterForm}
+        />
+      )}
       <ShelterListView
         loading={loading}
         count={shelters.count}
@@ -147,8 +148,7 @@ const Home = () => {
         onClearSearch={clearSearch}
         className="flex-1 p-4 max-w-4xl"
       />
-      <Footer />
-    </div>
+    </MainLayout>
   );
 };
 

@@ -1,19 +1,20 @@
-import { ChevronLeft, PlusCircle } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { PlusCircle } from 'lucide-react';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
-import { Button } from '@/components/ui/button';
-import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group } from '@/lib/utils';
-import { SupplyRow } from './components';
-import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { ShelterSupplyServices } from '@/service';
-import { useToast } from '@/components/ui/use-toast';
-import { ISupply, SupplyPriority } from '@/service/supply/types';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
+import { DialogSelector, LoadingScreen, TextField } from '@/components';
+import { IDialogSelectorProps } from '@/components/DialogSelector/types';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { useShelter, useSupplies, useThrottle } from '@/hooks';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { SecondaryLayout } from '@/layouts';
+import { group } from '@/lib/utils';
+import { ShelterSupplyServices } from '@/service';
+import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { SupplyRow } from './components';
+import { ISupplyRowItemProps } from './components/SupplyRow/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -153,20 +154,10 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
-        <Header
-          title="Editar Itens"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
-          startAdornment={
-            <Button
-              variant="ghost"
-              className="[&_svg]:stroke-blue-500"
-              onClick={() => navigate(`/abrigo/${shelterId}`)}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-          }
-        />
+      <SecondaryLayout
+        header={{ title: 'Editar Itens' }}
+        onBackClick={() => navigate(`/abrigo/${shelterId}`)}
+      >
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
@@ -213,7 +204,7 @@ const EditShelterSupply = () => {
             })}
           </div>
         </div>
-      </div>
+      </SecondaryLayout>
     </Fragment>
   );
 };
