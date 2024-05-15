@@ -9,17 +9,17 @@ export const useDebouncedValue = (value: string, delay: number): string => {
   }, [value]);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout | null = null;
 
     if (currentValue !== debouncedValue) {
-      clearTimeout(timeoutId);
+      if (timeoutId) clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setDebouncedValue(currentValue);
       }, delay);
     }
 
     return () => {
-      clearTimeout(timeoutId);
+      if (timeoutId) clearTimeout(timeoutId);
     };
   }, [currentValue, debouncedValue, delay]);
 
