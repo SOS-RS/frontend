@@ -1,6 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IInfoRowProps } from './types';
+import { Check } from 'lucide-react';
+import clsx from 'clsx';
+import { toast } from '@/components/ui/use-toast';
 
 const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
   (props, ref) => {
@@ -26,7 +29,14 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     ) : (
       <h1 className="font-semibold">{value}</h1>
     );
-
+    const [copied, setCopied] = useState(false);
+    const copy = () => {
+      if (value) navigator.clipboard.writeText(value);
+      setCopied(true);
+      toast({
+        title: 'Chave copiada com sucesso!',
+      });
+    };
     return (
       <div
         ref={ref}
@@ -48,10 +58,13 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {ValueComp}
             {clipboardButton && value && (
               <div
-                className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
-                onClick={() => navigator.clipboard.writeText(value)}
+                className={clsx(
+                  'text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800',
+                  copied && 'text-green-600 active:text-green-800'
+                )}
+                onClick={copy}
               >
-                copiar
+                {copied ? 'copiado' : 'copiar'}
               </div>
             )}
           </span>
