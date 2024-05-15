@@ -5,6 +5,7 @@ import {
   PawPrint,
   Landmark,
   Smartphone,
+  MapPin
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
@@ -23,6 +24,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={shelter.address} />
+        <InfoRow icon={<MapPin />} label={'Localização'}  value={shelter?.location}/>
         <InfoRow
           icon={<PawPrint />}
           label={
