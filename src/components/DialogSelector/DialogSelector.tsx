@@ -52,18 +52,6 @@ const DialogSelector = (props: IDialogSelectorProps) => {
             Quantidade
           </label>
           <div className="flex gap-2 items-center justify-center py-2">
-            <Button
-              onClick={(event) => {
-                event.preventDefault();
-                setQuantity((prev) => {
-                  const newQuantity = Math.max(prev - 1, 0);
-                  return newQuantity;
-                });
-              }}
-              className="bg-blue-700 text-white hover:bg-blue-600 active:bg-blue-500 px-8"
-            >
-              -
-            </Button>
             <Input
               type="number"
               name="quantity"
@@ -72,18 +60,9 @@ const DialogSelector = (props: IDialogSelectorProps) => {
               placeholder="Quantidade"
               min={0}
             />
-            <Button
-              onClick={(event) => {
-                event.preventDefault();
-                setQuantity((prev) => prev + 1);
-              }}
-              className="bg-blue-700 text-white hover:bg-blue-600 active:bg-blue-500 px-8"
-            >
-              +
-            </Button>
           </div>
         </div>
-        <div className="px-2 py-4 max-h-[50vh] overflow-y-auto">
+        <div className="px-2 max-h-[50vh] overflow-y-auto">
           <RadioGroup
             value={selectedItem}
             onValueChange={(v) => setSelectedItem(v)}

@@ -13,8 +13,10 @@ import { ShelterSupplyServices } from '@/service';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { SupplyRow } from './components';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
+
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const EditShelterSupply = () => {
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
+
   const [searchValue, setSearchValue] = useState<string>('');
   const [openedGroups, setOpenedGroups] = useState<string[]>([]);
 
@@ -203,7 +206,6 @@ const EditShelterSupply = () => {
             onValueChange={setOpenedGroups}
           >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
-
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {
                   const supply = shelterSupplyData[v.id];
@@ -211,6 +213,7 @@ const EditShelterSupply = () => {
                     id: v.id,
                     name: v.name,
                     priority: supply?.priority,
+                    quantity: supply?.quantity,
                   };
                 })
                 .sort((a, b) => {
@@ -219,8 +222,6 @@ const EditShelterSupply = () => {
 
                   return priorityDiff || a.name.localeCompare(b.name);
                 });
-
-
               return (
                 <SupplyRow
                   key={idx}
