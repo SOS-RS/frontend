@@ -10,7 +10,7 @@ assignees: ''
 Aqui você escreve sobre o que é o defeito.
 
 # Problema encontrado
-Aqui você dá detalhes sobre o problema.
+Aqui você dá detalhes sobre o problema, incluíndo os passos para reproduzir, se necessário.
 
 # Prioridade
 Registre apenas a prioridade ou seriedade do defeito. Um guia:
