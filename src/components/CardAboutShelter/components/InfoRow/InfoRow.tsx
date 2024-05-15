@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IInfoRowProps } from './types';
-import { Check } from 'lucide-react';
 import clsx from 'clsx';
 import { toast } from '@/components/ui/use-toast';
 
