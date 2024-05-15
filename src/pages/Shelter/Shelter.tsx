@@ -1,7 +1,8 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { ChevronLeft, Pencil } from "lucide-react";
+import { Fragment, useCallback, useContext, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
+import { clearCache } from "@/api/cache";
 import {
   Authenticated,
   CardAboutShelter,
@@ -100,7 +101,7 @@ const Shelter = () => {
     [addItem, opened, shelterId, toggleOpened]
   );
 
-  if (loading) return <LoadingScreen />;
+	if (loading) return <LoadingScreen />;
 
   return (
     <Fragment>
@@ -128,7 +129,7 @@ const Shelter = () => {
         />
         <div className="p-4 flex flex-col max-w-5xl w-full h-full gap-2">
           <div className="flex items-center gap-1">
-            <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+            <h1 className="text-[#2f2f2f] font-semibold text-2xl dark:text-white">
               {shelter.name}
             </h1>
             {shelter.verified && <VerifiedBadge />}

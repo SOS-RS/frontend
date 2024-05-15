@@ -42,8 +42,8 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
 
   const formatAddress = checkAndFormatAddress(shelter, false);
 	return (
-		<Card className='flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm dark:bg-[#A8B0B8]'>
-			<div className='text-[#646870] font-medium dark:text-[#C0C4C6]'>
+		<Card className='flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm dark:bg-[#292b2c]'>
+			<div className='text-[#646870] font-medium dark:text-[#c5cccf]'>
 				Sobre o abrigo
 			</div>
 			<div className='flex flex-col flex-wrap gap-3'>

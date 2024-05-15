@@ -10,11 +10,11 @@ import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
-  search: '',
-  priorities: [],
-  supplyCategoryIds: [],
-  supplyIds: [],
-  shelterStatus: [],
+	search: '',
+	priorities: [],
+	supplyCategoryIds: [],
+	supplyIds: [],
+	shelterStatus: [],
   cities: [],
 };
 
@@ -53,18 +53,18 @@ const Home = () => {
     [filterData]
   );
 
-  const clearSearch = useCallback(() => {
-    setSearch('');
-    setFilterData(initialFilterData);
+	const clearSearch = useCallback(() => {
+		setSearch('');
+		setFilterData(initialFilterData);
     localStorage.removeItem('filter-data');
-    setSearchParams('');
-    refresh();
-  }, [refresh, setSearch, setSearchParams]);
+		setSearchParams('');
+		refresh();
+	}, [refresh, setSearch, setSearchParams]);
 
-  const hasMore = useMemo(
-    () => shelters.page * shelters.perPage < shelters.count,
-    [shelters.page, shelters.perPage, shelters.count]
-  );
+	const hasMore = useMemo(
+		() => shelters.page * shelters.perPage < shelters.count,
+		[shelters.page, shelters.perPage, shelters.count],
+	);
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
     const searchQueryArgs = {
@@ -123,7 +123,7 @@ const Home = () => {
   }, [filterData, refresh, setSearchParams]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className='flex flex-col h-screen items-center'>
       {isModalOpen && (
         <Filter
           open={isModalOpen}
@@ -133,19 +133,38 @@ const Home = () => {
         />
       )}
       <Header
-        title="SOS Rio Grande do Sul"
-        startAdornment={<BurgerMenu />}
+        title='SOS Rio Grande do Sul'
+        startAdornment={<BurgerMenu session={session} />}
         endAdornment={
-          <div className="flex gap-2 items-center">
+          <div className='flex gap-2 items-center'>
+            {session && (
+              <h3 className='text-white font-thin'>
+                Bem vindo, {session.name}
+              </h3>
+            )}
             <Button
               loading={loading}
-              variant="ghost"
-              size="sm"
+              variant='ghost'
+              size='sm'
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
+              className='disabled:bg-red-500 hover:bg-red-400'
             >
-              <RotateCw size={20} className="stroke-white" />
+              <RotateCw size={20} className='stroke-white' />
             </Button>
+            {session && (
+              <Button
+                loading={loadingSession}
+                variant='ghost'
+                size='sm'
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  refreshSession();
+                }}
+                className='disabled:bg-red-500 hover:bg-red-400'
+              >
+                <LogOutIcon size={20} className='stroke-white' />
+              </Button>
+            )}
           </div>
         }
       />
@@ -153,32 +172,16 @@ const Home = () => {
         loading={loading}
         count={shelters.count}
         data={shelters.results}
-        filterData={filterData}
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
-        onCitiesChange={(v) => {
-          setFilterData((prev) => ({ ...prev, cities: v }));
-          const searchQuery = qs.stringify(
-            { ...filterData, cities: v },
-            {
-              skipNulls: true,
-            }
-          );
-          setSearchParams(searchQuery);
-          refresh({
-            params: {
-              search: searchQuery,
-            },
-          });
-        }}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
-        className="flex-1 p-4 max-w-4xl"
+        className='flex-1 p-4 max-w-4xl'
       />
       <Footer />
     </div>
