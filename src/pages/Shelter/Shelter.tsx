@@ -37,7 +37,11 @@ const Shelter = () => {
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
-        tags: values.map((v) => ({ label: v.supply.name, value: v.supply.id })),
+        tags: values.map((v) => ({
+          label: v.supply.name,
+          value: v.supply.id,
+          quantity: v.quantity,
+        })),
       }));
   }, [shelter?.shelterSupplies]);
   const { availability, className: availabilityClassName } =
