@@ -4,12 +4,21 @@ import { IInfoRowProps } from './types';
 
 const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
   (props, ref) => {
-    const { icon, label, value, clipboardButton = false, className = '', ...rest } = props;
+    const {
+      icon,
+      label,
+      value,
+      clipboardButton = false,
+      className = '',
+      ...rest
+    } = props;
     const isLink = value?.startsWith('http');
     const ValueComp = !value ? (
       <Fragment />
     ) : isLink ? (
-      <a href={value} target='_blank'
+      <a
+        href={value}
+        target="_blank"
         className="text-blue-500 break-all cursor-pointer hover:underline"
       >
         {value}
@@ -46,7 +55,6 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
               </div>
             )}
           </span>
-
         </div>
       </div>
     );

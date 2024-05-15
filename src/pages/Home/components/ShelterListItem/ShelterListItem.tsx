@@ -40,6 +40,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     };
   }, []);
 
+  const updatedAtDate = data.updatedAt
+    ? format(data.updatedAt, 'dd/MM/yyyy HH:mm')
+    : '(sem informação)';
+
   return (
     <Link to={`/abrigo/${data.id}`} target="_blank">
       <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
@@ -80,11 +84,9 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             />
           </>
         )}
-        {data.updatedAt && (
-          <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-            Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
-          </small>
-        )}
+        <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+          Atualizado em {updatedAtDate}
+        </small>
       </div>
     </Link>
   );
