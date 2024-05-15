@@ -9,26 +9,29 @@ import { Button } from '@/components/ui/button';
 import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
 
-
 const initialFilterData: IFilterFormProps = {
   search: '',
-  priority: null,
+  priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
-
   cities: [],
+};
+
+const loadFilterData = (): IFilterFormProps => {
+  const storedFilterData = JSON.parse(localStorage.getItem('filter-data') || '{}');
+  return { ...initialFilterData, ...storedFilterData, ...qs.parse(new URLSearchParams(window.location.search).toString()) };
+};
+
+const saveFilterData = (filterData: IFilterFormProps) => {
+  localStorage.setItem('filter-data', JSON.stringify(filterData));
 };
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>({
-    ...initialFilterData,
-    ...qs.parse(new URLSearchParams(window.location.search).toString()),
-  });
-
+  const [filterData, setFilterData] = useState<IFilterFormProps>(loadFilterData());
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -45,6 +48,7 @@ const Home = () => {
   const clearSearch = useCallback(() => {
     setSearch('');
     setFilterData(initialFilterData);
+    localStorage.removeItem('filter-data');
     setSearchParams('');
     refresh();
   }, [refresh, setSearch, setSearchParams]);
@@ -54,19 +58,26 @@ const Home = () => {
     [shelters.page, shelters.perPage, shelters.count]
   );
 
+  const factorySearchArgs = useCallback((values: IFilterFormProps) => {
+    const searchQueryArgs = {
+      search: values.search,
+      priorities: values.priorities,
+      supplyCategoryIds: values.supplyCategoryIds,
+      supplyIds: values.supplyIds,
+      shelterStatus: values.shelterStatus,
+      cities: values.cities,
+    };
+    return searchQueryArgs;
+  }, []);
+
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
       setOpenModal(false);
       setFilterData(values);
-      const searchQuery = qs.stringify(values, {
-        skipNulls: true,
-      });
+      const searchQuery = qs.stringify(values, { skipNulls: true });
       setSearchParams(searchQuery);
-      refresh({
-        params: {
-          search: searchQuery,
-        },
-      });
+      saveFilterData(values);
+      refresh({ params: { search: searchQuery } });
     },
     [refresh, setSearchParams]
   );
@@ -76,16 +87,19 @@ const Home = () => {
       ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
-      search: qs.stringify(filterData),
+      search: qs.stringify(factorySearchArgs(filterData)),
     };
+    refresh({ params }, true);
+  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
 
-    refresh(
-      {
-        params: params,
-      },
-      true
-    );
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
+  useEffect(() => {
+    if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0) {
+      setSearchParams(qs.stringify(filterData));
+      refresh({ params: { search: qs.stringify(filterData) } });
+    }
+    saveFilterData(filterData);
+  }, [filterData, refresh, setSearchParams]);
+
 
 
   const [windowSize, setWindowSize] = useState({
@@ -122,16 +136,6 @@ const Home = () => {
         endAdornment={
           <div className="flex gap-2 items-center">
             <Button
-              variant="ghost"
-              size="sm"
-              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
-              onClick={() =>
-                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
-              }
-            >
-              Cadastrar abrigo
-            </Button>
-            <Button
               loading={loading}
               variant="ghost"
               size="sm"
@@ -140,6 +144,7 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
+
           </div >
         }
       />

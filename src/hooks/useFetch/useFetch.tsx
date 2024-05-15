@@ -5,11 +5,7 @@ import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IUseFetchOptions } from './types';
 
-<<<<<<< HEAD
 function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
-=======
-function useFetch<T = any>(path: string, options: IUseFetchOptions<T> = {}) {
->>>>>>> 3d3f437 (merge: develop -> master (#91))
   const { cache, initialValue } = options;
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<T>(initialValue || ({} as T));
@@ -17,9 +13,9 @@ function useFetch<T = any>(path: string, options: IUseFetchOptions<T> = {}) {
   const refresh = useCallback(
     (config?: AxiosRequestConfig<any>) => {
       const headers = config?.headers ?? {};
-      if (cache) headers['x-app-cache'] = 'true';
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
+        headers['x-app-cache'] = 'true';
       setLoading(true);
-<<<<<<< HEAD
 
       if (path) {
         api
@@ -29,12 +25,6 @@ function useFetch<T = any>(path: string, options: IUseFetchOptions<T> = {}) {
       } else {
         setLoading(false);
       }
-=======
-      api
-        .get<IServerResponse<T>>(path, { ...config, headers })
-        .then(({ data }) => setData(data.data))
-        .finally(() => setLoading(false));
->>>>>>> 3d3f437 (merge: develop -> master (#91))
     },
     [cache, path]
   );
@@ -46,4 +36,4 @@ function useFetch<T = any>(path: string, options: IUseFetchOptions<T> = {}) {
   return { data, loading, refresh };
 }
 
-export { useFetch };
+export { useFetch }

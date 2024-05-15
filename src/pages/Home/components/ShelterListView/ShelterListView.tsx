@@ -34,9 +34,12 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     const [searchParams] = useSearchParams();
 
     return (
-      <div className={cn(className, 'flex flex-col gap-2 mt-20')}>
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl max-sm:text-center">
-          Abrigos disponíveis ({count})
+      <div className={cn(className, 'flex flex-col gap-2')}>
+        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+          {searchParams.toString()
+            ? `Abrigos encontrados (${count})`
+            : `Total de abrigos  (${count})`
+          }
         </h1>
         <Alert
           description="Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações."
@@ -46,10 +49,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         />
         <SearchInput
           value={searchValue}
-          onChange={(ev) =>
-            onSearchValueChange
-              ? onSearchValueChange(ev.target.value ?? '')
-              : undefined
+          onChange={(value) =>
+            onSearchValueChange ? onSearchValueChange(value) : undefined
           }
         />
         <div className="flex flex-wrap gap-1 items-center">
@@ -65,7 +66,6 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </div>
           ))}
         </div>
-
         <div className="flex flex-row">
           <Button
             variant="ghost"
@@ -91,14 +91,11 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <LoadingSkeleton amountItems={4} />
-
-
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
             <Fragment>
               {data.map((s, idx) => (
-
                 <ShelterListItem key={idx} data={s} />
               ))}
               {hasMoreItems ? (
@@ -118,7 +115,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </Fragment>
           )}
         </main>
-      </div >
+      </div>
     );
   }
 );

@@ -9,9 +9,13 @@ import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 import { SessionContext } from '@/contexts';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Badge } from '@/components/ui/badge';
 =======
 >>>>>>> 3d3f437 (merge: develop -> master (#91))
+=======
+import { Badge } from '@/components/ui/badge';
+>>>>>>> 0d9053f (Release/0.0.3 (#187))
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const {
@@ -57,10 +61,14 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
       </div>
       <div className="flex gap-2 flex-wrap">
 <<<<<<< HEAD
+<<<<<<< HEAD
         {visibleSupplies.map((tag, idx) => {
 =======
         {visibleTags.map((tag, idx) => {
 >>>>>>> 3d3f437 (merge: develop -> master (#91))
+=======
+        {visibleSupplies.map((tag, idx) => {
+>>>>>>> 0d9053f (Release/0.0.3 (#187))
           const tagProps =
             session &&
             ['DistributionCenter', 'Admin'].includes(session.accessLevel)
@@ -77,6 +85,9 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
                   className: circleClassName,
                 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0d9053f (Release/0.0.3 (#187))
           return (
             <div
               key={idx}
@@ -95,9 +106,12 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
                 )}
             </div>
           );
+<<<<<<< HEAD
 =======
           return <Chip key={idx} label={tag.label} {...tagProps} />;
 >>>>>>> 3d3f437 (merge: develop -> master (#91))
+=======
+>>>>>>> 0d9053f (Release/0.0.3 (#187))
         })}
       </div>
 

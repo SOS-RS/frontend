@@ -13,10 +13,11 @@ import { SearchInput } from './SearchInput';
 import { VerifiedBadge } from './VerifiedBadge';
 import { SelectField } from './SelectField';
 import { Authenticated } from './Authenticated';
-<<<<<<< HEAD
 import { BurgerMenu } from './BurgerMenu';
-=======
->>>>>>> 3d3f437 (merge: develop -> master (#91))
+import { BackToTop } from './BackToTop';
+import { DonationCartIcon } from './DonationCartIcon';
+import { DonationCart } from './DonationCart';
+import { Loader } from './Loader';
 
 export {
   LoadingScreen,
@@ -34,8 +35,9 @@ export {
   SearchInput,
   SelectField,
   Authenticated,
-<<<<<<< HEAD
   BurgerMenu,
-=======
->>>>>>> 3d3f437 (merge: develop -> master (#91))
+  BackToTop,
+  DonationCartIcon,
+  DonationCart,
+  Loader,
 };
