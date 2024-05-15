@@ -8,6 +8,7 @@ import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 import { SessionContext } from '@/contexts';
+import { Badge } from '@/components/ui/badge';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const {
@@ -57,26 +58,33 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
             session &&
             ['DistributionCenter', 'Admin'].includes(session.accessLevel)
               ? {
-                onClick: () => (onSelectTag ? onSelectTag(tag) : undefined),
-                className: variants({
-                  className: circleClassName,
-                  variant: selectedTags.includes(tag)
-                    ? 'selected'
-                    : 'default',
-                }),
-              }
+                  onClick: () => (onSelectTag ? onSelectTag(tag) : undefined),
+                  className: variants({
+                    className: circleClassName,
+                    variant: selectedTags.includes(tag)
+                      ? 'selected'
+                      : 'default',
+                  }),
+                }
               : {
-                className: circleClassName,
-              };
-          return <div key={idx} className={cn('flex gap-x-1 relative', { 'mr-3': tag.quantity })}>
-            <Chip key={idx} label={tag.label} {...tagProps} />
-            {tag.quantity && (
-              <div
-                className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs font-bold bg-gray-700 text-white rounded-full ring-black flex items-center justify-center w-7 h-6">
-                {tag.quantity > 99 ? '99+' : tag.quantity}
-              </div>
-            )}
-          </div>;
+                  className: circleClassName,
+                };
+          return (
+            <div
+              key={idx}
+              className={cn('flex gap-x-1 relative', { 'mr-3': tag.quantity })}
+            >
+              <Chip key={idx} label={tag.label} {...tagProps} />
+              {tag.quantity && (
+                <Badge
+                  variant="default"
+                  className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs flex items-center justify-center w-7 h-6"
+                >
+                  {tag.quantity > 99 ? '99+' : tag.quantity}
+                </Badge>
+              )}
+            </div>
+          );
         })}
       </div>
 

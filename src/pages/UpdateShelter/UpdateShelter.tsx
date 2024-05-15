@@ -3,7 +3,6 @@ import { Loader } from 'lucide-react';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactSelect from 'react-select';
-import * as Yup from 'yup';
 
 import { clearCache } from '@/api/cache';
 import {
@@ -16,11 +15,13 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { SessionContext } from '@/contexts';
 import { useDebouncedValue, useShelter, useViaCep } from '@/hooks';
+import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
 import { SecondaryLayout } from '@/layouts';
 import { cn } from '@/lib/utils';
 import { ShelterServices } from '@/service';
 import { IUpdateShelter } from '@/service/shelter/types';
 import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
+import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const UpdateShelter = () => {
   const { shelterId = '-1' } = params;
   const { data: shelter, loading } = useShelter(shelterId);
   const { session } = useContext(SessionContext);
+  const isAuthenticated = useAuthRoles('Staff');
 
   const {
     errors,
@@ -50,7 +52,7 @@ const UpdateShelter = () => {
       street: shelter.street ?? '',
       neighbourhood: shelter.neighbourhood ?? '',
       city: shelter.city ?? '',
-      streetNumber: shelter.streetNumber ?? null,
+      streetNumber: shelter.streetNumber,
       zipCode: shelter.zipCode ?? '',
       name: shelter.name,
     },
@@ -58,25 +60,11 @@ const UpdateShelter = () => {
     validateOnBlur: false,
     validateOnChange: false,
     validateOnMount: false,
-    validationSchema: Yup.object().shape({
-      shelteredPeople: Yup.number().nullable(),
-      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
-      verified: Yup.bool(),
-      address: Yup.string().nullable(),
-      capacity: Yup.string().nullable(),
-      pix: Yup.string().nullable(),
-      name: Yup.string(),
-      street: Yup.string().required('Este campo deve ser preenchido'),
-      neighbourhood: Yup.string().required('Este campo deve ser preenchido'),
-      city: Yup.string().required('Este campo deve ser preenchido'),
-      streetNumber: Yup.string()
-        .min(0, 'O valor mínimo para este campo é 1')
-        .required('Este campo deve ser preenchido'),
-      zipCode: Yup.string().nullable(),
-    }),
+    validationSchema: session ? FullUpdateShelterSchema : UpdateShelterSchema,
     onSubmit: async (values) => {
       try {
-        if (session) await ShelterServices.adminUpdate(shelterId, values);
+        if (isAuthenticated)
+          await ShelterServices.adminUpdate(shelterId, values);
         else await ShelterServices.update(shelterId, values);
         toast({
           title: 'Atualização feita com sucesso',
@@ -92,6 +80,7 @@ const UpdateShelter = () => {
       }
     },
   });
+
   const debouncedZipcode = useDebouncedValue(
     touched?.zipCode ? values?.zipCode ?? '' : '',
     500
@@ -106,8 +95,6 @@ const UpdateShelter = () => {
     if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
     if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
     if (cepData.localidade) setFieldValue('city', cepData.localidade);
-
-    setErrors({});
   }, [cepData, setFieldValue, setErrors]);
 
   if (loading) return <LoadingScreen />;

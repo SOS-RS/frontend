@@ -13,6 +13,7 @@ import { cn, getAvailabilityProps, group } from '@/lib/utils';
 import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
 import { ShelterSupplyServices } from '@/service';
 import { SupplyPriority } from '@/service/supply/types';
+import { format } from 'date-fns';
 import { ShelterCategoryItems } from './components';
 import {
   IShelterCategoryItemsProps,
@@ -53,6 +54,8 @@ const Shelter = () => {
       prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v]
     );
   }, []);
+
+  const updatedAtDate = shelter.updatedAt ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
 
   const handleUpdateMany = useCallback(() => {
     setLoadingUpdateMany(true);
@@ -142,7 +145,6 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
-        </div>
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button
@@ -156,6 +158,12 @@ const Shelter = () => {
             </Button>
           </div>
         </Authenticated>
+        </div>
+        <div className="flex justify-between p-4 items-center">
+          <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+            Atualizado em {updatedAtDate}
+          </small>
+        </div>
       </div>
     </MainLayout>
   );

@@ -1,9 +1,9 @@
-import { ISupply } from '@/service/supply/types';
 import { useFetch } from '../useFetch';
 import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
+import { IUseSuppliesData } from './types';
 
 const useSupplies = () => {
-  return useFetch<ISupply[]>(PaginatedQueryPath.Supplies, {
+  return useFetch<IUseSuppliesData[]>(PaginatedQueryPath.Supplies, {
     initialValue: [],
     cache: true,
   });
