@@ -143,6 +143,18 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   }, initialGroup);
 }
 
+function removeDuplicatesByField(
+  key: string,
+  ...lists: Record<string, any>[]
+): any[] {
+  return lists
+    .flatMap((list) => list)
+    .reduce((prev: Record<string, any>[], current) => {
+      if (prev.some((p) => p[key] === current[key])) return prev;
+      else return [...prev, current];
+    }, []);
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -153,4 +165,5 @@ export {
   nameStatusPriority,
   priorityOptions,
   groupShelterSuppliesByTag,
+  removeDuplicatesByField,
 };
