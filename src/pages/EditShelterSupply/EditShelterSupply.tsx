@@ -61,7 +61,7 @@ const EditShelterSupply = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
     IDialogSelectorProps,
-    'value' | 'onSave'
+    'value' | 'onSave' | 'quantity'
   > | null>();
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
@@ -75,7 +75,8 @@ const EditShelterSupply = () => {
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
-        onSave: (v) => {
+        quantity: item.quantity ?? 0,
+        onSave: (v, quantity) => {
           const isNewSupply = item.priority === undefined;
           setLoadingSave(true);
 
@@ -99,6 +100,7 @@ const EditShelterSupply = () => {
               shelterId,
               supplyId: item.id,
               priority: +v,
+              quantity,
             })
               .then(successCallback)
               .catch(errorCallback)
@@ -106,7 +108,10 @@ const EditShelterSupply = () => {
                 setLoadingSave(false);
               });
           } else {
-            ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
+            ShelterSupplyServices.update(shelterId, item.id, {
+              priority: +v,
+              quantity,
+            })
               .then(successCallback)
               .catch(errorCallback)
               .finally(() => {
@@ -198,6 +203,7 @@ const EditShelterSupply = () => {
             onValueChange={setOpenedGroups}
           >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
+
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {
                   const supply = shelterSupplyData[v.id];
@@ -213,6 +219,7 @@ const EditShelterSupply = () => {
 
                   return priorityDiff || a.name.localeCompare(b.name);
                 });
+
 
               return (
                 <SupplyRow

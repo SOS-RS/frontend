@@ -1,6 +1,11 @@
 export interface IUseShelterData {
   id: string;
   name: string;
+  street?: string;
+  neighbourhood?: string;
+  city?: string;
+  streetNumber?: string | null;
+  zipCode?: string;
   address: string;
   pix?: string | null;
   shelteredPeople?: number | null;
@@ -18,6 +23,7 @@ export interface IUseShelterData {
 
 export interface IUseShelterDataSupply {
   priority: number;
+  quantity?: number | null;
   supply: IUseShelterDataSupplyData;
 }
 

@@ -47,6 +47,7 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string().required('Este campo deve ser preenchido'),
+      quantity: Yup.number().typeError('Insira um valor númerico').moreThan(0, 'O valor tem que ser maior do que 0').optional(),
       priority: Yup.string().required('Este campo deve ser preenchido'),
       supplyCategoryId: Yup.string().required('Este campo deve ser preenchido'),
     }),
@@ -59,6 +60,7 @@ const CreateSupply = () => {
         await ShelterSupplyServices.create({
           supplyId: resp.data.id,
           priority: +values.priority,
+          quantity: Number(values.quantity) || null,
           shelterId,
         });
         clearCache(false);
@@ -134,6 +136,12 @@ const CreateSupply = () => {
                 </SelectContent>
               </Select>
             </div>
+            <TextField
+              label="Quantidade"
+              {...getFieldProps('quantity')}
+              error={!!errors.quantity}
+              helperText={errors.quantity}
+            />
             <div className="flex flex-col w-full">
               <label className="text-muted-foreground">Prioridade</label>
               <Select

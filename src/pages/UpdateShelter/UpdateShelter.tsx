@@ -1,8 +1,9 @@
-import { useContext } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { useContext, useEffect } from 'react';
+import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import ReactSelect from 'react-select';
 
 import {
   Authenticated,
@@ -18,6 +19,9 @@ import { useShelter } from '@/hooks';
 import { IUpdateShelter } from '@/service/shelter/types';
 import { SessionContext } from '@/contexts';
 import { clearCache } from '@/api/cache';
+import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
+import { useDebouncedValue, useViaCep } from '@/hooks';
+import { cn } from '@/lib/utils';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -33,6 +37,8 @@ const UpdateShelter = () => {
     handleSubmit,
     setFieldValue,
     values,
+    touched,
+    setErrors,
   } = useFormik<IUpdateShelter>({
     initialValues: {
       shelteredPeople: shelter.shelteredPeople,
@@ -42,6 +48,11 @@ const UpdateShelter = () => {
       capacity: shelter.capacity,
       contact: shelter.contact ?? '',
       pix: shelter.pix,
+      street: shelter.street ?? '',
+      neighbourhood: shelter.neighbourhood ?? '',
+      city: shelter.city ?? '',
+      streetNumber: shelter.streetNumber ?? null,
+      zipCode: shelter.zipCode ?? '',
       name: shelter.name,
     },
     enableReinitialize: true,
@@ -52,10 +63,17 @@ const UpdateShelter = () => {
       shelteredPeople: Yup.number().nullable(),
       petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
       verified: Yup.bool(),
-      address: Yup.string(),
+      address: Yup.string().nullable(),
       capacity: Yup.string().nullable(),
       pix: Yup.string().nullable(),
       name: Yup.string(),
+      street: Yup.string().required('Este campo deve ser preenchido'),
+      neighbourhood: Yup.string().required('Este campo deve ser preenchido'),
+      city: Yup.string().required('Este campo deve ser preenchido'),
+      streetNumber: Yup.string()
+        .min(0, 'O valor mínimo para este campo é 1')
+        .required('Este campo deve ser preenchido'),
+      zipCode: Yup.string().nullable(),
     }),
     onSubmit: async (values) => {
       try {
@@ -75,6 +93,23 @@ const UpdateShelter = () => {
       }
     },
   });
+  const debouncedZipcode = useDebouncedValue(
+    touched?.zipCode ? values?.zipCode ?? '' : '',
+    500
+  );
+
+  const { data: cepData, loading: isLoadingZipCodeData } =
+    useViaCep(debouncedZipcode);
+
+  useEffect(() => {
+    if (!cepData) return;
+
+    if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
+    if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
+    if (cepData.localidade) setFieldValue('city', cepData.localidade);
+
+    setErrors({});
+  }, [cepData, setFieldValue, setErrors]);
 
   if (loading) return <LoadingScreen />;
 
@@ -107,6 +142,59 @@ const UpdateShelter = () => {
                 error={!!errors.name}
                 helperText={errors.name}
               />
+              <TextField
+                label="CEP"
+                {...getFieldProps('zipCode')}
+                error={!!errors.zipCode}
+                helperText={errors.zipCode}
+              />
+              {Boolean(isLoadingZipCodeData) && (
+                <Loader className="animate-spin h-15 w-15 stroke-black" />
+              )}
+              <TextField
+                label="Logradouro (Rua/avenida)"
+                {...getFieldProps('street')}
+                error={!!errors.street}
+                helperText={errors.street}
+              />
+              <TextField
+                label="Número"
+                {...getFieldProps('streetNumber')}
+                error={!!errors.streetNumber}
+                helperText={errors.streetNumber}
+              />
+              <TextField
+                label="Bairro"
+                {...getFieldProps('neighbourhood')}
+                error={!!errors.neighbourhood}
+                helperText={errors.neighbourhood}
+              />
+              <div className="flex flex-col gap-1 w-full">
+                <label className="text-muted-foreground" htmlFor="city">
+                  Cidade
+                </label>
+                <ReactSelect
+                  name="city"
+                  placeholder="Cidade"
+                  value={{
+                    label: values.city,
+                    value: values.city,
+                  }}
+                  options={hardCodedRsCities.map((item) => ({
+                    value: item,
+                    label: item,
+                  }))}
+                  onChange={(v) => {
+                    setFieldValue('city', v?.value);
+                  }}
+                  className={cn('w-full', {
+                    'border-[1px] border-red-600 rounded-md': errors.city,
+                  })}
+                />
+                {errors.city && (
+                  <p className={'text-red-600 text-sm'}>{errors.city}</p>
+                )}
+              </div>
               <TextField
                 label="Endereço"
                 {...getFieldProps('address')}
