@@ -5,6 +5,7 @@ import { SessionContext } from '@/contexts';
 import { useShelters } from '@/hooks';
 
 import { LogOutIcon } from 'lucide-react';
+import { ShelterOverview } from './components';
 
 const Dashboard = () => {
   const { data: shelters, loading } = useShelters({ cache: true });
@@ -45,7 +46,13 @@ const Dashboard = () => {
           </div>
         }
       />
-      <h1 className='font-bold text-2xl'>Visão Geral</h1>
+      <div className="flex flex-col">
+        <h1 className="font-bold text-2xl justify-self-start mb-8 mt-4">Visão Geral</h1>
+        <ShelterOverview
+          shelters={shelters.results}
+          totalShelters={shelters.count}
+        />
+      </div>
       <Footer />
     </div>
   );
