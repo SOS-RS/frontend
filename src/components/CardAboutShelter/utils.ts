@@ -1,18 +1,28 @@
-import { IUseSheltersData } from '@/hooks/useShelters/types';
-import { ICardAboutShelter } from './types';
+import { IUseShelterData } from '@/hooks/useShelter/types';
 
 const formatShelterAddressFields = (
-  shelter: ICardAboutShelter['shelter'] | IUseSheltersData
-) =>
-  [shelter.street, shelter.streetNumber, shelter.neighbourhood]
-    .filter(Boolean)
-    .join(', ');
+  payload: Partial<
+    Pick<IUseShelterData, 'street' | 'streetNumber' | 'neighbourhood'>
+  >
+): string => {
+  const { street, streetNumber, neighbourhood } = payload;
+  return [street, streetNumber, neighbourhood].filter(Boolean).join(', ');
+};
 
-export const checkAndFormatAddress = (
-  shelter: ICardAboutShelter['shelter'] | IUseSheltersData,
+const checkAndFormatAddress = (
+  payload: Partial<
+    Pick<
+      IUseShelterData,
+      'address' | 'city' | 'street' | 'streetNumber' | 'neighbourhood'
+    >
+  >,
   showCity = true
-) =>
-  shelter.address ??
-  `${formatShelterAddressFields(shelter)}${
-    showCity ? ` - ${shelter.city}` : ''
-  }`;
+): string => {
+  const { address, city, ...rest } = payload;
+  return (
+    address ??
+    `${formatShelterAddressFields(rest)}${showCity ? ` - ${city}` : ''}`
+  );
+};
+
+export { checkAndFormatAddress };
