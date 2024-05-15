@@ -5,7 +5,7 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group } from '@/lib/utils';
+import { group, normalizedCompare } from '@/lib/utils';
 import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
@@ -32,18 +32,7 @@ const EditShelterSupply = () => {
       callback: (v) => {
         if (v) {
           setFilteredSupplies(
-            supplies.filter((s) =>
-              s.name
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .includes(
-                  v
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                )
-            )
+            supplies.filter((s) => normalizedCompare(s.name, v))
           );
         } else setFilteredSupplies(supplies);
       },
