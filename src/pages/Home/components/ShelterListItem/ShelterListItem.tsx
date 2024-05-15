@@ -40,7 +40,9 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     };
   }, []);
 
-  const updatedAtDate = data.updatedAt ? format(data.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
+  const updatedAtDate = data.updatedAt
+    ? format(data.updatedAt, 'dd/MM/yyyy HH:mm')
+    : '(sem informação)';
 
   return (
     <Link to={`/abrigo/${data.id}`} target="_blank">
@@ -83,7 +85,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           </>
         )}
         <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-            Atualizado em {updatedAtDate}
+          Atualizado em {updatedAtDate}
         </small>
       </div>
       <h6 className={cn('font-semibold text-md', availabilityClassName)}>
@@ -113,7 +115,6 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
         </small>
       )}
-    </div>
     </Link>
   );
 };
