@@ -6,6 +6,7 @@ import { useShelter } from './useShelter';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
 import { useGeolocation } from './useGeolocation';
+import { usePartners } from './usePartners';
 
 export {
   useShelters,
@@ -16,4 +17,5 @@ export {
   useSupplyCategories,
   useSupplies,
   useGeolocation,
+  usePartners,
 };
