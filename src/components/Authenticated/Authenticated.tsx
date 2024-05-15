@@ -1,21 +1,12 @@
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
 
-import { SessionContext } from '@/contexts';
 import { IAuthenticatedProps } from './types';
-import { AccessLevel } from '@/service/sessions/types';
-
-const MappedRoles: Record<AccessLevel, AccessLevel[]> = {
-  Admin: ['Admin'],
-  DistributionCenter: ['Admin', 'DistributionCenter'],
-  Staff: ['Admin', 'Staff'],
-  User: ['Admin', 'Staff', 'DistributionCenter', 'User'],
-};
+import { useAuthRoles } from '@/hooks';
 
 const Authenticated = ({ children, role = 'User' }: IAuthenticatedProps) => {
-  const { session } = useContext(SessionContext);
+  const isAuthenticated = useAuthRoles(role);
 
-  if (!session || !MappedRoles[role].includes(session.accessLevel))
-    return <Fragment />;
+  if (!isAuthenticated) return <Fragment />;
 
   return <div className="contents">{children}</div>;
 };
