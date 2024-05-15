@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import Select from 'react-select';
-import { useFormik } from 'formik';
+import { getIn, useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { LoadingScreen, SearchInput } from '@/components';
@@ -161,7 +161,7 @@ const Filter = (props: IFilterProps) => {
                 geolocationFormValues={values?.geolocation}
                 geolocationValues={data?.geolocation}
                 setFieldValue={setFieldValue}
-                error={errors.geolocation?.radiusInMeters}
+                error={getIn(errors, 'geolocation.radiusInMeters')}
               />
               <Separator className="mt-2" />
               <CitiesFilter
