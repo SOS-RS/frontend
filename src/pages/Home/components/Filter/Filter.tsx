@@ -107,8 +107,8 @@ const Filter = (props: IFilterProps) => {
       .filter((v) => {
         return values.supplyCategories.length > 0
           ? values.supplyCategories.some(
-              (categoryItem) => categoryItem.value === v.supplyCategory.id
-            )
+            (categoryItem) => categoryItem.value === v.supplyCategory.id
+          )
           : true;
       })
       .map((el: IUseSuppliesData) => ({
@@ -124,9 +124,9 @@ const Filter = (props: IFilterProps) => {
         'shelterStatus',
         checked
           ? [
-              ...values.shelterStatus,
-              { label: ShelterAvailabilityStatusMap[status], value: status },
-            ]
+            ...values.shelterStatus,
+            { label: ShelterAvailabilityStatusMap[status], value: status },
+          ]
           : values.shelterStatus.filter((s) => s.value !== status)
       );
     },
@@ -268,7 +268,7 @@ const Filter = (props: IFilterProps) => {
               </div>
             </div>
           </div>
-          <DialogFooter className="sticky bg-white -bottom-6">
+          <DialogFooter className="sticky bg-white -bottom-6 dark:bg-[#2B2B2B]">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"
