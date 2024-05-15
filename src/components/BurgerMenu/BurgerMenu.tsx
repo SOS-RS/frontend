@@ -21,111 +21,96 @@ import { usePartners } from '@/hooks';
 import { Button } from '../ui/button';
 import { DialogClose, DialogFooter } from '../ui/dialog';
 
-const BurgerMenu = () => {
-  const { session } = useContext(SessionContext);
-  const { data: partners } = usePartners();
+const BurgerMenu = (props: IBurgerMenu) => {
+	const { session } = props;
+	const partnerLinks: IPartnerLink[] = [];
+	const logout = () => {
+		localStorage.removeItem('token');
+		window.location.href = '/';
+	};
+  const {theme}= useTheme()
+	return (
+		<Sheet>
+			<SheetTrigger>
+				<Menu color='white' className='ml-2 mr-2' />
+			</SheetTrigger>
+			<SheetContent side={'left'} className='pt-[96px] flex flex-col'>
+				<div className='flex'>
+					<ul className='flex flex-col text-base'>
+						{session ? (
+							<li className='inline-flex items-center mb-5'>
+								<User className='mr-2' />
+								Olá, {session.name}
+							</li>
+						) : (
+							<Link to={'/entrar'} className='hover:font-semibold'>
+								<li className='inline-flex items-center mb-5'>
+									<DoorClosed className='mr-2' />
+									Entrar
+								</li>
+							</Link>
+						)}
+						<Link
+							to={'https://forms.gle/2S7L2gR529Dc8P3T9'}
+							target='_blank'
+							className='hover:font-semibold'
+						>
+							<li className='inline-flex items-center mb-5'>
+								<CirclePlus className='mr-2' />
+								Cadastrar Abrigo
+							</li>
+						</Link>
+						<Link
+							to={'https://www.instagram.com/reel/C613CfGuh4b'}
+							target='_blank'
+							className='hover:font-semibold'
+						>
+							<li className='inline-flex items-center mb-5'>
+								<CircleHelp className='mr-2' />
+								Como Ajudar
+							</li>
+						</Link>
+            <li className='inline-flex items-center mb-5 gap-2'>
+              <ToggleTheme /> 
+              Mudar Tema
+            </li>
+					</ul>
+          
 
-  const logout = useCallback(() => {
-    SessionServices.logout()
-      .then(() => {
-        localStorage.removeItem('token');
-        window.location.href = '/';
-      })
-      .catch((err) => {
-        console.log(`Erro ao realizar logout: ${err}`);
-      });
-  }, []);
-
-  return (
-    <Sheet>
-      <SheetTrigger>
-        <Menu color='white' className='ml-2 mr-2' />
-      </SheetTrigger>
-      <SheetContent side='left' className='pt-[96px] flex flex-col z-[90]'>
-        <DialogFooter className='absolute top-16 right-4'>
-          <DialogClose asChild>
-            <Button type='button' variant='ghost'>
-              <X className='stroke-muted-foreground' />
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-        <div className='flex flex-col gap-4'>
-          {session && (
-            <Fragment>
-              <div className='inline-flex items-center text-semibold'>
-                Olá, {session.name}
-              </div>
-              <Separator />
-            </Fragment>
-          )}
-          <BurguerMenuItem
-            label='Sobre nós'
-            link='/sobre-nos'
-            icon={<Info className='w-5 h-5' />}
-          />
-          <BurguerMenuItem
-            label='Minhas Doações'
-            link='/doacoes'
-            icon={<HeartHandshake className='w-5 h-5' />}
-            className={clsx({ hidden: !session })}
-          />
-          <BurguerMenuItem
-            label='Cadastrar abrigo'
-            link='https://forms.gle/2S7L2gR529Dc8P3T9'
-            icon={<CirclePlus className='w-5 h-5' />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label='Canal de Denúncias'
-            link='https://contatoseguro.com.br/sos_rs'
-            icon={<ShieldAlert className='w-5 h-5' />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label='Como Ajudar'
-            link='https://www.instagram.com/reel/C613CfGuh4b'
-            icon={<CircleHelp className='w-5 h-5' />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label='Política de Privacidade'
-            link='/politica-de-privacidade'
-            icon={<Info className='w-5 h-5' />}
-          />
-          <BurguerMenuItem
-            label='Apoiadores'
-            link='/apoiadores'
-            icon={<HeartHandshake className='w-5 h-5' />}
-          />
-          <ToggleTheme /> 
-          <Separator />
-          {partners.length > 0 && (
-            <Fragment>
-              <span>Parcerias</span>
-              {partners.map((partner, idx) => (
-                <BurguerMenuItem
-                  key={idx}
-                  label={partner.name}
-                  link={partner.link}
-                  icon={<LinkIcon className='w-4 h-4' />}
-                />
-              ))}
-            </Fragment>
-          )}
-        </div>
-        {session && (
-          <div className='mt-auto'>
-            <span
-              className='inline-flex items-center hover:font-semibold cursor-pointer'
-              onClick={logout}
-            >
-              <DoorOpen className='mr-2' /> Sair
-            </span>
-          </div>
-        )}
-      </SheetContent>
-    </Sheet>
-  );
+					{!!partnerLinks.length && (
+						<>
+							<div className='mt-5 text-sm text-gray-500'>Links Úteis</div>
+							<ul className='flex flex-col text-base'>
+								{partnerLinks.map((link, index) => (
+									<Link
+										key={index}
+										to={link.url}
+										target='_blank'
+										className='hover:font-semibold'
+									>
+										<li className='inline-flex items-center mt-5'>
+											<LinkIcon className='mr-2' />
+											{link.name}
+										</li>
+									</Link>
+								))}
+							</ul>
+						</>
+					)}
+				</div>
+				{session && (
+					<div className='mt-auto mb-8'>
+						<span
+							className='inline-flex items-center hover:font-semibold cursor-pointer'
+							onClick={logout}
+						>
+							<DoorOpen className='mr-2' /> Sair
+						</span>
+					</div>
+				)}
+			</SheetContent>
+		</Sheet>
+	);
 };
 
 export { BurgerMenu };
