@@ -49,9 +49,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {clipboardButton && value && (
               <div
                 className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
-                onClick={() =>
-                  value ? navigator.clipboard.writeText(value) : undefined
-                }
+                onClick={() => navigator.clipboard.writeText(value)}
               >
                 copiar
               </div>
