@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
@@ -6,7 +6,6 @@ import qs from 'qs';
 import { Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
 import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
@@ -22,7 +21,6 @@ const initialFilterData: IFilterFormProps = {
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const { session } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
@@ -103,7 +101,7 @@ const Home = () => {
       )}
       <Header
         title="SOS Rio Grande do Sul"
-        startAdornment={<BurgerMenu session={session} />}
+        startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
             <Button

@@ -1,5 +1,12 @@
 import { Fragment, useCallback, useContext } from 'react';
-import { DoorOpen, Menu } from 'lucide-react';
+import {
+  CircleHelp,
+  CirclePlus,
+  DoorOpen,
+  Info,
+  LinkIcon,
+  Menu,
+} from 'lucide-react';
 
 import { SessionServices } from '@/service';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -38,17 +45,25 @@ const BurgerMenu = () => {
               <Separator />
             </Fragment>
           )}
-
-          <BurguerMenuItem label="Sobre nós" link="/sobre" icon="Info" />
+          <BurguerMenuItem
+            label="Sobre nós"
+            link="/sobre"
+            icon={<Info className="w-4 h-4" />}
+          />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon="CirclePlus"
+            icon={<CirclePlus className="w-4 h-4" />}
           />
           <BurguerMenuItem
             label="Como Ajudar"
             link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon="CircleHelp"
+            icon={<CircleHelp className="w-4 h-4" />}
+          />
+          <BurguerMenuItem
+            label="Política de Privacidade"
+            link="/politica-privacidade"
+            icon={<Info className="w-4 h-4" />}
           />
           <Separator />
           {partners.length > 0 && (
@@ -59,7 +74,7 @@ const BurgerMenu = () => {
                   key={idx}
                   label={partner.name}
                   link={partner.link}
-                  icon={partner.iconName}
+                  icon={<LinkIcon className="w-4 h-4" />}
                 />
               ))}
             </Fragment>
