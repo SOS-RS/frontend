@@ -5,9 +5,37 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { useGeolocation } from '@/hooks';
 import { ILocationFilter } from './types';
+import { getOS } from './utils';
+import { Link } from 'react-router-dom';
 
 const MAX_PROXIMITY_IN_METERS = 50_000;
 const PROXIMITY_INTERVAL_IN_METERS = 500;
+
+const LocationAdvice = () => {
+  const currentOs = getOS();
+
+  if (currentOs === 'Android') {
+    return (
+      <Link
+        to={'https://support.google.com/accounts/answer/3467281?hl=pt-BR'}
+        target="_blank"
+        className="text-blue-600"
+      >
+        Clique aqui para mais informações sobre a opção de geolocalização do
+        Android
+      </Link>
+    );
+  }
+  if (currentOs === 'iOS') {
+    return (
+      <Link to={'https://support.apple.com/pt-br/102647'} target="_blank">
+        Veja mais informações sobre a opção de geolocalização do Iphone
+      </Link>
+    );
+  }
+
+  return null;
+};
 
 const LocationFilter = ({
   geolocationFormValues,
@@ -85,7 +113,10 @@ const LocationFilter = ({
         {Boolean(errorGeolocation) && (
           <>
             {errorGeolocation && (
-              <p className={'text-red-600 text-sm'}>{errorGeolocation}</p>
+              <>
+                <LocationAdvice />
+                <p className={'text-red-600 text-sm'}>{errorGeolocation}</p>
+              </>
             )}
           </>
         )}
@@ -97,7 +128,7 @@ const LocationFilter = ({
               </p>
               {Boolean(error) && (
                 <div className="pb-2">
-                  {error && <p className={'text-red-600 text-sm'}>{error}</p>}
+                  <p className={'text-red-600 text-sm'}>{error}</p>
                 </div>
               )}
               <div className="flex flex-row gap-2 w-full my-2 items-center justify-center">

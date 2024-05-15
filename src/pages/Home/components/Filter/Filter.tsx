@@ -93,7 +93,7 @@ const Filter = (props: IFilterProps) => {
         geolocation: Yup.object()
           .shape({
             radiusInMeters: Yup.number().positive(
-              'Raio em metros deve ser um número positivo'
+              'Raio em metros deve ser positivo'
             ),
           })
           .nullable(),

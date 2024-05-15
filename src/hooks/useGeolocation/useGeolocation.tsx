@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 
-import { IGeolocation } from './types';
+import { GeolocationError, IGeolocation } from './types';
 
-export const useGeolocation = (isForceReresh = false) => {
+export const useGeolocation = () => {
   const [geolocation, setGeolocation] = useState<IGeolocation>({
     latitude: 0,
     longitude: 0,
@@ -20,28 +20,28 @@ export const useGeolocation = (isForceReresh = false) => {
   const showError = (error: GeolocationPositionError) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        setError('É preciso liberar a permissão de geolocalização.');
+        setError(GeolocationError.PERMISSION_DENIED);
         break;
       case error.POSITION_UNAVAILABLE:
-        setError(
-          'Infelizmente não foi possível obter sua posição, talvez seu dispositivo esteja desatualizado.'
-        );
+        setError(GeolocationError.PERMISSION_DENIED);
         break;
       case error.TIMEOUT:
-        setError('A requisição expirou, por favor tente novamente.');
+        setError(GeolocationError.TIMEOUT);
         break;
 
       default:
-        setError(
-          'Infelizmente não foi possível obter seu endereço neste dispositivo.'
-        );
+        setError(GeolocationError.DEFAULT);
         break;
     }
     setIsLoading(false);
   };
+
+  const clearData = () => {
+    setGeolocation({ latitude: 0, longitude: 0 });
+  };
+
   const getLocation = useCallback(() => {
-    if (isForceReresh || (geolocation.latitude && geolocation.longitude))
-      return;
+    if (geolocation.latitude && geolocation.longitude) return;
 
     setIsLoading(true);
     if (!window.navigator.geolocation) return;
@@ -51,7 +51,7 @@ export const useGeolocation = (isForceReresh = false) => {
       (error) => showError(error),
       { enableHighAccuracy: true }
     );
-  }, [geolocation.latitude, geolocation.longitude, isForceReresh]);
+  }, [geolocation.latitude, geolocation.longitude]);
 
-  return { isLoading, getLocation, geolocation, error };
+  return { isLoading, getLocation, clearData, geolocation, error };
 };
