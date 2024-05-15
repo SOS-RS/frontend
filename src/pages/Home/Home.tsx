@@ -16,6 +16,7 @@ const initialFilterData: IFilterFormProps = {
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
+  cities: [],
 };
 
 const Home = () => {
@@ -139,11 +140,27 @@ const Home = () => {
         loading={loading}
         count={shelters.count}
         data={shelters.results}
+        filterData={filterData}
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
+        }}
+        onCitiesChange={(v) => {
+          setFilterData((prev) => ({ ...prev, cities: v }));
+          const searchQuery = qs.stringify(
+            { ...filterData, cities: v },
+            {
+              skipNulls: true,
+            }
+          );
+          setSearchParams(searchQuery);
+          refresh({
+            params: {
+              search: searchQuery,
+            },
+          });
         }}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
