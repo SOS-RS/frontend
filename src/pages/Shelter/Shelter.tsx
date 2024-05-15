@@ -22,6 +22,7 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
+import { format } from 'date-fns';
 
 const Shelter = () => {
   const params = useParams();
@@ -57,6 +58,8 @@ const Shelter = () => {
       prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v]
     );
   }, []);
+
+  const updatedAtDate = shelter.updatedAt ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
 
   const handleUpdateMany = useCallback(() => {
     setLoadingUpdateMany(true);
@@ -145,7 +148,6 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
-        </div>
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button
@@ -159,6 +161,12 @@ const Shelter = () => {
             </Button>
           </div>
         </Authenticated>
+        </div>
+        <div className="flex justify-between p-4 items-center">
+          <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+            Atualizado em {updatedAtDate}
+          </small>
+        </div>
       </div>
     </div>
   );
