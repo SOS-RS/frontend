@@ -75,14 +75,16 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
               className={cn('flex gap-x-1 relative', { 'mr-3': tag.quantity })}
             >
               <Chip key={idx} label={tag.label} {...tagProps} />
-              {tag.quantity && (
-                <Badge
-                  variant="default"
-                  className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs flex items-center justify-center w-7 h-6"
-                >
-                  {tag.quantity > 99 ? '99+' : tag.quantity}
-                </Badge>
-              )}
+              {tag.quantity !== null &&
+                tag.quantity !== undefined &&
+                tag.quantity > 0 && (
+                  <Badge
+                    variant="default"
+                    className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs flex items-center justify-center w-7 h-6"
+                  >
+                    {tag.quantity > 99 ? '99+' : tag.quantity}
+                  </Badge>
+                )}
             </div>
           );
         })}
