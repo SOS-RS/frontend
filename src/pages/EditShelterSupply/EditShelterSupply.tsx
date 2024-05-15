@@ -187,7 +187,7 @@ const EditShelterSupply = () => {
                   name: v.name,
                   priority: supply?.priority,
                 };
-              });
+              }).sort((a, b) => a.name.localeCompare(b.name));
               return (
                 <SupplyRow
                   key={idx}
