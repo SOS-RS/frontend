@@ -10,6 +10,8 @@ import { useSupplies } from './useSupplies';
 import { useGeolocation } from './useGeolocation';
 import { useViaCep } from './useViaCep';
 import { usePartners } from './usePartners';
+import { useGithubContributors } from './useGithubContributors';
+import { useAuthRoles } from './useAuthRoles';
 
 export {
   useShelters,
@@ -24,4 +26,6 @@ export {
   useGeolocation,
   useViaCep,
   usePartners,
+  useGithubContributors,
+  useAuthRoles,
 };

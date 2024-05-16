@@ -23,6 +23,7 @@ import { clearCache } from '@/api/cache';
 import { hardCodedRsCities } from './hardcodedCities';
 import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { checkAndFormatAddress } from '@/components/CardAboutShelter';
 
 const CreateShelterComponent = () => {
   const navigate = useNavigate();
@@ -74,7 +75,14 @@ const CreateShelterComponent = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        await ShelterServices.create(values);
+        const address = checkAndFormatAddress({
+          address: values.address,
+          city: values.city,
+          neighbourhood: values.neighbourhood,
+          street: values.street,
+          streetNumber: values.streetNumber,
+        });
+        await ShelterServices.create({ ...values, address });
         clearCache(false);
         toast({
           title: 'Cadastro feita com sucesso',
