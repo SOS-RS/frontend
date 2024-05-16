@@ -106,7 +106,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => refresh()}
+              onClick={() => refresh({}, false, true)}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
