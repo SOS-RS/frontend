@@ -17,6 +17,8 @@ export interface IUseShelterData {
   capacity?: number | null;
   contact?: string | null;
   petFriendly?: boolean | null;
+  shelteredPets?: number | null;
+  petsCapacity?: number | null;
   prioritySum: number;
   verified: boolean;
   latitude?: string | null;
