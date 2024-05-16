@@ -10,6 +10,7 @@ import {
   UpdateShelter,
   PrivacyPolicy,
   AboutUs,
+  Supporters,
 } from '@/pages';
 
 const Routes = () => {
@@ -27,6 +28,7 @@ const Routes = () => {
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
       <Route path="/sobre-nos" element={<AboutUs />} />
+      <Route path="/apoiadores" element={<Supporters />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );
