@@ -23,7 +23,7 @@ export const useGeolocation = () => {
         setError(GeolocationError.PERMISSION_DENIED);
         break;
       case error.POSITION_UNAVAILABLE:
-        setError(GeolocationError.PERMISSION_DENIED);
+        setError(GeolocationError.POSITION_UNAVAILABLE);
         break;
       case error.TIMEOUT:
         setError(GeolocationError.TIMEOUT);
