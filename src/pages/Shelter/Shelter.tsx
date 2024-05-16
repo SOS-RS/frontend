@@ -123,7 +123,7 @@ const Shelter = () => {
         </div>
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
-          <p className='p-1'>Lembre-se: é probibido tirar fotos ou filmar dentro dos abrigos, garanta a privacidade das pessoas nesse momento de vulnerabilidade.</p>
+          <p className='p-1'>Lembre-se: é proibido tirar fotos ou filmar dentro dos abrigos, garanta a privacidade das pessoas nesse momento de vulnerabilidade.</p>
         </div>
         
         <div className="flex justify-between p-4 items-center">
