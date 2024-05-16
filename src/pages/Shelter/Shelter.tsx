@@ -22,6 +22,7 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
+import { format } from 'date-fns';
 
 const Shelter = () => {
   const params = useParams();
@@ -37,7 +38,11 @@ const Shelter = () => {
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
-        tags: values.map((v) => ({ label: v.supply.name, value: v.supply.id })),
+        tags: values.map((v) => ({
+          label: v.supply.name,
+          value: v.supply.id,
+          quantity: v.quantity,
+        })),
       }));
   }, [shelter?.shelterSupplies]);
   const { availability, className: availabilityClassName } =
@@ -142,6 +147,13 @@ const Shelter = () => {
             />
           ))}
         </div>
+        {shelter.updatedAt && (
+          <div className="flex justify-between p-4 items-center">
+            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+            </small>
+          </div>
+        )}
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button

@@ -12,18 +12,22 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import {
   IFilterFormikProps,
   IFilterProps,
+  ISelectField,
   ShelterAvailabilityStatus,
 } from './types';
 import { priorityOptions } from '@/lib/utils';
-import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { SupplyPriority } from '@/service/supply/types';
 import { useSearchParams } from 'react-router-dom';
 import { initialFilterData } from '../../Home';
+import CitiesFilter from './CitiesFilter';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -60,15 +64,18 @@ const Filter = (props: IFilterProps) => {
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, ISupply>
+      {} as Record<string, IUseSuppliesData>
     );
   }, [supplies]);
 
   const initialFormValues = {
-    priority: {
-      value: data.priority ?? SupplyPriority.Urgent,
-      label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
-    },
+    cities: data.cities ?? [],
+    priority: data.priority
+      ? {
+          label: priorityOpts[data.priority],
+          value: data.priority,
+        }
+      : null,
     search: data.search,
     shelterStatus: data.shelterStatus.map((s) => ({
       label: ShelterAvailabilityStatusMapped[s],
@@ -95,17 +102,40 @@ const Filter = (props: IFilterProps) => {
         search: Yup.string(),
       }),
       onSubmit: (values) => {
-        const { priority, search, shelterStatus, supplies, supplyCategories } =
-          values;
+        const {
+          priority,
+          search,
+          shelterStatus,
+          supplies,
+          supplyCategories,
+          cities,
+        } = values;
         onSubmit({
           priority: priority?.value ? +priority.value : null,
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
+          cities,
         });
       },
     });
+
+  const supplyOptions = useMemo(() => {
+    return supplies
+      .filter((v) => {
+        return values.supplyCategories.length > 0
+          ? values.supplyCategories.some(
+              (categoryItem) => categoryItem.value === v.supplyCategory.id
+            )
+          : true;
+      })
+      .map((el: IUseSuppliesData) => ({
+        label: el.name,
+        value: el.id,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [supplies, values.supplyCategories]);
 
   const handleToggleShelterStatus = useCallback(
     (checked: boolean, status: ShelterAvailabilityStatus) => {
@@ -143,10 +173,15 @@ const Filter = (props: IFilterProps) => {
               />
             </div>
             <Separator className="mt-2" />
+            <CitiesFilter
+              cities={values.cities}
+              setCities={(cities: string[]) => {
+                setFieldValue('cities', cities);
+              }}
+            />
+            <Separator className="mt-2" />
             <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Busca avançada
-              </p>
+              <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
                 Você pode buscar pelo item que os abrigos precisam urgentemente
                 de doação ou por itens que os abrigos tem disponibilidade para
@@ -158,15 +193,13 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={{
-                    label:
-                      priorityOpts[
-                        values.priority?.value ?? SupplyPriority.Urgent
-                      ],
-                    value: values.priority?.value ?? SupplyPriority.Needing,
-                  }}
+                  value={values.priority}
                   options={Object.entries(priorityOpts).map(
-                    ([priority, label]) => ({ label, value: +priority } as any)
+                    ([priority, label]) =>
+                      ({
+                        label,
+                        value: +priority,
+                      } as ISelectField<SupplyPriority>)
                   )}
                   onChange={(v) => {
                     const newValue = {
@@ -185,10 +218,12 @@ const Filter = (props: IFilterProps) => {
                   value={values.supplyCategories}
                   placeholder="Selecione"
                   isMulti
-                  options={supplyCategories.map((el: ISupplyCategory) => ({
-                    label: el.name,
-                    value: el.id,
-                  }))}
+                  options={supplyCategories
+                    .map((el: ISupplyCategory) => ({
+                      label: el.name,
+                      value: el.id,
+                    }))
+                    .sort((a, b) => a.label.localeCompare(b.label))}
                   onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
@@ -200,10 +235,7 @@ const Filter = (props: IFilterProps) => {
                   placeholder="Selecione"
                   isMulti
                   value={values.supplies}
-                  options={supplies.map((el: ISupply) => ({
-                    label: el.name,
-                    value: el.id,
-                  }))}
+                  options={supplyOptions}
                   onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
@@ -262,7 +294,8 @@ const Filter = (props: IFilterProps) => {
                 </label>
               </div>
             </div>
-
+          </div>
+          <DialogFooter className="sticky bg-white -bottom-6">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6 gap-4">
               <Button
                 type="submit"
@@ -287,7 +320,7 @@ const Filter = (props: IFilterProps) => {
                 Limpar resultados
               </Button>
             </div>
-          </div>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
