@@ -59,8 +59,6 @@ const Shelter = () => {
     );
   }, []);
 
-  const updatedAtDate = shelter.updatedAt ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
-
   const handleUpdateMany = useCallback(() => {
     setLoadingUpdateMany(true);
     ShelterSupplyServices.updateMany(
@@ -148,6 +146,14 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
+        </div>
+        {shelter.updatedAt && (
+          <div className="flex justify-between p-4 items-center">
+            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+            </small>
+          </div>
+        )}
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button
@@ -161,12 +167,6 @@ const Shelter = () => {
             </Button>
           </div>
         </Authenticated>
-        </div>
-        <div className="flex justify-between p-4 items-center">
-          <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-            Atualizado em {updatedAtDate}
-          </small>
-        </div>
       </div>
     </div>
   );
