@@ -132,7 +132,7 @@ const CreateSupply = () => {
                     >
                       {category.name}
                     </SelectItem>
-                  )).sort((a, b) => a.props.children.localeCompare(b.props.children))}
+                  ))}
                 </SelectContent>
               </Select>
             </div>

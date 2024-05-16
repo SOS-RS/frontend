@@ -216,7 +216,7 @@ const Filter = (props: IFilterProps) => {
                       label: el.name,
                       value: el.id,
                     }))
-                    .sort((a, b) => a.label.localeCompare(b.label))}
+                    }
                   onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
