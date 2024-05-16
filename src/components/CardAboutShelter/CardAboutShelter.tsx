@@ -51,6 +51,28 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
             )
           }
         />
+        {shelter.petFriendly && (
+          <>
+            <InfoRow
+              icon={<PawPrint />}
+              label="Pets abrigados:"
+              value={
+                check(shelter.shelteredPets)
+                  ? `${shelter.shelteredPets} pets`
+                  : 'Não informado'
+              }
+            />
+            <InfoRow
+              icon={<PawPrint />}
+              label="Capacidade de pets no abrigo:"
+              value={
+                check(shelter.petsCapacity)
+                  ? `${shelter.petsCapacity} pets`
+                  : 'Não informado'
+              }
+            />
+          </>
+        )}
         <InfoRow
           icon={<HandHeart />}
           label="Pessoas abrigadas:"

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, PawPrint } from 'lucide-react';
 
 import {
   IShelterListItemProps,
@@ -48,15 +48,14 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     <Link to={`/abrigo/${data.id}`} target="_blank">
       <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
         <div className="inline-flex justify-between">
-          <div className="flex flex-row items-center gap-1">
-            <h3 className="font-semibold text-lg h-full hover:cursor-pointer hover:text-slate-500">
+          <div className="flex items-center gap-1">
+            <h3 className="font-semibold text-lg hover:cursor-pointer hover:text-slate-500">
               {data.name}
             </h3>
             {data.verified && (
-              <div className="h-full pt-1">
                 <VerifiedBadge />
-              </div>
             )}
+              {data.petFriendly === true ? <PawPrint className='min-w-4 min-h-4 w-4 h-4 fill-[#1D61C8]' color="#1D61C8" /> : ''}
           </div>
           <Button size="sm" variant="ghost">
             <ChevronRight className="h-5 w-5" />
