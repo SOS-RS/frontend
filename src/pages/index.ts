@@ -7,7 +7,9 @@ import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
-import { Filter } from './Home/components/Filter';
+import { PrivacyPolicy } from './PrivacyPolicy';
+import { AboutUs } from './AboutUs';
+import { Filter } from './Home/components';
 
 export {
   SignIn,
@@ -19,4 +21,6 @@ export {
   UpdateShelter,
   Filter,
   Dashboard,
+  PrivacyPolicy,
+  AboutUs,
 };

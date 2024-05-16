@@ -40,23 +40,27 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     };
   }, []);
 
+  const updatedAtDate = data.updatedAt
+    ? format(data.updatedAt, 'dd/MM/yyyy HH:mm')
+    : '(sem informação)';
+
   return (
     <Link to={`/abrigo/${data.id}`} target="_blank">
       <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
-        <Button size="sm" variant="ghost" className="absolute top-4 right-4">
-          <ChevronRight
-            className="h-5 w-5"
-          />
-        </Button>
-        <div
-          className="flex items-center gap-1"
-        >
-          <h3
-            className="font-semibold text-lg  hover:cursor-pointer hover:text-slate-500"
-          >
-            {data.name}
-          </h3>
-          {data.verified && <VerifiedBadge />}
+        <div className="inline-flex justify-between">
+          <div className="flex flex-row items-center gap-1">
+            <h3 className="font-semibold text-lg h-full hover:cursor-pointer hover:text-slate-500">
+              {data.name}
+            </h3>
+            {data.verified && (
+              <div className="h-full pt-1">
+                <VerifiedBadge />
+              </div>
+            )}
+          </div>
+          <Button size="sm" variant="ghost">
+            <ChevronRight className="h-5 w-5" />
+          </Button>
         </div>
         <h6 className={cn('font-semibold text-md', availabilityClassName)}>
           {availability}
@@ -80,11 +84,9 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             />
           </>
         )}
-        {data.updatedAt && (
-          <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-            Atualizado em {format(data.updatedAt, 'dd/MM/yyyy HH:mm')}
-          </small>
-        )}
+        <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+          Atualizado em {updatedAtDate}
+        </small>
       </div>
     </Link>
   );
