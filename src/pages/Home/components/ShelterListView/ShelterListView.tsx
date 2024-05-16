@@ -36,10 +36,10 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Abrigos disponíveis ({count})
+          Abrigos encontrados ({count})
         </h1>
         <Alert
-          description="Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações."
+          description="Você pode consultar a lista de abrigos. Ver e editar os itens que necessitam de doações."
           startAdornment={
             <CircleAlert size={20} className="stroke-light-yellow" />
           }
