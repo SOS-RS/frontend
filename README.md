@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/badge/REACT-03bafc?style=for-the-badge&logo=react&logoColor=white" />   <img src="https://img.shields.io/badge/VITE-a103fc?style=for-the-badge&logo=vite&logoColor=white" />   <img src="https://img.shields.io/badge/Tailwind-0362fc?style=for-the-badge&logo=vite&logoColor=white" />  <img src="https://img.shields.io/badge/Shadcn-black?style=for-the-badge&logo=vite&logoColor=white" />
+
 # README
 
 Este projeto é o frontend de um aplicativo destinado a auxiliar na organização e distribuição de suprimentos, além de coordenar voluntários durante os alagamentos no Rio Grande do Sul. A aplicação visa conectar pessoas afetadas pelas enchentes com recursos essenciais e voluntários dispostos a ajudar.
