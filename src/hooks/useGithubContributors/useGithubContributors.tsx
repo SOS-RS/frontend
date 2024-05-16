@@ -13,12 +13,12 @@ function useGithubContributors(owner: string, repo: string) {
       axios
         .get(
           `https://api.github.com/repos/${owner}/${repo}/contributors`,
-          config
+          config,
         )
         .then(({ data }) => setData(data))
         .finally(() => setLoading(false));
     },
-    [owner, repo]
+    [owner, repo],
   );
 
   useEffect(() => {

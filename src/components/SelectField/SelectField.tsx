@@ -43,7 +43,7 @@ const SelectField = React.forwardRef<HTMLDivElement, ISelectComponentProps>(
         </Select>
       </div>
     );
-  }
+  },
 );
 
 export { SelectField };

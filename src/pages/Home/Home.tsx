@@ -39,7 +39,7 @@ const Home = () => {
         });
       },
     },
-    []
+    [],
   );
 
   const clearSearch = useCallback(() => {
@@ -51,7 +51,7 @@ const Home = () => {
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
-    [shelters.page, shelters.perPage, shelters.count]
+    [shelters.page, shelters.perPage, shelters.count],
   );
 
   const onSubmitFilterForm = useCallback(
@@ -68,7 +68,7 @@ const Home = () => {
         },
       });
     },
-    [refresh, setSearchParams]
+    [refresh, setSearchParams],
   );
 
   const handleFetchMore = useCallback(() => {
@@ -83,7 +83,7 @@ const Home = () => {
       {
         params: params,
       },
-      true
+      true,
     );
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
@@ -131,7 +131,7 @@ const Home = () => {
             { ...filterData, cities: v },
             {
               skipNulls: true,
-            }
+            },
           );
           setSearchParams(searchQuery);
           refresh({

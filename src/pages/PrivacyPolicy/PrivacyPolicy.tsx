@@ -44,8 +44,8 @@ const PrivacyPolicy = () => {
         <p className="text-justify text-md">
           Coletamos apenas informações imprescindíveis para desempenhar nosso
           propósito. As informações coletadas e como essas informações são
-          utilizadas dependem de como e do quanto você utiliza o <b>SOS RS 🛟</b>
-          . Armazenamos as informações que coletamos.
+          utilizadas dependem de como e do quanto você utiliza o{' '}
+          <b>SOS RS 🛟</b>. Armazenamos as informações que coletamos.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
           Itens que você cria ou nos fornece
@@ -143,8 +143,8 @@ const PrivacyPolicy = () => {
         </p>
         <p className="text-justify text-md">
           Eventualmente os dados serão descartados após o encerramento do
-          propósito do <b>SOS RS 🛟</b>. A nossa política de exclusão garante que
-          os dados fornecidos sejam removidos de forma segura e completa dos
+          propósito do <b>SOS RS 🛟</b>. A nossa política de exclusão garante
+          que os dados fornecidos sejam removidos de forma segura e completa dos
           nossos servidores. Para manter as suas informações protegidas em caso
           de exclusão acidental, pode haver um espaço de tempo entre o momento
           em que você solicita excluir ou exclui algo e o momento em que as

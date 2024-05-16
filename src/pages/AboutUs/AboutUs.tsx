@@ -16,16 +16,16 @@ const AboutUs = () => {
 
   const loading = useMemo(
     () => loadingBackendContributors || loadingFrontendContributors,
-    [loadingBackendContributors, loadingFrontendContributors]
+    [loadingBackendContributors, loadingFrontendContributors],
   );
   const contributors = useMemo(
     () =>
       removeDuplicatesByField(
         'login',
         frontendContributors,
-        backendContributors
+        backendContributors,
       ),
-    [frontendContributors, backendContributors]
+    [frontendContributors, backendContributors],
   );
 
   return (

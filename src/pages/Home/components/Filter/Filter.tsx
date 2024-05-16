@@ -41,7 +41,7 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
     priority === `${SupplyPriority.NotNeeded}`
       ? prev
       : { ...prev, [priority]: label },
-  {} as Record<SupplyPriority, string>
+  {} as Record<SupplyPriority, string>,
 );
 
 const Filter = (props: IFilterProps) => {
@@ -52,13 +52,13 @@ const Filter = (props: IFilterProps) => {
   const mappedSupplyCategories = useMemo(() => {
     return supplyCategories.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, ISupplyCategory>
+      {} as Record<string, ISupplyCategory>,
     );
   }, [supplyCategories]);
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, IUseSuppliesData>
+      {} as Record<string, IUseSuppliesData>,
     );
   }, [supplies]);
 
@@ -111,7 +111,7 @@ const Filter = (props: IFilterProps) => {
           cities,
         });
       },
-    }
+    },
   );
 
   const supplyOptions = useMemo(() => {
@@ -119,7 +119,7 @@ const Filter = (props: IFilterProps) => {
       .filter((v) => {
         return values.supplyCategories.length > 0
           ? values.supplyCategories.some(
-              (categoryItem) => categoryItem.value === v.supplyCategory.id
+              (categoryItem) => categoryItem.value === v.supplyCategory.id,
             )
           : true;
       })
@@ -139,10 +139,10 @@ const Filter = (props: IFilterProps) => {
               ...values.shelterStatus,
               { label: ShelterAvailabilityStatusMapped[status], value: status },
             ]
-          : values.shelterStatus.filter((s) => s.value !== status)
+          : values.shelterStatus.filter((s) => s.value !== status),
       );
     },
-    [setFieldValue, values.shelterStatus]
+    [setFieldValue, values.shelterStatus],
   );
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
@@ -192,7 +192,7 @@ const Filter = (props: IFilterProps) => {
                       ({
                         label,
                         value: +priority,
-                      } as ISelectField<SupplyPriority>)
+                      }) as ISelectField<SupplyPriority>,
                   )}
                   onChange={(v) => {
                     const newValue = {
@@ -247,7 +247,7 @@ const Filter = (props: IFilterProps) => {
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'available'
+                      (s) => s.value === 'available',
                     )}
                   />
                   Abrigo Disponivel
@@ -261,11 +261,11 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(
                         ev.target.checked,
-                        'unavailable'
+                        'unavailable',
                       )
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'unavailable'
+                      (s) => s.value === 'unavailable',
                     )}
                   />
                   Abrigo Indisponível
@@ -280,7 +280,7 @@ const Filter = (props: IFilterProps) => {
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'waiting'
+                      (s) => s.value === 'waiting',
                     )}
                   />
                   Sem informação de disponibilidade

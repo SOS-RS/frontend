@@ -25,7 +25,7 @@ function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
         setLoading(false);
       }
     },
-    [cache, path]
+    [cache, path],
   );
 
   useEffect(() => {

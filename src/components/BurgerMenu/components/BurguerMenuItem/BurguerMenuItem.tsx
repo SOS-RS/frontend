@@ -16,7 +16,7 @@ const BurguerMenuItem = React.forwardRef<
       target="_blank"
       className={cn(
         'hover:font-semibold flex gap-2 items-center text-zinc-600 [&_svg]:stroke-zinc-500',
-        className
+        className,
       )}
       onClick={onClick}
       {...rest}

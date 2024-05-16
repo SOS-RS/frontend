@@ -23,7 +23,7 @@ function usePaginatedQuery<T = any>(path: string | PaginatedQueryPath) {
         .then(({ data }) => setData(data.data))
         .finally(() => setLoading(false));
     },
-    [path]
+    [path],
   );
 
   useEffect(() => {

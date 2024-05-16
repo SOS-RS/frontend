@@ -48,24 +48,26 @@ const Shelter = () => {
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(shelter?.capacity, shelter?.shelteredPeople),
-      [shelter?.capacity, shelter?.shelteredPeople]
+      [shelter?.capacity, shelter?.shelteredPeople],
     );
   const [loadingUpdateMany, setLoadingUpdateMany] = useState<boolean>(false);
   const { toast } = useToast();
 
   const handleSelectTag = useCallback((v: ITagItem) => {
     setSelectedTags((prev) =>
-      prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v]
+      prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v],
     );
   }, []);
 
-  const updatedAtDate = shelter.updatedAt ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm') : "(sem informação)";
+  const updatedAtDate = shelter.updatedAt
+    ? format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')
+    : '(sem informação)';
 
   const handleUpdateMany = useCallback(() => {
     setLoadingUpdateMany(true);
     ShelterSupplyServices.updateMany(
       shelterId,
-      selectedTags.map((s) => s.value)
+      selectedTags.map((s) => s.value),
     )
       .then(() => {
         toast({
@@ -148,19 +150,19 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
-        <Authenticated role="DistributionCenter">
-          <div className="flex w-full p-4">
-            <Button
-              className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
-              size="sm"
-              disabled={loadingUpdateMany || selectedTags.length === 0}
-              loading={loadingUpdateMany}
-              onClick={handleUpdateMany}
-            >
-              Atender pedido
-            </Button>
-          </div>
-        </Authenticated>
+          <Authenticated role="DistributionCenter">
+            <div className="flex w-full p-4">
+              <Button
+                className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
+                size="sm"
+                disabled={loadingUpdateMany || selectedTags.length === 0}
+                loading={loadingUpdateMany}
+                onClick={handleUpdateMany}
+              >
+                Atender pedido
+              </Button>
+            </div>
+          </Authenticated>
         </div>
         <div className="flex justify-between p-4 items-center">
           <small className="text-sm md:text-md font-light text-muted-foreground mt-2">

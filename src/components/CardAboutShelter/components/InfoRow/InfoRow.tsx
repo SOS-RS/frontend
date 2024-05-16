@@ -33,7 +33,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
         className={cn(
           'flex items-start gap-2 font-medium w-full',
           'md:flex',
-          className
+          className,
         )}
         {...rest}
       >
@@ -58,7 +58,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { InfoRow };

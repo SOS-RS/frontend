@@ -84,7 +84,7 @@ const UpdateShelter = () => {
 
   const debouncedZipcode = useDebouncedValue(
     touched?.zipCode ? values?.zipCode ?? '' : '',
-    500
+    500,
   );
 
   const { data: cepData, loading: isLoadingZipCodeData } =

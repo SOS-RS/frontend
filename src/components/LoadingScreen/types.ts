@@ -1,3 +1,3 @@
-export interface ILoadingScreen extends React.ComponentPropsWithoutRef<"div"> {
-  variant?: "full" | "content";
+export interface ILoadingScreen extends React.ComponentPropsWithoutRef<'div'> {
+  variant?: 'full' | 'content';
 }

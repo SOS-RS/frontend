@@ -18,7 +18,7 @@ const LoadingScreen = (props: ILoadingScreen) => {
       defaultVariants: {
         variant: 'full',
       },
-    }
+    },
   );
 
   return (

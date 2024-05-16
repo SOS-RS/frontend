@@ -19,7 +19,7 @@ const AboutCardInfo = React.forwardRef<HTMLDivElement, IAboutCardInfoProps>(
         ref={ref}
         className={cn(
           'flex gap-4 p-4 bg-[#E8F0F8] border-border rounded-xl',
-          className
+          className,
         )}
         {...rest}
       >
@@ -36,7 +36,7 @@ const AboutCardInfo = React.forwardRef<HTMLDivElement, IAboutCardInfoProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { AboutCardInfo };

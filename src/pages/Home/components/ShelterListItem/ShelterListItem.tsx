@@ -25,7 +25,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(capacity, shelteredPeople),
-      [capacity, shelteredPeople]
+      [capacity, shelteredPeople],
     );
 
   const tags: ShelterTagInfo<IUseSheltersDataSupplyData[]> = useMemo(() => {

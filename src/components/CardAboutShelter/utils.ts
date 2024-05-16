@@ -2,7 +2,7 @@ import { IUseSheltersData } from '@/hooks/useShelters/types';
 import { ICardAboutShelter } from './types';
 
 const formatShelterAddressFields = (
-  shelter: ICardAboutShelter['shelter'] | IUseSheltersData
+  shelter: ICardAboutShelter['shelter'] | IUseSheltersData,
 ) =>
   [shelter.street, shelter.streetNumber, shelter.neighbourhood]
     .filter(Boolean)
@@ -10,7 +10,7 @@ const formatShelterAddressFields = (
 
 export const checkAndFormatAddress = (
   shelter: ICardAboutShelter['shelter'] | IUseSheltersData,
-  showCity = true
+  showCity = true,
 ) =>
   shelter.address ??
   `${formatShelterAddressFields(shelter)}${

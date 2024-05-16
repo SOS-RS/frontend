@@ -10,11 +10,11 @@ const UserServices = {
   },
   update: async (
     userId: string,
-    payload: IUpdateUser
+    payload: IUpdateUser,
   ): Promise<IServerResponse> => {
     const { data } = await api.put<IServerResponse>(
       `/users/${userId}`,
-      payload
+      payload,
     );
     return data;
   },
