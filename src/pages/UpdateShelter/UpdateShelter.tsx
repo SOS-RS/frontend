@@ -3,7 +3,6 @@ import { ChevronLeft, Loader, PawPrint } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import ReactSelect from 'react-select';
-
 import {
   Authenticated,
   Header,
@@ -209,72 +208,74 @@ const UpdateShelter = () => {
                 />
               )}
             </Authenticated>
-            {shelter.category === ShelterCategory.Shelter && (
-              <Fragment>
-                <TextField
-                  type="number"
-                  label="Quantidade de pessoas abrigadas"
-                  {...getFieldProps('shelteredPeople')}
-                  error={!!errors.shelteredPeople}
-                  helperText={errors.shelteredPeople}
-                />
-                <Card className='w-full'>
-                  <CardHeader className='flex flex-row items-center gap-1 w-full'>
-                    <PawPrint />
-                    <CardTitle>
-                      Pets
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='space-y-4'>
-                    <SelectField
-                      label="O abrigo aceita animais"
-                      value={values.petFriendly ? 'true' : 'false'}
-                      onSelectChange={(v) => {
-                        setFieldValue('petFriendly', v === 'true')
-                        setFieldValue('petsCapacity', v === 'true' ? values.petsCapacity : 0)
-                        setFieldValue('shelteredPets', v === 'true' ? values.shelteredPets : 0)
-                      }}
-                      options={[
-                        { value: 'true', label: 'Sim' },
-                        { value: 'false', label: 'Não' },
-                      ]}
-                    />
-                    <Authenticated role="Staff">
+            <Authenticated role="User">
+              {shelter.category === ShelterCategory.Shelter && (
+                <Fragment>
+                  <TextField
+                    type="number"
+                    label="Quantidade de pessoas abrigadas"
+                    {...getFieldProps('shelteredPeople')}
+                    error={!!errors.shelteredPeople}
+                    helperText={errors.shelteredPeople}
+                  />
+                  <Card className='w-full'>
+                    <CardHeader className='flex flex-row items-center gap-1 w-full'>
+                      <PawPrint />
+                      <CardTitle>
+                        Pets
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className='space-y-4'>
                       <SelectField
-                        label="O abrigo é verificado"
-                        value={values.verified ? 'true' : 'false'}
-                        onSelectChange={(v) =>
-                          setFieldValue('verified', v === 'true')
-                        }
+                        label="O abrigo aceita animais"
+                        value={values.petFriendly ? 'true' : 'false'}
+                        onSelectChange={(v) => {
+                          setFieldValue('petFriendly', v)
+                          setFieldValue('petsCapacity', v ? values.petsCapacity : 0)
+                          setFieldValue('shelteredPets', v ? values.shelteredPets : 0)
+                        }}
                         options={[
                           { value: 'true', label: 'Sim' },
                           { value: 'false', label: 'Não' },
                         ]}
                       />
-                    </Authenticated>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <TextField
-                        type="number"
-                        label="Capacidade de pets total do abrigo"
-                        {...getFieldProps('petsCapacity')}
-                        error={!!errors.petsCapacity}
-                        helperText={errors.petsCapacity}
-                        disabled={!values.petFriendly}
-                        className='disabled:text-opacity-50'
-                      />
-                      <TextField
-                        type="number"
-                        label="Quantidade de pets abrigados"
-                        {...getFieldProps('shelteredPets')}
-                        error={!!errors.shelteredPets}
-                        helperText={errors.shelteredPets}
-                        disabled={!values.petFriendly}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Fragment>
-            )}
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <TextField
+                          type="number"
+                          label="Capacidade de pets total do abrigo"
+                          {...getFieldProps('petsCapacity')}
+                          error={!!errors.petsCapacity}
+                          helperText={errors.petsCapacity}
+                          disabled={!values.petFriendly}
+                          className='disabled:text-opacity-50'
+                        />
+                        <TextField
+                          type="number"
+                          label="Quantidade de pets abrigados"
+                          {...getFieldProps('shelteredPets')}
+                          error={!!errors.shelteredPets}
+                          helperText={errors.shelteredPets}
+                          disabled={!values.petFriendly}
+                        />
+                      </div>
+                      <Authenticated role="Staff">
+                        <SelectField
+                          label="O abrigo é verificado"
+                          value={values.verified ? 'true' : 'false'}
+                          onSelectChange={(v) =>
+                            setFieldValue('verified', v === 'true')
+                          }
+                          options={[
+                            { value: 'true', label: 'Sim' },
+                            { value: 'false', label: 'Não' },
+                          ]}
+                        />
+                      </Authenticated>
+                    </CardContent>
+                  </Card>
+                </Fragment>
+              )}
+            </Authenticated>
 
             <Authenticated role="Staff">
               <TextField
