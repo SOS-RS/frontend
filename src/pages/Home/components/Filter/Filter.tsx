@@ -85,7 +85,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
-        showDisabled: data.showDisabled ?? true,
+        showDisabled: data.showDisabled,
       },
       enableReinitialize: true,
       validateOnChange: false,
