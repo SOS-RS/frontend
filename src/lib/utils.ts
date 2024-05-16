@@ -158,6 +158,23 @@ function removeDuplicatesByField(
     }, []);
 }
 
+function normalizedCompare(a: string, b: string): boolean {
+  return a
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .includes(
+      b
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ''),
+    );
+}
+
+function checkIsNull(v?: any | null) {
+  return v !== null && v !== undefined;
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -169,4 +186,6 @@ export {
   priorityOptions,
   groupShelterSuppliesByTag,
   removeDuplicatesByField,
+  normalizedCompare,
+  checkIsNull,
 };
