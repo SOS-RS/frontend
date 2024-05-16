@@ -11,7 +11,7 @@ import { Filter } from './components/Filter';
 import { ShelterListView } from './components/ShelterListView';
 import { IFilterFormProps } from './components/Filter/types';
 
-const initialFilterData: IFilterFormProps = {
+export const initialFilterData: IFilterFormProps = {
   search: '',
   priority: null,
   supplyCategoryIds: [],
@@ -102,6 +102,9 @@ const Home = () => {
           data={filterData}
           onClose={() => setOpenModal(false)}
           onSubmit={onSubmitFilterForm}
+          setSearch={setSearch}
+          refreshFn={refresh}
+          setFilterData={setFilterData}
         />
       )}
       <Header

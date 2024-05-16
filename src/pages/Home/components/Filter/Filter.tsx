@@ -22,6 +22,8 @@ import {
 } from './types';
 import { priorityOptions } from '@/lib/utils';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { useSearchParams } from 'react-router-dom';
+import { initialFilterData } from '../../Home';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -41,43 +43,50 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
 );
 
 const Filter = (props: IFilterProps) => {
-  const { data, onClose, onSubmit, open } = props;
+  const { data, onClose, onSubmit, open, setSearch, refreshFn, setFilterData } =
+    props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
+  const [, setSearchParams] = useSearchParams();
+
   const mappedSupplyCategories = useMemo(() => {
     return supplyCategories.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
       {} as Record<string, ISupplyCategory>
     );
   }, [supplyCategories]);
+
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
       {} as Record<string, ISupply>
     );
   }, [supplies]);
-  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
-    {
-      initialValues: {
-        priority: {
-          value: data.priority ?? SupplyPriority.Urgent,
-          label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
-        },
-        search: data.search,
-        shelterStatus: data.shelterStatus.map((s) => ({
-          label: ShelterAvailabilityStatusMapped[s],
-          value: s,
-        })),
-        supplyCategories: data.supplyCategoryIds.map((id) => ({
-          label: mappedSupplyCategories[id]?.name,
-          value: id,
-        })),
-        supplies: data.supplyIds.map((id) => ({
-          value: id,
-          label: mappedSupplies[id]?.name,
-        })),
-      },
+
+  const initialFormValues = {
+    priority: {
+      value: data.priority ?? SupplyPriority.Urgent,
+      label: priorityOpts[data.priority ?? SupplyPriority.Urgent],
+    },
+    search: data.search,
+    shelterStatus: data.shelterStatus.map((s) => ({
+      label: ShelterAvailabilityStatusMapped[s],
+      value: s,
+    })),
+    supplyCategories: data.supplyCategoryIds.map((id) => ({
+      label: mappedSupplyCategories[id]?.name,
+      value: id,
+    })),
+    supplies: data.supplyIds.map((id) => ({
+      value: id,
+      label: mappedSupplies[id]?.name,
+    })),
+  };
+
+  const { handleSubmit, values, setFieldValue, resetForm } =
+    useFormik<IFilterFormikProps>({
+      initialValues: initialFormValues,
       enableReinitialize: true,
       validateOnChange: false,
       validateOnBlur: false,
@@ -96,8 +105,7 @@ const Filter = (props: IFilterProps) => {
           supplyIds: supplies.map((s) => s.value),
         });
       },
-    }
-  );
+    });
 
   const handleToggleShelterStatus = useCallback(
     (checked: boolean, status: ShelterAvailabilityStatus) => {
@@ -213,7 +221,7 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'available'
                     )}
                   />
@@ -231,7 +239,7 @@ const Filter = (props: IFilterProps) => {
                         'unavailable'
                       )
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'unavailable'
                     )}
                   />
@@ -246,7 +254,7 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'waiting'
                     )}
                   />
@@ -255,12 +263,28 @@ const Filter = (props: IFilterProps) => {
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6 gap-4">
               <Button
                 type="submit"
                 className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
               >
                 Filtrar resultados
+              </Button>
+              <Button
+                type="button"
+                className="flex gap-2 text-blue-500 font-medium text-lg bg-transparent hover:bg-blue-500 hover:text-white w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSearch('');
+                  setFilterData(initialFilterData);
+                  resetForm({
+                    values: initialFormValues,
+                  });
+                  setSearchParams('');
+                  refreshFn();
+                }}
+              >
+                Limpar resultados
               </Button>
             </div>
           </div>
