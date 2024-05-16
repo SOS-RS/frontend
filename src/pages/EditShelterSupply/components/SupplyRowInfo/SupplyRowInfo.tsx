@@ -22,7 +22,7 @@ const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
       <div className="flex justify-end items-center gap-2">
         <CircleStatus className={className} />
         <p className="text-muted-foreground text-nowrap pl-1">{label}</p>
-        {Boolean(quantity) && <Badge className="bg-gray-700">{quantity}</Badge>}
+        {Boolean(quantity) && <Badge variant="secondary">{quantity}</Badge>}
       </div>
     </div>
   );

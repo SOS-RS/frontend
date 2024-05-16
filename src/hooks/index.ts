@@ -9,6 +9,8 @@ import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
 import { useViaCep } from './useViaCep';
 import { usePartners } from './usePartners';
+import { useGithubContributors } from './useGithubContributors';
+import { useAuthRoles } from './useAuthRoles';
 
 export {
   useShelters,
@@ -22,4 +24,6 @@ export {
   useSupplies,
   useViaCep,
   usePartners,
+  useGithubContributors,
+  useAuthRoles,
 };

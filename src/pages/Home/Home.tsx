@@ -3,13 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
-import { Footer, Header } from '@/components';
+import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { Filter } from './components/Filter';
-import { ShelterListView } from './components/ShelterListView';
+import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
-import { BurgerMenu } from '@/components/BurgerMenu';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
