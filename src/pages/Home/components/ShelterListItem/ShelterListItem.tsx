@@ -55,7 +55,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             {data.verified && (
                 <VerifiedBadge />
             )}
-              {data.petFriendly === true ? <PawPrint className='min-w-4 min-h-4 w-4 h-4 fill-[#1D61C8]' color="#1D61C8" /> : ''}
+              {data?.petFriendly && <PawPrint className='min-w-4 min-h-4 w-4 h-4 fill-[#1D61C8]' color="#1D61C8" />}
           </div>
           <Button size="sm" variant="ghost">
             <ChevronRight className="h-5 w-5" />

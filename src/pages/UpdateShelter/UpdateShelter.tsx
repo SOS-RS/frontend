@@ -224,15 +224,15 @@ const UpdateShelter = () => {
               <CardContent className='space-y-4'>
                 <SelectField
                   label="O abrigo aceita animais"
-                  value={values.petFriendly ? 'true' : 'false'}
+                  value={!!values.petFriendly}
                   onSelectChange={(v) => {
-                    setFieldValue('petFriendly', v === 'true')
-                    setFieldValue('petsCapacity', v === 'true' ? values.petsCapacity : 0)
-                    setFieldValue('shelteredPets', v === 'true' ? values.shelteredPets : 0)
+                    setFieldValue('petFriendly', v)
+                    setFieldValue('petsCapacity', v ? values.petsCapacity : 0)
+                    setFieldValue('shelteredPets', v ? values.shelteredPets : 0)
                   } }
                   options={[
-                    { value: 'true', label: 'Sim' },
-                    { value: 'false', label: 'Não' },
+                    { value: true, label: 'Sim' },
+                    { value: false, label: 'Não' },
                   ]}
                 />
                   <div className="grid md:grid-cols-2 gap-4">
