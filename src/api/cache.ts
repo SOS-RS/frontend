@@ -39,7 +39,8 @@ function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
   if (
     config.method === 'get' &&
     config.url &&
-    config.headers['x-app-cache'] === 'true'
+    config.headers['x-app-cache'] === 'true' &&
+    config.headers['x-app-reset'] !== 'true'
   ) {
     const url = 'cache:' + config.url + '?' + qs.stringify(config.params);
     const cache = localStorage.getItem(url);
