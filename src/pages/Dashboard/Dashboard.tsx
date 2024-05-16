@@ -5,10 +5,10 @@ import { SessionContext } from '@/contexts';
 import { useShelters } from '@/hooks';
 
 import { LogOutIcon } from 'lucide-react';
-import { ShelterOverview } from './components';
+import { NeedsSuppliesCard, ShelterOverview } from './components';
 
 const Dashboard = () => {
-  const { data: shelters, loading } = useShelters({ cache: true });
+  const { data: shelters, loading } = useShelters({ cache: false });
 
   const {
     loading: loadingSession,
@@ -47,11 +47,19 @@ const Dashboard = () => {
         }
       />
       <div className="flex flex-col">
-        <h1 className="font-bold text-2xl justify-self-start mb-8 mt-4">Visão Geral</h1>
+        <h1 className="font-bold text-2xl justify-self-start mb-8 mt-4">
+          Visão Geral
+        </h1>
         <ShelterOverview
           shelters={shelters.results}
           totalShelters={shelters.count}
         />
+      </div>
+      <div className="flex flex-col">
+        <h1 className="font-bold text-2xl justify-self-start mt-4 mb-8">
+          Visão geral das necessidades
+        </h1>
+        <NeedsSuppliesCard supplies={{ name: 'Arroz' }} />
       </div>
       <Footer />
     </div>
