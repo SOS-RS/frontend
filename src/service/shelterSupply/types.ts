@@ -4,16 +4,17 @@ export interface IShelterSupply {
   id: string;
   shelterId: string;
   supplyId: string;
+  quantity?: number | null;
   priority: SupplyPriority;
   createdAt: string;
   updatedAt?: string | null;
 }
 
 export type IUpdateShelterSupply = Partial<
-  Pick<IShelterSupply, 'priority' | 'shelterId' | 'supplyId'>
+  Pick<IShelterSupply, 'priority' | 'shelterId' | 'supplyId' | 'quantity'>
 >;
 
 export type ICreateShelterSupply = Pick<
   IShelterSupply,
-  'priority' | 'shelterId' | 'supplyId'
+  'priority' | 'shelterId' | 'supplyId' | 'quantity'
 >;

@@ -5,11 +5,14 @@ import {
   PawPrint,
   Landmark,
   Smartphone,
+  Building,
+  MapPinned,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
 import { ICardAboutShelter } from './types';
 import { InfoRow } from './components';
+import { checkAndFormatAddress } from './utils';
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
@@ -17,20 +20,35 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
   };
+  const formatAddress = checkAndFormatAddress(shelter, false);
 
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
-      <div className="text-[#646870] font-medium">Sobre o abrigo</div>
+      <p className="text-[#646870] font-medium">Sobre o abrigo</p>
       <div className="flex flex-col flex-wrap gap-3">
-        <InfoRow icon={<Home />} label={shelter.address} />
+        <InfoRow icon={<Home />} label={formatAddress} />
+        {Boolean(shelter.city) && (
+          <InfoRow icon={<Building />} label="Cidade:" value={shelter.city} />
+        )}
+        {Boolean(shelter.zipCode) && (
+          <InfoRow icon={<MapPinned />} label="CEP:" value={shelter.zipCode} />
+        )}
         <InfoRow
           icon={<PawPrint />}
           label={
-            check(shelter.petFriendly)
-              ? shelter.petFriendly
-                ? 'O abrigo aceita animais'
-                : 'O abrigo não aceita animais'
-              : 'Não informado se aceita animais'
+            check(shelter.petFriendly) ? (
+              shelter.petFriendly ? (
+                <p>
+                  O abrigo <b>aceita</b> animais
+                </p>
+              ) : (
+                <p>
+                  O abrigo <b>não</b> aceita animais
+                </p>
+              )
+            ) : (
+              <b>Não informado se aceita animais</b>
+            )
           }
         />
         <InfoRow
@@ -57,11 +75,13 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={
             check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
           }
+          clipboardButton={check(shelter.contact)}
         />
         <InfoRow
           icon={<Landmark />}
           label="Chave Pix:"
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+          clipboardButton={check(shelter.pix)}
         />
       </div>
     </Card>

@@ -13,6 +13,7 @@ import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { clearCache } from '@/api/cache';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -29,7 +30,16 @@ const EditShelterSupply = () => {
         if (v) {
           setFilteredSupplies(
             supplies.filter((s) =>
-              s.name.toLowerCase().includes(v.toLowerCase())
+              s.name
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .includes(
+                  v
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                )
             )
           );
         } else setFilteredSupplies(supplies);
@@ -41,7 +51,7 @@ const EditShelterSupply = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
     IDialogSelectorProps,
-    'value' | 'onSave'
+    'value' | 'onSave' | 'quantity'
   > | null>();
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
@@ -56,17 +66,18 @@ const EditShelterSupply = () => {
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
-      console.log('Item: ', item);
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
-        onSave: (v) => {
+        quantity: item.quantity ?? 0,
+        onSave: (v, quantity) => {
           const isNewSupply = item.priority === undefined;
           setLoadingSave(true);
 
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            clearCache(false);
             refresh();
           };
 
@@ -83,6 +94,7 @@ const EditShelterSupply = () => {
               shelterId,
               supplyId: item.id,
               priority: +v,
+              quantity,
             })
               .then(successCallback)
               .catch(errorCallback)
@@ -90,7 +102,10 @@ const EditShelterSupply = () => {
                 setLoadingSave(false);
               });
           } else {
-            ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
+            ShelterSupplyServices.update(shelterId, item.id, {
+              priority: +v,
+              quantity,
+            })
               .then(successCallback)
               .catch(errorCallback)
               .finally(() => {
@@ -183,6 +198,7 @@ const EditShelterSupply = () => {
                 return {
                   id: v.id,
                   name: v.name,
+                  quantity: supply?.quantity,
                   priority: supply?.priority,
                 };
               });
