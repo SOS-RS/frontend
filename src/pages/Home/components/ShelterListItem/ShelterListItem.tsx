@@ -60,7 +60,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           </div>
           <div>
           <h2 className='font-semibold text-sm h-full'>
-              {data.city ? data.city : "Cidade Não Cadastrada"}
+              {data?.city ?? "Cidade Não Cadastrada"}
           </h2>
           </div>
           <Button size="sm" variant="ghost">
