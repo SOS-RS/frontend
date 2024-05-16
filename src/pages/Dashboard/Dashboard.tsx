@@ -1,48 +1,31 @@
-import { useContext } from 'react';
-import { Footer, Header } from '@/components';
+import { BurgerMenu, Footer, Header } from '@/components';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
-import { useShelters } from '@/hooks';
 
-import { LogOutIcon } from 'lucide-react';
 import { NeedsSuppliesCard, ShelterOverview } from './components';
+import { RotateCw } from 'lucide-react';
+import { useDashboard } from '@/hooks/useDashboard/useDashboard';
 
 const Dashboard = () => {
-  const { data: shelters, loading } = useShelters({ cache: false });
-
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
+  const { data: shelters, loading, refresh } = useDashboard({ cache: false });
 
   if (loading) return null;
   console.log(shelters);
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
-        title="SOS Rio Grande do Sul - Dashboard"
+        title="SOS Rio Grande do Sul"
+        startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
-            {session && (
-              <h3 className="text-white font-thin">
-                Bem vindo, {session.name}
-              </h3>
-            )}
-            {session && (
-              <Button
-                loading={loadingSession}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  refreshSession();
-                }}
-                className="disabled:bg-red-500 hover:bg-red-400"
-              >
-                <LogOutIcon size={20} className="stroke-white" />
-              </Button>
-            )}
+            <Button
+              loading={loading}
+              variant="ghost"
+              size="sm"
+              onClick={() => refresh()}
+              className="disabled:bg-red-500 hover:bg-red-400"
+            >
+              <RotateCw size={20} className="stroke-white" />
+            </Button>
           </div>
         }
       />
@@ -51,8 +34,8 @@ const Dashboard = () => {
           Visão Geral
         </h1>
         <ShelterOverview
-          shelters={shelters.results}
-          totalShelters={shelters.count}
+          allPeopleShelters={shelters.allPeopleSheltered}
+          totalShelters={shelters.allShelters}
         />
       </div>
       <div className="flex flex-col">

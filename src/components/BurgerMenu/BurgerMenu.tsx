@@ -65,6 +65,11 @@ const BurgerMenu = () => {
             link="/politica-de-privacidade"
             icon={<Info className="w-4 h-4" />}
           />
+          <BurguerMenuItem
+            label="Visão Geral"
+            link="/dashboar"
+            icon={<Info className="w-4 h-4" />}
+          />
           <Separator />
           {partners.length > 0 && (
             <Fragment>
