@@ -2,6 +2,7 @@ import Select from 'react-select';
 
 import { useShelterCities } from '@/hooks';
 import { ISelectField } from './types';
+import { useTheme } from '@/components/Theme/provider';
 
 interface CitiesFilterInterface<S> {
   cities: S;
@@ -13,6 +14,7 @@ export const CitiesFilter = ({
   setCities,
 }: CitiesFilterInterface<string[]>) => {
   const { data, loading } = useShelterCities();
+  const { theme } = useTheme();
 
   if (loading) return null;
 
@@ -39,6 +41,21 @@ export const CitiesFilter = ({
           isMulti
           options={options}
           onChange={(v) => setCities(v.map((item) => item.value))}
+          styles={{
+            control: (baseStyles) => ({
+              ...baseStyles,
+              backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+            }),
+            menu: (baseStyles) => ({
+              ...baseStyles,
+              backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+            }),
+            option: (baseStyles) => ({
+              ...baseStyles,
+              backgroundColor: theme === "dark" ? "#5B6367" : "#E1EAFF",
+              color: "#000000",
+            }),
+          }}
         />
       </div>
     </div>
