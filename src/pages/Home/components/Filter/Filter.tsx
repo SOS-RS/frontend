@@ -152,6 +152,16 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue, values.shelterStatus]
   );
 
+  const clearFilters = () => {
+    setSearch('');
+    setFilterData(initialFilterData);
+    resetForm({
+      values: initialFormValues,
+    });
+    setSearchParams('');
+    refreshFn();
+  };
+
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
   return (
@@ -308,13 +318,7 @@ const Filter = (props: IFilterProps) => {
                 className="flex gap-2 text-blue-500 font-medium text-lg bg-transparent hover:bg-blue-500 hover:text-white w-full"
                 onClick={(e) => {
                   e.preventDefault();
-                  setSearch('');
-                  setFilterData(initialFilterData);
-                  resetForm({
-                    values: initialFormValues,
-                  });
-                  setSearchParams('');
-                  refreshFn();
+                  clearFilters();
                 }}
               >
                 Limpar resultados
