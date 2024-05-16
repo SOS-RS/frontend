@@ -8,12 +8,12 @@ import { Accordion } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group } from '@/lib/utils';
+
 import { ShelterSupplyServices } from '@/service';
 import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { group, normalizedCompare } from '@/lib/utils';
 import { SupplyRow } from './components';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
-
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
