@@ -85,6 +85,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
+        showDisabled: data.showDisabled ?? true,
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -101,6 +102,7 @@ const Filter = (props: IFilterProps) => {
           supplies,
           supplyCategories,
           cities,
+          showDisabled,
         } = values;
         onSubmit({
           priority: priority?.value ? +priority.value : null,
@@ -109,6 +111,7 @@ const Filter = (props: IFilterProps) => {
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
           cities,
+          showDisabled,
         });
       },
     }
@@ -284,6 +287,25 @@ const Filter = (props: IFilterProps) => {
                     )}
                   />
                   Sem informação de disponibilidade
+                </label>
+              </div>
+            </div>
+            <Separator className="mt-2" />
+            <div className="flex flex-col gap-2 w-full my-4">
+              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+                Exibição dos abrigos
+              </p>
+              <div>
+                <label className="flex items-center mb-4">
+                  <input
+                    type="checkbox"
+                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    defaultChecked={values.showDisabled}
+                    onChange={(ev) =>
+                      setFieldValue('showDisabled', ev.target.checked)
+                    }
+                  />
+                  Exibir abrigos desativados na listagem
                 </label>
               </div>
             </div>
