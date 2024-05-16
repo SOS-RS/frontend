@@ -33,7 +33,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
 
     const [filterParamsUrl] = useSearchParams();
 
-    const filterValues = [...filterParamsUrl.values()].filter(Boolean);
+    const filteredValues = [...filterParamsUrl.values()].filter(Boolean);
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -77,7 +77,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             <ListFilter className="h-5 w-5 stroke-blue-500" />
             Filtros
           </Button>
-          {filterValues.length > 0 && (
+          {filteredValues.length > 0 && (
             <Button
               variant="ghost"
               size="sm"
