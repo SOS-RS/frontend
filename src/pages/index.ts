@@ -1,5 +1,4 @@
 import { SignIn } from './SignIn';
-
 import { Home } from './Home';
 import { Shelter } from './Shelter';
 import { EditShelterSupply } from './EditShelterSupply';
@@ -8,6 +7,7 @@ import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
 import { PrivacyPolicy } from './PrivacyPolicy';
 import { AboutUs } from './AboutUs';
+import { Supporters } from './Supporters';
 
 export {
   SignIn,
@@ -19,4 +19,5 @@ export {
   UpdateShelter,
   PrivacyPolicy,
   AboutUs,
+  Supporters,
 };
