@@ -24,7 +24,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
         {value}
       </a>
     ) : (
-      <h1 className="font-semibold">{value}</h1>
+      <p className="font-semibold">{value}</p>
     );
 
     return (

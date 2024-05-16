@@ -97,6 +97,7 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
             size="sm"
             className="flex gap-2 items-center"
             onClick={() => setOpened((v) => !v)}
+            aria-expanded={opened}
           >
             <span className="text-lg font-normal text-blue-500">
               {btnLabel}

@@ -101,73 +101,75 @@ const Shelter = () => {
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
-        <div className="flex items-center gap-1">
-          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-            {shelter.name}
-          </h1>
-          {shelter.verified && <VerifiedBadge />}
-        </div>
-        <div className="flex items-center justify-between pr-4">
-          <h1 className={cn(availabilityClassName, 'font-semibold')}>
-            {availability}
-          </h1>
-          <Button
-            variant="ghost"
-            className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-            onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
-          >
-            Editar abrigo
-            <Pencil size={17} className="stroke-blue-600" />
-          </Button>
-        </div>
-        <div className="p-4">
-          <CardAboutShelter shelter={shelter} />
-        </div>
-        <div className="flex justify-between p-4 items-center">
-          <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-          <div className="flex gap-2 items-center ">
+      <main className="p-4 flex flex-col max-w-5xl w-full h-full ">
+        <section>
+          <div className="flex items-center gap-1">
+            <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+              {shelter.name}
+            </h1>
+            {shelter.verified && <VerifiedBadge />}
+          </div>
+          <div className="flex items-center justify-between pr-4">
+            <p className={cn(availabilityClassName, 'font-semibold')}>
+              {availability}
+            </p>
             <Button
               variant="ghost"
               className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-              onClick={() => navigate(`/abrigo/${shelterId}/items`)}
+              onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
             >
-              Editar itens
+              Editar abrigo
               <Pencil size={17} className="stroke-blue-600" />
             </Button>
           </div>
-        </div>
-        <div className="flex flex-col gap-8 p-4 ">
-          {shelterCategories.map((categoryProps, idx) => (
-            <ShelterCategoryItems
-              onSelectTag={handleSelectTag}
-              selectedTags={selectedTags}
-              key={idx}
-              {...categoryProps}
-            />
-          ))}
-        </div>
-        {shelter.updatedAt && (
+          <div className="p-4">
+            <CardAboutShelter shelter={shelter} />
+          </div>
           <div className="flex justify-between p-4 items-center">
-            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
-            </small>
+            <h3 className="font-semibold text-[18px]">Itens do abrigo</h3>
+            <div className="flex gap-2 items-center ">
+              <Button
+                variant="ghost"
+                className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+                onClick={() => navigate(`/abrigo/${shelterId}/items`)}
+              >
+                Editar itens
+                <Pencil size={17} className="stroke-blue-600" />
+              </Button>
+            </div>
           </div>
-        )}
-        <Authenticated role="DistributionCenter">
-          <div className="flex w-full p-4">
-            <Button
-              className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
-              size="sm"
-              disabled={loadingUpdateMany || selectedTags.length === 0}
-              loading={loadingUpdateMany}
-              onClick={handleUpdateMany}
-            >
-              Atender pedido
-            </Button>
+          <div className="flex flex-col gap-8 p-4 ">
+            {shelterCategories.map((categoryProps, idx) => (
+              <ShelterCategoryItems
+                onSelectTag={handleSelectTag}
+                selectedTags={selectedTags}
+                key={idx}
+                {...categoryProps}
+              />
+            ))}
           </div>
-        </Authenticated>
-      </div>
+          {shelter.updatedAt && (
+            <div className="flex justify-between p-4 items-center">
+              <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+                Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+              </small>
+            </div>
+          )}
+          <Authenticated role="DistributionCenter">
+            <div className="flex w-full p-4">
+              <Button
+                className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
+                size="sm"
+                disabled={loadingUpdateMany || selectedTags.length === 0}
+                loading={loadingUpdateMany}
+                onClick={handleUpdateMany}
+              >
+                Atender pedido
+              </Button>
+            </div>
+          </Authenticated>
+        </section>
+      </main>
     </div>
   );
 };
