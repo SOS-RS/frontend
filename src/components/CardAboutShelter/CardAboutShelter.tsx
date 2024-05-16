@@ -55,6 +55,30 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                 )
               }
             />
+
+            {shelter.petFriendly && (
+              <>
+                <InfoRow
+                  icon={<PawPrint />}
+                  label="Pets abrigados:"
+                  value={
+                    check(shelter.shelteredPets)
+                      ? `${shelter.shelteredPets} pets`
+                      : 'Não informado'
+                  }
+                />
+                <InfoRow
+                  icon={<PawPrint />}
+                  label="Capacidade de pets no abrigo:"
+                  value={
+                    check(shelter.petsCapacity)
+                      ? `${shelter.petsCapacity} pets`
+                      : 'Não informado'
+                  }
+                />
+              </>
+            )}
+
             <InfoRow
               icon={<HandHeart />}
               label="Pessoas abrigadas:"
@@ -64,6 +88,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                   : 'Não informado'
               }
             />
+
             <InfoRow
               icon={<UsersRound />}
               label="Capacidade do abrigo:"
@@ -73,22 +98,22 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                   : 'Não informado'
               }
             />
+            <InfoRow
+              icon={<Smartphone />}
+              label="Contato:"
+              value={
+                check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+              }
+              clipboardButton={check(shelter.contact)}
+            />
+            <InfoRow
+              icon={<Landmark />}
+              label="Chave Pix:"
+              value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+              clipboardButton={check(shelter.pix)}
+            />
           </Fragment>
         )}
-        <InfoRow
-          icon={<Smartphone />}
-          label="Contato:"
-          value={
-            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
-          }
-          clipboardButton={check(shelter.contact)}
-        />
-        <InfoRow
-          icon={<Landmark />}
-          label="Chave Pix:"
-          value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
-          clipboardButton={check(shelter.pix)}
-        />
       </div>
     </Card>
   );
