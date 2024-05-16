@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { GeolocationError, IGeolocation } from './types';
+import { IGeolocation } from './types';
 
 export const useGeolocation = () => {
   const [geolocation, setGeolocation] = useState<IGeolocation>({
@@ -18,21 +18,18 @@ export const useGeolocation = () => {
   };
 
   const showError = (error: GeolocationPositionError) => {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        setError(GeolocationError.PERMISSION_DENIED);
-        break;
-      case error.POSITION_UNAVAILABLE:
-        setError(GeolocationError.POSITION_UNAVAILABLE);
-        break;
-      case error.TIMEOUT:
-        setError(GeolocationError.TIMEOUT);
-        break;
-
-      default:
-        setError(GeolocationError.DEFAULT);
-        break;
-    }
+    const errorMessages: { [key: number]: string } = {
+      [GeolocationPositionError.PERMISSION_DENIED]:
+        'É preciso liberar a permissão de geolocalização.',
+      [GeolocationPositionError.POSITION_UNAVAILABLE]:
+        'Infelizmente não foi possível obter sua posição, talvez seu dispositivo esteja desatualizado.',
+      [GeolocationPositionError.TIMEOUT]:
+        'A requisição expirou, por favor tente novamente.',
+    };
+    const errorMessage =
+      errorMessages[error.code] ||
+      'Infelizmente não foi possível obter seu endereço neste dispositivo.';
+    setError(errorMessage);
     setIsLoading(false);
   };
 

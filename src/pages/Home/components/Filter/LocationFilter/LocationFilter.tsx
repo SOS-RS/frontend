@@ -14,27 +14,20 @@ const PROXIMITY_INTERVAL_IN_METERS = 500;
 const LocationAdvice = () => {
   const currentOs = getOS();
 
-  if (currentOs === 'Android') {
-    return (
-      <Link
-        to={'https://support.google.com/accounts/answer/3467281?hl=pt-BR'}
-        target="_blank"
-        className="text-blue-600"
-      >
-        Clique aqui para mais informações sobre a opção de geolocalização do
-        Android
-      </Link>
-    );
-  }
-  if (currentOs === 'iOS') {
-    return (
-      <Link to={'https://support.apple.com/pt-br/102647'} target="_blank">
-        Veja mais informações sobre a opção de geolocalização do Iphone
-      </Link>
-    );
-  }
+  const devicesLinks: { [key: string]: string } = {
+    ['Android']:
+      'https://support.google.com/accounts/answer/3467281?hl=pt-BR#turn_on_off',
+    ['iOS']: 'https://support.apple.com/pt-br/102647',
+  };
+  const currentLink =
+    devicesLinks[currentOs] ||
+    'https://support.google.com/chrome/answer/142065?hl=pt-BR&co=GENIE.Platform%3DDesktop&sjid=11531706076940529676-SA';
 
-  return null;
+  return (
+    <Link to={currentLink} target="_blank" className="text-blue-600">
+      Veja mais informações sobre a opção de geolocalização do Iphone
+    </Link>
+  );
 };
 
 const LocationFilter = ({
