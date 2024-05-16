@@ -30,6 +30,23 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
    ```
    cd frontend
    ```
+
+Instale e execute o projeto utilizando uma das duas opções abaixo (Docker ou o Node.js local):
+
+#### Docker
+
+3. Instale as dependências:
+   ```
+   docker-compose -f docker-compose.dev.yml build
+   ```
+
+4. Inicie o servidor de desenvolvimento:
+   ```
+   docker-compose -f docker-compose.dev.yml up
+   ```
+
+#### Node Local
+
 3. Instale as dependências:
    ```
    npm install
@@ -38,7 +55,8 @@ Para executar o frontend do aplicativo em seu ambiente local, siga os passos aba
    ```
    npm run dev
    ```
-   O app estará disponível em `http://localhost:5173`.
+ 
+O app estará disponível em `http://localhost:5173`.
 
 ## Contribuindo
 
