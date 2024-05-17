@@ -3,5 +3,6 @@ export interface IBurguerMenuItemProps
   label: string;
   icon?: React.ReactNode;
   link?: string;
+  openExternal?: boolean;
   onClick?: () => void;
 }
