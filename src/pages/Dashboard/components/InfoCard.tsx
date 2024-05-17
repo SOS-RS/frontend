@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 
 interface IInfoCard {
   totalAvaliable: number;
@@ -19,15 +20,19 @@ const InfoCard = ({
 
       <div className="box-border border-2 rounded-xl ">
         <Link to={''}>
-          <div className="w-full bg-green-300">
-            Disponíveis {totalAvaliable}
+          <div className="bg-green-300 flex justify-between pl-2">
+            Disponíveis {totalAvaliable} <ChevronRight />
           </div>
         </Link>
         <Link to={''}>
-          <div className="bg-red-300">Lotados {totalCrowded}</div>
+          <div className="bg-red-300 flex justify-between pl-2">
+            Lotados {totalCrowded} <ChevronRight />
+          </div>
         </Link>
         <Link to={''}>
-          <div className="bg-gray-300">Sem informação {totalNoInformation}</div>
+          <div className="bg-gray-300 flex justify-between pl-2">
+            Sem informação {totalNoInformation} <ChevronRight />
+          </div>
         </Link>
       </div>
     </div>
