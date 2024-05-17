@@ -2,6 +2,7 @@ import { Fragment, useCallback, useContext } from 'react';
 import {
   CircleHelp,
   CirclePlus,
+  Home,
   DoorOpen,
   HeartHandshake,
   Info,
@@ -46,31 +47,38 @@ const BurgerMenu = () => {
               <Separator />
             </Fragment>
           )}
+
           <BurguerMenuItem
-            label="Sobre nós"
-            link="/sobre-nos"
-            icon={<Info className="w-4 h-4" />}
+            label="Abrigos"
+            link="/"
+            icon={<Home className="w-6 h-6" />}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon={<CirclePlus className="w-4 h-4" />}
+            icon={<CirclePlus className="w-6 h-6" />}
           />
           <BurguerMenuItem
             label="Como Ajudar"
             link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon={<CircleHelp className="w-4 h-4" />}
+            icon={<CircleHelp className="w-6 h-6" />}
           />
           <BurguerMenuItem
             label="Política de Privacidade"
             link="/politica-de-privacidade"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="w-6 h-6" />}
           />
           <BurguerMenuItem
             label="Apoiadores"
             link="/apoiadores"
-            icon={<HeartHandshake className="w-4 h-4" />}
+            icon={<HeartHandshake className="w-6 h-6" />}
           />
+          <BurguerMenuItem
+            label="Sobre nós"
+            link="/sobre-nos"
+            icon={<Info className="w-6 h-6" />}
+          />
+
           <Separator />
           {partners.length > 0 && (
             <Fragment>
@@ -80,7 +88,7 @@ const BurgerMenu = () => {
                   key={idx}
                   label={partner.name}
                   link={partner.link}
-                  icon={<LinkIcon className="w-4 h-4" />}
+                  icon={<LinkIcon className="w-6 h-6" />}
                 />
               ))}
             </Fragment>
