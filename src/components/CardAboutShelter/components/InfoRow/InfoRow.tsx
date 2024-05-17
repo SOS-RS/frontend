@@ -10,6 +10,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
       value,
       clipboardButton = false,
       className = '',
+      iconTwo,
       ...rest
     } = props;
     const isLink = value?.startsWith('http');
@@ -56,6 +57,9 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             )}
           </span>
         </div>
+        {React.cloneElement(iconTwo as any, {
+          className: 'min-w-5 min-h-5 w-5 h-5 stroke-muted-foreground',
+        })}
       </div>
     );
   }
