@@ -41,7 +41,10 @@ export const useGeolocation = () => {
     if (geolocation.latitude && geolocation.longitude) return;
 
     setIsLoading(true);
-    if (!window.navigator.geolocation) return;
+    if (!window.navigator.geolocation) {
+      setIsLoading(false);
+      return;
+    }
 
     window.navigator.geolocation.getCurrentPosition(
       (position) => showPosition(position),

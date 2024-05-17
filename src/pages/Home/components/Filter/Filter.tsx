@@ -176,8 +176,7 @@ const Filter = (props: IFilterProps) => {
             </div>
             <Separator className="mt-2" />
             <LocationFilter
-              geolocationFormValues={values?.geolocation}
-              geolocationValues={data?.geolocation}
+              geolocationValues={values?.geolocation}
               setFieldValue={setFieldValue}
               error={getIn(errors, 'geolocation.radiusInMeters')}
             />
