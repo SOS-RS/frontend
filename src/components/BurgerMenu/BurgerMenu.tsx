@@ -34,9 +34,9 @@ const BurgerMenu = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu color="white" className="ml-2 mr-2" />
+        <Menu color="white" className="ml-2 mr-2 " />
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col">
+      <SheetContent side="left" className="pt-[96px] flex flex-col ">
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
@@ -49,19 +49,23 @@ const BurgerMenu = () => {
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
+            targetLink=''
             icon={<Info className="w-4 h-4" />}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"
+            targetLink='_blank'
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
             icon={<CirclePlus className="w-4 h-4" />}
           />
           <BurguerMenuItem
             label="Como Ajudar"
+            targetLink='_blank'
             link="https://www.instagram.com/reel/C613CfGuh4b"
             icon={<CircleHelp className="w-4 h-4" />}
           />
           <BurguerMenuItem
+            targetLink=''
             label="Política de Privacidade"
             link="/politica-de-privacidade"
             icon={<Info className="w-4 h-4" />}
@@ -69,6 +73,7 @@ const BurgerMenu = () => {
           <BurguerMenuItem
             label="Apoiadores"
             link="/apoiadores"
+            targetLink=''
             icon={<HeartHandshake className="w-4 h-4" />}
           />
           <Separator />
@@ -78,6 +83,7 @@ const BurgerMenu = () => {
               {partners.map((partner, idx) => (
                 <BurguerMenuItem
                   key={idx}
+                  targetLink='_blank'
                   label={partner.name}
                   link={partner.link}
                   icon={<LinkIcon className="w-4 h-4" />}
