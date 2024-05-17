@@ -10,7 +10,7 @@ const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
 
   const { className, label } = useMemo(
     () => getSupplyPriorityProps(priority),
-    [priority]
+    [priority],
   );
 
   return (

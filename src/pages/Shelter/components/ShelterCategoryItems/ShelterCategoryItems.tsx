@@ -22,11 +22,11 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const maxVisibleSupplies: number = 10;
   const visibleSupplies = useMemo(
     () => (opened ? tags : tags.slice(0, maxVisibleSupplies)),
-    [opened, tags]
+    [opened, tags],
   );
   const { className: circleClassName, label } = useMemo(
     () => getSupplyPriorityProps(priority),
-    [priority]
+    [priority],
   );
 
   const Icon = opened ? ChevronUp : ChevronDown;

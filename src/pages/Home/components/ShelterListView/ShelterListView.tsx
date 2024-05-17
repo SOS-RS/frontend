@@ -116,7 +116,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         </main>
       </div>
     );
-  }
+  },
 );
 
 export { ShelterListView };

@@ -48,14 +48,14 @@ const Shelter = () => {
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () => getAvailabilityProps(shelter?.capacity, shelter?.shelteredPeople),
-      [shelter?.capacity, shelter?.shelteredPeople]
+      [shelter?.capacity, shelter?.shelteredPeople],
     );
   const [loadingUpdateMany, setLoadingUpdateMany] = useState<boolean>(false);
   const { toast } = useToast();
 
   const handleSelectTag = useCallback((v: ITagItem) => {
     setSelectedTags((prev) =>
-      prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v]
+      prev.includes(v) ? prev.filter((p) => p.value !== v.value) : [...prev, v],
     );
   }, []);
 
@@ -63,7 +63,7 @@ const Shelter = () => {
     setLoadingUpdateMany(true);
     ShelterSupplyServices.updateMany(
       shelterId,
-      selectedTags.map((s) => s.value)
+      selectedTags.map((s) => s.value),
     )
       .then(() => {
         toast({

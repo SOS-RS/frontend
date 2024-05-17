@@ -47,7 +47,10 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string().required('Este campo deve ser preenchido'),
-      quantity: Yup.number().typeError('Insira um valor númerico').moreThan(0, 'O valor tem que ser maior do que 0').optional(),
+      quantity: Yup.number()
+        .typeError('Insira um valor númerico')
+        .moreThan(0, 'O valor tem que ser maior do que 0')
+        .optional(),
       priority: Yup.string().required('Este campo deve ser preenchido'),
       supplyCategoryId: Yup.string().required('Este campo deve ser preenchido'),
     }),

@@ -23,7 +23,7 @@ const EditShelterSupply = () => {
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
   const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
-    []
+    [],
   );
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
@@ -32,12 +32,12 @@ const EditShelterSupply = () => {
       callback: (v) => {
         if (v) {
           setFilteredSupplies(
-            supplies.filter((s) => normalizedCompare(s.name, v))
+            supplies.filter((s) => normalizedCompare(s.name, v)),
           );
         } else setFilteredSupplies(supplies);
       },
     },
-    [supplies]
+    [supplies],
   );
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -48,13 +48,13 @@ const EditShelterSupply = () => {
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
       (prev, current) => ({ ...prev, [current.supply.id]: current }),
-      {} as Record<string, IUseShelterDataSupply>
+      {} as Record<string, IUseShelterDataSupply>,
     );
   }, [shelter?.shelterSupplies]);
   const supplyGroups = useMemo(
     () =>
       group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
-    [filteredSupplies]
+    [filteredSupplies],
   );
 
   const handleClickSupplyRow = useCallback(
@@ -108,7 +108,7 @@ const EditShelterSupply = () => {
         },
       });
     },
-    [refresh, shelterId, toast]
+    [refresh, shelterId, toast],
   );
 
   useEffect(() => {
