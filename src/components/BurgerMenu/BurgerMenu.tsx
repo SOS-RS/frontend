@@ -3,6 +3,7 @@ import {
   CircleHelp,
   CirclePlus,
   DoorOpen,
+  HeartHandshake,
   Info,
   LinkIcon,
   Menu,
@@ -64,6 +65,11 @@ const BurgerMenu = () => {
             label="Política de Privacidade"
             link="/politica-de-privacidade"
             icon={<Info className="w-4 h-4" />}
+          />
+          <BurguerMenuItem
+            label="Apoiadores"
+            link="/apoiadores"
+            icon={<HeartHandshake className="w-4 h-4" />}
           />
           <Separator />
           {partners.length > 0 && (
