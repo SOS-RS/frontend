@@ -87,6 +87,25 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </Button>
           )}
         </div>
+				<div>
+					<p>
+						<strong>Legenda dos itens para doação</strong>
+					</p>
+					<ul>
+						<li className="flex gap-2 items-center">
+							<div className="w-4 h-4 rounded-md bg-light-red"></div>
+							Necessita urgente
+						</li>
+						<li className="flex gap-2 items-center">
+							<div className="w-4 h-4 rounded-md bg-light-orange"></div>
+							Precisa
+						</li>
+						<li className="flex gap-2 items-center">
+							<div className="w-4 h-4 rounded-md bg-light-green"></div>
+							Disponível para doação
+						</li>
+					</ul>
+				</div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <LoadingSkeleton amountItems={4} />
