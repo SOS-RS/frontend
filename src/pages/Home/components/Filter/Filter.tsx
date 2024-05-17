@@ -321,7 +321,7 @@ const Filter = (props: IFilterProps) => {
                   clearFilters();
                 }}
               >
-                Limpar resultados
+                Limpar filtros
               </Button>
             </div>
           </DialogFooter>
