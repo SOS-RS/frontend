@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
@@ -26,7 +26,7 @@ const Home = () => {
     ...initialFilterData,
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
-  const [forceRefresh, setForceRefresh] = useState(false); // Estado adicional para forçar o refresh
+  const [forceRefresh, setForceRefresh] = useState(false);
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -43,36 +43,33 @@ const Home = () => {
     []
   );
 
-  const clearSearch = useCallback(() => {
+  const clearSearch = () => {
     setSearch('');
     setFilterData(initialFilterData);
     setSearchParams('');
     refresh();
-  }, [refresh, setSearch, setSearchParams]);
+  };
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
     [shelters.page, shelters.perPage, shelters.count]
   );
 
-  const onSubmitFilterForm = useCallback(
-    (values: IFilterFormProps) => {
-      setOpenModal(false);
-      setFilterData(values);
-      const searchQuery = qs.stringify(values, {
-        skipNulls: true,
-      });
-      setSearchParams(searchQuery);
-      refresh({
-        params: {
-          search: searchQuery,
-        },
-      });
-    },
-    [refresh, setSearchParams]
-  );
+  const onSubmitFilterForm = (values: IFilterFormProps) => {
+    setOpenModal(false);
+    setFilterData(values);
+    const searchQuery = qs.stringify(values, {
+      skipNulls: true,
+    });
+    setSearchParams(searchQuery);
+    refresh({
+      params: {
+        search: searchQuery,
+      },
+    });
+  };
 
-  const handleFetchMore = useCallback(() => {
+  const handleFetchMore = () => {
     const params = {
       ...shelters.filters,
       page: shelters.page + 1,
@@ -86,11 +83,11 @@ const Home = () => {
       },
       true
     );
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
+  };
 
-  const handleRefreshClick = useCallback(() => {
+  const handleRefreshClick = () => {
     setForceRefresh((prev) => !prev);
-  }, []);
+  };
 
   return (
     <div className="flex flex-col h-screen items-center">
