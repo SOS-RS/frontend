@@ -7,13 +7,13 @@ const BurguerMenuItem = React.forwardRef<
   HTMLAnchorElement,
   IBurguerMenuItemProps
 >((props, ref) => {
-  const { icon, label, onClick, link, className = '', ...rest } = props;
+  const { icon, label, onClick, link, className = '', targetLink, ...rest } = props;
 
   return (
     <a
       ref={ref}
       href={link}
-      target="_blank"
+      target={targetLink}
       className={cn(
         'hover:font-semibold flex gap-2 items-center text-zinc-600 [&_svg]:stroke-zinc-500',
         className
