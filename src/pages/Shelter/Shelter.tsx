@@ -23,6 +23,7 @@ import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
 import { format } from 'date-fns';
+import { Share } from '@/components/Share';
 
 const Shelter = () => {
   const params = useParams();
@@ -112,6 +113,7 @@ const Shelter = () => {
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
           </h1>
+     
           <Button
             variant="ghost"
             className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
@@ -121,6 +123,7 @@ const Shelter = () => {
             <Pencil size={17} className="stroke-blue-600" />
           </Button>
         </div>
+        <Share />
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
         </div>
