@@ -111,10 +111,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => {
-                console.log("Refreshing data...");
-                handleRefreshClick;
-              }}
+              onClick={handleRefreshClick}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
