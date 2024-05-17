@@ -26,6 +26,7 @@ const Home = () => {
     ...initialFilterData,
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
+  const [forceRefresh, setForceRefresh] = useState(false); // Estado adicional para forçar o refresh
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -87,6 +88,10 @@ const Home = () => {
     );
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
+  const handleRefreshClick = useCallback(() => {
+    setForceRefresh((prev) => !prev);
+  }, []);
+
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (
@@ -106,7 +111,10 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
-              onClick={() => refresh()}
+              onClick={() => {
+                console.log("Refreshing data...");
+                handleRefreshClick;
+              }}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
@@ -115,6 +123,7 @@ const Home = () => {
         }
       />
       <ShelterListView
+        key={forceRefresh}
         loading={loading}
         count={shelters.count}
         data={shelters.results}
