@@ -40,17 +40,12 @@ export const useGeolocation = () => {
   const getLocation = useCallback(() => {
     if (geolocation.latitude && geolocation.longitude) return;
 
+    if (!window.navigator.geolocation) return;
     setIsLoading(true);
-    if (!window.navigator.geolocation) {
-      setIsLoading(false);
-      return;
-    }
 
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => showPosition(position),
-      (error) => showError(error),
-      { enableHighAccuracy: true }
-    );
+    window.navigator.geolocation.getCurrentPosition(showPosition, showError, {
+      enableHighAccuracy: true,
+    });
   }, [geolocation.latitude, geolocation.longitude]);
 
   return { isLoading, getLocation, clearData, geolocation, error };
