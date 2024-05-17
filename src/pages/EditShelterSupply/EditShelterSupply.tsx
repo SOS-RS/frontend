@@ -15,6 +15,7 @@ import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -185,27 +186,35 @@ const EditShelterSupply = () => {
             />
           </div>
           <div className="flex flex-col gap-2 w-full my-4">
-            {Object.entries(supplyGroups).map(([key, values], idx) => {
-              const items: ISupplyRowItemProps[] = values
-                .map((v) => {
-                  const supply = shelterSupplyData[v.id];
-                  return {
-                    id: v.id,
-                    name: v.name,
-                    quantity: supply?.quantity,
-                    priority: supply?.priority,
-                  };
-                })
-                .sort((a, b) => a.name.localeCompare(b.name));
-              return (
-                <SupplyRow
-                  key={idx}
-                  name={key}
-                  items={items}
-                  onClick={handleClickSupplyRow}
-                />
-              );
-            })}
+            <Accordion className="AccordionRoot" type="single" defaultValue="item-1" collapsible>
+              {Object.entries(supplyGroups).map(([key, values], idx) => {
+                const items: ISupplyRowItemProps[] = values
+                  .map((v) => {
+                    const supply = shelterSupplyData[v.id];
+                    return {
+                      id: v.id,
+                      name: v.name,
+                      quantity: supply?.quantity,
+                      priority: supply?.priority,
+                    };
+                  })
+                  .sort((a, b) => a.name.localeCompare(b.name));
+                return (
+                  <AccordionItem className="AccordionItem" value={key}>
+                    <AccordionTrigger>
+                      <h3 className="font-semibold text-lg">{key}</h3>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <SupplyRow
+                        key={idx}
+                        items={items}
+                        onClick={handleClickSupplyRow}
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
           </div>
         </div>
       </div>

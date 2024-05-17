@@ -8,7 +8,7 @@ export interface ISupplyRowItemProps {
 }
 
 export interface ISupplyRowProps {
-  name: string;
+  name?: string;
   onClick?: (item: ISupplyRowItemProps) => void;
   items: ISupplyRowItemProps[];
 }
