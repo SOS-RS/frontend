@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IInfoRowProps } from './types';
 import clsx from 'clsx';
@@ -30,12 +30,31 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     );
     const [copied, setCopied] = useState(false);
     const copy = () => {
-      if (value) navigator.clipboard.writeText(value);
-      setCopied(true);
-      toast({
-        title: 'Chave copiada com sucesso!',
-      });
+      try {
+        navigator.clipboard.writeText(value as string);
+        toast({ title: 'Chave copiada com sucesso!' });
+        setCopied(true);
+      } catch (error) {
+        console.error(error);
+
+        toast({
+          variant: 'destructive',
+          title:
+            'Ocorreu um erro ao enviar os dados para a sua área de transferência. Por gentileza, copie manualmente.',
+        });
+      }
     };
+    useEffect(() => {
+      let timeout: NodeJS.Timeout;
+      if (copied) {
+        timeout = setTimeout(() => {
+          setCopied(false);
+        }, 2000);
+      }
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [copied]);
     return (
       <div
         ref={ref}
