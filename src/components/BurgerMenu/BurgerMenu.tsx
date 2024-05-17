@@ -80,6 +80,11 @@ const BurgerMenu = () => {
             link="/apoiadores"
             icon={<HeartHandshake className="w-5 h-5" />}
           />
+          <BurguerMenuItem
+            label="Apoiadores"
+            link="/apoiadores"
+            icon={<HeartHandshake className="w-4 h-4" />}
+          />
           <Separator />
           {partners.length > 0 && (
             <Fragment>
