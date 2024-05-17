@@ -92,6 +92,8 @@ const Shelter = () => {
 
   if (loading) return <LoadingScreen />;
 
+  const parsedAddress = shelter?.address?.split(',').join('+');
+
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
@@ -114,6 +116,12 @@ const Shelter = () => {
           </h1>
           {shelter.verified && <VerifiedBadge />}
         </div>
+        {parsedAddress && (
+          <iframe
+            className="rounded-lg w-full h-60 md:h-96 mt-2"
+            src={`https://www.google.com/maps/embed/v1/place?q=${parsedAddress}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+          ></iframe>
+        )}
         <div className="flex items-center justify-between pr-4">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
