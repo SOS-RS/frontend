@@ -8,6 +8,7 @@ import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
 import { PrivacyPolicy } from './PrivacyPolicy';
 import { AboutUs } from './AboutUs';
+import { SupplyHistory } from './SupplyHistory';
 
 export {
   SignIn,
@@ -19,4 +20,5 @@ export {
   UpdateShelter,
   PrivacyPolicy,
   AboutUs,
+  SupplyHistory,
 };

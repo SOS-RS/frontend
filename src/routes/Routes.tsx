@@ -10,6 +10,7 @@ import {
   UpdateShelter,
   PrivacyPolicy,
   AboutUs,
+  SupplyHistory,
 } from '@/pages';
 
 const Routes = () => {
@@ -19,6 +20,10 @@ const Routes = () => {
       <Route path="/abrigo/:shelterId/atualizar" element={<UpdateShelter />} />
       <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
       <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />
+      <Route
+        path="/abrigo/:shelterId/items/historico"
+        element={<SupplyHistory />}
+      />
       <Route
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
