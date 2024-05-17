@@ -23,7 +23,7 @@ export const CitiesFilter = ({
   const options: ISelectField<string>[] = data.map((item) => ({
     label: `(${item.sheltersCount}) ${item.city}`,
     value: item.city,
-  }));
+  })).sort((a, b) => a.value.localeCompare(b.value));
 
   return (
     <div className="flex flex-col w-full gap-2">
