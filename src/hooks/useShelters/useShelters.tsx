@@ -17,10 +17,11 @@ const useShelters = (options: IUseShelterOptions = {}) => {
   });
 
   const refresh = useCallback(
-    (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
+    (config: AxiosRequestConfig<any> = {}, append: boolean = false, reset: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
       const headers = config.headers ?? {};
       if (cache) headers['x-app-cache'] = 'true';
+      if (reset) headers['x-app-reset'] = 'true';
       if (!append) setLoading(true);
       api
         .get<IServerResponse<any>>('/shelters', {
