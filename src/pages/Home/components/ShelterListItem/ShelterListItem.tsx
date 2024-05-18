@@ -19,13 +19,36 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import { ShelterSupplyCategoryRow } from '../ShelterSupplyCategoryRow';
 
+const Wrapper = ({
+  children,
+  active,
+  link,
+}: {
+  children: React.ReactNode;
+  link: string;
+  active: boolean;
+}) => {
+  if (active) return <Link to={link}>{children}</Link>;
+  else
+    return (
+      <div className="[&>div]:hover:bg-white [&_*]:text-muted-foreground [&>div]:blur-[1px]">
+        {children}
+      </div>
+    );
+};
+
 const ShelterListItem = (props: IShelterListItemProps) => {
   const { data } = props;
   const { capacity, shelteredPeople } = data;
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
-      () => getAvailabilityProps(capacity, shelteredPeople),
-      [capacity, shelteredPeople]
+      () =>
+        getAvailabilityProps({
+          capacity,
+          shelteredPeople,
+          category: data.category,
+        }),
+      [capacity, shelteredPeople, data.category]
     );
 
   const tags: ShelterTagInfo<IUseSheltersDataSupplyData[]> = useMemo(() => {
@@ -45,7 +68,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     : '(sem informação)';
 
   return (
-    <Link to={`/abrigo/${data.id}`} target="_blank">
+    <Wrapper link={`/abrigo/${data.id}`} active={data.actived}>
       <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
         <div className="inline-flex justify-between">
           <div className="flex flex-row items-center gap-1">
@@ -58,9 +81,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
               </div>
             )}
           </div>
-          <Button size="sm" variant="ghost">
-            <ChevronRight className="h-5 w-5" />
-          </Button>
+          {data.actived && (
+            <Button size="sm" variant="ghost">
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          )}
         </div>
         <h6 className={cn('font-semibold text-md', availabilityClassName)}>
           {availability}
@@ -88,7 +113,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           Atualizado em {updatedAtDate}
         </small>
       </div>
-    </Link>
+    </Wrapper>
   );
 };
 
