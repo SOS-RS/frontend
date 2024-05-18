@@ -166,7 +166,7 @@ const Filter = (props: IFilterProps) => {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
-            <div className="flex flex-col gap-2 w-full my-4">
+            <div className="flex flex-col gap-2 w-full mt-4">
               <SearchInput
                 value={values.search}
                 onChange={(ev) =>
@@ -174,7 +174,6 @@ const Filter = (props: IFilterProps) => {
                 }
               />
             </div>
-            <Separator className="mt-2" />
             <LocationFilter
               geolocationValues={values?.geolocation}
               setFieldValue={setFieldValue}

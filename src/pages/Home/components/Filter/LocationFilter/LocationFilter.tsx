@@ -3,6 +3,7 @@ import { Loader } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
 import { useGeolocation } from '@/hooks';
 import { ILocationFilter } from './types';
 import { getOS } from './utils';
@@ -71,32 +72,29 @@ const LocationFilter = ({
   return (
     <div className="flex flex-col gap-2 w-full my-4">
       <div>
-        <div className="flex flex-col gap-2 w-full">
-          <label className="flex items-center mb-2">
-            <input
-              type="checkbox"
-              className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              onChange={(event) => {
-                const { checked } = event.target;
-                setIsProximityChecked(checked);
-                if (checked) {
-                  getLocation();
-                  return;
-                }
+        <div className="flex flex-row gap-2 w-full">
+          <Switch
+            id="proximityCheck"
+            defaultChecked={isProximityChecked}
+            onCheckedChange={(checked) => {
+              // const { checked } = event.target;
+              setIsProximityChecked(checked);
+              if (checked) {
+                getLocation();
+                return;
+              }
 
-                setFieldValue('geolocation.radiusInMeters', undefined);
-                setFieldValue('geolocation.latitude', undefined);
-                setFieldValue('geolocation.longitude', undefined);
-              }}
-              defaultChecked={isProximityChecked}
-            />
-            Filtro por proximidade
-          </label>
-
+              setFieldValue('geolocation.radiusInMeters', undefined);
+              setFieldValue('geolocation.latitude', undefined);
+              setFieldValue('geolocation.longitude', undefined);
+            }}
+          ></Switch>
+          <label htmlFor="proximityCheck">Filtrar por proximidade</label>
           {isLoading && (
             <Loader className="animate-spin h-15 w-15 stroke-black" />
           )}
         </div>
+        <div className="flex flex-col gap-2 w-full"></div>
         {Boolean(errorGeolocation) && (
           <>
             <LocationAdvice />
@@ -105,14 +103,12 @@ const LocationFilter = ({
         )}
         {showFilter && (
           <div className="flex flex-col gap-2 w-full my-2 items-center">
-            <p className="text-sm md:text-md font-medium mb-5">
-              Selecione o raio máximo de abrigos na região(KM's ao redor)
-            </p>
-            {Boolean(error) && (
-              <div className="pb-2">
-                <p className={'text-red-600 text-sm'}>{error}</p>
+            <div className="flex flex-row justify-start items-start w-full">
+              <div>Proximidade do abrigo</div>
+              <div className="ml-auto font-bold">
+                {normalizedRadiusMeters / 1000} km
               </div>
-            )}
+            </div>
             <div className="flex flex-row gap-2 w-full my-2 items-center justify-center">
               <Button
                 onClick={(event) => {
@@ -123,13 +119,20 @@ const LocationFilter = ({
                   );
                   setFieldValue('geolocation.radiusInMeters', newValue);
                 }}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
+                className="flex bg-white text-black hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
               >
                 -
               </Button>
-              <span className="w-2/6 justify-center flex">
-                {normalizedRadiusMeters / 1000} km
-              </span>
+              <Slider
+                max={MAX_PROXIMITY_IN_METERS}
+                step={PROXIMITY_INTERVAL_IN_METERS}
+                value={[geolocationValues?.radiusInMeters ?? 0]}
+                onValueChange={(value) => {
+                  setFieldValue('geolocation.radiusInMeters', value[0]);
+                }}
+                name="geolocation.radiusInMeters"
+                className=""
+              />
               <Button
                 onClick={(event) => {
                   event.preventDefault();
@@ -139,21 +142,16 @@ const LocationFilter = ({
                   );
                   setFieldValue('geolocation.radiusInMeters', newValue);
                 }}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600"
+                className="flex bg-white text-black hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
               >
                 +
               </Button>
             </div>
-            <Slider
-              max={MAX_PROXIMITY_IN_METERS}
-              step={PROXIMITY_INTERVAL_IN_METERS}
-              value={[geolocationValues?.radiusInMeters ?? 0]}
-              onValueChange={(value) => {
-                setFieldValue('geolocation.radiusInMeters', value[0]);
-              }}
-              name="geolocation.radiusInMeters"
-              className=""
-            />
+            {Boolean(error) && (
+              <div className="pb-2">
+                <p className={'text-red-600 text-sm'}>{error}</p>
+              </div>
+            )}
           </div>
         )}
       </div>
