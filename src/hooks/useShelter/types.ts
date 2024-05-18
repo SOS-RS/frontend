@@ -1,3 +1,8 @@
+export enum ShelterCategory {
+  Shelter = 'Shelter',
+  DistributionCenter = 'DistributionCenter',
+}
+
 export interface IUseShelterData {
   id: string;
   name: string;
@@ -17,6 +22,8 @@ export interface IUseShelterData {
   latitude?: string | null;
   longitude?: string | null;
   shelterSupplies: IUseShelterDataSupply[];
+  category: ShelterCategory;
+  actived: boolean;
   createdAt: string;
   updatedAt?: string | null;
 }
