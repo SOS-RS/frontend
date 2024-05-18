@@ -114,6 +114,13 @@ const Home = () => {
           </div>
         }
       />
+      <div>
+          <h1 className='txt-slogan'>Unidos pela Solidariedade: Juntos, reconstruímos o Rio Grande do Sul 🫶🏻</h1>
+      </div>
+
+        <div>
+          <img className='banner-sos' src="/public/sos.png" alt="Logotipo SOS RS" />
+        </div>
       <ShelterListView
         loading={loading}
         count={shelters.count}
