@@ -7,6 +7,7 @@ import {
   Info,
   LinkIcon,
   Menu,
+  ShieldAlert,
 } from 'lucide-react';
 
 import { SessionServices } from '@/service';
@@ -49,27 +50,35 @@ const BurgerMenu = () => {
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon={<CirclePlus className="w-4 h-4" />}
+            icon={<CirclePlus className="w-5 h-5" />}
+            openExternal={true}
+          />
+          <BurguerMenuItem
+            label="Canal de Denúncias"
+            link="https://contatoseguro.com.br/sos_rs"
+            icon={<ShieldAlert className="w-5 h-5" />}
+            openExternal={true}
           />
           <BurguerMenuItem
             label="Como Ajudar"
             link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon={<CircleHelp className="w-4 h-4" />}
+            icon={<CircleHelp className="w-5 h-5" />}
+            openExternal={true}
           />
           <BurguerMenuItem
             label="Política de Privacidade"
             link="/politica-de-privacidade"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Apoiadores"
             link="/apoiadores"
-            icon={<HeartHandshake className="w-4 h-4" />}
+            icon={<HeartHandshake className="w-5 h-5" />}
           />
           <Separator />
           {partners.length > 0 && (

@@ -1,3 +1,4 @@
+import { ShelterCategory } from '@/hooks/useShelter/types';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import {
   ShelterTagInfo,
@@ -41,11 +42,18 @@ function nameStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
 }
 
-function getAvailabilityProps(
-  capacity?: number | null,
-  shelteredPeople?: number | null
-) {
-  if (capacity && (shelteredPeople || shelteredPeople === 0)) {
+function getAvailabilityProps(props: {
+  capacity?: number | null;
+  shelteredPeople?: number | null;
+  category: ShelterCategory;
+}) {
+  const { category, capacity, shelteredPeople } = props;
+  if (category === ShelterCategory.DistributionCenter) {
+    return {
+      availability: 'Centro de Distribuição',
+      className: 'text-green-600',
+    };
+  } else if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',
