@@ -119,7 +119,7 @@ const LocationFilter = ({
                   );
                   setFieldValue('geolocation.radiusInMeters', newValue);
                 }}
-                className="flex bg-white text-black hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
+                className="flex bg-white text-blue-600 hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
               >
                 -
               </Button>
@@ -142,7 +142,7 @@ const LocationFilter = ({
                   );
                   setFieldValue('geolocation.radiusInMeters', newValue);
                 }}
-                className="flex bg-white text-black hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
+                className="flex bg-white text-blue-600 hover:bg-white rounded-full border-blue-600 border-2 p-0 m-0 hover:opacity-80 transition-colors duration-800 self-auto h-6 aspect-square"
               >
                 +
               </Button>
