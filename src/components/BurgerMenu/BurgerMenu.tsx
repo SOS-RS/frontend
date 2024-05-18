@@ -38,7 +38,7 @@ const BurgerMenu = () => {
         <Menu color="white" className="ml-2 mr-2" />
       </SheetTrigger>
       <SheetContent side="left" className="pt-[96px] flex flex-col">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 overflow-y-auto">
           {session && (
             <Fragment>
               <div className="inline-flex items-center text-semibold">
