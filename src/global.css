@@ -86,8 +86,40 @@
     padding: 0;
   }
 
+  .txt-slogan {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
   #root {
     max-width: 100vw;
     overflow-x: hidden;
+  }
+}
+
+.banner-sos {
+  width: 40vw;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .banner-sos {
+    width: 60vw; /* Ajuste a largura para telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-sos {
+    width: 80vw; /* Ajuste a largura para telas muito pequenas */
+  }
+  .txt-slogan {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
   }
 }
