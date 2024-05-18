@@ -21,9 +21,16 @@ const ShelterSupplyCategoryRow = React.forwardRef<
       </p>
       {description && <p>{description}</p>}
       <div className="flex gap-2 flex-wrap">
-        {tags.map((s, idx) => (
+        {tags.slice(0, 10).map((s, idx) => (
           <Chip key={idx} {...s} />
         ))}
+
+        {tags.length > 10 && (
+          <Chip
+            label={`+${tags.length - 10} items`}
+            className="bg-gray-300 txt-black-600"
+          />
+        )}
       </div>
     </div>
   );
