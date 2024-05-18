@@ -19,17 +19,17 @@ const InfoCard = ({
       <p className="font-bold text-md">Disponibilidade dos abrigos</p>
 
       <div className="box-border border-2 rounded-xl ">
-        <Link to={''}>
+        <Link to={'/?search=&shelterStatus%5B0%5D=available'}>
           <div className="bg-green-300 flex justify-between pl-2">
             Disponíveis {totalAvaliable} <ChevronRight />
           </div>
         </Link>
-        <Link to={''}>
+        <Link to={'/?search=&shelterStatus%5B0%5D=unavailable'}>
           <div className="bg-red-300 flex justify-between pl-2">
             Lotados {totalCrowded} <ChevronRight />
           </div>
         </Link>
-        <Link to={''}>
+        <Link to={'/?search=&shelterStatus%5B0%5D=waiting'}>
           <div className="bg-gray-300 flex justify-between pl-2">
             Sem informação {totalNoInformation} <ChevronRight />
           </div>
