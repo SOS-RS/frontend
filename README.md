@@ -57,7 +57,7 @@ Na aba *Issues* você vai encontrar várias propostas de correções, melhorias 
 Para ajudar a manter tudo mais organizado e fácil de pesquisar, siga estas sugestões:
 
 1. Ao entrar na aba, procure uma Issue que ninguem ainda esteja trabalhando.
-2. Quando encontrar e desejar trabalhar com ela, assine ela há você na seção "Assignees".
+2. Quando encontrar e desejar trabalhar com ela, atribua ela a você na seção "Assignees".
 3. Quando criar seu Pull Request, link ele na seção de "Development".
 
 ---
