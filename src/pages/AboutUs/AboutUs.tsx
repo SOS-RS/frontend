@@ -29,7 +29,7 @@ const AboutUs = () => {
   );
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center overflow-y-scroll">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
       <div className="flex flex-col gap-4 p-4 max-w-4xl pb-8 w-full">
         <h2 className="text-4xl pt-4 font-semibold !text-zinc-900">
