@@ -315,7 +315,7 @@ const Filter = (props: IFilterProps) => {
               </Button>
               <Button
                 type="button"
-                className="flex gap-2 text-blue-500 font-medium text-lg bg-transparent hover:bg-blue-500 hover:text-white w-full"
+                className="flex gap-2 text-blue-500 font-medium text-lg bg-transparent hover:bg-blue-600 hover:text-white w-full"
                 onClick={(e) => {
                   e.preventDefault();
                   clearFilters();
