@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 const ScrollToTopButton = forwardRef<HTMLButtonElement, IScrollToTopButton>(
   ({ className = '', ...rest }, ref) => {
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
       const scrolled = document.documentElement.scrollTop;
