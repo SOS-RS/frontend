@@ -53,3 +53,28 @@ Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhor
 ---
 
 Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
+
+## Conteúdo para Divulgação
+### POST LONGO
+
+O SOS-RS (https://sos-rs.com/) é um portal criado pela comunidade DEV com o objetivo de coordenar o apoio às vítimas do Rio Grande do Sul. Através deste portal, é possível acompanhar em tempo real as necessidades dos abrigos, a demanda por voluntários, as doações específicas necessárias, os excedentes disponíveis e a disponibilidade para receber desabrigados.
+
+Este projeto é uma iniciativa valiosa que visa unir esforços para ajudar aqueles que foram afetados por desastres naturais ou outras situações de emergência. Ao fornecer informações atualizadas sobre as necessidades e recursos disponíveis, o SOS-RS desempenha um papel fundamental na mobilização da solidariedade e na prestação de assistência eficaz às pessoas em momentos difíceis.
+
+Se você desejar saber mais detalhes sobre como contribuir ou participar dessa iniciativa, recomendo visitar o site oficial do SOS-RS. Juntos, podemos fazer a diferença e oferecer apoio àqueles que mais precisam! 🤝🌟
+
+
+### POST CURTO 
+
+Para quem está precisando cadastrar abrigo ou doações, o SOS-RS é um portal, você pode registrar informações sobre abrigos disponíveis ou doações que deseja oferecer. Assim, a comunidade pode coordenar melhor o apoio às vítimas no Rio Grande do Sul. Acesse o site  https://sos-rs.com/ para fazer o cadastro e contribuir com essa importante iniciativa! 🤝🌟
+
+<img src="divulgacao/img.jpeg" alt="imagem ia" width="10%" >
+<img src="divulgacao/logo.png" alt="logo" width="10%">
+<img src="divulgacao/qrcode.png" alt="qr code" width="10%">
+<video width="320" height="240" controls src="divulgacao/como usar.mp4" type="video/mp4"></video>
+<video width="320" height="240" controls src="divulgacao/equipe sos.mp4" type="video/mp4"></video>
+
+
+
+
+
