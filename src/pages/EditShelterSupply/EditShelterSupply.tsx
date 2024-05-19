@@ -166,14 +166,6 @@ const EditShelterSupply = () => {
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
             selecionado
           </p>
-          <Button
-            variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
-            onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
-          >
-            <PlusCircle />
-            Cadastrar novo item
-          </Button>
           <div className="w-full my-2">
             <TextField
               label="Buscar"
