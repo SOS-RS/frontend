@@ -50,6 +50,16 @@ Contribuições são muito bem-vindas! Se você tem interesse em ajudar a melhor
 4. Faça push para a branch (`git push origin feature/MinhaFeature`).
 5. Abra um Pull Request.
 
+### Trabalhando na aba Issues do repositório
+
+Na aba *Issues* você vai encontrar várias propostas de correções, melhorias etc. Pode ser um bom ponto para começar a contribuir.
+
+Para ajudar a manter tudo mais organizado e fácil de pesquisar, siga estas sugestões:
+
+1. Ao entrar na aba, procure uma Issue que ninguem ainda esteja trabalhando.
+2. Quando encontrar e desejar trabalhar com ela, assine ela há você na seção "Assignees".
+3. Quando criar seu Pull Request, link ele na seção de "Development".
+
 ---
 
 Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
