@@ -3,7 +3,6 @@ import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
-import { X } from 'lucide-react';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -65,9 +64,7 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       {children}
-      <SheetPrimitive.Close className="absolute right-3 mt-[-30px] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <X className="h-6 w-6" />
-      </SheetPrimitive.Close>
+      <SheetPrimitive.Close className="absolute right-3 mt-[-30px] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary"/>
     </SheetPrimitive.Content>
   </SheetPortal>
 ));

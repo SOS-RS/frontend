@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext, useState } from 'react';
 import {
   CircleHelp,
   CirclePlus,
@@ -6,8 +6,8 @@ import {
   HeartHandshake,
   Info,
   LinkIcon,
-  Menu,
 } from 'lucide-react';
+import { Squash as Hamburger } from 'hamburger-react'
 
 import { SessionServices } from '@/service';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -19,6 +19,7 @@ import { usePartners } from '@/hooks';
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
   const { data: partners } = usePartners();
+  const [isOpen, setOpen] = useState(false)
 
   const logout = useCallback(() => {
     SessionServices.logout()
@@ -32,11 +33,11 @@ const BurgerMenu = () => {
   }, []);
 
   return (
-    <Sheet modal={false}>
+    <Sheet modal={false} onOpenChange={() => setOpen(!isOpen)}>
       <SheetTrigger>
-        <Menu color="white" className="ml-2 mr-2" />
+        <Hamburger color='#fff' size={20} toggled={isOpen}/>
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col absolute top-[56px] h-screen">
+      <SheetContent side="left" className="pt-[30px] flex flex-col absolute top-[56px] h-screen">
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
@@ -49,27 +50,27 @@ const BurgerMenu = () => {
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon={<CirclePlus className="w-4 h-4" />}
+            icon={<CirclePlus className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Como Ajudar"
             link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon={<CircleHelp className="w-4 h-4" />}
+            icon={<CircleHelp className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Política de Privacidade"
             link="/politica-de-privacidade"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="w-5 h-5" />}
           />
           <BurguerMenuItem
             label="Apoiadores"
             link="/apoiadores"
-            icon={<HeartHandshake className="w-4 h-4" />}
+            icon={<HeartHandshake className="w-5 h-5" />}
           />
           <Separator />
           {partners.length > 0 && (
@@ -80,7 +81,7 @@ const BurgerMenu = () => {
                   key={idx}
                   label={partner.name}
                   link={partner.link}
-                  icon={<LinkIcon className="w-4 h-4" />}
+                  icon={<LinkIcon className="w-5 h-5" />}
                 />
               ))}
             </Fragment>
