@@ -67,9 +67,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
     ? format(data.updatedAt, 'dd/MM/yyyy HH:mm')
     : '(sem informação)';
 
+  
   return (
     <Wrapper link={`/abrigo/${data.id}`} active={data.actived}>
-      <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
+      <div role='listitem' className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
         <div className="inline-flex justify-between">
           <div className="flex flex-row items-center gap-1">
             <h3 className="font-semibold text-lg h-full hover:cursor-pointer hover:text-slate-500">
@@ -82,7 +83,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             )}
           </div>
           {data.actived && (
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="ghost" tabIndex={-1}>
               <ChevronRight className="h-5 w-5" />
             </Button>
           )}
@@ -92,6 +93,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
         </h6>
         <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
           {data.address}
+          
         </h6>
         {data.shelterSupplies.length > 0 && (
           <>

@@ -71,6 +71,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             size="sm"
             className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
             onClick={onOpenModal}
+            aria-label='Filtrar abrigos'
           >
             <ListFilter className="h-5 w-5 stroke-blue-500" />
             Filtros
@@ -87,7 +88,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </Button>
           )}
         </div>
-        <main ref={ref} className="flex flex-col gap-4" {...rest}>
+        <main role='list' ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <LoadingSkeleton amountItems={4} />
           ) : data.length === 0 ? (

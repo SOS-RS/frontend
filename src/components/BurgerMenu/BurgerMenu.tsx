@@ -35,10 +35,10 @@ const BurgerMenu = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu color="white" className="ml-2 mr-2" />
+        <Menu color="white" className="ml-2 mr-2" aria-label="Expandir menu lateral"/>
       </SheetTrigger>
       <SheetContent side="left" className="pt-[96px] flex flex-col">
-        <div className="flex flex-col gap-4">
+        <nav className="flex flex-col gap-4">
           {session && (
             <Fragment>
               <div className="inline-flex items-center text-semibold">
@@ -94,7 +94,7 @@ const BurgerMenu = () => {
               ))}
             </Fragment>
           )}
-        </div>
+        </nav>
         {session && (
           <div className="mt-auto">
             <span

@@ -31,7 +31,7 @@ const AboutUs = () => {
   return (
     <div className="flex flex-col h-screen items-center">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
-      <div className="flex flex-col gap-4 p-4 max-w-4xl pb-8 w-full">
+      <main className="flex flex-col gap-4 p-4 max-w-4xl pb-8 w-full">
         <h2 className="text-4xl pt-4 font-semibold !text-zinc-900">
           Sobre nós
         </h2>
@@ -160,7 +160,7 @@ const AboutUs = () => {
             ))
           )}
         </div>
-      </div>
+      </main>
       <div className="bg-black [&>p]:text-white p-8 w-full flex justify-center mt-4">
         <p className="text-justify text-md md:text-lg">
           Agradecemos a todos que têm tornado este impacto possível! Vamos

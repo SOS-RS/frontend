@@ -106,6 +106,7 @@ const Home = () => {
               loading={loading}
               variant="ghost"
               size="sm"
+              aria-label='Atualizar lista de abrigos'
               onClick={() => refresh()}
               className="disabled:bg-red-500 hover:bg-red-400"
             >
