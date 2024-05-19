@@ -32,7 +32,7 @@ const BurguerMenuItem = React.forwardRef<
     >
       {icon}
       {label}
-      {openExternal && <ExternalLink className="w-3 h-3" />}
+      {openExternal && <ExternalLink className="size-3" />}
     </a>
   );
 });

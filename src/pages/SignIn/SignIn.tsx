@@ -46,11 +46,11 @@ const SignInComponent = () => {
     });
 
   return (
-    <div className="flex h-screen justify-center items-center bg-slate-50 p-4">
-      <div className="flex flex-col justify-center gap-4 max-w-lg w-full p-10 bg-white max-h-[600px] rounded-md shadow-sm">
+    <div className="flex h-screen items-center justify-center bg-slate-50 p-4">
+      <div className="flex max-h-[600px] w-full max-w-lg flex-col justify-center gap-4 rounded-md bg-white p-10 shadow-sm">
         <form onSubmit={handleSubmit} className="contents">
-          <div className="justify-center flex flex-col md:justify-normal">
-            <h1 className="font-bold text-lg md:text-2xl text-red-600">
+          <div className="flex flex-col justify-center md:justify-normal">
+            <h1 className="text-lg font-bold text-red-600 md:text-2xl">
               SOS Rio Grande do Sul
             </h1>
             <span className="text-muted-foreground">
@@ -73,7 +73,7 @@ const SignInComponent = () => {
           <Button
             loading={isSubmitting}
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full"
+            className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-400"
           >
             Entrar
           </Button>

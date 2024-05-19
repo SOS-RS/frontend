@@ -7,11 +7,11 @@ const LoadingScreen = (props: ILoadingScreen) => {
   const { variant = 'full', className, ...rest } = props;
 
   const variants = cva(
-    'bg-zinc-800 opacity-60 w-full flex items-center justify-center min-h-screen z-50',
+    'z-50 flex min-h-screen w-full items-center justify-center bg-zinc-800 opacity-60',
     {
       variants: {
         variant: {
-          full: 'absolute top-0 right-0 bottom-0 left-0',
+          full: 'absolute inset-0',
           content: 'w-full',
         },
       },
@@ -23,7 +23,7 @@ const LoadingScreen = (props: ILoadingScreen) => {
 
   return (
     <div {...rest} className={variants({ className, variant })}>
-      <Loader className="animate-spin h-15 w-15 stroke-white" />
+      <Loader className="h-15 w-15 animate-spin stroke-white" />
     </div>
   );
 };

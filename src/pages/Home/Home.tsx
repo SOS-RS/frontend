@@ -88,7 +88,7 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex h-screen flex-col items-center">
       {isModalOpen && (
         <Filter
           open={isModalOpen}
@@ -101,13 +101,13 @@ const Home = () => {
         title="SOS Rio Grande do Sul"
         startAdornment={<BurgerMenu />}
         endAdornment={
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Button
               loading={loading}
               variant="ghost"
               size="sm"
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
+              className="hover:bg-red-400 disabled:bg-red-500"
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
@@ -143,7 +143,7 @@ const Home = () => {
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
-        className="flex-1 p-4 max-w-4xl"
+        className="max-w-4xl flex-1 p-4"
       />
       <Footer />
     </div>
