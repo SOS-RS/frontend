@@ -95,9 +95,7 @@ const Filter = (props: IFilterProps) => {
         search: Yup.string(),
         geolocation: Yup.object()
           .shape({
-            radiusInMeters: Yup.number().positive(
-              'Raio em metros deve ser positivo'
-            ),
+            radiusInMeters: Yup.number().positive('Raio deve ser positivo'),
           })
           .nullable(),
       }),
