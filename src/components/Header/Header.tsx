@@ -15,9 +15,10 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
 
   return (
     <div
+      id='header'
       ref={ref}
       className={cn(
-        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[60]',
+        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[60] fixed',
         className
       )}
       {...rest}

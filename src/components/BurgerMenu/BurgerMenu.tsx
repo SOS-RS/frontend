@@ -32,11 +32,11 @@ const BurgerMenu = () => {
   }, []);
 
   return (
-    <Sheet>
+    <Sheet modal={false}>
       <SheetTrigger>
         <Menu color="white" className="ml-2 mr-2" />
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col">
+      <SheetContent side="left" className="pt-[96px] flex flex-col absolute top-[56px] h-screen">
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
