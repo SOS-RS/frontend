@@ -6,8 +6,8 @@ const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <div className="gap-4 flex flex-col pb-6">
-      <h3 className="font-semibold text-lg">{name}</h3>
+    <div className="flex flex-col gap-4 pb-6">
+      <h3 className="text-lg font-semibold">{name}</h3>
       <div className="flex flex-col">
         {items.map((item, idy) => (
           <SupplyRowInfo

@@ -46,13 +46,13 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <CircleStatus className={circleClassName} />
         <h3>
           {label} ({tags.length})
         </h3>
       </div>
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {visibleSupplies.map((tag, idx) => {
           const tagProps =
             session &&
@@ -80,7 +80,7 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
                 tag.quantity > 0 && (
                   <Badge
                     variant="default"
-                    className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs flex items-center justify-center w-7 h-6"
+                    className="absolute right-4 top-0 z-10 flex h-6 w-7 -translate-y-2 translate-x-full items-center justify-center text-xs"
                   >
                     {tag.quantity > 99 ? '99+' : tag.quantity}
                   </Badge>
@@ -95,13 +95,13 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center"
+            className="flex items-center gap-2"
             onClick={() => setOpened((v) => !v)}
           >
             <span className="text-lg font-normal text-blue-500">
               {btnLabel}
             </span>
-            <Icon className="h-5 w-5 stroke-blue-500" />
+            <Icon className="size-5 stroke-blue-500" />
           </Button>
         </div>
       )}

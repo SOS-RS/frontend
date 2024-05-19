@@ -93,23 +93,23 @@ const Shelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex h-screen flex-col items-center">
       <Header
         title={shelter.name}
         startAdornment={
           <Button
             size="sm"
             variant="ghost"
-            className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
+            className="hover:bg-red-400 disabled:bg-red-500 [&_svg]:stroke-white"
             onClick={() => navigate('/')}
           >
             <ChevronLeft size={20} />
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
+      <div className="flex size-full max-w-5xl flex-col p-4 ">
         <div className="flex items-center gap-1">
-          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+          <h1 className="text-2xl font-semibold text-[#2f2f2f]">
             {shelter.name}
           </h1>
           {shelter.verified && <VerifiedBadge />}
@@ -124,7 +124,7 @@ const Shelter = () => {
           >
             <Button
               variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              className="flex items-center gap-2 text-[16px] font-medium text-blue-600 hover:text-blue-500 active:text-blue-700"
               onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
             >
               Editar
@@ -135,12 +135,12 @@ const Shelter = () => {
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
         </div>
-        <div className="flex justify-between p-4 items-center">
-          <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-          <div className="flex gap-2 items-center ">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="text-[18px] font-semibold">Itens do abrigo</h1>
+          <div className="flex items-center gap-2 ">
             <Button
               variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              className="flex items-center gap-2 text-[16px] font-medium text-blue-600 hover:text-blue-500 active:text-blue-700"
               onClick={() => navigate(`/abrigo/${shelterId}/items`)}
             >
               Editar itens
@@ -159,8 +159,8 @@ const Shelter = () => {
           ))}
         </div>
         {shelter.updatedAt && (
-          <div className="flex justify-between p-4 items-center">
-            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+          <div className="flex items-center justify-between p-4">
+            <small className="md:text-md mt-2 text-sm font-light text-muted-foreground">
               Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
             </small>
           </div>
@@ -168,7 +168,7 @@ const Shelter = () => {
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button
-              className="w-full bg-blue-500 active:bg-blue-700 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-900"
+              className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-900"
               size="sm"
               disabled={loadingUpdateMany || selectedTags.length === 0}
               loading={loadingUpdateMany}

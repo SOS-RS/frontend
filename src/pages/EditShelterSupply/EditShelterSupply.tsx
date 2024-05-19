@@ -146,10 +146,10 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex h-screen flex-col items-center">
         <Header
           title="Editar Itens"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+          className="border-b border-b-border bg-white [&_*]:text-zinc-800"
           startAdornment={
             <Button
               variant="ghost"
@@ -160,7 +160,7 @@ const EditShelterSupply = () => {
             </Button>
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
+        <div className="flex w-full max-w-5xl flex-col items-start gap-3 p-4">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
@@ -168,13 +168,13 @@ const EditShelterSupply = () => {
           </p>
           <Button
             variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
+            className="flex gap-2 text-lg font-medium text-blue-500 hover:text-blue-600 [&_svg]:stroke-blue-500"
             onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
           >
             <PlusCircle />
             Cadastrar novo item
           </Button>
-          <div className="w-full my-2">
+          <div className="my-2 w-full">
             <TextField
               label="Buscar"
               value={searchValue}
@@ -184,7 +184,7 @@ const EditShelterSupply = () => {
               }}
             />
           </div>
-          <div className="flex flex-col gap-2 w-full my-4">
+          <div className="my-4 flex w-full flex-col gap-2">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {

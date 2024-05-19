@@ -35,7 +35,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
-        <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+        <h1 className="text-2xl font-semibold text-[#2f2f2f]">
           Abrigos disponíveis ({count})
         </h1>
         <Alert
@@ -52,16 +52,16 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               : undefined
           }
         />
-        <div className="flex flex-wrap gap-1 items-center">
+        <div className="flex flex-wrap items-center gap-1">
           {filterData.cities?.map((item) => (
             <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              className="md:text-md flex cursor-pointer items-center justify-center rounded-3xl bg-gray-300 px-4 py-1 text-sm font-normal transition-all duration-200 hover:opacity-80"
               key={item}
               onClick={() =>
                 onCitiesChange?.(filterData.cities.filter((it) => it !== item))
               }
             >
-              <span className="pr-1">{item}</span> <X className="h-4 w-4" />
+              <span className="pr-1">{item}</span> <X className="size-4" />
             </div>
           ))}
         </div>
@@ -69,20 +69,20 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+            className="flex items-center gap-2 text-blue-500 hover:text-blue-600 active:text-blue-700"
             onClick={onOpenModal}
           >
-            <ListFilter className="h-5 w-5 stroke-blue-500" />
+            <ListFilter className="size-5 stroke-blue-500" />
             Filtros
           </Button>
           {searchParams.toString() && (
             <Button
               variant="ghost"
               size="sm"
-              className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+              className="flex items-center gap-2 text-blue-500 hover:text-blue-600 active:text-blue-700"
               onClick={onClearSearch}
             >
-              <CircleAlert className="h-5 w-5 stroke-blue-500" />
+              <CircleAlert className="size-5 stroke-blue-500" />
               Limpar Filtros
             </Button>
           )}
@@ -107,7 +107,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
                   Carregar mais
                 </Button>
               ) : (
-                <p className="text-muted-foreground font-semibold">
+                <p className="font-semibold text-muted-foreground">
                   Não há mais registros
                 </p>
               )}

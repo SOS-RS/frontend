@@ -112,10 +112,10 @@ const CreateShelterComponent = () => {
   }, [cepData, setFieldValue, setErrors]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex h-screen flex-col items-center">
       <Header
         title="Cadastrar novo abrigo"
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+        className="border-b border-b-border bg-white [&_*]:text-zinc-800"
         startAdornment={
           <Button
             variant="ghost"
@@ -126,13 +126,13 @@ const CreateShelterComponent = () => {
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+      <div className="flex size-full max-w-5xl flex-col items-start gap-3 p-4">
         <form className="contents" onSubmit={handleSubmit}>
           <h6 className="text-2xl font-semibold">Cadastrar novo abrigo</h6>
           <p className="text-muted-foreground">
             Adicione as informações necessarias para o cadastro do novo abrigo.
           </p>
-          <div className=" flex flex-col max-w-5xl w-full gap-2 items-start">
+          <div className=" flex w-full max-w-5xl flex-col items-start gap-2">
             <TextField
               label="Nome do abrigo"
               {...getFieldProps('name')}
@@ -146,7 +146,7 @@ const CreateShelterComponent = () => {
               helperText={errors.zipCode}
             />
             {Boolean(isLoadingZipCodeData) && (
-              <Loader className="animate-spin h-15 w-15 stroke-black" />
+              <Loader className="h-15 w-15 animate-spin stroke-black" />
             )}
             <TextField
               label="Logradouro (Rua/avenida)"
@@ -166,7 +166,7 @@ const CreateShelterComponent = () => {
               error={!!errors.neighbourhood}
               helperText={errors.neighbourhood}
             />
-            <div className="flex flex-col gap-1 w-full">
+            <div className="flex w-full flex-col gap-1">
               <label className="text-muted-foreground" htmlFor="city">
                 Cidade
               </label>
@@ -189,7 +189,7 @@ const CreateShelterComponent = () => {
                 })}
               />
               {errors.city && (
-                <p className={'text-red-600 text-sm'}>{errors.city}</p>
+                <p className={'text-sm text-red-600'}>{errors.city}</p>
               )}
             </div>
             <TextField
@@ -238,11 +238,11 @@ const CreateShelterComponent = () => {
               helperText={errors.pix}
             />
           </div>
-          <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+          <div className="flex w-full flex-1 flex-col justify-end py-6 md:justify-start">
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="flex w-full gap-2 bg-blue-500 text-lg font-medium text-white hover:bg-blue-600"
             >
               Cadastrar
             </Button>

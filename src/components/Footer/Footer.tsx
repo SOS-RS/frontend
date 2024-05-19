@@ -27,17 +27,17 @@ const Footer = React.forwardRef<
           aqui
         </a>
       </p>
-      <span className="text-white hidden md:block">•</span>
-      <span className="text-white flex flex-nowrap gap-2 items-center">
+      <span className="hidden text-white md:block">•</span>
+      <span className="flex flex-nowrap items-center gap-2 text-white">
         Projeto Open Source disponível em{' '}
         <a
-          className="underline hover:text-gray-300 flex"
+          className="flex underline hover:text-gray-300"
           href="https://github.com/SOS-RS"
           target="_blank"
         >
           Github
         </a>
-        <Heart className="h-3 w-3 stroke-white fill-white" />
+        <Heart className="size-3 fill-white stroke-white" />
       </span>
     </div>
   );
