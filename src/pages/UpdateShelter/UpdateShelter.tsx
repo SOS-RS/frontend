@@ -214,40 +214,43 @@ const UpdateShelter = () => {
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
-            <div className="flex items-center space-x-2">
-              <Switch id="petFriendly"
-                {...getFieldProps('petFriendly')}
-                className='data-[state=checked]:bg-blue-500'
-                checked={values.petFriendly}
-                onCheckedChange={(checked: boolean) => {
-                  setFieldValue('petFriendly', checked);
-                  if (!checked) {
-                    setFieldValue('petsCapacity', 0);
-                    setFieldValue('shelteredPets', 0);
-                  }
-                }}
-              />
-              <Label htmlFor="">Aceita pets</Label>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              <TextField
-                type="number"
-                label="Capacidade de pets do abrigo"
-                {...getFieldProps('petsCapacity')}
-                error={!!errors.petsCapacity}
-                helperText={errors.petsCapacity}
-                disabled={!values.petFriendly}
-                className='disabled:text-opacity-50'
-              />
-              <TextField
-                type="number"
-                label="Quantidade de pets abrigados"
-                {...getFieldProps('shelteredPets')}
-                error={!!errors.shelteredPets}
-                helperText={errors.shelteredPets}
-                disabled={!values.petFriendly}
-              />
-            </div>
+
+            <Authenticated role="User">
+              <div className="flex items-center space-x-2">
+                <Switch id="petFriendly"
+                  {...getFieldProps('petFriendly')}
+                  className='data-[state=checked]:bg-blue-500'
+                  checked={values.petFriendly}
+                  onCheckedChange={(checked: boolean) => {
+                    setFieldValue('petFriendly', checked);
+                    if (!checked) {
+                      setFieldValue('petsCapacity', 0);
+                      setFieldValue('shelteredPets', 0);
+                    }
+                  }}
+                />
+                <Label htmlFor="">Aceita pets</Label>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextField
+                  type="number"
+                  label="Capacidade de pets do abrigo"
+                  {...getFieldProps('petsCapacity')}
+                  error={!!errors.petsCapacity}
+                  helperText={errors.petsCapacity}
+                  disabled={!values.petFriendly}
+                  className='disabled:text-opacity-50'
+                />
+                <TextField
+                  type="number"
+                  label="Quantidade de pets abrigados"
+                  {...getFieldProps('shelteredPets')}
+                  error={!!errors.shelteredPets}
+                  helperText={errors.shelteredPets}
+                  disabled={!values.petFriendly}
+                />
+              </div>
+            </Authenticated>
 
             <Authenticated role="Staff">
               <SelectField
