@@ -9,7 +9,7 @@ const SupplyRow = (props: ISupplyRowProps) => {
     <div className="gap-4 flex flex-col pb-6">
       <h3 className="font-semibold text-lg">{name}</h3>
       <div className="flex flex-col">
-        {items.filter(element => element.priority).map((item, idy) => (
+        {items.map((item, idy) => (
           <SupplyRowInfo
             key={idy}
             name={item.name}
