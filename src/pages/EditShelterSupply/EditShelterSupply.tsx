@@ -28,6 +28,13 @@ const EditShelterSupply = () => {
   const [searchedSupplies, setSearchedSupplies] = useState<IUseSuppliesData[]>(
     []
   );
+  const shelterSupplyData = useMemo(() => {
+    return (shelter?.shelterSupplies ?? []).reduce(
+      (prev, current) => ({ ...prev, [current.supply.id]: current }),
+      {} as Record<string, IUseShelterDataSupply>
+    );
+  }, [shelter?.shelterSupplies]);
+  
   const [, setSearchSupplies] = useThrottle<string>(
     {
       throttle: 200,
@@ -56,11 +63,12 @@ const EditShelterSupply = () => {
           );
           setFilteredSupplies(filteredSupplies);
         } else {
-          setFilteredSupplies(supplies);
+          const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
+          setFilteredSupplies(storedSupplies);
         }
       },
     },
-    [supplies]
+    [supplies, shelterSupplyData]
   );
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -68,12 +76,7 @@ const EditShelterSupply = () => {
     IDialogSelectorProps,
     'value' | 'onSave' | 'quantity'
   > | null>();
-  const shelterSupplyData = useMemo(() => {
-    return (shelter?.shelterSupplies ?? []).reduce(
-      (prev, current) => ({ ...prev, [current.supply.id]: current }),
-      {} as Record<string, IUseShelterDataSupply>
-    );
-  }, [shelter?.shelterSupplies]);
+
   const supplyGroups = useMemo(
     () =>
       group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
@@ -135,8 +138,9 @@ const EditShelterSupply = () => {
   );
 
   useEffect(() => {
-    setFilteredSupplies(supplies);
-  }, [supplies]);
+    const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
+    setFilteredSupplies(storedSupplies);
+  }, [supplies, shelterSupplyData]);
 
   if (loading) return <LoadingScreen />;
 
