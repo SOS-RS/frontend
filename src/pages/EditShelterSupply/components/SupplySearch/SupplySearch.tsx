@@ -13,6 +13,7 @@ export const SupplySearch = ({
   onAddNewItem
 }: ISupplySearchProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [selectedItem, setSelectedItem] = useState<IUseSuppliesData | null>(null);
 
   function onChangeInputHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(event.target.value);
@@ -21,14 +22,17 @@ export const SupplySearch = ({
 
   function onSelectItemHandler(item: IUseSuppliesData) {
     setSearchValue(item.name);
+    setSelectedItem(item);
     onSelectItem(item);
   }
 
   function onAddNewItemHandler() {
+    setSelectedItem(null);
     onAddNewItem();
   }
 
   function onClearClickHandler() {
+    setSelectedItem(null);
     setSearchValue('');
     onSearch('');
   }
@@ -50,7 +54,7 @@ export const SupplySearch = ({
         <X className="h-4 w-4 ml-2 hover:cursor-pointer" onClick={onClearClickHandler} />
       </div>
 
-      {!!searchValue ? (
+      {!!searchValue && !selectedItem ? (
         <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50 mt-1">
           {supplyItems.slice(0, limit).map((item) => (
             <div

@@ -30,7 +30,7 @@ const EditShelterSupply = () => {
   );
   const [, setSearchSupplies] = useThrottle<string>(
     {
-      throttle: 400,
+      throttle: 200,
       callback: (value) => {
         if (value) {
           const filteredSupplies = supplies.filter((s) =>
@@ -45,6 +45,7 @@ const EditShelterSupply = () => {
     },
     [supplies]
   );
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
