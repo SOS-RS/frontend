@@ -60,7 +60,6 @@ export const SupplySearch = ({
       </div>
 
       {!!searchValue && !selectedItem ? (
-
         <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50 mt-1">
           {supplyItems
             .sort((a, b) => a.name.length - b.name.length)
