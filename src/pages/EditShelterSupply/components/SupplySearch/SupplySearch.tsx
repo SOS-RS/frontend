@@ -1,16 +1,7 @@
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
-import { Search } from 'lucide-react';
+import { Search, PlusCircle } from 'lucide-react';
+import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 interface ISupplySearchProps {
@@ -18,6 +9,7 @@ interface ISupplySearchProps {
   limit?: number;
   onSearch: (value: string) => void;
   onSelectItem: (item: IUseSuppliesData) => void;
+  onAddNewItem: () => void;
 }
 
 export const SupplySearch = ({
@@ -25,7 +17,24 @@ export const SupplySearch = ({
   limit = 10,
   onSearch,
   onSelectItem,
+  onAddNewItem
 }: ISupplySearchProps) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  function onChangeInputHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(event.target.value);
+    onSearch(event.target.value);
+  }
+
+  function onSelectItemHandler(item: IUseSuppliesData) {
+    setSearchValue(item.name);
+    onSelectItem(item);
+  }
+
+  function onAddNewItemHandler() {
+    onAddNewItem();
+  }
+
   return (
     <Fragment>
       <div
@@ -37,23 +46,30 @@ export const SupplySearch = ({
           type="text"
           className="outline-none border-none focus-visible:ring-transparent h-8"
           placeholder="Buscar itens..."
-          onChange={(ev) => onSearch(ev.target.value)}
+          value={searchValue}
+          onChange={onChangeInputHandler}
         />
       </div>
 
       {supplyItems.length > 0 ? (
-        <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50">
+        <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50 mt-1">
           {supplyItems.slice(0, limit).map((item) => (
             <div
               key={item.id}
               className="h-10 flex items-center rounded-md p-2 hover:bg-slate-100 hover:cursor-pointer"
-              onClick={() => onSelectItem(item)}
+              onClick={() => onSelectItemHandler(item)}
             >
               <span className="text-sm">{item.name}</span>
             </div>
           ))}
-          <div className="h-10 flex items-center rounded-md p-2 hover:bg-slate-100 hover:cursor-pointer">
-            <span className="text-sm text-sky-600">Cadastrar novo item</span>
+          <div 
+            className="h-10 flex items-center rounded-md p-2 hover:bg-slate-100 hover:cursor-pointer"
+            onClick={onAddNewItemHandler}
+          >
+            <div className="flex gap-2 items-center">
+              <PlusCircle size={16} color="#0284c7" />
+              <span className="text-sm text-sky-600">Cadastrar novo item</span>
+            </div>
           </div>
         </div>
       ) : null}

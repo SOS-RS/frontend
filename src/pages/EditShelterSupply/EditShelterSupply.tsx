@@ -32,20 +32,20 @@ const EditShelterSupply = () => {
   const [, setSearchSupplies] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        if (v) {
+      callback: (value) => {
+        if (value) {
           const filteredSupplies = supplies.filter((s) =>
-            normalizedCompare(s.name, v)
+            normalizedCompare(s.name, value)
           );
           setSearchedSupplies(filteredSupplies);
         } else {
           setSearchedSupplies([]);
+          setSearch('');
         }
       },
     },
     [supplies]
   );
-  const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -138,10 +138,6 @@ const EditShelterSupply = () => {
     setFilteredSupplies(supplies);
   }, [supplies]);
 
-  // useEffect(() => {
-  //   setSearch(searchValue);
-  // }, [searchValue]);
-
   if (loading) return <LoadingScreen />;
 
   return (
@@ -200,7 +196,11 @@ const EditShelterSupply = () => {
               onSearch={(value) => 
                 setSearchSupplies(value)
               }
-              onSelectItem={(item) =>  setSearch(item.name)}
+              onSelectItem={(item) =>  {
+                setSearch(item.name);
+                setSearchedSupplies([]);
+              }}
+              onAddNewItem={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
             />
           </div>
           <div className="flex flex-col gap-2 w-full my-4">
