@@ -2,7 +2,12 @@ import * as Yup from 'yup';
 
 const FullUpdateShelterSchema = Yup.object().shape({
   shelteredPeople: Yup.number().nullable(),
-  petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+  petFriendly: Yup.bool().required('Este campo deve ser preenchido').default(false),
+  shelteredPets: Yup.number(),
+  petsCapacity: Yup.number()
+    .when('petFriendly', ([petFriendly], schema) => {
+      return petFriendly ? schema.moreThan(0, "Capacidade de pets deve ser maior que 0") : schema.optional()
+    }),
   verified: Yup.bool(),
   address: Yup.string().nullable(),
   capacity: Yup.string().nullable(),
@@ -19,7 +24,12 @@ const FullUpdateShelterSchema = Yup.object().shape({
 
 const UpdateShelterSchema = Yup.object().shape({
   shelteredPeople: Yup.number().nullable(),
-  petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
+  petFriendly: Yup.bool().required('Este campo deve ser preenchido').default(false),
+  shelteredPets: Yup.number(),
+  petsCapacity: Yup.number()
+    .when('petFriendly', ([petFriendly], schema) => {
+      return petFriendly ? schema.moreThan(0, "Capacidade de pets deve ser maior que 0") : schema.optional()
+    }),
 });
 
 export { FullUpdateShelterSchema, UpdateShelterSchema };

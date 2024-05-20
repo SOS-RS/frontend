@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { ChevronLeft, Loader, PawPrint } from 'lucide-react';
+import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import ReactSelect from 'react-select';
@@ -23,7 +23,8 @@ import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
 import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -213,50 +214,40 @@ const UpdateShelter = () => {
               error={!!errors.shelteredPeople}
               helperText={errors.shelteredPeople}
             />
-
-            <Card className='w-full'>
-              <CardHeader className='flex flex-row items-center gap-1 w-full'>
-              <PawPrint />
-                <CardTitle>
-                  Pets
-                </CardTitle>
-              </CardHeader>
-              <CardContent className='space-y-4'>
-                <SelectField
-                  label="O abrigo aceita animais"
-                  value={!!values.petFriendly}
-                  onSelectChange={(v) => {
-                    setFieldValue('petFriendly', v)
-                    setFieldValue('petsCapacity', v ? values.petsCapacity : 0)
-                    setFieldValue('shelteredPets', v ? values.shelteredPets : 0)
-                  } }
-                  options={[
-                    { value: true, label: 'Sim' },
-                    { value: false, label: 'Não' },
-                  ]}
-                />
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <TextField
-                      type="number"
-                      label="Capacidade de pets total do abrigo"
-                      {...getFieldProps('petsCapacity')}
-                      error={!!errors.petsCapacity}
-                      helperText={errors.petsCapacity}
-                      disabled={!values.petFriendly}
-                      className='disabled:text-opacity-50'
-                    />
-                    <TextField
-                      type="number"
-                      label="Quantidade de pets abrigados"
-                      {...getFieldProps('shelteredPets')}
-                      error={!!errors.shelteredPets}
-                      helperText={errors.shelteredPets}
-                      disabled={!values.petFriendly}
-                    />
-                  </div>
-              </CardContent>
-            </Card>
-
+            <div className="flex items-center space-x-2">
+              <Switch id="petFriendly"
+                {...getFieldProps('petFriendly')}
+                className='data-[state=checked]:bg-blue-500'
+                checked={values.petFriendly}
+                onCheckedChange={(checked: boolean) => {
+                  setFieldValue('petFriendly', checked);
+                  if (!checked) {
+                    setFieldValue('petsCapacity', 0);
+                    setFieldValue('shelteredPets', 0);
+                  }
+                }}
+              />
+              <Label htmlFor="">Aceita pets</Label>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <TextField
+                type="number"
+                label="Capacidade de pets do abrigo"
+                {...getFieldProps('petsCapacity')}
+                error={!!errors.petsCapacity}
+                helperText={errors.petsCapacity}
+                disabled={!values.petFriendly}
+                className='disabled:text-opacity-50'
+              />
+              <TextField
+                type="number"
+                label="Quantidade de pets abrigados"
+                {...getFieldProps('shelteredPets')}
+                error={!!errors.shelteredPets}
+                helperText={errors.shelteredPets}
+                disabled={!values.petFriendly}
+              />
+            </div>
 
             <Authenticated role="Staff">
               <SelectField
