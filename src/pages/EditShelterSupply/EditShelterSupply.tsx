@@ -202,6 +202,10 @@ const EditShelterSupply = () => {
               onAddNewItem={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
             />
           </div>
+
+          <p className="text-muted-foreground mt-3">
+            Para cada item da lista abaixo, informe a disponibilidade no abrigo selecionado. 
+          </p>
           <div className="flex flex-col gap-2 w-full my-4">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
