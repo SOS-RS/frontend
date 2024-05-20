@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
+import { ChevronLeft, PawPrint, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
@@ -113,6 +113,7 @@ const Shelter = () => {
             {shelter.name}
           </h1>
           {shelter.verified && <VerifiedBadge />}
+          {shelter?.petFriendly && <PawPrint  className='min-w-4 min-h-4 w-4 h-4' />}
         </div>
         <div className="flex items-center justify-between pr-4">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>

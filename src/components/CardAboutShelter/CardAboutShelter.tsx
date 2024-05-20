@@ -37,42 +37,32 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
         )}
         {shelter.category === ShelterCategory.Shelter && (
           <Fragment>
-            <InfoRow
-              icon={<PawPrint />}
-              label={
-                check(shelter.petFriendly) ? (
-                  shelter.petFriendly ? (
-                    <p>
-                      O abrigo <b>aceita</b> animais
-                    </p>
-                  ) : (
-                    <p>
-                      O abrigo <b>não</b> aceita animais
-                    </p>
-                  )
-                ) : (
-                  <b>Não informado se aceita animais</b>
-                )
-              }
-            />
-
             {shelter.petFriendly && (
               <>
                 <InfoRow
                   icon={<PawPrint />}
-                  label="Pets abrigados:"
-                  value={
-                    check(shelter.shelteredPets)
-                      ? `${shelter.shelteredPets} pets`
-                      : 'Não informado'
+                  label={
+                    check(shelter.petFriendly) ? (
+                      shelter.petFriendly ? (
+                        <p>
+                          O abrigo <b>aceita</b> animais
+                        </p>
+                      ) : (
+                        <p>
+                          O abrigo <b>não</b> aceita animais
+                        </p>
+                      )
+                    ) : (
+                      <b>Não informado se aceita animais</b>
+                    )
                   }
                 />
                 <InfoRow
                   icon={<PawPrint />}
-                  label="Capacidade de pets no abrigo:"
+                  label="Vagas pet disponíveis: "
                   value={
-                    check(shelter.petsCapacity)
-                      ? `${shelter.petsCapacity} pets`
+                    check(shelter.shelteredPets)
+                      ? `${shelter.shelteredPets} de ${shelter.petsCapacity}`
                       : 'Não informado'
                   }
                 />
@@ -104,8 +94,8 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
               value={
                 check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
               }
-              clipboardButton={check(shelter.contact)}
             />
+
             <InfoRow
               icon={<Landmark />}
               label="Chave Pix:"
