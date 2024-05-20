@@ -8,7 +8,6 @@ interface WithTooltipProps {
 
 const WithTooltip = ({ children, content }: WithTooltipProps) => {
   const [open, setOpen] = useState(false);
-  console.log('🚀 ~ WithTooltip ~ open:', open);
 
   useEffect(() => {
     if (!open) return;
