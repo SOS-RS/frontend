@@ -17,6 +17,7 @@ const BackToTop =() => {
             setVisibility(false)
         }
     })
+    //document.getElementById('root').addEventListener('scroll', (e) => console.log(e.target.scrollTop))
 
 
 return (isVisible && (
