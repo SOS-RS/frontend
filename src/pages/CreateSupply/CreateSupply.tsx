@@ -90,6 +90,22 @@ const CreateSupply = () => {
     },
   });
 
+  const filteredSupplies =
+    values.name.length > 2
+      ? supplies.filter((e) => {
+          const normalizedSearchTerm = values.name
+            .trim()
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+          return e.name
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .includes(normalizedSearchTerm);
+        })
+      : [];
+
   const renderSupplies = (element: IUseSuppliesData, key: number) => {
     if (values.name.length < 3) return <></>;
 
@@ -169,34 +185,14 @@ const CreateSupply = () => {
                 helperText={errors.name}
               />
               <div className="flex flex-wrap">
-                {(() => {
-                  const normalizedSearchTerm = values.name
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '');
-                  const filteredSupplies = supplies.filter((e) =>
-                    e.name
-                      .toLowerCase()
-                      .normalize('NFD')
-                      .replace(/[\u0300-\u036f]/g, '')
-                      .includes(normalizedSearchTerm)
-                  );
-
-                  return (
-                    <>
-                      {filteredSupplies.length > 0 &&
-                        values.name.length > 2 && (
-                          <div className="border p-2 rounded bg-amber-200 text-gray-700">
-                            Foram encontrados registros com as informações
-                            fornecidas. Para evitar registros duplicados,
-                            pedimos a gentileza de verificar se alguns dos
-                            registros abaixo lhe atende:
-                          </div>
-                        )}
-                      {filteredSupplies.map(renderSupplies)}
-                    </>
-                  );
-                })()}
+                {filteredSupplies.length > 0 && (
+                  <div className="border p-2 rounded bg-amber-200 text-gray-700">
+                    Foram encontrados registros com as informações fornecidas.
+                    Para evitar registros duplicados, pedimos a gentileza de
+                    verificar se alguns dos registros abaixo lhe atende:
+                  </div>
+                )}
+                {filteredSupplies.map(renderSupplies)}
               </div>
               <div className="flex flex-col w-full">
                 <label className="text-muted-foreground">Categoria</label>
@@ -275,6 +271,7 @@ const CreateSupply = () => {
               <Button
                 loading={isSubmitting}
                 type="submit"
+                disabled={filteredSupplies.length > 0}
                 className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
               >
                 Salvar
