@@ -3,14 +3,7 @@ import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { Search, PlusCircle, X } from 'lucide-react';
 import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
-
-interface ISupplySearchProps {
-  supplyItems: IUseSuppliesData[];
-  limit?: number;
-  onSearch: (value: string) => void;
-  onSelectItem: (item: IUseSuppliesData) => void;
-  onAddNewItem: () => void;
-}
+import {ISupplySearchProps} from './types';
 
 export const SupplySearch = ({
   supplyItems,

@@ -6,7 +6,7 @@ import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
 import { group, normalizedCompare } from '@/lib/utils';
-import { SupplyRow } from './components';
+import { SupplyRow, SupplySearch } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
 import { ShelterSupplyServices } from '@/service';
@@ -15,7 +15,6 @@ import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-import { SupplySearch } from './components/SupplySearch/SupplySearch';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
