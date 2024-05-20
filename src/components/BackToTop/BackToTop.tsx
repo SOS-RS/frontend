@@ -2,7 +2,7 @@ import { useState } from "react"
 
 const BackToTop =() => {
 
-    const [isVisible, setVisibility] = useState(!false)
+    const [isVisible, setVisibility] = useState(false)
 
     const scrollToTop = () => {
         let root = document.getElementById('root')
