@@ -146,6 +146,14 @@ const Shelter = () => {
               Editar itens
               <Pencil size={17} className="stroke-blue-600" />
             </Button>
+            <Button
+              variant="ghost"
+              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              onClick={() => navigate(`/abrigo/${shelterId}/items/tabela`)}
+            >
+              Mostrar tabela de itens
+              <Pencil size={17} className="stroke-blue-600" />
+            </Button>
           </div>
         </div>
         <div className="flex flex-col gap-8 p-4 ">
