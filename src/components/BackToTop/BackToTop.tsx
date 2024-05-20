@@ -14,6 +14,7 @@ const BackToTop = () => {
     root.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+
   document.getElementById('root')?.addEventListener('scroll', (e) => {
     if (e.target === null) {
       return;
@@ -28,7 +29,7 @@ const BackToTop = () => {
     }
   });
 
-  
+
   return (
     isVisible && (
       <button
