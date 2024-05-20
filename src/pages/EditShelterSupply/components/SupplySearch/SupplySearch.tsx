@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-import { Search, PlusCircle } from 'lucide-react';
+import { Search, PlusCircle, X } from 'lucide-react';
 import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -35,6 +35,11 @@ export const SupplySearch = ({
     onAddNewItem();
   }
 
+  function onClearClickHandler() {
+    setSearchValue('');
+    onSearch('');
+  }
+
   return (
     <Fragment>
       <div
@@ -49,9 +54,10 @@ export const SupplySearch = ({
           value={searchValue}
           onChange={onChangeInputHandler}
         />
+        <X className="h-4 w-4 ml-2 hover:cursor-pointer" onClick={onClearClickHandler} />
       </div>
 
-      {supplyItems.length > 0 ? (
+      {!!searchValue ? (
         <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50 mt-1">
           {supplyItems.slice(0, limit).map((item) => (
             <div
