@@ -1,4 +1,4 @@
-import { ChevronLeft, PlusCircle } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -15,6 +15,7 @@ import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { SupplySearch } from './components/SupplySearch/SupplySearch';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -25,16 +26,38 @@ const EditShelterSupply = () => {
   const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
     []
   );
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [, setSearch] = useThrottle<string>(
+  const [searchedSupplies, setSearchedSupplies] = useState<IUseSuppliesData[]>(
+    []
+  );
+  const [, setSearchSupplies] = useThrottle<string>(
     {
       throttle: 400,
       callback: (v) => {
         if (v) {
-          setFilteredSupplies(
-            supplies.filter((s) => normalizedCompare(s.name, v))
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, v)
           );
-        } else setFilteredSupplies(supplies);
+          setSearchedSupplies(filteredSupplies);
+        } else {
+          setSearchedSupplies([]);
+        }
+      },
+    },
+    [supplies]
+  );
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [, setSearch] = useThrottle<string>(
+    {
+      throttle: 400,
+      callback: (value) => {
+        if (value) {
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, value)
+          );
+          setFilteredSupplies(filteredSupplies);
+        } else {
+          setFilteredSupplies(supplies);
+        }
       },
     },
     [supplies]
@@ -115,6 +138,10 @@ const EditShelterSupply = () => {
     setFilteredSupplies(supplies);
   }, [supplies]);
 
+  // useEffect(() => {
+  //   setSearch(searchValue);
+  // }, [searchValue]);
+
   if (loading) return <LoadingScreen />;
 
   return (
@@ -167,13 +194,13 @@ const EditShelterSupply = () => {
             selecionado
           </p>
           <div className="w-full my-2">
-            <TextField
-              label="Buscar"
-              value={searchValue}
-              onChange={(ev) => {
-                setSearchValue(ev.target.value);
-                setSearch(ev.target.value);
-              }}
+            <SupplySearch
+              supplyItems={searchedSupplies}
+              limit={5}
+              onSearch={(value) => 
+                setSearchSupplies(value)
+              }
+              onSelectItem={(item) =>  setSearch(item.name)}
             />
           </div>
           <div className="flex flex-col gap-2 w-full my-4">
