@@ -21,7 +21,13 @@ const WithTooltip = ({ children, content }: WithTooltipProps) => {
 
   return (
     <Tooltip open={open} onOpenChange={setOpen}>
-      <TooltipTrigger asChild onClick={() => setOpen(!open)}>
+      <TooltipTrigger
+        asChild
+        onClick={(e) => {
+          e.preventDefault();
+          setOpen(!open);
+        }}
+      >
         {children}
       </TooltipTrigger>
 
