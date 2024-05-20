@@ -205,6 +205,7 @@ const EditShelterSupply = () => {
                   items={items}
                   onClick={handleClickSupplyRow}
                 />
+                
               );
             })}
           </div>
