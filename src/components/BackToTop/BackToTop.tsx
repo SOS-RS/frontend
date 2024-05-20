@@ -4,7 +4,6 @@ import { ArrowUp } from 'lucide-react';
 const BackToTop = () => {
   const [isVisible, setVisibility] = useState(false);
 
-
   const scrollToTop = () => {
     const root = document.getElementById('root');
     if (!root) {
@@ -13,7 +12,6 @@ const BackToTop = () => {
 
     root.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
 
   document.getElementById('root')?.addEventListener('scroll', (e) => {
     if (e.target === null) {
@@ -29,7 +27,6 @@ const BackToTop = () => {
     }
   });
 
-
   return (
     isVisible && (
       <button
@@ -43,6 +40,6 @@ const BackToTop = () => {
       </button>
     )
   );
-}
+};
 
 export { BackToTop };
