@@ -2,22 +2,26 @@ import { useState } from "react"
 
 const BackToTop =() => {
 
-    const [isVisible, setVisibility] = useState(false)
+    const [isVisible, setVisibility] = useState(!false)
 
     const scrollToTop = () => {
-        window.scrollTo({top:0, behavior:"smooth"})
+        let root = document.getElementById('root')
+        if (!root) {return}
 
-        console.log(window.scrollY)
+        root.scrollTo({top:0, behavior:"smooth"})
+        
     }
 
-    window.addEventListener("scroll", () => {
-        if ( window.innerHeight / 2 < window.scrollY) {
+    document.getElementById("root")?.addEventListener('scroll', (e) => {
+        let CurrentScrollHeight = e.target.scrollTop
+        let WindowHeight = window.innerHeight
+
+        if ( CurrentScrollHeight > WindowHeight / 2) {
             setVisibility(true)
         } else {
             setVisibility(false)
         }
     })
-    //document.getElementById('root').addEventListener('scroll', (e) => console.log(e.target.scrollTop))
 
 
 return (isVisible && (
