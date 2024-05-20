@@ -24,9 +24,15 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     >
       <div className="flex gap-1 items-center">
         {startAdornment}
-        <Link className="font-medium text-white" to="/">
-          {title}
-        </Link>
+        {title === 'SOS Rio Grande do Sul' ? (
+          <Link className="font-medium text-white" to="/">
+            {title}
+          </Link>
+        ) : (
+          <span className="font-medium text-white">
+            {title}
+          </span>
+        )}
       </div>
       <div className="flex items-center">
         <div className="cursor-pointer ">{endAdornment}</div>
