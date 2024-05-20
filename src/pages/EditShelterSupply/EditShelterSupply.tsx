@@ -186,8 +186,7 @@ const EditShelterSupply = () => {
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
-            Para cada item da lista abaixo, informe a disponibilidade no abrigo
-            selecionado
+            Antes de adicionar um novo item, confira na busca abaixo se ele já não foi cadastrado.
           </p>
           <div className="w-full my-2">
             <SupplySearch
