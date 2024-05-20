@@ -196,11 +196,12 @@ const EditShelterSupply = () => {
                     priority: supply?.priority,
                   };
                 })
-                .sort((a, b) => a.name.localeCompare(b.name));
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .filter((element) => element.priority);
               return (
                 <SupplyRow
                   key={idx}
-                  name={key}
+                  name={items.length > 0 ? key : ""}
                   items={items}
                   onClick={handleClickSupplyRow}
                 />

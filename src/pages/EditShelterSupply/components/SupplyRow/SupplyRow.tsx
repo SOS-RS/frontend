@@ -1,13 +1,18 @@
 import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRowInfo } from '../SupplyRowInfo';
 import { ISupplyRowProps } from './types';
+import IconOpenBook from '@/components/Icon/IconOpenBook';
 
 const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <div className="gap-4 flex flex-col pb-6">
-      <h3 className="font-semibold text-lg">{name}</h3>
+    <div className={`${name !== '' ? 'gap-4 flex flex-col pb-6' : 'hidden'}`}>
+        <div className='flex w-full'>
+      <h3 className="font-semibold text-lg border rounded p-2 flex items-center">
+          <IconOpenBook className='mr-2'/>{name.toUpperCase()}
+      </h3>
+          </div>
       <div className="flex flex-col">
         {items.map((item, idy) => (
           <SupplyRowInfo
