@@ -16,7 +16,6 @@ const ScrollToTopButton = forwardRef<HTMLButtonElement, IScrollToTopButton>(
     };
 
     const scrollToTop = () => {
-      console.log('scroll top');
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
@@ -26,7 +25,7 @@ const ScrollToTopButton = forwardRef<HTMLButtonElement, IScrollToTopButton>(
     window.addEventListener('scroll', toggleVisibility);
 
     return (
-      <div className={cn('fixed bottom-24 right-8 hidden md:block', className)}>
+      <div className={cn('fixed bottom-24 right-8 hidden lg:block', className)}>
         {isVisible && (
           <button
             ref={ref}
