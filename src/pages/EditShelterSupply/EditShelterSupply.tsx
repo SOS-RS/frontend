@@ -5,15 +5,16 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group } from '@/lib/utils';
+import { group, normalizedCompare } from '@/lib/utils';
 import { SupplyRow } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
-import { ISupply, SupplyPriority } from '@/service/supply/types';
+import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -21,7 +22,9 @@ const EditShelterSupply = () => {
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
-  const [filteredSupplies, setFilteredSupplies] = useState<ISupply[]>([]);
+  const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
+    []
+  );
   const [searchValue, setSearchValue] = useState<string>('');
   const [, setSearch] = useThrottle<string>(
     {
@@ -29,10 +32,7 @@ const EditShelterSupply = () => {
       callback: (v) => {
         if (v) {
           setFilteredSupplies(
-            supplies.filter((s) =>
-              s.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                .includes(v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
-            )
+            supplies.filter((s) => normalizedCompare(s.name, v))
           );
         } else setFilteredSupplies(supplies);
       },
@@ -43,7 +43,7 @@ const EditShelterSupply = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
     IDialogSelectorProps,
-    'value' | 'onSave'
+    'value' | 'onSave' | 'quantity'
   > | null>();
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
@@ -52,7 +52,8 @@ const EditShelterSupply = () => {
     );
   }, [shelter?.shelterSupplies]);
   const supplyGroups = useMemo(
-    () => group<ISupply>(filteredSupplies ?? [], 'supplyCategory.name'),
+    () =>
+      group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
     [filteredSupplies]
   );
 
@@ -61,7 +62,8 @@ const EditShelterSupply = () => {
       setModalOpened(true);
       setModalData({
         value: `${item.priority ?? SupplyPriority.NotNeeded}`,
-        onSave: (v) => {
+        quantity: item.quantity ?? 0,
+        onSave: (v, quantity) => {
           const isNewSupply = item.priority === undefined;
           setLoadingSave(true);
 
@@ -85,6 +87,7 @@ const EditShelterSupply = () => {
               shelterId,
               supplyId: item.id,
               priority: +v,
+              quantity,
             })
               .then(successCallback)
               .catch(errorCallback)
@@ -92,7 +95,10 @@ const EditShelterSupply = () => {
                 setLoadingSave(false);
               });
           } else {
-            ShelterSupplyServices.update(shelterId, item.id, { priority: +v })
+            ShelterSupplyServices.update(shelterId, item.id, {
+              priority: +v,
+              quantity,
+            })
               .then(successCallback)
               .catch(errorCallback)
               .finally(() => {
@@ -180,14 +186,17 @@ const EditShelterSupply = () => {
           </div>
           <div className="flex flex-col gap-2 w-full my-4">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
-              const items: ISupplyRowItemProps[] = values.map((v) => {
-                const supply = shelterSupplyData[v.id];
-                return {
-                  id: v.id,
-                  name: v.name,
-                  priority: supply?.priority,
-                };
-              });
+              const items: ISupplyRowItemProps[] = values
+                .map((v) => {
+                  const supply = shelterSupplyData[v.id];
+                  return {
+                    id: v.id,
+                    name: v.name,
+                    quantity: supply?.quantity,
+                    priority: supply?.priority,
+                  };
+                })
+                .sort((a, b) => a.name.localeCompare(b.name));
               return (
                 <SupplyRow
                   key={idx}

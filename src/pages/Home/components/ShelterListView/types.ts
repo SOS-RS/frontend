@@ -1,4 +1,5 @@
 import { IUseSheltersData } from '@/hooks/useShelters/types';
+import { IFilterFormProps } from '../Filter/types';
 
 export interface IShelterListViewProps
   extends React.ComponentPropsWithoutRef<'div'> {
@@ -10,6 +11,8 @@ export interface IShelterListViewProps
   onOpenModal?: () => void;
   onClearSearch?: () => void;
   onSearchValueChange?: (v: string) => void;
+  onCitiesChange?: (v: string[]) => void;
   onFetchMoreData?: () => void;
   onSelectShelter?: (shelter: IUseSheltersData) => void;
+  filterData: IFilterFormProps;
 }
