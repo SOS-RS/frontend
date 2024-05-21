@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { EyeOff, MoveDown, MoveUp } from "lucide-react"
+import { MoveDown, MoveUp } from "lucide-react"
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,7 +41,6 @@ export function DataTableColumnHeader<TData, TValue>({
               <MoveUp className="ml-2 h-4 w-4" />
             ) : (
               <></>
-              // <EyeOff className="ml-2 h-4 w-4" />
             )}
           </Button>
         </DropdownMenuTrigger>
@@ -55,10 +54,6 @@ export function DataTableColumnHeader<TData, TValue>({
             Desc
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          {/* <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            <EyeOff className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Hide
-          </DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -51,8 +51,6 @@ const ShelterSupplyTable = () => {
   //   [filteredSupplies]
   // );
 
-  console.log(shelter.shelterSupplies)
-
   if (loading) return <LoadingScreen />;
 
   return (
@@ -77,24 +75,6 @@ const ShelterSupplyTable = () => {
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
             selecionado
           </p>
-          <Button
-            variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
-            onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
-          >
-            <PlusCircle />
-            Cadastrar novo item
-          </Button>
-          <div className="w-full my-2">
-            <TextField
-              label="Buscar"
-              value={searchValue}
-              onChange={(ev) => {
-                setSearchValue(ev.target.value);
-                setSearch(ev.target.value);
-              }}
-            />
-          </div>
           <div className="flex flex-col gap-2 w-full my-4">
             <>
               {shelterSupplyData &&

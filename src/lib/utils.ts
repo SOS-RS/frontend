@@ -85,21 +85,25 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
       return {
         label,
         className: 'bg-gray-200 text-gray-800',
+        initials: 'N'
       };
     case SupplyPriority.Remaining:
       return {
         label,
         className: 'bg-light-green text-green-800',
+        initials: 'D'
       };
     case SupplyPriority.Needing:
       return {
         label,
         className: 'bg-light-orange text-orange-800',
+        initials: 'P'
       };
     case SupplyPriority.Urgent:
       return {
         label,
         className: 'bg-light-red text-red-800',
+        initials: 'U'
       };
   }
 }
@@ -180,6 +184,27 @@ function checkIsNull(v?: any | null) {
   return v !== null && v !== undefined;
 }
 
+function separateClasses(classString: string): { bgClass: string; textClass: string } {
+  const classes = classString.split(' ');
+  let bgClass = '';
+  let textClass = '';
+
+  classes.forEach((cls) => {
+    switch (true) {
+      case cls.startsWith('bg-'):
+        bgClass = cls;
+        break;
+      case cls.startsWith('text-'):
+        textClass = cls;
+        break;
+      default:
+        break;
+    }
+  });
+
+  return { bgClass, textClass };
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -193,4 +218,5 @@ export {
   removeDuplicatesByField,
   normalizedCompare,
   checkIsNull,
+  separateClasses
 };
