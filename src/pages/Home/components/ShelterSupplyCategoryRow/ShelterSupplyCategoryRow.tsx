@@ -26,10 +26,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
         ))}
 
         {tags.length > 10 && (
-          <Chip
-            label={`+${tags.length - 10} items`}
-            className="bg-gray-300 txt-black-600"
-          />
+          <Chip label={`+${tags.length - 10} itens`} variant="moreInfo" />
         )}
       </div>
     </div>
