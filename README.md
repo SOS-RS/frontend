@@ -1,15 +1,22 @@
-# Frontend da aplicação de Ajuda em Enchentes
+# 🌊 Frontend para App de Ajuda em Enchentes 🌊
 
 Este projeto é o frontend de um aplicativo destinado a auxiliar na organização e distribuição de suprimentos, além de coordenar voluntários durante os alagamentos no Rio Grande do Sul. A aplicação visa conectar pessoas afetadas pelas enchentes com recursos essenciais e voluntários dispostos a ajudar.
+
+O objetivo deste aplicativo é facilitar uma resposta rápida e eficiente em situações de emergência causadas por enchentes, promovendo a colaboração e o apoio mútuo entre a comunidade e organizações de ajuda.
+
+Se você quiser discutir ideias, problemas ou contribuições, sinta-se à vontade para se juntar ao nosso servidor do
+Discord [aqui](https://discord.gg/vjZS6BQXvM).
 
 ## 🌎 Acesso à Aplicação
 
 [SOS Rio Grande do Sul](https://sos-rs.com/)
-[Discord](https://discord.gg/eJTuannsd6)
 
-## 📓 Sobre o Projeto
+## 🤝 Contribuição
 
-O objetivo deste aplicativo é facilitar uma resposta rápida e eficiente em situações de emergência causadas por enchentes, promovendo a colaboração e o apoio mútuo entre a comunidade e organizações de ajuda.
+Contribuições são muito bem-vindas! Se deseja ajudar, veja o
+[documento de contribuição](./CONTRIBUTING.md).
+
+Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
 
 ## 🛠 Tecnologias Utilizadas
 
@@ -65,6 +72,3 @@ Este código está licenciado usando a
 
 Os contribuidores são voluntários, e podem ser encontrados
 [na página de contribuidores](https://github.com/SOS-RS/frontend/graphs/contributors).
-
----
-Agradecemos o seu interesse e apoio. Juntos, podemos fazer uma diferença significativa para as vítimas das enchentes no Rio Grande do Sul!
