@@ -10,7 +10,7 @@ import {
 import { Squash as Hamburger } from 'hamburger-react'
 
 import { SessionServices } from '@/service';
-import { Sheet, SheetContent, SheetTrigger, SheetOverlay, SheetPortal, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetOverlay, SheetPortal } from '@/components/ui/sheet';
 import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
@@ -40,8 +40,12 @@ const BurgerMenu = () => {
   }, [])
 
   const toggleMenu = () => {
+    console.log('agora está: ', isOpen)
     setOpen(!isOpen)
-    setTimeout(() => { document.body.style.pointerEvents = ""}, 100)
+    document.body.style.pointerEvents = "none"
+    setTimeout(() => { 
+      document.body.style.pointerEvents = "auto"
+    }, 500)
   }
 
   return (
@@ -49,9 +53,6 @@ const BurgerMenu = () => {
       <SheetTrigger>
         <Hamburger color='#fff' size={20} toggled={isOpen} aria-label="menu"/>
       </SheetTrigger>
-      <SheetClose>
-        close
-      </SheetClose>
       <SheetPortal container={pageElement}>
         <SheetOverlay />
       </SheetPortal>
