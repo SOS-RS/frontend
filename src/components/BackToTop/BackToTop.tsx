@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { ArrowUp } from "lucide-react"
+
 
 const BackToTop =() => {
 
@@ -13,6 +15,7 @@ const BackToTop =() => {
     }
 
     document.getElementById("root")?.addEventListener('scroll', (e) => {
+        if (e.target === null) {return}
         let CurrentScrollHeight = e.target.scrollTop
         let WindowHeight = window.innerHeight
 
@@ -26,9 +29,12 @@ const BackToTop =() => {
 
 return (isVisible && (
     <button 
-    className=" fixed ease-in-out duration-300 hover:bg-red-800/100 bg-red-800/40 z-[100] right-10 bottom-10 w-12 h-12 rounded-full shadow-slate-500 font-bold shadow-md text-white select-none" 
+    className=" fixed ease-in-out hidden sm:flex justify-center items-center duration-300 
+    bg-red-600/75 focus:bg-red-700 hover:bg-red-700 z-[100] shadow-slate-600/75
+    right-6 bottom-6 rounded-full shadow-md
+    w-12 h-12 "
     onClick={scrollToTop}
-    >^</button>
+    ><ArrowUp color="white" /></button>
 ));
 }
 
