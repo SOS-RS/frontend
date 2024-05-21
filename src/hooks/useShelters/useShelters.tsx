@@ -1,12 +1,7 @@
-import { useFetch } from '../useFetch';
-import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
-import { IUseShelterData } from './types';
+import { useState, useCallback, useEffect } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
-<<<<<<< HEAD
-const useShelter = (shelterId: string) => {
-  return useFetch<IUseShelterData>(
-    `${PaginatedQueryPath.Shelters}/${shelterId}`
-=======
+
 import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
@@ -60,8 +55,12 @@ const useShelters = (options: IUseShelterOptions = {}) => {
         });
     },
     [cache]
->>>>>>> 2b13673 (Update staging branch (#299))
   );
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  return { data, loading, refresh };
 };
 
-export { useShelter };
+export { useShelters };
