@@ -72,7 +72,7 @@ function getAvailabilityProps(props: {
 }
 
 const priorityOptions: Record<SupplyPriority, string> = {
-  [SupplyPriority.Urgent]: 'Necessita urgente',
+  [SupplyPriority.Urgent]: 'Precisa com urgência',
   [SupplyPriority.Needing]: 'Precisa',
   [SupplyPriority.Remaining]: 'Disponível para doação',
   [SupplyPriority.NotNeeded]: 'Não preciso',
