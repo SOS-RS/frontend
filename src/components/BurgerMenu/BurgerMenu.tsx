@@ -41,7 +41,6 @@ const BurgerMenu = () => {
   }, [])
 
   const toggleMenu = () => {
-    console.log('agora está: ', isOpen)
     setOpen(!isOpen)
     document.body.style.pointerEvents = "none"
     setTimeout(() => { 
@@ -50,9 +49,9 @@ const BurgerMenu = () => {
   }
 
   return (
-    <Sheet modal={true} onOpenChange={toggleMenu} open={isOpen}>
+    <Sheet onOpenChange={toggleMenu} open={isOpen}>
       <SheetTrigger>
-        <Hamburger color='#fff' size={20} toggled={isOpen} aria-label="menu"/>
+        <Hamburger color="#fff" size={20} toggled={isOpen} aria-label="menu"/>
       </SheetTrigger>
       <SheetPortal container={pageElement}>
         <SheetOverlay />
@@ -68,7 +67,6 @@ const BurgerMenu = () => {
                 <Separator />
               </Fragment>
             )}
-           {/* deelete */}
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
