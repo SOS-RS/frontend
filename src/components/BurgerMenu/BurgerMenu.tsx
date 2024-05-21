@@ -6,6 +6,7 @@ import {
   HeartHandshake,
   Info,
   LinkIcon,
+  ShieldAlert,
 } from 'lucide-react';
 import { Squash as Hamburger } from 'hamburger-react'
 
@@ -40,7 +41,6 @@ const BurgerMenu = () => {
   }, [])
 
   const toggleMenu = () => {
-    console.log('agora está: ', isOpen)
     setOpen(!isOpen)
     document.body.style.pointerEvents = "none"
     setTimeout(() => { 
@@ -117,6 +117,63 @@ const BurgerMenu = () => {
               </span>
             </div>
           )}
+          <BurguerMenuItem
+            label="Sobre nós"
+            link="/sobre-nos"
+            icon={<Info className="w-5 h-5" />}
+          />
+          <BurguerMenuItem
+            label="Cadastrar abrigo"
+            link="https://forms.gle/2S7L2gR529Dc8P3T9"
+            icon={<CirclePlus className="w-5 h-5" />}
+            openExternal={true}
+          />
+          <BurguerMenuItem
+            label="Canal de Denúncias"
+            link="https://contatoseguro.com.br/sos_rs"
+            icon={<ShieldAlert className="w-5 h-5" />}
+            openExternal={true}
+          />
+          <BurguerMenuItem
+            label="Como Ajudar"
+            link="https://www.instagram.com/reel/C613CfGuh4b"
+            icon={<CircleHelp className="w-5 h-5" />}
+            openExternal={true}
+          />
+          <BurguerMenuItem
+            label="Política de Privacidade"
+            link="/politica-de-privacidade"
+            icon={<Info className="w-5 h-5" />}
+          />
+          <BurguerMenuItem
+            label="Apoiadores"
+            link="/apoiadores"
+            icon={<HeartHandshake className="w-5 h-5" />}
+          />
+          <Separator />
+          {partners.length > 0 && (
+            <Fragment>
+              <span>Parcerias</span>
+              {partners.map((partner, idx) => (
+                <BurguerMenuItem
+                  key={idx}
+                  label={partner.name}
+                  link={partner.link}
+                  icon={<LinkIcon className="w-4 h-4" />}
+                />
+              ))}
+            </Fragment>
+          )}
+        {session && (
+          <div className="mt-auto">
+            <span
+              className="inline-flex items-center hover:font-semibold cursor-pointer"
+              onClick={logout}
+            >
+              <DoorOpen className="mr-2" /> Sair
+            </span>
+          </div>
+        )}
         </SheetContent>
       </SheetPortal>
     </Sheet>

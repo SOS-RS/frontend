@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -23,6 +23,7 @@ import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
 import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
+import { ShelterCategory } from '@/hooks/useShelter/types';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -117,9 +118,9 @@ const UpdateShelter = () => {
       />
       <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
         <form className="contents" onSubmit={handleSubmit}>
-          <h6 className="text-2xl font-semibold">Atualizar abrigo</h6>
+          <h6 className="text-2xl font-semibold">Atualização cadastral</h6>
           <p className="text-muted-foreground">
-            Atualize as informações desejadas sobre o abrigo.
+            Atualize as informações desejadas.
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
             <Authenticated role="Staff">
@@ -194,40 +195,52 @@ const UpdateShelter = () => {
                 error={!!errors.contact}
                 helperText={errors.contact}
               />
-              <TextField
-                type="number"
-                label="Capacidade total do abrigo"
-                {...getFieldProps('capacity')}
-                error={!!errors.capacity}
-                helperText={errors.capacity}
-              />
+              {shelter.category === ShelterCategory.Shelter && (
+                <TextField
+                  type="number"
+                  label="Capacidade total do abrigo"
+                  {...getFieldProps('capacity')}
+                  error={!!errors.capacity}
+                  helperText={errors.capacity}
+                />
+              )}
             </Authenticated>
-            <TextField
-              type="number"
-              label="Quantidade de pessoas abrigadas"
-              {...getFieldProps('shelteredPeople')}
-              error={!!errors.shelteredPeople}
-              helperText={errors.shelteredPeople}
-            />
-            <SelectField
-              label="O abrigo aceita animais"
-              value={values.petFriendly ? 'true' : 'false'}
-              onSelectChange={(v) => setFieldValue('petFriendly', v === 'true')}
-              options={[
-                { value: 'true', label: 'Sim' },
-                { value: 'false', label: 'Não' },
-              ]}
-            />
+            {shelter.category === ShelterCategory.Shelter && (
+              <Fragment>
+                <TextField
+                  type="number"
+                  label="Quantidade de pessoas abrigadas"
+                  {...getFieldProps('shelteredPeople')}
+                  error={!!errors.shelteredPeople}
+                  helperText={errors.shelteredPeople}
+                />
+                <SelectField
+                  label="O abrigo aceita animais"
+                  value={values.petFriendly ? 'true' : 'false'}
+                  onSelectChange={(v) =>
+                    setFieldValue('petFriendly', v === 'true')
+                  }
+                  options={[
+                    { value: 'true', label: 'Sim' },
+                    { value: 'false', label: 'Não' },
+                  ]}
+                />
+                <Authenticated role="Staff">
+                  <SelectField
+                    label="O abrigo é verificado"
+                    value={values.verified ? 'true' : 'false'}
+                    onSelectChange={(v) =>
+                      setFieldValue('verified', v === 'true')
+                    }
+                    options={[
+                      { value: 'true', label: 'Sim' },
+                      { value: 'false', label: 'Não' },
+                    ]}
+                  />
+                </Authenticated>
+              </Fragment>
+            )}
             <Authenticated role="Staff">
-              <SelectField
-                label="O abrigo é verificado"
-                value={values.verified ? 'true' : 'false'}
-                onSelectChange={(v) => setFieldValue('verified', v === 'true')}
-                options={[
-                  { value: 'true', label: 'Sim' },
-                  { value: 'false', label: 'Não' },
-                ]}
-              />
               <TextField
                 label="Pix"
                 {...getFieldProps('pix')}
