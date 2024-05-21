@@ -2,7 +2,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
+import { DialogSelector, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
 import { group, normalizedCompare } from '@/lib/utils';
