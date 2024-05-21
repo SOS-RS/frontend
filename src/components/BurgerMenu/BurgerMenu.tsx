@@ -67,7 +67,7 @@ const BurgerMenu = () => {
           />
           <BurguerMenuItem
             label="Visão Geral"
-            link="/dashboar"
+            link="/dashboard"
             icon={<Info className="w-4 h-4" />}
           />
           <Separator />
