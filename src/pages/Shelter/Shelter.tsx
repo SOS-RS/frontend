@@ -87,7 +87,7 @@ const Shelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center" id="page">
       <Header
         title={shelter.name}
         startAdornment={

@@ -2,7 +2,7 @@ import { BurgerMenu, Header } from '@/components';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center" id="page">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
       <div className="w-full flex flex-col gap-4 p-4 max-w-4xl [&_*]:text-zinc-500 pb-8">
         <h3 className="text-4xl pt-4 font-bold !text-zinc-900">

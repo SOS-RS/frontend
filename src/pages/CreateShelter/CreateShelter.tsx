@@ -112,7 +112,7 @@ const CreateShelterComponent = () => {
   }, [cepData, setFieldValue, setErrors]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center" id="page">
       <Header
         title="Cadastrar novo abrigo"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
