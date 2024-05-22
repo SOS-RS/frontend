@@ -19,7 +19,7 @@ const initialFilterData: IFilterFormProps = {
 };
 
 const Home = () => {
-  const { data: shelters, loading, refresh } = useShelters({ cache: true });
+  const { data: shelters, loading, refresh } = useShelters({ cache: false });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
   const [filterData, setFilterData] = useState<IFilterFormProps>({
