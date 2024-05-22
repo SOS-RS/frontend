@@ -34,7 +34,7 @@ const SupplyHistory = () => {
         <div>
           <h6 className="text-2xl font-semibold">Histórico de edições</h6>
           <h1 className="font-semibold text-slate-500">
-            Escola Rodrigo de Castro
+            Escola Rodrigo de Castro Melo
           </h1>
         </div>
         <div>
