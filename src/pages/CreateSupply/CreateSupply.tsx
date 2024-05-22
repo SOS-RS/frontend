@@ -81,7 +81,7 @@ const CreateSupply = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center" id="page">
       <Header
         title="Cadastrar novo item"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"

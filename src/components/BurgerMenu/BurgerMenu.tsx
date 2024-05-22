@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
 import {
   CircleHelp,
   CirclePlus,
@@ -6,12 +6,12 @@ import {
   HeartHandshake,
   Info,
   LinkIcon,
-  Menu,
   ShieldAlert,
 } from 'lucide-react';
+import { Squash as Hamburger } from 'hamburger-react'
 
 import { SessionServices } from '@/service';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetOverlay, SheetPortal } from '@/components/ui/sheet';
 import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
@@ -20,6 +20,9 @@ import { usePartners } from '@/hooks';
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
   const { data: partners } = usePartners();
+  const [isOpen, setOpen] = useState(false)
+  const [pageElement, setPageElement] = useState(document.body)
+  const [headerElement, setHeaderElement] = useState(document.body)
 
   const logout = useCallback(() => {
     SessionServices.logout()
@@ -32,21 +35,38 @@ const BurgerMenu = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setPageElement(document.getElementById('page') || document.body)
+    setHeaderElement(document.getElementById('header') || document.body)
+  }, [])
+
+  const toggleMenu = () => {
+    setOpen(!isOpen)
+    document.body.style.pointerEvents = "none"
+    setTimeout(() => { 
+      document.body.style.pointerEvents = "auto"
+    }, 500)
+  }
+
   return (
-    <Sheet>
+    <Sheet onOpenChange={toggleMenu} open={isOpen}>
       <SheetTrigger>
-        <Menu color="white" className="ml-2 mr-2" />
+        <Hamburger color="#fff" size={20} toggled={isOpen} aria-label="menu"/>
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col">
-        <div className="flex flex-col gap-4">
-          {session && (
-            <Fragment>
-              <div className="inline-flex items-center text-semibold">
-                Olá, {session.name}
-              </div>
-              <Separator />
-            </Fragment>
-          )}
+      <SheetPortal container={pageElement}>
+        <SheetOverlay />
+      </SheetPortal>
+      <SheetPortal container={headerElement}>
+        <SheetContent side="left" className="pt-[30px] flex flex-col absolute top-[56px] h-screen">
+          <div className="flex flex-col gap-4">
+            {session && (
+              <Fragment>
+                <div className="inline-flex items-center text-semibold">
+                  Olá, {session.name}
+                </div>
+                <Separator />
+              </Fragment>
+            )}
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
@@ -105,7 +125,8 @@ const BurgerMenu = () => {
             </span>
           </div>
         )}
-      </SheetContent>
+        </SheetContent>
+      </SheetPortal>
     </Sheet>
   );
 };
