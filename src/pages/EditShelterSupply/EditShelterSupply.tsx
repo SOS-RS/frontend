@@ -1,7 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useMemo, useState } from 'react';
-
 import { DialogSelector, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
@@ -191,6 +190,10 @@ const EditShelterSupply = () => {
               supplyItems={searchResult}
               limit={5}
               onSearch={(value) => {
+                if (!value) {
+                  setOpenedGroups([]);
+                }
+
                 setSearch(value);
               }}
               onSelectItem={(item) => {
