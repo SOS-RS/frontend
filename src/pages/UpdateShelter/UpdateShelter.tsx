@@ -207,7 +207,6 @@ const UpdateShelter = () => {
                 helperText={errors.capacity}
               />
             </Authenticated>
-
             {shelter.category === ShelterCategory.Shelter && (
               <Fragment>
                 <TextField
