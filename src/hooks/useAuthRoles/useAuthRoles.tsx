@@ -1,16 +1,19 @@
 import { useContext } from 'react';
-import { SessionContext } from '@/contexts/SessionContext';
+
+import { SessionContext } from '@/contexts';
 import MappedRoles from '@/hooks/useAuthRoles/MappedRoles';
 import { AccessLevel } from '@/service/sessions/types';
 
-const useAuthRoles = (...roles: AccessLevel[]): boolean => {
+const useAuthRoles = (...roles: AccessLevel[]) => {
   const { session } = useContext(SessionContext);
 
-  if (!session) {
+  if (
+    !session ||
+    !roles.some((role) => MappedRoles[role].includes(session.accessLevel))
+  )
     return false;
-  }
 
-  return roles.some((role) => MappedRoles[role].includes(session.accessLevel));
+  return true;
 };
 
 export { useAuthRoles };
