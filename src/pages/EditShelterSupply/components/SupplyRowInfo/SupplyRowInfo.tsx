@@ -1,31 +1,32 @@
-import { useMemo } from 'react';
+import { SupplyPriority } from '@/service/supply/types';
+import { SupplyRowInfo } from '../SupplyRowInfo';
+import { ISupplyRowProps } from './types';
+import { Archive } from 'lucide-react';
 
-import { CircleStatus } from '@/components';
-import { ISupplyRowInfoProps } from './types';
-import { getSupplyPriorityProps } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-
-const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
-  const { name, priority, quantity, onClick } = props;
-
-  const { className, label } = useMemo(
-    () => getSupplyPriorityProps(priority),
-    [priority]
-  );
+const SupplyRow = (props: ISupplyRowProps) => {
+  const { name, items, onClick } = props;
 
   return (
-    <div
-      onClick={onClick}
-      className="flex w-full justify-between content-end border-b-[1px] border-b-border py-4 hover:cursor-pointer hover:bg-slate-50 px-1 rounded-sm"
-    >
-      <h2 className="font-medium">{name}</h2>
-      <div className="flex justify-end items-center gap-2">
-        <CircleStatus className={className} />
-        <p className="text-muted-foreground text-nowrap pl-1">{label}</p>
-        {Boolean(quantity) && <Badge variant="secondary">{quantity}</Badge>}
+    <div className={`${name !== '' ? 'gap-4 flex flex-col pb-6' : 'hidden'}`}>
+      <div className="flex w-full">
+        <h3 className="font-semibold text-lg border rounded p-2 flex items-center">
+          <Archive className="mr-2 size-5" />
+          {name.toUpperCase()}
+        </h3>
+      </div>
+      <div className="flex flex-col">
+        {items.map((item, idy) => (
+          <SupplyRowInfo
+            key={idy}
+            name={item.name}
+            quantity={item.quantity}
+            priority={item.priority ?? SupplyPriority.NotNeeded}
+            onClick={() => (onClick ? onClick(item) : undefined)}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export { SupplyRowInfo };
+export { SupplyRow };
