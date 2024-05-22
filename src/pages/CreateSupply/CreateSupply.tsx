@@ -25,6 +25,7 @@ const CreateSupply = () => {
   const { shelterId = '-1' } = useParams();
   const { toast } = useToast();
   const { data: supplyCategories, loading } = useSupplyCategories();
+  const containsLetter = /[a-zA-Z]/;
 
   const {
     errors,
@@ -46,7 +47,7 @@ const CreateSupply = () => {
     validateOnMount: false,
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
-      name: Yup.string().required('Este campo deve ser preenchido'),
+      name: Yup.string().matches(containsLetter, "O campo não pode conter apenas números.").required('Este campo deve ser preenchido'),
       quantity: Yup.number().typeError('Insira um valor númerico').moreThan(0, 'O valor tem que ser maior do que 0').optional(),
       priority: Yup.string().required('Este campo deve ser preenchido'),
       supplyCategoryId: Yup.string().required('Este campo deve ser preenchido'),
