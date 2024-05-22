@@ -36,22 +36,14 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           },
         })
         .then(({ data }) => {
-          if (append) {
-            setData((prev) => ({
-              ...prev,
-              ...data.data,
-              results: [...prev.results, ...data.data.results],
-            }));
-          } else {
-            setData((prev) => ({
-              ...prev,
-              ...data.data,
-              results: [...data.data.results],
-            }));
-          }
+          setData((prev) => ({
+            ...prev,
+            ...data.data,
+            results: [...data.data.results],
+          }));
         })
         .finally(() => {
-          if (!append) setLoading(false);
+          setLoading(!append);
         });
     },
     []
