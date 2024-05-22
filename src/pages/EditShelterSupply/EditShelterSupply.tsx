@@ -1,6 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 
 import { DialogSelector, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { Accordion } from '@/components/ui/accordion';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -22,12 +23,8 @@ const EditShelterSupply = () => {
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
-  const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
-    []
-  );
-  const [searchedSupplies, setSearchedSupplies] = useState<IUseSuppliesData[]>(
-    []
-  );
+  const [searchValue, setSearchValue] = useState<string>('');
+
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
       (prev, current) => ({ ...prev, [current.supply.id]: current }),
@@ -35,43 +32,16 @@ const EditShelterSupply = () => {
     );
   }, [shelter?.shelterSupplies]);
 
-  const [, setSearchSupplies] = useThrottle<string>(
-    {
-      throttle: 200,
-      callback: (value) => {
-        if (value) {
-          const filteredSupplies = supplies.filter((s) =>
-            normalizedCompare(s.name, value)
-          );
-          setSearchedSupplies(filteredSupplies);
-        } else {
-          setSearchedSupplies([]);
-          setSearch('');
-        }
-      },
-    },
-    [supplies]
-  );
-
-  const [, setSearch] = useThrottle<string>(
+  const [search, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: (value) => {
-        if (value) {
-          const filteredSupplies = supplies.filter((s) =>
-            normalizedCompare(s.name, value)
-          );
-          setFilteredSupplies(filteredSupplies);
-        } else {
-          const storedSupplies = supplies.filter(
-            (s) => !!shelterSupplyData[s.id]
-          );
-          setFilteredSupplies(storedSupplies);
-        }
+        setSearchValue(value);
       },
     },
     [supplies, shelterSupplyData]
   );
+
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
@@ -79,11 +49,36 @@ const EditShelterSupply = () => {
     'value' | 'onSave' | 'quantity'
   > | null>();
 
-  const supplyGroups = useMemo(
-    () =>
-      group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
-    [filteredSupplies]
-  );
+  const [openedGroups, setOpenedGroups] = useState<string[]>([]);
+
+  const { supplyGroups, searchResult } = useMemo(() => {
+    let result = supplies.filter((s) => !!shelterSupplyData[s.id]);
+    let searchResult: IUseSuppliesData[] = [];
+
+    if (search && searchValue) {
+      const filtered = supplies.filter((s) =>
+        normalizedCompare(s.name, searchValue)
+      );
+
+      setOpenedGroups(
+        filtered
+          .filter((c) => !!c.supplyCategory)
+          .map((f: IUseSuppliesData) => f.supplyCategory!.name)
+      );
+
+      result = filtered;
+
+      /* seta o filtro do Search Comp*/
+      searchResult = supplies.filter((s) =>
+        normalizedCompare(s.name, searchValue)
+      );
+    }
+
+    const grouped = group<IUseSuppliesData>(result, 'supplyCategory.name');
+    const sorted = Object.fromEntries(Object.entries(grouped).sort());
+
+    return { supplyGroups: sorted, searchResult };
+  }, [searchValue, supplies, search, shelterSupplyData]);
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
@@ -98,6 +93,7 @@ const EditShelterSupply = () => {
           const successCallback = () => {
             setModalOpened(false);
             setModalData(null);
+            setSearch('');
             clearCache(false);
             refresh();
           };
@@ -136,13 +132,8 @@ const EditShelterSupply = () => {
         },
       });
     },
-    [refresh, shelterId, toast]
+    [refresh, shelterId, toast, setSearch]
   );
-
-  useEffect(() => {
-    const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
-    setFilteredSupplies(storedSupplies);
-  }, [supplies, shelterSupplyData]);
 
   if (loading) return <LoadingScreen />;
 
@@ -197,12 +188,13 @@ const EditShelterSupply = () => {
           </p>
           <div className="w-full my-2">
             <SupplySearch
-              supplyItems={searchedSupplies}
+              supplyItems={searchResult}
               limit={5}
-              onSearch={(value) => setSearchSupplies(value)}
+              onSearch={(value) => {
+                setSearch(value);
+              }}
               onSelectItem={(item) => {
                 setSearch(item.name);
-                setSearchedSupplies([]);
               }}
               onAddNewItem={() =>
                 navigate(`/abrigo/${shelterId}/item/cadastrar`)
@@ -214,7 +206,12 @@ const EditShelterSupply = () => {
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
             selecionado.
           </p>
-          <div className="flex flex-col w-full gap-2 my-4">
+          <Accordion
+            type="multiple"
+            className="flex flex-col w-full gap-2 my-4"
+            value={openedGroups}
+            onValueChange={setOpenedGroups}
+          >
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {
@@ -226,7 +223,13 @@ const EditShelterSupply = () => {
                     priority: supply?.priority,
                   };
                 })
-                .sort((a, b) => a.name.localeCompare(b.name));
+                .sort((a, b) => {
+                  const [first, second] = [a.priority || 0, b.priority || 0];
+                  const priorityDiff = second - first;
+
+                  return priorityDiff || a.name.localeCompare(b.name);
+                });
+
               return (
                 <SupplyRow
                   key={idx}
@@ -236,7 +239,7 @@ const EditShelterSupply = () => {
                 />
               );
             })}
-          </div>
+          </Accordion>
         </div>
       </div>
     </Fragment>
