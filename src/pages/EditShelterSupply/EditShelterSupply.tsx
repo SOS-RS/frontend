@@ -1,19 +1,17 @@
-import { ChevronLeft, PlusCircle } from 'lucide-react';
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
-import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { Accordion } from '@/components/ui/accordion';
+import { DialogSelector, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
-
-import { ShelterSupplyServices } from '@/service';
-import { ISupply, SupplyPriority } from '@/service/supply/types';
 import { group, normalizedCompare } from '@/lib/utils';
-import { SupplyRow } from './components';
+import { SupplyRow, SupplySearch } from './components';
+import { IDialogSelectorProps } from '@/components/DialogSelector/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
+import { ShelterSupplyServices } from '@/service';
+import { useToast } from '@/components/ui/use-toast';
+import { SupplyPriority } from '@/service/supply/types';
 import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
@@ -24,54 +22,68 @@ const EditShelterSupply = () => {
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
-
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [openedGroups, setOpenedGroups] = useState<string[]>([]);
-
-  const [search, setSearch] = useThrottle<string>(
-    {
-      throttle: 400,
-      callback: (v) => {
-        setSearchValue(v);
-      },
-    },
-    [supplies]
+  const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
+    []
   );
-
-  const supplyGroups = useMemo(() => {
-    let result = supplies;
-    if (search && searchValue) {
-      const filtered = result.filter((s) =>
-        s.name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-
-      setOpenedGroups(
-        filtered
-          .filter((c) => !!c.supplyCategory)
-          .map((f: ISupply) => f.supplyCategory!.name)
-      );
-
-      result = filtered;
-    }
-
-    const grouped = group<ISupply>(result, 'supplyCategory.name');
-    const sorted = Object.fromEntries(Object.entries(grouped).sort());
-
-    return sorted;
-  }, [searchValue, supplies, search]);
-
-  const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const [loadingSave, setLoadingSave] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<Pick<
-    IDialogSelectorProps,
-    'value' | 'onSave' | 'quantity'
-  > | null>();
+  const [searchedSupplies, setSearchedSupplies] = useState<IUseSuppliesData[]>(
+    []
+  );
   const shelterSupplyData = useMemo(() => {
     return (shelter?.shelterSupplies ?? []).reduce(
       (prev, current) => ({ ...prev, [current.supply.id]: current }),
       {} as Record<string, IUseShelterDataSupply>
     );
   }, [shelter?.shelterSupplies]);
+
+  const [, setSearchSupplies] = useThrottle<string>(
+    {
+      throttle: 200,
+      callback: (value) => {
+        if (value) {
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, value)
+          );
+          setSearchedSupplies(filteredSupplies);
+        } else {
+          setSearchedSupplies([]);
+          setSearch('');
+        }
+      },
+    },
+    [supplies]
+  );
+
+  const [, setSearch] = useThrottle<string>(
+    {
+      throttle: 400,
+      callback: (value) => {
+        if (value) {
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, value)
+          );
+          setFilteredSupplies(filteredSupplies);
+        } else {
+          const storedSupplies = supplies.filter(
+            (s) => !!shelterSupplyData[s.id]
+          );
+          setFilteredSupplies(storedSupplies);
+        }
+      },
+    },
+    [supplies, shelterSupplyData]
+  );
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [loadingSave, setLoadingSave] = useState<boolean>(false);
+  const [modalData, setModalData] = useState<Pick<
+    IDialogSelectorProps,
+    'value' | 'onSave' | 'quantity'
+  > | null>();
+
+  const supplyGroups = useMemo(
+    () =>
+      group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
+    [filteredSupplies]
+  );
 
   const handleClickSupplyRow = useCallback(
     (item: ISupplyRowItemProps) => {
@@ -127,6 +139,11 @@ const EditShelterSupply = () => {
     [refresh, shelterId, toast]
   );
 
+  useEffect(() => {
+    const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
+    setFilteredSupplies(storedSupplies);
+  }, [supplies, shelterSupplyData]);
+
   if (loading) return <LoadingScreen />;
 
   return (
@@ -175,36 +192,29 @@ const EditShelterSupply = () => {
         <div className="flex flex-col items-start w-full max-w-5xl gap-3 p-4">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
-            Para cada item da lista abaixo, informe a disponibilidade no abrigo
-            selecionado
+            Antes de adicionar um novo item, confira na busca abaixo se ele já
+            não foi cadastrado.
           </p>
-          <Button
-            variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
-            onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
-          >
-            <PlusCircle />
-            Cadastrar novo item
-          </Button>
           <div className="w-full my-2">
-            <TextField
-              label="Buscar"
-              value={search || ''}
-              onChange={(ev) => {
-                if (!ev.target.value) {
-                  setOpenedGroups([]);
-                }
-                setSearch(ev.target.value);
+            <SupplySearch
+              supplyItems={searchedSupplies}
+              limit={5}
+              onSearch={(value) => setSearchSupplies(value)}
+              onSelectItem={(item) => {
+                setSearch(item.name);
+                setSearchedSupplies([]);
               }}
+              onAddNewItem={() =>
+                navigate(`/abrigo/${shelterId}/item/cadastrar`)
+              }
             />
           </div>
 
-          <Accordion
-            type="multiple"
-            className="flex flex-col w-full gap-2 my-4"
-            value={openedGroups}
-            onValueChange={setOpenedGroups}
-          >
+          <p className="mt-3 text-muted-foreground">
+            Para cada item da lista abaixo, informe a disponibilidade no abrigo
+            selecionado.
+          </p>
+          <div className="flex flex-col w-full gap-2 my-4">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {
@@ -212,16 +222,11 @@ const EditShelterSupply = () => {
                   return {
                     id: v.id,
                     name: v.name,
-                    priority: supply?.priority,
                     quantity: supply?.quantity,
+                    priority: supply?.priority,
                   };
                 })
-                .sort((a, b) => {
-                  const [first, second] = [a.priority || 0, b.priority || 0];
-                  const priorityDiff = second - first;
-
-                  return priorityDiff || a.name.localeCompare(b.name);
-                });
+                .sort((a, b) => a.name.localeCompare(b.name));
               return (
                 <SupplyRow
                   key={idx}
@@ -231,7 +236,7 @@ const EditShelterSupply = () => {
                 />
               );
             })}
-          </Accordion>
+          </div>
         </div>
       </div>
     </Fragment>
