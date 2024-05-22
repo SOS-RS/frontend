@@ -36,7 +36,7 @@ const colorStatusPriority = (priority: SupplyPriority) => {
  * deprecated
  */
 function nameStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
+  if (priority === SupplyPriority.Needing) return 'Precisa com urgência';
   if (priority === SupplyPriority.Urgent) return 'Precisa';
   if (priority === SupplyPriority.NotNeeded) return 'Não preciso';
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
