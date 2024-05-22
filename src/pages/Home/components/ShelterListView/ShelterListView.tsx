@@ -38,7 +38,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           {searchParams.toString()
             ? `Abrigos encontrados (${count})`
-            : 'Total de abrigos'
+            : `Total de abrigos  (${count})`
           }
         </h1>
         <Alert
