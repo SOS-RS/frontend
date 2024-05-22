@@ -11,6 +11,7 @@ import { useViaCep } from './useViaCep';
 import { usePartners } from './usePartners';
 import { useGithubContributors } from './useGithubContributors';
 import { useAuthRoles } from './useAuthRoles';
+import { useSupporters } from './useSupporters';
 
 export {
   useShelters,
@@ -26,4 +27,5 @@ export {
   usePartners,
   useGithubContributors,
   useAuthRoles,
+  useSupporters,
 };

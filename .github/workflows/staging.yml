@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [staging]
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       - name: Create .env file
         run: |
           touch .env
-          echo VITE_API_URL=${{ secrets.VITE_API_URL }} >> .env
+          echo VITE_API_URL=${{ secrets.STG_VITE_API_URL }} >> .env
           cat .env
 
       - run: npm run build
@@ -31,4 +31,4 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: sa-east-1
-      - run: aws s3 sync ./dist s3://sos-rs.com
+      - run: aws s3 sync ./dist s3://stg.sos-rs.com
