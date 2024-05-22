@@ -1,12 +1,10 @@
 import { useContext } from 'react';
 
-
 import { SessionContext } from '@/contexts';
 import MappedRoles from '@/hooks/useAuthRoles/MappedRoles';
 import { AccessLevel } from '@/service/sessions/types';
 
 const useAuthRoles = (...roles: AccessLevel[]) => {
-
   const { session } = useContext(SessionContext);
 
   if (
