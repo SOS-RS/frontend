@@ -1,5 +1,4 @@
 import { SignIn } from './SignIn';
-
 import { Home } from './Home';
 import { Dashboard } from './Dashboard';
 import { Shelter } from './Shelter';
@@ -10,6 +9,7 @@ import { UpdateShelter } from './UpdateShelter';
 import { PrivacyPolicy } from './PrivacyPolicy';
 import { AboutUs } from './AboutUs';
 import { Filter } from './Home/components';
+import { Supporters } from './Supporters';
 
 export {
   SignIn,
@@ -23,4 +23,5 @@ export {
   Dashboard,
   PrivacyPolicy,
   AboutUs,
+  Supporters,
 };

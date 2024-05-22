@@ -1,4 +1,5 @@
 import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
+import { ShelterCategory } from '../useShelter/types';
 
 export interface IUseSheltersData {
   id: string;
@@ -18,6 +19,8 @@ export interface IUseSheltersData {
   verified: boolean;
   latitude?: string | null;
   longitude?: string | null;
+  category: ShelterCategory;
+  actived: boolean;
   createdAt: string;
   updatedAt?: string | null;
   shelterSupplies: IUseSheltersDataSupplyData[];

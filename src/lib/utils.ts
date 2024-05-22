@@ -1,3 +1,4 @@
+import { ShelterCategory } from '@/hooks/useShelter/types';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import {
   ShelterTagInfo,
@@ -11,41 +12,18 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * deprecated
- */
-function variantStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'danger';
-  if (priority === SupplyPriority.Urgent) return 'warn';
-  if (priority === SupplyPriority.NotNeeded) return 'alert';
-  if (priority === SupplyPriority.Remaining) return 'success';
-}
-
-/**
- * deprecated
- */
-const colorStatusPriority = (priority: SupplyPriority) => {
-  if (priority === SupplyPriority.Needing) return 'bg-[#f69f9d]';
-  if (priority === SupplyPriority.Urgent) return 'bg-[#f8b993]';
-  if (priority === SupplyPriority.NotNeeded) return 'bg-[#f9cf8d]';
-  if (priority === SupplyPriority.Remaining) return 'bg-[#63bc43]';
-};
-
-/**
- * deprecated
- */
-function nameStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
-  if (priority === SupplyPriority.Urgent) return 'Precisa';
-  if (priority === SupplyPriority.NotNeeded) return 'Não preciso';
-  if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
-}
-
-function getAvailabilityProps(
-  capacity?: number | null,
-  shelteredPeople?: number | null
-) {
-  if (capacity && (shelteredPeople || shelteredPeople === 0)) {
+function getAvailabilityProps(props: {
+  capacity?: number | null;
+  shelteredPeople?: number | null;
+  category: ShelterCategory;
+}) {
+  const { category, capacity, shelteredPeople } = props;
+  if (category === ShelterCategory.DistributionCenter) {
+    return {
+      availability: 'Centro de Distribuição',
+      className: 'text-green-600',
+    };
+  } else if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',
@@ -64,7 +42,7 @@ function getAvailabilityProps(
 }
 
 const priorityOptions: Record<SupplyPriority, string> = {
-  [SupplyPriority.Urgent]: 'Necessita urgente',
+  [SupplyPriority.Urgent]: 'Precisa com urgência',
   [SupplyPriority.Needing]: 'Precisa',
   [SupplyPriority.Remaining]: 'Disponível para doação',
   [SupplyPriority.NotNeeded]: 'Não preciso',
@@ -155,15 +133,31 @@ function removeDuplicatesByField(
     }, []);
 }
 
+function normalizedCompare(a: string, b: string): boolean {
+  return a
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .includes(
+      b
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+    );
+}
+
+function checkIsNull(v?: any | null) {
+  return v !== null && v !== undefined;
+}
+
 export {
   cn,
   getAvailabilityProps,
   group,
   getSupplyPriorityProps,
-  variantStatusPriority,
-  colorStatusPriority,
-  nameStatusPriority,
   priorityOptions,
   groupShelterSuppliesByTag,
   removeDuplicatesByField,
+  normalizedCompare,
+  checkIsNull,
 };

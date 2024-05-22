@@ -149,14 +149,14 @@ const Filter = (props: IFilterProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="rounded-md overflow-y-scroll max-h-[90vh]">
+      <DialogContent className="rounded-md overflow-y-scroll max-h-[85vh] mt-8">
         <DialogHeader>
           <DialogTitle className="text-base font-medium">
             Faça sua busca:
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
+          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
@@ -176,7 +176,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Você pode buscar pelo item que os abrigos precisam urgentemente
+                Você pode buscar pelo item que os abrigos precisam com urgência
                 de doação ou por itens que os abrigos tem disponibilidade para
                 doar.
               </p>
