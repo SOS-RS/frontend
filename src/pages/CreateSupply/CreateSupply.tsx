@@ -129,8 +129,6 @@ const CreateSupply = () => {
     );
   };
 
-  console.log(values);
-
   if (loading) return <LoadingScreen />;
 
   return (
