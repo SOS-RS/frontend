@@ -14,6 +14,7 @@ export interface IFilterFormProps {
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
   cities: string[];
+  showDisabled: boolean;
 }
 
 export interface IFilterFormikProps {
@@ -23,6 +24,7 @@ export interface IFilterFormikProps {
   supplies: ISelectField[];
   shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
   cities: string[];
+  showDisabled: boolean;
 }
 
 export interface IFilterProps {
