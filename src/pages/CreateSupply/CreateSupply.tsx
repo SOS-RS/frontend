@@ -112,7 +112,7 @@ const CreateSupply = () => {
       : [];
 
   const renderSupplies = (element: IUseSuppliesData, key: number) => {
-    if (values.name.length < 3) return <></>;
+        if (values.name.length < 3 || key > 30) return <></>;
 
     return (
       <Fragment key={key}>
