@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { HandHeart, Home, Loader, Users } from 'lucide-react';
+import { HandHeart, Home, LifeBuoy, Loader, Users } from 'lucide-react';
 
 import { BurgerMenu, Header } from '@/components';
 import { AboutCardInfo, ServicedFrontInfo } from './components';
@@ -43,8 +43,12 @@ const AboutUs = () => {
         </h3>
         <p className="text-justify text-md md:text-lg font-medium [&>a]:text-blue-500 [&>a]:hover:text-blue-600 [&>a]:active:text-blue-700">
           Iniciado no domingo (04/05) e concluído na segunda (05/05), após 18
-          horas seguidas de desenvolvimento, nosso webapp <b>SOS RS 🛟</b>,
-          idealizado e desenvolvido por{' '}
+          horas seguidas de desenvolvimento, nosso webapp <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />
+          , idealizado e desenvolvido por{' '}
           <a
             className="hover:underline"
             href="https://www.linkedin.com/in/klaus-riffel-69441928/"
@@ -124,10 +128,14 @@ const AboutUs = () => {
             className="w-full"
           />
         </div>
-        <p className="text-justify font-medium text-md md:text-lg">
-          Atualmente, o <b>SOS RS 🛟</b> apoia a gestão das demandas e
-          necessidades dos abrigos do Rio Grande do Sul com informações
-          públicas, atualizadas, confiáveis e auditáveis.
+        <p className="text-justify font-medium text-md md:text-lg leading-10">
+          Atualmente, o <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          apoia a gestão das demandas e necessidades dos abrigos do Rio Grande
+          do Sul com informações públicas, atualizadas, confiáveis e auditáveis.
         </p>
         <h3 className="text-2xl font-medium text-muted-foreground mt-4">
           Frentes atendidas
