@@ -54,7 +54,7 @@ const CreateSupply = () => {
     validateOnMount: false,
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
-      name: Yup.string().required('Este campo deve ser preenchido'),
+      name: Yup.string().min(3, "Insira no mínimo 3 caracteres").required('Este campo deve ser preenchido'),
       quantity: Yup.number()
         .typeError('Insira um valor númerico')
         .moreThan(0, 'O valor tem que ser maior do que 0')
