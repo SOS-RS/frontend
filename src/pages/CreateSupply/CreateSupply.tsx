@@ -55,10 +55,11 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string()
-        .matches(
-          /^[a-zA-ZÀ-ÿ\s]*$/,
-          'Não inclua números ou caracteres especiais'
-        )
+      .matches(/^[a-zA-ZÀ-ÿ0-9\s]*$/, "O nome não deve conter caracteres especiais")
+      .test('min-letters', 'O nome deve conter pelo menos 3 letras', value => {
+        const letterCount = (value?.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
+        return letterCount >= 3;
+      })
         .min(3, 'Insira no mínimo 3 caracteres')
         .required('Este campo deve ser preenchido'),
       quantity: Yup.number()
