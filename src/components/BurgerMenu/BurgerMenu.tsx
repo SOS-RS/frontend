@@ -17,6 +17,7 @@ import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
 
+
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
   const { data: partners } = usePartners();
