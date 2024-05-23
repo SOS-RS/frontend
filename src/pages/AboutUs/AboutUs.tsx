@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react';
-import { HandHeart, Home, Loader, Users } from 'lucide-react';
+import { HandHeart, Home, LifeBuoy, Loader, Users } from 'lucide-react';
 
 import { BurgerMenu, Header } from '@/components';
 import { AboutCardInfo, ServicedFrontInfo } from './components';
@@ -141,10 +141,14 @@ const AboutUs = () => {
             className="w-full"
           />
         </div>
-        <p className="text-justify font-medium text-md md:text-lg">
-          Atualmente, o <b>SOS RS 🛟</b> apoia a gestão das demandas e
-          necessidades dos abrigos do Rio Grande do Sul com informações
-          públicas, atualizadas, confiáveis e auditáveis.
+        <p className="text-justify font-medium text-md md:text-lg leading-10">
+          Atualmente, o <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          apoia a gestão das demandas e necessidades dos abrigos do Rio Grande
+          do Sul com informações públicas, atualizadas, confiáveis e auditáveis.
         </p>
         <h3 className="text-2xl font-medium text-muted-foreground mt-4">
           Frentes atendidas
