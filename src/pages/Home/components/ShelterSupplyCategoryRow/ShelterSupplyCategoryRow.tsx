@@ -13,6 +13,10 @@ const ShelterSupplyCategoryRow = React.forwardRef<
 
   if (tags.length === 0) return <Fragment />;
 
+  const moreInfoLabel = () => {
+    return `${tags.length - 10} ${tags.length > 11 ? 'itens' : 'item'}`;
+  };
+
   return (
     <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
       <Separator className="mt-2" />
@@ -26,7 +30,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
         ))}
 
         {tags.length > 10 && (
-          <Chip label={`+${tags.length - 10} itens`} variant="moreInfo" />
+          <Chip label={moreInfoLabel()} variant="moreInfo" />
         )}
       </div>
     </div>
