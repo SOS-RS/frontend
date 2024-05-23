@@ -12,36 +12,6 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * deprecated
- */
-function variantStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'danger';
-  if (priority === SupplyPriority.Urgent) return 'warn';
-  if (priority === SupplyPriority.NotNeeded) return 'alert';
-  if (priority === SupplyPriority.Remaining) return 'success';
-}
-
-/**
- * deprecated
- */
-const colorStatusPriority = (priority: SupplyPriority) => {
-  if (priority === SupplyPriority.Needing) return 'bg-[#f69f9d]';
-  if (priority === SupplyPriority.Urgent) return 'bg-[#f8b993]';
-  if (priority === SupplyPriority.NotNeeded) return 'bg-[#f9cf8d]';
-  if (priority === SupplyPriority.Remaining) return 'bg-[#63bc43]';
-};
-
-/**
- * deprecated
- */
-function nameStatusPriority(priority: SupplyPriority) {
-  if (priority === SupplyPriority.Needing) return 'Precisa urgentimente';
-  if (priority === SupplyPriority.Urgent) return 'Precisa';
-  if (priority === SupplyPriority.NotNeeded) return 'Não preciso';
-  if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
-}
-
 function getAvailabilityProps(props: {
   capacity?: number | null;
   shelteredPeople?: number | null;
@@ -72,7 +42,7 @@ function getAvailabilityProps(props: {
 }
 
 const priorityOptions: Record<SupplyPriority, string> = {
-  [SupplyPriority.Urgent]: 'Necessita urgente',
+  [SupplyPriority.Urgent]: 'Precisa com urgência',
   [SupplyPriority.Needing]: 'Precisa',
   [SupplyPriority.Remaining]: 'Disponível para doação',
   [SupplyPriority.NotNeeded]: 'Não preciso',
@@ -185,9 +155,6 @@ export {
   getAvailabilityProps,
   group,
   getSupplyPriorityProps,
-  variantStatusPriority,
-  colorStatusPriority,
-  nameStatusPriority,
   priorityOptions,
   groupShelterSuppliesByTag,
   removeDuplicatesByField,
