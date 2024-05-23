@@ -3,6 +3,14 @@ export enum ShelterCategory {
   DistributionCenter = 'DistributionCenter',
 }
 
+export enum SupplyMeasure {
+  Unit = 'Unit',
+  Kg = 'Kg',
+  Litters = 'Litters',
+  Box = 'Box',
+  Piece = 'Piece',
+}
+
 export interface IUseShelterData {
   id: string;
   name: string;
@@ -37,6 +45,7 @@ export interface IUseShelterDataSupply {
 export interface IUseShelterDataSupplyData {
   id: string;
   name: string;
+  measure: SupplyMeasure;
   supplyCategory: IUseShelterDataSupplyCategory;
   createdAt: string;
   updatedAt?: string | null;
