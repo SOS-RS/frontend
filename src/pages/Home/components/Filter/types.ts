@@ -31,6 +31,6 @@ export interface IFilterFormikProps {
 export interface IFilterProps {
   onSubmit: (values: IFilterFormProps) => void;
   data: IFilterFormProps;
-  open: true;
+  open: boolean;
   onClose: () => void;
 }
