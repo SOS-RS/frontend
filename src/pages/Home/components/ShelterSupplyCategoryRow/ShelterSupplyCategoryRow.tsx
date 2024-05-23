@@ -14,7 +14,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   if (tags.length === 0) return <Fragment />;
 
   const moreInfoLabel = () => {
-    return `${tags.length - 10} ${tags.length > 11 ? 'itens' : 'item'}`;
+    return `+${tags.length - 10} ${tags.length > 11 ? 'itens' : 'item'}`;
   };
 
   return (
