@@ -25,4 +25,15 @@ const checkAndFormatAddress = (
   );
 };
 
-export { checkAndFormatAddress };
+function getShelterNameBeforeSeparator(input: string): string {
+  const separators = ['(', '-', '[', '{'];
+  for(const separator of separators) {
+    const index = input.indexOf(separator);
+    if (index !== -1) {
+      return input.substring(0, index);
+    }
+  }
+  return input;
+}
+
+export { checkAndFormatAddress, getShelterNameBeforeSeparator };
