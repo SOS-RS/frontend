@@ -23,7 +23,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
       {description && <p>{description}</p>}
       <div className="flex flex-wrap gap-2">
         {tags.map((s, idx) => (
-          <WithTooltip key={idx} content={s.priority}>
+          <WithTooltip key={idx} content={s.priority} preventLinkDefault>
             <Chip {...s} />
           </WithTooltip>
         ))}
