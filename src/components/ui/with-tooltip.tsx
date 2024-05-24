@@ -48,7 +48,7 @@ const WithTooltip = ({
         {children}
       </TooltipTrigger>
 
-      <TooltipContent className="border-none data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-violet11 select-none rounded-[8px] px-[15px] py-[10px] text-[12px] leading-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]">
+      <TooltipContent className="border-none data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-violet11 select-none rounded-[8px] px-[15px] py-[10px] text-[12px] leading-none shadow-[hsl(0_0%_0%_/_25%)_0px_4px_8px_0px] will-change-[transform,opacity]">
         <p className="antialiased font-bold text-white">{content}</p>
         <TooltipArrow />
       </TooltipContent>
