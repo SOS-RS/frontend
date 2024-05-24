@@ -1,3 +1,4 @@
+import { ShelterCategory } from '@/hooks/useShelter/types';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import {
   ShelterTagInfo,
@@ -41,11 +42,18 @@ function nameStatusPriority(priority: SupplyPriority) {
   if (priority === SupplyPriority.Remaining) return 'Disponível para doação';
 }
 
-function getAvailabilityProps(
-  capacity?: number | null,
-  shelteredPeople?: number | null
-) {
-  if (capacity && (shelteredPeople || shelteredPeople === 0)) {
+function getAvailabilityProps(props: {
+  capacity?: number | null;
+  shelteredPeople?: number | null;
+  category: ShelterCategory;
+}) {
+  const { category, capacity, shelteredPeople } = props;
+  if (category === ShelterCategory.DistributionCenter) {
+    return {
+      availability: 'Centro de Distribuição',
+      className: 'text-green-600',
+    };
+  } else if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
         availability: 'Abrigo disponível',
@@ -76,22 +84,22 @@ function getSupplyPriorityProps(priority: SupplyPriority) {
     case SupplyPriority.NotNeeded:
       return {
         label,
-        className: 'bg-gray-200',
+        className: 'bg-gray-200 text-gray-800',
       };
     case SupplyPriority.Remaining:
       return {
         label,
-        className: 'bg-light-green',
+        className: 'bg-light-green text-green-800',
       };
     case SupplyPriority.Needing:
       return {
         label,
-        className: 'bg-light-orange',
+        className: 'bg-light-orange text-orange-800',
       };
     case SupplyPriority.Urgent:
       return {
         label,
-        className: 'bg-light-red',
+        className: 'bg-light-red text-red-800',
       };
   }
 }
@@ -143,6 +151,35 @@ function groupShelterSuppliesByTag(data: IUseSheltersDataSupplyData[]) {
   }, initialGroup);
 }
 
+function removeDuplicatesByField(
+  key: string,
+  ...lists: Record<string, any>[]
+): any[] {
+  return lists
+    .flatMap((list) => list)
+    .reduce((prev: Record<string, any>[], current) => {
+      if (prev.some((p) => p[key] === current[key])) return prev;
+      else return [...prev, current];
+    }, []);
+}
+
+function normalizedCompare(a: string, b: string): boolean {
+  return a
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .includes(
+      b
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+    );
+}
+
+function checkIsNull(v?: any | null) {
+  return v !== null && v !== undefined;
+}
+
 export {
   cn,
   getAvailabilityProps,
@@ -153,4 +190,7 @@ export {
   nameStatusPriority,
   priorityOptions,
   groupShelterSuppliesByTag,
+  removeDuplicatesByField,
+  normalizedCompare,
+  checkIsNull,
 };

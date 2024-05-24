@@ -1,6 +1,16 @@
+export enum ShelterCategory {
+  Shelter = 'Shelter',
+  DistributionCenter = 'DistributionCenter',
+}
+
 export interface IUseShelterData {
   id: string;
   name: string;
+  street?: string;
+  neighbourhood?: string;
+  city?: string;
+  streetNumber?: string | null;
+  zipCode?: string;
   address: string;
   pix?: string | null;
   shelteredPeople?: number | null;
@@ -12,12 +22,15 @@ export interface IUseShelterData {
   latitude?: string | null;
   longitude?: string | null;
   shelterSupplies: IUseShelterDataSupply[];
+  category: ShelterCategory;
+  actived: boolean;
   createdAt: string;
   updatedAt?: string | null;
 }
 
 export interface IUseShelterDataSupply {
   priority: number;
+  quantity?: number | null;
   supply: IUseShelterDataSupplyData;
 }
 

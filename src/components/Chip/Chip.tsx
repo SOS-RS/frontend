@@ -5,7 +5,7 @@ import { cva } from 'class-variance-authority';
 const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
   const { label, className, variant = 'info', ...rest } = props;
 
-  const variants = cva('px-4 py-1 font-normal text-sm md:text-md rounded-3xl', {
+  const variants = cva('px-4 py-1.5 font-medium text-sm md:text-md rounded-2xl', {
     variants: {
       variant: {
         warn: 'bg-light-yellow',
@@ -21,9 +21,9 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
   });
 
   return (
-    <div ref={ref} {...rest} className={variants({ className, variant })}>
+    <span tabIndex={0} ref={ref} {...rest} className={variants({ className, variant })}>
       {label}
-    </div>
+    </span>
   );
 });
 

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 import {
   Authenticated,
@@ -22,6 +23,7 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
+import { ShelterCategory } from '@/hooks/useShelter/types';
 
 const Shelter = () => {
   const params = useParams();
@@ -37,13 +39,22 @@ const Shelter = () => {
       .sort(([a], [b]) => (+a > +b ? -1 : 1))
       .map(([key, values]) => ({
         priority: +key,
-        tags: values.map((v) => ({ label: v.supply.name, value: v.supply.id })),
+        tags: values.map((v) => ({
+          label: v.supply.name,
+          value: v.supply.id,
+          quantity: v.quantity,
+        })),
       }));
   }, [shelter?.shelterSupplies]);
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
-      () => getAvailabilityProps(shelter?.capacity, shelter?.shelteredPeople),
-      [shelter?.capacity, shelter?.shelteredPeople]
+      () =>
+        getAvailabilityProps({
+          capacity: shelter?.capacity,
+          shelteredPeople: shelter?.shelteredPeople,
+          category: shelter?.category,
+        }),
+      [shelter?.capacity, shelter?.shelteredPeople, shelter?.category]
     );
   const [loadingUpdateMany, setLoadingUpdateMany] = useState<boolean>(false);
   const { toast } = useToast();
@@ -107,14 +118,19 @@ const Shelter = () => {
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
           </h1>
-          <Button
-            variant="ghost"
-            className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-            onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
+          <Authenticated
+            role="DistributionCenter"
+            bypass={shelter.category === ShelterCategory.Shelter}
           >
-            Editar abrigo
-            <Pencil size={17} className="stroke-blue-600" />
-          </Button>
+            <Button
+              variant="ghost"
+              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
+            >
+              Editar
+              <Pencil size={17} className="stroke-blue-600" />
+            </Button>
+          </Authenticated>
         </div>
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
@@ -142,6 +158,13 @@ const Shelter = () => {
             />
           ))}
         </div>
+        {shelter.updatedAt && (
+          <div className="flex justify-between p-4 items-center">
+            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+            </small>
+          </div>
+        )}
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button

@@ -3,11 +3,12 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cva } from 'class-variance-authority';
 
 import { IShelterCategoryItemsProps } from './types';
-import { getSupplyPriorityProps } from '@/lib/utils';
+import { cn, getSupplyPriorityProps } from '@/lib/utils';
 import { CircleStatus, Chip } from '@/components';
 import { Button } from '@/components/ui/button';
 import { SupplyPriority } from '@/service/supply/types';
 import { SessionContext } from '@/contexts';
+import { Badge } from '@/components/ui/badge';
 
 const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   const {
@@ -18,9 +19,9 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
   } = props;
   const { session } = useContext(SessionContext);
   const [opened, setOpened] = useState<boolean>(false);
-  const maxVisibleTags: number = 10;
-  const visibleTags = useMemo(
-    () => (opened ? tags : tags.slice(0, maxVisibleTags)),
+  const maxVisibleSupplies: number = 10;
+  const visibleSupplies = useMemo(
+    () => (opened ? tags : tags.slice(0, maxVisibleSupplies)),
     [opened, tags]
   );
   const { className: circleClassName, label } = useMemo(
@@ -52,7 +53,7 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
         </h3>
       </div>
       <div className="flex gap-2 flex-wrap">
-        {visibleTags.map((tag, idx) => {
+        {visibleSupplies.map((tag, idx) => {
           const tagProps =
             session &&
             ['DistributionCenter', 'Admin'].includes(session.accessLevel)
@@ -68,10 +69,28 @@ const ShelterCategoryItems = (props: IShelterCategoryItemsProps) => {
               : {
                   className: circleClassName,
                 };
-          return <Chip key={idx} label={tag.label} {...tagProps} />;
+          return (
+            <div
+              key={idx}
+              className={cn('flex gap-x-1 relative', { 'mr-3': tag.quantity })}
+            >
+              <Chip key={idx} label={tag.label} {...tagProps} />
+              {tag.quantity !== null &&
+                tag.quantity !== undefined &&
+                tag.quantity > 0 && (
+                  <Badge
+                    variant="default"
+                    className="absolute z-10 right-4 top-0 -translate-y-2 translate-x-full text-xs flex items-center justify-center w-7 h-6"
+                  >
+                    {tag.quantity > 99 ? '99+' : tag.quantity}
+                  </Badge>
+                )}
+            </div>
+          );
         })}
       </div>
-      {tags.length > maxVisibleTags && (
+
+      {tags.length > maxVisibleSupplies && (
         <div>
           <Button
             variant="ghost"
