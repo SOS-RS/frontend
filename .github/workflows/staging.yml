@@ -22,6 +22,7 @@ jobs:
         run: |
           touch .env
           echo VITE_API_URL=${{ secrets.STG_VITE_API_URL }} >> .env
+          echo VITE_HMAC_SECRET_KEY=${{ secrets.VITE_HMAC_SECRET_KEY }} >> .env
           cat .env
 
       - run: npm run build
