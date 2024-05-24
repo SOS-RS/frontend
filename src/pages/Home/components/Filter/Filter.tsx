@@ -176,7 +176,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Você pode buscar pelo item que os abrigos precisam urgentemente
+                Você pode buscar pelo item que os abrigos precisam com urgência
                 de doação ou por itens que os abrigos tem disponibilidade para
                 doar.
               </p>
