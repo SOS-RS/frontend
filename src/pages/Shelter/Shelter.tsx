@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
+import { ChevronLeft, Pencil, History, ChevronRight } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
@@ -159,10 +159,26 @@ const Shelter = () => {
           ))}
         </div>
         {shelter.updatedAt && (
-          <div className="flex justify-between p-4 items-center">
-            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
-            </small>
+          <div>
+            <div className="flex justify-between p-4 items-center">
+              <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+                Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+              </small>
+            </div>
+
+            <div className="p-4">
+              <Button
+                variant="ghost"
+                className="font-medium text-[16px] w-full sm:w-72 flex gap-2 justify-between bg-[#F6F8FC] hover:text-blue-500 border-[#E8F0F8]"
+                onClick={() => navigate(`/abrigo/${shelterId}/history`)}
+              >
+                <div className="flex gap-2 items-center">
+                  <History size={17} />
+                  Histórico de edições
+                </div>
+                <ChevronRight size={17} />
+              </Button>
+            </div>
           </div>
         )}
         <Authenticated role="DistributionCenter">

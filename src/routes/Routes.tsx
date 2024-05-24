@@ -11,7 +11,9 @@ import {
   PrivacyPolicy,
   AboutUs,
   Supporters,
+  SuppliesHistory
 } from '@/pages';
+
 
 const Routes = () => {
   return (
@@ -24,6 +26,7 @@ const Routes = () => {
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
       />
+       <Route path="/abrigo/:shelterId/history" element={<SuppliesHistory />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />

@@ -12,6 +12,8 @@ import { usePartners } from './usePartners';
 import { useGithubContributors } from './useGithubContributors';
 import { useAuthRoles } from './useAuthRoles';
 import { useSupporters } from './useSupporters';
+import {useSuppliesHistory} from './useSuppliesHistory'
+
 
 export {
   useShelters,
@@ -28,4 +30,5 @@ export {
   useGithubContributors,
   useAuthRoles,
   useSupporters,
+  useSuppliesHistory
 };
