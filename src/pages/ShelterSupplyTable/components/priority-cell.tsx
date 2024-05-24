@@ -1,10 +1,24 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { getSupplyPriorityProps, priorityOptions } from "@/lib/utils"
+import { cn, getSupplyPriorityProps, priorityOptions,
+  //  separateClasses 
+  } from "@/lib/utils"
 import { SupplyPriority } from "@/service/supply/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const PriorityCell: React.FC<{ priority: number }> = ({ priority }) => {
-  const [selectedPriority, setSelectedPriority] = useState<number>(priority)
+export const PriorityCell = ({ getValue, row, column, table }: any) => {
+
+  const initialPriority = getValue()
+  const [selectedPriority, setSelectedPriority] = useState<number>(initialPriority)
+
+  useEffect(() => {
+    setSelectedPriority(initialPriority)
+  }, [initialPriority])
+
+  function handleUpdatePriority(newPriority: number) {
+    setSelectedPriority(newPriority)
+    table.options.meta?.updateData(row.index, column.id, newPriority)
+  }
+
   return (
     <div className="flex items-center">
       <ToggleGroup
@@ -13,7 +27,7 @@ export const PriorityCell: React.FC<{ priority: number }> = ({ priority }) => {
         onValueChange={(value) => {
           const priorityValue = Object.entries(SupplyPriority).find(([, val]) => priorityOptions[val as SupplyPriority] === value)
           if (priorityValue) {
-            setSelectedPriority(Number(priorityValue[1]))
+            handleUpdatePriority(Number(priorityValue[1]))
           }
         }}
       >
@@ -23,21 +37,23 @@ export const PriorityCell: React.FC<{ priority: number }> = ({ priority }) => {
           } = getSupplyPriorityProps(value as SupplyPriority)
           const isEqual = selectedPriority === value
           // const result = separateClasses(circleClassNameItem);
-          // const selectedItemClassName = String(`data-[state=on]:${result.bgClass}`)
+          const selectedItemClassName = `data-[state=on]:bg-blue-500 data-[state=on]:text-white`
+          
+          // do not working
+          // const selectedItemClassName = `data-[state=on]:${result.bgClass}`
 
           return (
             <ToggleGroupItem
               key={value}
               value={labelItem}
-              // defaultChecked={value === priority }
+              defaultChecked={value === selectedPriority }
               aria-label={labelItem}
-              // do not working
-              // className={cn('',
-              //   isEqual ? selectedItemClassName : ''
-              //   )}
-              className={
-                isEqual ? `data-[state=on]:bg-blue-500 data-[state=on]:text-white` : ``
-              }
+              variant={'outline'}
+              
+              className={cn(
+                initialPriority === value && !isEqual ? 'border-blue-400 border-2' : '',
+                isEqual ? selectedItemClassName : '',
+              )}
             >
               {initialsItem}
             </ToggleGroupItem>

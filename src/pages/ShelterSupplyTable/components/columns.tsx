@@ -5,8 +5,9 @@ import { Badge } from "@/components/ui/badge"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { IUseShelterDataSupply } from "@/hooks/useShelter/types"
 import { PriorityCell } from "./priority-cell"
-import { Input } from "@/components/ui/input"
-import { DataTableRowActions } from "./data-table-row-actions"
+// import { DataTableRowActions } from "./data-table-row-actions"
+import { QuantityCell } from "./quantity-cell"
+import { DataTableRowAction } from "./data-table-row-actions"
 // import { Checkbox } from "@/components/ui/checkbox"
 
 export const columns: ColumnDef<IUseShelterDataSupply>[] = [
@@ -88,10 +89,11 @@ export const columns: ColumnDef<IUseShelterDataSupply>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Prioridade" />
     ),
-    cell: ({ row }) => {
-      const priority: number = row.getValue("priority")
-      return <PriorityCell priority={priority} />
-    },
+    cell: PriorityCell,
+    // cell: ({ getValue, row, column, table }) => {
+    //   const priority: number = row.getValue("priority")
+    //   return <PriorityCell priority={priority} />
+    // },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
@@ -101,25 +103,14 @@ export const columns: ColumnDef<IUseShelterDataSupply>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Quantidade" />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex w-[100px] items-center">
-          <span>
-            <Input 
-              type="number"
-              placeholder={row.getValue("quantity") ? row.getValue("quantity") : '0'}
-              defaultValue={row.getValue("quantity") ? row.getValue("quantity") : ''}
-            />
-          </span>
-        </div>
-      )
-    },
+    cell: QuantityCell,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: DataTableRowAction
+    // cell: ({ row  }) => <DataTableRowActions row={row} />,
   },
 ]

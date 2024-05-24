@@ -1,28 +1,46 @@
 "use client"
-
-import { Row } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { Save } from "lucide-react"
+import { Undo } from "lucide-react"
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
-}
+// interface DataTableRowActionsProps<TData> {
+//   row: Row<TData>
+// }
 
-export function DataTableRowActions<TData>({
-  row,
-}: DataTableRowActionsProps<TData>) {
+// export function DataTableRowActions<TData>({
+//   row,
+// }: DataTableRowActionsProps<TData>) {
+
+  export function DataTableRowAction(
+    { getValue, row, column, table }: any) {
+
+  const id = row.index
+  const priority = getValue("priority") as number
+  const quantity = getValue("quantity") as number
+
+
+
+  // error: quando faço isso, dentro das cells priority e quantity
+  // the newValue not return to the initial value
+  function handleResetToInitialValues(values: { id: number, priority: number, quantity: number }) {
+    console.log({
+      values
+    })
+
+    table.options.meta?.removeUpdateData(row.index, column.id, values)
+  }
 
   return (
     <div>
-      <div className="hidden md:flex w-auto items-center  justify-between">
+      <div className="hidden md:flex w-auto items-center justify-between">
         <Button
-          variant={'link'}
-          className="px-3 py-2"
-          onClick={() => {
-            console.log('row clicked', row);
-          }}
+          variant={'ghost'}
+          className=""
+          onClick={() => handleResetToInitialValues({
+            id, priority, quantity
+          })}
         >
-          <Save className="w-5 h-5 stroke-primary/80 hover:stroke-blue-500" />
+          <Undo className="h-4 w-4" />
+
         </Button>
       </div>
     </div>

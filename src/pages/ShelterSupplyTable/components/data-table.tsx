@@ -15,7 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-
 import {
   Table,
   TableBody,
@@ -24,7 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 
@@ -44,6 +42,12 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
+
+  // const [updateData, setUpdateData] = React.useState(() => [...data]);
+ const [updateData, setUpdateData] = React.useState<TData[]>([])
+
+
+  console.log(updateData)
 
   const table = useReactTable({
     data,
@@ -65,12 +69,48 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    meta: {
+      // updateData: (rowIndex: number, columnId: string, value: string) => {
+      //   console.log('updating data to...', value)
+      //   setUpdateData((old) =>
+      //     old.map((row, index) => {
+      //       if (index === rowIndex) {
+      //         return {
+      //           ...old[rowIndex],
+      //           [columnId]: value,
+      //         };
+      //       }
+      //       return row;
+      //     })
+      //   );
+      // },
+      updateData: (rowIndex: number, columnId: string, value: string) => {
+        setUpdateData((old) => {
+          const updatedData = [...old];
+          if (!updatedData[rowIndex]) {
+            updatedData[rowIndex] = { ...data[rowIndex] };
+          }
+          updatedData[rowIndex] = {
+            ...updatedData[rowIndex],
+            [columnId]: value,
+          };
+          return updatedData;
+        });
+      },
+      removeUpdateData: (rowIndex: number) => {
+        setUpdateData((old) => old.filter((_, index) => index !== rowIndex));
+      },
+    }
   })
+
 
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
       <div className="rounded-md border">
+      <div className="fixed bottom-0 w-full left-0 bg-gray-200 p-4 z-50">
+        <code>{JSON.stringify(updateData, null, 2)}</code>
+      </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
