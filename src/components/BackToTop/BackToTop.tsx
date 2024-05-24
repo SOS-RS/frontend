@@ -16,7 +16,7 @@ const BackToTop =() => {
 
     document.getElementById("root")?.addEventListener('scroll', (e) => {
         if (e.target === null) {return}
-        let CurrentScrollHeight = e.target.scrollTop
+        let CurrentScrollHeight = (e.target as HTMLElement).scrollTop 
         let WindowHeight = window.innerHeight
 
         if ( CurrentScrollHeight > WindowHeight / 2) {
