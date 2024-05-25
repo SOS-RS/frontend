@@ -12,9 +12,15 @@ const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <AccordionItem value={name}>
-      <AccordionTrigger>
-        <h3 className="text-lg font-semibold">{name}</h3>
+    <AccordionItem
+      value={name}
+      className={`${name !== '' ? 'gap-4 flex flex-col' : 'hidden'}`}
+    >
+      <AccordionTrigger className="">
+        <h3 className="flex items-center flex-1 gap-2 text-lg font-semibold">
+          <Archive size={20} />
+          <span className="flex-1 text-left">{name.toUpperCase()}</span>
+        </h3>
       </AccordionTrigger>
       <AccordionContent className="flex flex-col">
         {items.map((item, idy) => (
