@@ -101,6 +101,7 @@ const Shelter = () => {
             size="sm"
             variant="ghost"
             className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
+            aria-label='Voltar ao início'
             onClick={() => navigate('/')}
           >
             <ChevronLeft size={20} />
@@ -132,9 +133,9 @@ const Shelter = () => {
             </Button>
           </Authenticated>
         </div>
-        <div className="p-4">
+        <main className="p-4">
           <CardAboutShelter shelter={shelter} />
-        </div>
+        </main>
         <div className="flex justify-between p-4 items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
           <div className="flex gap-2 items-center ">

@@ -64,7 +64,7 @@ const SheetContent = React.forwardRef<
     >
       {children}
       <SheetPrimitive.Close className="absolute right-3 mt-[-30px] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <X className="h-6 w-6" />
+        <X className="h-6 w-6" aria-label='Fechar menu lateral' tabIndex={0}/>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>

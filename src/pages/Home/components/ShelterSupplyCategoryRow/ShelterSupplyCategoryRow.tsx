@@ -14,7 +14,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   if (tags.length === 0) return <Fragment />;
 
   return (
-    <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
+    <div role='list' className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
       <Separator className="mt-2" />
       <p className="text-muted-foreground text-sm md:text-lg font-medium">
         {title}
@@ -22,7 +22,7 @@ const ShelterSupplyCategoryRow = React.forwardRef<
       {description && <p>{description}</p>}
       <div className="flex gap-2 flex-wrap">
         {tags.map((s, idx) => (
-          <Chip key={idx} {...s} />
+          <Chip role='listitem'  key={idx} {...s} />
         ))}
       </div>
     </div>

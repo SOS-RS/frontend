@@ -5,9 +5,9 @@ const PrivacyPolicy = () => {
     <div className="flex flex-col h-screen items-center">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
       <div className="w-full flex flex-col gap-4 p-4 max-w-4xl [&_*]:text-zinc-500 pb-8">
-        <h3 className="text-4xl pt-4 font-bold !text-zinc-900">
+        <h1 className="text-4xl pt-4 font-bold !text-zinc-900">
           Política de privacidade
-        </h3>
+        </h1>
         <p className="text-justify text-md">
           Ao entrar para o <b>SOS RS 🛟</b>, você nos confia uma série de
           informações. E nós cuidamos e protegemos essas informações, para você.
@@ -38,18 +38,18 @@ const PrivacyPolicy = () => {
           legislações vigentes no Brasil, especialmente, a Resolução{' '}
           <b>CFM Nº 2299 DE 30/09/2021</b>.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Coleta de informações
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Coletamos apenas informações imprescindíveis para desempenhar nosso
           propósito. As informações coletadas e como essas informações são
           utilizadas dependem de como e do quanto você utiliza o <b>SOS RS 🛟</b>
           . Armazenamos as informações que coletamos.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Itens que você cria ou nos fornece
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Ao cadastrar um abrigo, você nos fornece, inicialmente, informações
           pessoais, como seu nome e CPF. Ao alimentar nosso aplicativo, você
@@ -57,10 +57,10 @@ const PrivacyPolicy = () => {
           responsabiliza integralmente, e que também são fornecidos para a
           comunidade, após alimentação, e podem ser armazenados pelo SOS-RS.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Informações que coletamos automaticamente quando você utiliza nossos
           serviços
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Utilizamos apenas cookies temporários, com ID de sessão do servidor e
           dados de localização, quando autorizados, para otimizar sua
@@ -69,32 +69,32 @@ const PrivacyPolicy = () => {
           não funcionar corretamente, se a sua capacidade de aceitar cookies
           estiver desabilitada.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Por que o SOS RS coleta dados
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Usamos as informações coletadas para auxiliar a fornecer, manter e
           melhorar a logística de suprimentos e disponibilidade em abrigos.
           Também para:
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Entrar em contato com você
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Se você for um abrigo, usamos as informações que coletamos para
           interagir diretamente com você.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Compartilhamento de suas informações
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Podemos compartilhar os dados com a comunidade e outras soluções do
           mesmo grupo e segmento, para cumprimento do nosso propósito e outros
           fins que julgarmos pertinente.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Por motivos legais
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Talvez precisemos compartilhar informações pessoais suas para fora do
           SOS, se isso for absolutamente necessário para cumprir a lei ou
@@ -106,9 +106,9 @@ const PrivacyPolicy = () => {
           os afetados antes que as informações sejam transferidas ou submetidas
           a uma política de privacidade diferente.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Mantemos suas informações seguras
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Possuímos segurança que protege continuamente suas informações, o que
           inclui:
@@ -126,16 +126,16 @@ const PrivacyPolicy = () => {
             confidencialidade para os que possuem acesso total aos dados.
           </li>
         </ul>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Exportar e excluir informações
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Nossos desenvolvedores permitem solicitar a exclusão dos seus dados
           pessoais, enviando um e-mail para <b>contato@sos-rs.com</b>.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Retenção de suas informações e compliance
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Reteremos suas informações por quanto tempo for necessário para
           satisfazer as finalidades para as quais elas foram coletadas ou para
@@ -151,25 +151,25 @@ const PrivacyPolicy = () => {
           cópias são definitivamente excluídas dos nossos sistemas ativos e de
           backup.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Você pode, a qualquer momento:
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Atualizar, inativar e corrigir, remover e solicitar acesso às suas
           informações.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Dados de contato
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Entre em contato conosco em caso de dúvidas, pelo e-mail{' '}
           <b>contato@sos-rs.com</b>. Você também pode travar contato com a
           autoridade local de proteção de dados, se possuir dúvidas sobre seus
           direitos de acordo com a legislação brasileira.
         </p>
-        <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
+        <h2 className="text-2xl pt-4 font-bold !text-zinc-900">
           Quando esta política se aplica e alterações
-        </h5>
+        </h2>
         <p className="text-justify text-md">
           Esta Política de Privacidade se aplica ao <b>SOS RS 🛟</b>. Nos
           reservamos ao direito de alterar este documento periodicamente, porém

@@ -159,6 +159,7 @@ const Filter = (props: IFilterProps) => {
           <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
+              aria-placeholder='Buscar por abrigo ou endereço'
                 value={values.search}
                 onChange={(ev) =>
                   setFieldValue('search', ev.target.value ?? '')
