@@ -1,6 +1,7 @@
 import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRowInfo } from '../SupplyRowInfo';
 import { ISupplyRowProps } from './types';
+import { Archive } from 'lucide-react';
 import {
   AccordionContent,
   AccordionItem,
