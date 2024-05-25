@@ -50,7 +50,6 @@ const Home = () => {
     setFilterData(initialFilterData);
     localStorage.removeItem('filterData');
     setSearchParams('');
-    console.log(filterData, 'filterData');
     refresh();
   }, [refresh, setSearch, setSearchParams]);
 
@@ -83,10 +82,8 @@ const Home = () => {
 
   useEffect(() => {
     const storedFilterData = loadFilterData();
-    console.log('Loaded filter data:', storedFilterData['cities'].length);
     const Keys = ['search', 'priority', 'cities']; 
     if ( Keys.every(key => storedFilterData[key].length > 0)){
-      console.log('Applying filter data from localStorage:', storedFilterData);
       setFilterData(storedFilterData);
       setSearchParams(qs.stringify(storedFilterData));
       refresh({ params: { search: qs.stringify(storedFilterData) } });
