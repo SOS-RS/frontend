@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
@@ -27,6 +27,13 @@ const Home = () => {
     ...qs.parse(new URLSearchParams(window.location.search).toString()),
   });
 
+  useEffect(() => {
+    const storedSearchParams = localStorage.getItem('searchParams');
+    if (storedSearchParams) {
+      setSearchParams(new URLSearchParams(storedSearchParams));
+    }
+  }, []);
+
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
@@ -47,6 +54,7 @@ const Home = () => {
     setFilterData(initialFilterData);
     setSearchParams('');
     refresh();
+    localStorage.removeItem('searchParams');
   }, [refresh, setSearch, setSearchParams]);
 
   const hasMore = useMemo(
@@ -62,6 +70,7 @@ const Home = () => {
         skipNulls: true,
       });
       setSearchParams(searchQuery);
+      localStorage.setItem('searchParams', JSON.stringify(searchQuery));
       refresh({
         params: {
           search: searchQuery,
