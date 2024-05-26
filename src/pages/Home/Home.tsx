@@ -27,11 +27,14 @@ const saveFilterData = (filterData: IFilterFormProps) => {
   localStorage.setItem('filterData', JSON.stringify(filterData));
 };
 
+const Keys = ['search', 'priority', 'cities']; 
+
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>(loadFilterData);
+  const storedFilterData = loadFilterData();
+  const [filterData, setFilterData] = useState<IFilterFormProps>(storedFilterData);
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -81,8 +84,6 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   useEffect(() => {
-    const storedFilterData = loadFilterData();
-    const Keys = ['search', 'priority', 'cities']; 
     if ( Keys.every(key => storedFilterData[key].length > 0)){
       setFilterData(storedFilterData);
       setSearchParams(qs.stringify(storedFilterData));
