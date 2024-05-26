@@ -14,6 +14,10 @@ const ShelterSupplyCategoryRow = React.forwardRef<
 
   if (tags.length === 0) return <Fragment />;
 
+  const moreInfoLabel = () => {
+    return `+${tags.length - 10} ${tags.length > 11 ? 'itens' : 'item'}`;
+  };
+
   return (
     <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
       <Separator className="mt-2" />
@@ -22,11 +26,16 @@ const ShelterSupplyCategoryRow = React.forwardRef<
       </p>
       {description && <p>{description}</p>}
       <div className="flex flex-wrap gap-2">
-        {tags.map((s, idx) => (
+        {tags.slice(0, 10).map((s, idx) => (
           <WithTooltip key={idx} content={s.priority} preventLinkDefault>
             <Chip {...s} />
           </WithTooltip>
+
         ))}
+
+        {tags.length > 10 && (
+          <Chip label={moreInfoLabel()} variant="moreInfo" />
+        )}
       </div>
     </div>
   );
