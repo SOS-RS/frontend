@@ -1,6 +1,8 @@
 import { IUseSheltersData } from '@/hooks/useShelters/types';
 import { IFilterFormProps } from '../Filter/types';
 
+export type FilterKey = 'isPetFriendlyFiltered' | 'needVolunteers' | 'isAvailableFiltered' | 'isUnavailableFiltered' | 'isConfirmFiltered';
+
 export interface IShelterListViewProps
   extends React.ComponentPropsWithoutRef<'div'> {
   count: number;
