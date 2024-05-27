@@ -24,17 +24,16 @@ const loadFilterData = (): IFilterFormProps => {
 };
 
 const saveFilterData = (filterData: IFilterFormProps) => {
+  console.log('Valores storage',filterData);
   localStorage.setItem('filterData', JSON.stringify(filterData));
 };
 
-const Keys = ['search', 'priority', 'cities']; 
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const storedFilterData = loadFilterData();
-  const [filterData, setFilterData] = useState<IFilterFormProps>(storedFilterData);
+  const [filterData, setFilterData] = useState<IFilterFormProps>(loadFilterData());
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -84,16 +83,12 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   useEffect(() => {
-    if ( Keys.every(key => storedFilterData[key].length > 0)){
-      setFilterData(storedFilterData);
-      setSearchParams(qs.stringify(storedFilterData));
-      refresh({ params: { search: qs.stringify(storedFilterData) } });
+    if (filterData.search || filterData.cities.length > 0 || filterData.priority || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0){
+      setSearchParams(qs.stringify(filterData));
+      refresh({ params: { search: qs.stringify(filterData) } });
     }
-  }, [refresh, setSearchParams]);
-
-  useEffect(() => {
     saveFilterData(filterData);
-  }, [filterData]);
+  }, [filterData, refresh, setSearchParams]);
 
   return (
     <div className="flex flex-col h-screen items-center">
