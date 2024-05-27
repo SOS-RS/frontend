@@ -83,6 +83,7 @@ export const columns: ColumnDef<IUseShelterDataSupply>[] = [
       const rowValue = (row.getValue(id) as string).toLowerCase();
       return rowValue.includes(searchValue);
     },
+    enableGrouping: true,
   },
   {
     accessorKey: "priority",

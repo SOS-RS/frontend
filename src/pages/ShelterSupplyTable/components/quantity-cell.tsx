@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 
 export const QuantityCell = ({ getValue, row, column, table }: any) => {
-
+  const supplyId = row.original.supply.id as string
   const initialQuantity = getValue()
   const [newQuantity, setNewQuantity] = useState<number>(initialQuantity)
 
@@ -10,9 +10,22 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
     setNewQuantity(initialQuantity)
   }, [initialQuantity])
 
-  function handleUpdateQuantity(newPriorityToUpdate: number) {
-    setNewQuantity(newPriorityToUpdate)
-    table.options.meta?.updateData(row.index, column.id, newPriorityToUpdate)
+  function handleUpdateQuantity(newQuantityToUpdate: number) {
+    setNewQuantity(newQuantityToUpdate)
+
+    console.log({
+      initialQuantity, newQuantityToUpdate
+    })
+
+    if (initialQuantity === null && newQuantityToUpdate === 0) {
+      table.options.meta?.updateData(row.index, column.id, null)
+    }
+
+    // if(initialQuantity === newQuantityToUpdate) {
+    //   return
+    // }
+
+    table.options.meta?.updateData(row.index, column.id, newQuantityToUpdate, supplyId)
   }
 
   return (
@@ -27,8 +40,8 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
       />
       <p className={initialQuantity !== newQuantity ? 'visible' : 'collapse'}>
       Anterior:
-      <span className="text-blue-500">
-        {' '}{initialQuantity}
+      <span className="text-red-500">
+        {' '}{initialQuantity ? initialQuantity : '0'}
       </span>
       </p>
     </div>

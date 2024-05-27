@@ -4,7 +4,6 @@ import { Fragment, useMemo } from 'react';
 import { Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter } from '@/hooks';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
 
@@ -14,13 +13,13 @@ const ShelterSupplyTable = () => {
   const { data: shelter, loading } = useShelter(shelterId);
 
   const shelterSupplyData = useMemo(() => {
-    return (shelter?.shelterSupplies ?? []).reduce(
-      (prev, current) => ({ ...prev, [current.supply.id]: current }),
-      {} as Record<string, IUseShelterDataSupply>
-    );
+    return shelter?.shelterSupplies ?? [];
   }, [shelter?.shelterSupplies]);
+  
 
   if (loading) return <LoadingScreen />;
+
+  console.log(shelterSupplyData)
 
   return (
     <Fragment>
@@ -47,7 +46,7 @@ const ShelterSupplyTable = () => {
           <div className="flex flex-col gap-2 w-full my-4">
             <>
               {shelterSupplyData &&
-                <DataTable data={shelter.shelterSupplies} columns={columns} />
+                <DataTable data={shelterSupplyData} columns={columns} />
               }
             </>
           </div>

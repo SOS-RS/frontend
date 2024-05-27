@@ -31,7 +31,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { supply: { id: string } }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -43,11 +43,9 @@ export function DataTable<TData, TValue>({
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  // const [updateData, setUpdateData] = React.useState(() => [...data]);
+//  const [updateData, setUpdateData] = React.useState<TData[]>([])
  const [updateData, setUpdateData] = React.useState<TData[]>([])
 
-
-  console.log(updateData)
 
   const table = useReactTable({
     data,
@@ -70,37 +68,35 @@ export function DataTable<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     meta: {
-      // updateData: (rowIndex: number, columnId: string, value: string) => {
-      //   console.log('updating data to...', value)
-      //   setUpdateData((old) =>
-      //     old.map((row, index) => {
-      //       if (index === rowIndex) {
-      //         return {
-      //           ...old[rowIndex],
-      //           [columnId]: value,
-      //         };
-      //       }
-      //       return row;
-      //     })
-      //   );
-      // },
-      updateData: (rowIndex: number, columnId: string, value: string) => {
+      updateData: (supplyId: string, columnId: string, value: string) => {
         setUpdateData((old) => {
-          const updatedData = [...old];
-          if (!updatedData[rowIndex]) {
-            updatedData[rowIndex] = { ...data[rowIndex] };
+          const existingIndex = old.findIndex(item => item.supply.id === supplyId);
+          const originalData = data.find(item => item.supply.id === supplyId);
+
+          if (!originalData) return old;
+
+          let updatedData: TData[];
+
+          if (existingIndex > -1) {
+            updatedData = old.map((item, index) =>
+              index === existingIndex ? { ...item, [columnId]: value } : item
+            );
+          } else {
+            updatedData = [...old, { ...originalData, [columnId]: value }];
           }
-          updatedData[rowIndex] = {
-            ...updatedData[rowIndex],
-            [columnId]: value,
-          };
+
+          // Remove the update if it matches the original data
+          if (JSON.stringify(updatedData[existingIndex]) === JSON.stringify(originalData)) {
+            return updatedData.filter(item => item.supply.id !== supplyId);
+          }
+
           return updatedData;
         });
       },
-      removeUpdateData: (rowIndex: number) => {
-        setUpdateData((old) => old.filter((_, index) => index !== rowIndex));
+      removeUpdateData: (supplyId: string) => {
+        setUpdateData((old) => old.filter((updateItem) => updateItem.supply.id !== supplyId));
       },
-    }
+    },
   })
 
 

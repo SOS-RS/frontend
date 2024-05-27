@@ -6,9 +6,12 @@ import { SupplyPriority } from "@/service/supply/types"
 import { useEffect, useState } from "react"
 
 export const PriorityCell = ({ getValue, row, column, table }: any) => {
+  const supplyId = row.original.supply.id as string
 
   const initialPriority = getValue()
   const [selectedPriority, setSelectedPriority] = useState<number>(initialPriority)
+
+  console.log({initialPriority})
 
   useEffect(() => {
     setSelectedPriority(initialPriority)
@@ -16,7 +19,8 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
 
   function handleUpdatePriority(newPriority: number) {
     setSelectedPriority(newPriority)
-    table.options.meta?.updateData(row.index, column.id, newPriority)
+
+    table.options.meta?.updateData(row.index, column.id, newPriority, supplyId)
   }
 
   return (
@@ -37,8 +41,10 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
           } = getSupplyPriorityProps(value as SupplyPriority)
           const isEqual = selectedPriority === value
           // const result = separateClasses(circleClassNameItem);
-          const selectedItemClassName = `data-[state=on]:bg-blue-500 data-[state=on]:text-white`
+          const selectedItemClassName = `data-[state=on]:bg-red-500 data-[state=on]:text-white`
           
+          console.log(isEqual)
+
           // do not working
           // const selectedItemClassName = `data-[state=on]:${result.bgClass}`
 
@@ -51,7 +57,7 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
               variant={'outline'}
               
               className={cn(
-                initialPriority === value && !isEqual ? 'border-blue-400 border-2' : '',
+                initialPriority === value && !isEqual ? ' data-[state=off]:bg-red-500/20' : '',
                 isEqual ? selectedItemClassName : '',
               )}
             >
