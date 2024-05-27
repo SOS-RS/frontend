@@ -24,7 +24,6 @@ const loadFilterData = (): IFilterFormProps => {
 };
 
 const saveFilterData = (filterData: IFilterFormProps) => {
-  console.log('Valores storage',filterData);
   localStorage.setItem('filterData', JSON.stringify(filterData));
 };
 
