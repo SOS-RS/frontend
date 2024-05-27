@@ -27,6 +27,7 @@ const saveFilterData = (filterData: IFilterFormProps) => {
   localStorage.setItem('filter-data', JSON.stringify(filterData));
 };
 
+
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
