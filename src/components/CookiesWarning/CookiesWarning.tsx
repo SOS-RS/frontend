@@ -1,7 +1,7 @@
 import { Cookie } from "lucide-react"
 import { useState } from "react"
 
-const CookieWarning = () => {
+const CookiesWarning = () => {
   const [BoxVisibility, setBoxVisibility] = useState(!localStorage.getItem("cache:/partners?") ? false : true)
   // the logic above seeks a cached key on the user browser.
   // if we do not find a cached item, there is a high likelyhood that we are dealing with a new user.
@@ -33,5 +33,5 @@ const CookieWarning = () => {
     </div>)
 }
 
-export { CookieWarning }
+export { CookiesWarning }
 
