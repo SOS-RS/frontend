@@ -1,4 +1,4 @@
 
-import { CookieWarning } from "./CookiesWarning"
+import { CookiesWarning } from "./CookiesWarning"
 
-export { CookieWarning }
+export { CookiesWarning }
