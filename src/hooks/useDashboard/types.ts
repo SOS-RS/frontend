@@ -7,10 +7,11 @@ export interface ISupplieShelter {
   name: string;
 }
 export interface ISuppliesCategories {
-  id: string;
-  name: string;
-  sheltersWithSupplies: ISupplieShelter[];
-  sheltersRequesting: ISupplieShelter[];
+  categoryId: string;
+  categoryName: string;
+  priority100: number;
+  priority10: number;
+  priority1: number;
 }
 
 export interface IUseDashboardData {
@@ -19,5 +20,5 @@ export interface IUseDashboardData {
   shelterAvailable?: number;
   shelterFull?: number;
   shelterWithoutInformation?: number;
-  categories?: ISuppliesCategories[];
+  categoriesWithPriorities?: ISuppliesCategories[];
 }

@@ -86,9 +86,7 @@ const Home = () => {
       true
     );
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
-
-  console.log(shelters);
-
+  
   return (
     <div className="flex flex-col h-screen items-center">
       {isModalOpen && (

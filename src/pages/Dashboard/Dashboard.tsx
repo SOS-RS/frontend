@@ -276,7 +276,7 @@ const Dashboard = () => {
         <h1 className="font-bold text-2xl justify-self-start mt-8 mb-4">
           Visão geral das necessidades
         </h1>
-        <NeedsSuppliesCard catergories={data.categories} />
+        <NeedsSuppliesCard catergories={data.categoriesWithPriorities} />
       </div>
       <Footer />
     </div>
