@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -40,7 +40,7 @@ const Shelter = () => {
   const params = useParams();
   const { shelterId = '-1' } = params;
   const navigate = useNavigate();
-  const { data: shelter, loading, refresh } = useShelter(shelterId);
+  const { data: shelter, loading } = useShelter(shelterId);
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () =>

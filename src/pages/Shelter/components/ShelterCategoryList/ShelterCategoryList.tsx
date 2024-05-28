@@ -34,6 +34,8 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
                     } ${SupplyMeasureMap[item.measure]}`}</span>
                   )}
                   <button
+                    type="button"
+                    onClick={() => onDonate(item.id)}
                     className={clsx(
                       'text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md',
                       {
