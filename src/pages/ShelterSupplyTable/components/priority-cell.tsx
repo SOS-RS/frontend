@@ -8,11 +8,16 @@ import { useEffect, useState } from "react"
 export const PriorityCell = ({ getValue, row, column, table }: any) => {
   const supplyId = row.original.supply.id as string
 
-  const initialPriority = getValue()
+  const initialPriority: number = getValue()
   const [selectedPriority, setSelectedPriority] = useState<number>(initialPriority)
 
-  console.log({initialPriority})
+  const newData = table.options.meta
 
+  console.log({
+    newData
+  })
+
+  // o initial nao mudou, por isso nao mudo o selected
   useEffect(() => {
     setSelectedPriority(initialPriority)
   }, [initialPriority])
@@ -20,7 +25,7 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
   function handleUpdatePriority(newPriority: number) {
     setSelectedPriority(newPriority)
 
-    table.options.meta?.updateData(row.index, column.id, newPriority, supplyId)
+    table.options.meta?.updateRowData(supplyId, newPriority, column.id)
   }
 
   return (
@@ -43,8 +48,7 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
           // const result = separateClasses(circleClassNameItem);
           const selectedItemClassName = `data-[state=on]:bg-red-500 data-[state=on]:text-white`
           
-          console.log(isEqual)
-
+          // console.log({isEqual})
           // do not working
           // const selectedItemClassName = `data-[state=on]:${result.bgClass}`
 

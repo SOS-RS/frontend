@@ -42,10 +42,7 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
-
-//  const [updateData, setUpdateData] = React.useState<TData[]>([])
- const [updateData, setUpdateData] = React.useState<TData[]>([])
-
+  const [updatedRows, setUpdatedRows] = React.useState<TData[]>([])
 
   const table = useReactTable({
     data,
@@ -68,8 +65,17 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     meta: {
-      updateData: (supplyId: string, columnId: string, value: string) => {
-        setUpdateData((old) => {
+      newData: updatedRows,  
+      updateRowData: (supplyId: string, value: string, columnId: string ) => {
+        setUpdatedRows((old) => {
+
+          console.log({
+            supplyId,
+            value,
+            columnId,
+            old,
+          })
+
           const existingIndex = old.findIndex(item => item.supply.id === supplyId);
           const originalData = data.find(item => item.supply.id === supplyId);
 
@@ -93,8 +99,8 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
           return updatedData;
         });
       },
-      removeUpdateData: (supplyId: string) => {
-        setUpdateData((old) => old.filter((updateItem) => updateItem.supply.id !== supplyId));
+      removeRowUpdate: (supplyId: string) => {
+        setUpdatedRows((old) => old.filter((updateItem) => updateItem.supply.id !== supplyId));
       },
     },
   })
@@ -105,7 +111,7 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
       <DataTableToolbar table={table} />
       <div className="rounded-md border">
       <div className="fixed bottom-0 w-full left-0 bg-gray-200 p-4 z-50">
-        <code>{JSON.stringify(updateData, null, 2)}</code>
+        <code>{JSON.stringify(updatedRows, null, 2)}</code>
       </div>
         <Table>
           <TableHeader>

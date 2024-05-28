@@ -16,10 +16,7 @@ const ShelterSupplyTable = () => {
     return shelter?.shelterSupplies ?? [];
   }, [shelter?.shelterSupplies]);
   
-
   if (loading) return <LoadingScreen />;
-
-  console.log(shelterSupplyData)
 
   return (
     <Fragment>

@@ -13,19 +13,11 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
   function handleUpdateQuantity(newQuantityToUpdate: number) {
     setNewQuantity(newQuantityToUpdate)
 
-    console.log({
-      initialQuantity, newQuantityToUpdate
-    })
-
     if (initialQuantity === null && newQuantityToUpdate === 0) {
-      table.options.meta?.updateData(row.index, column.id, null)
+      table.options.meta?.updateRowData(supplyId, null, column.id)
     }
 
-    // if(initialQuantity === newQuantityToUpdate) {
-    //   return
-    // }
-
-    table.options.meta?.updateData(row.index, column.id, newQuantityToUpdate, supplyId)
+    table.options.meta?.updateRowData(supplyId, newQuantityToUpdate, column.id)
   }
 
   return (
