@@ -11,16 +11,19 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
   const initialPriority: number = getValue()
   const [selectedPriority, setSelectedPriority] = useState<number>(initialPriority)
 
-  const newData = table.options.meta
+  const { newData } = table.options.meta
+  const rowIsModified = newData && newData.some((item: any) => item.supply.id === supplyId);
 
-  console.log({
-    newData
-  })
+  // is necessaary?
+  // useEffect(() => {
+  //   setSelectedPriority(initialPriority)
+  // }, [initialPriority])
 
-  // o initial nao mudou, por isso nao mudo o selected
   useEffect(() => {
-    setSelectedPriority(initialPriority)
-  }, [initialPriority])
+    if (!rowIsModified) {  
+      setSelectedPriority(initialPriority)
+    }
+  }, [rowIsModified, initialPriority])
 
   function handleUpdatePriority(newPriority: number) {
     setSelectedPriority(newPriority)

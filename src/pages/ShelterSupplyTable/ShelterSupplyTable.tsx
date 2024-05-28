@@ -20,7 +20,7 @@ const ShelterSupplyTable = () => {
 
   return (
     <Fragment>
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex flex-col h-auto items-center">
         <Header
           title="Editar Itens"
           className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"

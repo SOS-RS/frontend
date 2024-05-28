@@ -6,9 +6,20 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
   const initialQuantity = getValue()
   const [newQuantity, setNewQuantity] = useState<number>(initialQuantity)
 
+  const { newData } = table.options.meta
+  const rowIsModified = newData && newData.some((item: any) => item.supply.id === supplyId);
+
+  // is necessaary?
+  // useEffect(() => {
+  //   setNewQuantity(initialQuantity)
+  // }, [initialQuantity])
+
   useEffect(() => {
-    setNewQuantity(initialQuantity)
-  }, [initialQuantity])
+    if (!rowIsModified) {  
+      setNewQuantity(initialQuantity)
+    }
+  }, [rowIsModified, initialQuantity])
+
 
   function handleUpdateQuantity(newQuantityToUpdate: number) {
     setNewQuantity(newQuantityToUpdate)

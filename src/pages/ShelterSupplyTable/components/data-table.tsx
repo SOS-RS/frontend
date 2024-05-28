@@ -25,6 +25,10 @@ import {
 } from "@/components/ui/table"
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
+import { Button } from "@/components/ui/button"
+import { useNavigate, useParams } from "react-router-dom"
+import { PlusCircle } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -35,6 +39,10 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const navigate = useNavigate();
+  const { shelterId } = useParams()
+  const { toast } = useToast();
+
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -69,13 +77,6 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
       updateRowData: (supplyId: string, value: string, columnId: string ) => {
         setUpdatedRows((old) => {
 
-          console.log({
-            supplyId,
-            value,
-            columnId,
-            old,
-          })
-
           const existingIndex = old.findIndex(item => item.supply.id === supplyId);
           const originalData = data.find(item => item.supply.id === supplyId);
 
@@ -105,14 +106,32 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
     },
   })
 
+  function handleUpdateShelterSupplies(shelterId: string, supplies: any[]) {
+    toast({
+      title: 'Suprimentos atualizados com sucesso',
+    });
+  }
+
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-end border-b-2">
+      <Button
+          variant="ghost"
+          className="p-0 m-0 flex gap-2 text-red-500 [&_svg]:stroke-red-500 font-sm text-sm hover:text-red-600"
+          onClick={() =>
+            navigate(`/abrigo/${shelterId}/item/cadastrar`)}
+        >
+          Cadastrar novo item
+          <PlusCircle />
+        </Button>
+      </div>
+
       <DataTableToolbar table={table} />
       <div className="rounded-md border">
-      <div className="fixed bottom-0 w-full left-0 bg-gray-200 p-4 z-50">
+      {/* <div className="fixed bottom-0 w-full left-0 bg-gray-200 p-4 z-50">
         <code>{JSON.stringify(updatedRows, null, 2)}</code>
-      </div>
+      </div> */}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -163,6 +182,28 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
+      
+      <div
+        className="flex items-center justify-end"
+      >
+        <Button
+          variant={'ghost'}
+          className="text-red-600 hover:text-red-700"
+          onClick={() => {
+            ''
+          }}
+        >
+          Cancelar
+        </Button>
+        <Button
+          className="bg-red-600 hover:bg-red-700 p-5"
+          disabled={updatedRows.length === 0}
+          onClick={() => handleUpdateShelterSupplies(shelterId!, updatedRows)}
+        >
+          Salvar
+        </Button>
+      </div>
+
     </div>
   )
 }
