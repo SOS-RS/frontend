@@ -7,7 +7,7 @@ import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Filter, ShelterListView } from './components';
-import { IFilterFormProps, IFilterSubmittionForm } from './components/Filter/types';
+import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -55,7 +55,7 @@ const Home = () => {
   );
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
-    const searchQueryArgs: IFilterSubmittionForm = {
+    const searchQueryArgs = {
       search: values.search,
       priority: values.priority.join(),
       supplyCategoryIds: values.supplyCategoryIds,
