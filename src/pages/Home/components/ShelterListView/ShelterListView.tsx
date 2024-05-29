@@ -8,7 +8,7 @@ import {
   ShelterListItem,
 } from '@/components';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, getSupplyPriorityProps } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
@@ -64,6 +64,18 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               <span className="pr-1">{item}</span> <X className="h-4 w-4" />
             </div>
           ))}
+
+          {filterData.priority?.map((item) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={item}
+            >
+              <span className="pr-1">{getSupplyPriorityProps(+item).label}</span> <X className="h-4 w-4" />
+            </div>
+          
+          ))}
+
+
         </div>
         <div className="flex flex-row">
           <Button
