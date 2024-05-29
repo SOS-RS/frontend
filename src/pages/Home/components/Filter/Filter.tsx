@@ -65,7 +65,7 @@ const Filter = (props: IFilterProps) => {
     {
       initialValues: {
         cities: data.cities ?? [],
-        priority: data.priority.map((p: string) => ({
+        priorities: data.priorities.map((p: string) => ({
           label: priorityOpts[Number(p) as SupplyPriority],
           value: p,
         })),
@@ -92,7 +92,7 @@ const Filter = (props: IFilterProps) => {
       }),
       onSubmit: (values) => {
         const {
-          priority,
+          priorities,
           search,
           shelterStatus,
           supplies,
@@ -100,7 +100,7 @@ const Filter = (props: IFilterProps) => {
           cities,
         } = values;
         onSubmit({
-          priority: priority.map((p) => p.value),
+          priorities: priorities.map((p) => p.value),
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
@@ -108,7 +108,8 @@ const Filter = (props: IFilterProps) => {
           cities,
         });
       },
-  });
+    }
+  );
 
   const supplyOptions = useMemo(() => {
     return supplies
@@ -182,15 +183,15 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={values.priority}
+                  value={values.priorities}
                   isMulti
                   options={Object.entries(priorityOpts).map(
                     ([priority, label]) => ({
                       label,
                       value: priority,
-                    }),
+                    })
                   )}
-                  onChange={(v) => setFieldValue('priority', v)}
+                  onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">

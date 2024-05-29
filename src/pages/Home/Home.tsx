@@ -7,11 +7,11 @@ import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Filter, ShelterListView } from './components';
-import { IFilterFormProps, IFilterSubmittionForm } from './components/Filter/types';
+import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
-  priority: [],
+  priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
@@ -55,17 +55,16 @@ const Home = () => {
   );
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
-    const searchQueryArgs: IFilterSubmittionForm = {
+    const searchQueryArgs = {
       search: values.search,
-      priority: values.priority.join(),
+      priorities: values.priorities,
       supplyCategoryIds: values.supplyCategoryIds,
       supplyIds: values.supplyIds,
       shelterStatus: values.shelterStatus,
-      cities: values.cities
-    }
-
+      cities: values.cities,
+    };
     return searchQueryArgs;
-  }, [])
+  }, []);
 
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
@@ -101,7 +100,14 @@ const Home = () => {
       },
       true
     );
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
+  }, [
+    refresh,
+    filterData,
+    shelters.filters,
+    shelters.page,
+    shelters.perPage,
+    factorySearchArgs,
+  ]);
 
   return (
     <div className="flex flex-col h-screen items-center">
