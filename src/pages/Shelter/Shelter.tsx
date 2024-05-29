@@ -134,7 +134,9 @@ const Shelter = () => {
         </div>
         <div className="p-4">
           <CardAboutShelter shelter={shelter} />
+          <p className='p-2 text-[13px]'><strong>Lembre-se:</strong> é proibido tirar fotos ou filmar dentro dos abrigos, garanta a privacidade das pessoas nesse momento de vulnerabilidade.</p>
         </div>
+        
         <div className="flex justify-between p-4 items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
           <div className="flex gap-2 items-center ">
