@@ -35,7 +35,7 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
                   )}
                   <button
                     type="button"
-                    onClick={() => onDonate(item.id)}
+                    onClick={() => onDonate(item)}
                     className={clsx(
                       'text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md',
                       {

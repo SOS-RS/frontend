@@ -155,7 +155,7 @@ const SupplyMeasureMap: Record<SupplyMeasure, string> = {
   Kg: 'kg',
   Litters: 'litro(s)',
   Piece: 'peça(s)',
-  Unit: 'unidade(s)',
+  Unit: 'un',
 };
 
 export {

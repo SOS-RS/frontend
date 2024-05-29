@@ -10,13 +10,15 @@ export interface IDonationCartItem {
 }
 
 export interface IDonationCartContext {
-  items: IDonationCartItem[];
-  addItem: (item: IDonationCartItem) => void;
-  removeItem: (supplyId: string) => void;
+  carts: Record<string, IDonationCartItem[]>;
+  opened: boolean;
+  toggleOpened: () => void;
+  addItem: (shelterId: string, item: IDonationCartItem) => void;
+  removeItem: (shelterId: string, supplyId: string) => void;
   updateItem: (
+    shelterId: string,
     supplyId: string,
     payload: Partial<Omit<IDonationCartItem, 'id'>>
   ) => void;
-  opened: boolean;
-  toggleOpened: () => void;
+  clearCart: (shelterId: string) => void;
 }

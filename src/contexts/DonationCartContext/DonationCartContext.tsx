@@ -1,46 +1,83 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 import { IDonationCartContext, IDonationCartItem } from './types';
-import { DonationCart } from '@/components';
+
+function getDonationCart(): Record<string, IDonationCartItem[]> {
+  const data = localStorage.getItem('shelter-carts');
+  if (!data) return {};
+  return JSON.parse(data);
+}
 
 const DonationCartContext = createContext({} as IDonationCartContext);
 
 const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
   const [opened, setOpened] = useState<boolean>(false);
-  const [items, setItems] = useState<IDonationCartItem[]>([]);
+  const [carts, setCarts] = useState<Record<string, IDonationCartItem[]>>(
+    getDonationCart()
+  );
 
-  const addItem = (item: IDonationCartItem) => {
-    setItems((prev) => {
+  const addItem = (shelterId: string, item: IDonationCartItem) => {
+    setCarts((state) => {
+      const prev = state[shelterId] ?? [];
       if (prev.some((p) => p.id === item.id))
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + item.quantity } : p
-        );
-      else return [...prev, item];
+        return {
+          ...state,
+          [shelterId]: prev.map((p) =>
+            p.id === item.id
+              ? { ...p, quantity: p.quantity + item.quantity }
+              : p
+          ),
+        };
+      else return { ...state, [shelterId]: [...prev, item] };
     });
   };
 
   const updateItem = (
+    shelterId: string,
     supplyId: string,
     payload: Partial<Omit<IDonationCartItem, 'id'>>
   ) => {
-    setItems((prev) => {
+    setCarts((state) => {
+      const prev = state[shelterId] ?? [];
       if (prev.some((p) => p.id === supplyId))
-        return prev.map((p) => (p.id === supplyId ? { ...p, ...payload } : p));
-      else return prev;
+        return {
+          ...state,
+          [shelterId]: prev.map((p) =>
+            p.id === supplyId ? { ...p, ...payload } : p
+          ),
+        };
+      else return state;
     });
   };
 
-  const removeItem = (supplyId: string) => {
-    setItems((prev) => prev.filter((p) => p.id !== supplyId));
+  const removeItem = (shelterId: string, supplyId: string) => {
+    setCarts((state) => {
+      const prev = state[shelterId] ?? [];
+      return { ...state, [shelterId]: prev.filter((p) => p.id !== supplyId) };
+    });
   };
 
   const toggleOpened = () => setOpened((prev) => !prev);
 
+  const clearCart = (shelterId: string) =>
+    setCarts((state) => ({ ...state, [shelterId]: [] }));
+
+  useEffect(() => {
+    localStorage.setItem('shelter-carts', JSON.stringify(carts));
+  }, [carts]);
+
   return (
     <DonationCartContext.Provider
-      value={{ items, addItem, removeItem, updateItem, opened, toggleOpened }}
+      value={{
+        carts,
+        addItem,
+        removeItem,
+        updateItem,
+        opened,
+        toggleOpened,
+        clearCart,
+      }}
     >
-      <DonationCart opened={opened} onClose={toggleOpened} />
       {children}
     </DonationCartContext.Provider>
   );

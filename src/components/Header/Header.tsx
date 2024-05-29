@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
-import { DonationCartIcon } from '../DonationCartIcon';
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
@@ -29,10 +28,7 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
           {title}
         </Link>
       </div>
-      <div className="flex items-center gap-1">
-        {endAdornment}
-        <DonationCartIcon />
-      </div>
+      <div className="flex items-center gap-1">{endAdornment}</div>
     </header>
   );
 });
