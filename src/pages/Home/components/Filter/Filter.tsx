@@ -19,7 +19,6 @@ import {
 import {
   IFilterFormikProps,
   IFilterProps,
-  ISelectField,
   ShelterAvailabilityStatus,
 } from './types';
 import { priorityOptions } from '@/lib/utils';
@@ -66,12 +65,10 @@ const Filter = (props: IFilterProps) => {
     {
       initialValues: {
         cities: data.cities ?? [],
-        priority: data.priority
-          ? {
-              label: priorityOpts[data.priority],
-              value: data.priority,
-            }
-          : null,
+        priorities: data.priorities.map((p: string) => ({
+          label: priorityOpts[Number(p) as SupplyPriority],
+          value: p,
+        })),
         search: data.search,
         shelterStatus: data.shelterStatus.map((s) => ({
           label: ShelterAvailabilityStatusMapped[s],
@@ -95,7 +92,7 @@ const Filter = (props: IFilterProps) => {
       }),
       onSubmit: (values) => {
         const {
-          priority,
+          priorities,
           search,
           shelterStatus,
           supplies,
@@ -103,7 +100,7 @@ const Filter = (props: IFilterProps) => {
           cities,
         } = values;
         onSubmit({
-          priority: priority?.value ? +priority.value : null,
+          priorities: priorities.map((p) => p.value),
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
@@ -186,21 +183,15 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={values.priority}
+                  value={values.priorities}
+                  isMulti
                   options={Object.entries(priorityOpts).map(
-                    ([priority, label]) =>
-                      ({
-                        label,
-                        value: +priority,
-                      } as ISelectField<SupplyPriority>)
+                    ([priority, label]) => ({
+                      label,
+                      value: priority,
+                    })
                   )}
-                  onChange={(v) => {
-                    const newValue = {
-                      ...v,
-                      value: v ? +v.value : SupplyPriority.Urgent,
-                    };
-                    setFieldValue('priority', newValue);
-                  }}
+                  onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
