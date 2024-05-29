@@ -64,7 +64,7 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
               variant={'outline'}
               
               className={cn(
-                initialPriority === value && !isEqual ? ' data-[state=off]:bg-red-500/20' : '',
+                initialPriority === value && !isEqual ? ' data-[state=off]:border-red-400' : '',
                 isEqual ? selectedItemClassName : '',
               )}
             >

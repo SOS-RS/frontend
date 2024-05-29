@@ -40,7 +40,7 @@ export function DataTableRowAction(
 
   return (
     <div>
-      <div className="hidden md:flex w-auto items-center">
+      <div className="hidden md:flex max-w-[100px] items-center">
         <Button
           variant={'ghost'}
           className={!rowIsModified ? 'collapse' : 'active'}

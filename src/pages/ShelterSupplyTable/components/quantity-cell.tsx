@@ -10,9 +10,9 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
   const rowIsModified = newData && newData.some((item: any) => item.supply.id === supplyId);
 
   // is necessaary?
-  // useEffect(() => {
-  //   setNewQuantity(initialQuantity)
-  // }, [initialQuantity])
+  useEffect(() => {
+    setNewQuantity(initialQuantity)
+  }, [initialQuantity])
 
   useEffect(() => {
     if (!rowIsModified) {  
@@ -32,21 +32,24 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
   }
 
   return (
-    <div className="flex items-center gap-4 w-full">
+    <div className="flex items-center gap-4 max-w-[120px]">
       <Input
-        className="max-w-[100px]"
+        className="w-full"
         type="number"
         placeholder={initialQuantity ? initialQuantity : '0'}
         // defaultValue={initialQuantity ? initialQuantity : ''}
         onChange={(e) => handleUpdateQuantity(Number(e.target.value))}
-        value={newQuantity}
+        value={newQuantity ? newQuantity : ''}
       />
-      <p className={initialQuantity !== newQuantity ? 'visible' : 'collapse'}>
-      Anterior:
-      <span className="text-red-500">
-        {' '}{initialQuantity ? initialQuantity : '0'}
-      </span>
-      </p>
+
+      <div className="max-w-[20px]">
+        <p className={initialQuantity !== newQuantity ? 'visible' : 'collapse'}>
+          Anterior:
+          <span className="text-red-500">
+            {' '}{initialQuantity ? initialQuantity : '0'}
+          </span>
+        </p>
+      </div>
     </div>
   )
 }

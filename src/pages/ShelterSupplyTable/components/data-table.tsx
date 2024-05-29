@@ -35,7 +35,9 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function DataTable<TData extends { supply: { id: string } }, TValue>({
+export function DataTable<TData extends {
+  quantity: number,
+  supply: { id: string, name: string } }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -51,6 +53,8 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [updatedRows, setUpdatedRows] = React.useState<TData[]>([])
+
+ 
 
   const table = useReactTable({
     data,
@@ -106,7 +110,14 @@ export function DataTable<TData extends { supply: { id: string } }, TValue>({
     },
   })
 
-  function handleUpdateShelterSupplies(shelterId: string, supplies: any[]) {
+  function handleUpdateShelterSupplies(shelterId: string, supplies: TData[]) {
+
+    const dataToUpdate = supplies.map((v) => ({
+      label: v.supply.name,
+      value: v.supply.id,
+      quantity: v.quantity,
+    }))
+
     toast({
       title: 'Suprimentos atualizados com sucesso',
     });
