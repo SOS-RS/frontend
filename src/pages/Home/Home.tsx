@@ -93,6 +93,7 @@ const Home = () => {
     refresh({ params }, true);
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
 
+
   useEffect(() => {
     if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0) {
       setSearchParams(qs.stringify(filterData));
