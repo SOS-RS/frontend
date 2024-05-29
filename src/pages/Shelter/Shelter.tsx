@@ -11,7 +11,10 @@ import {
 } from '@/components';
 import { useShelter } from '@/hooks';
 import { IShelterAvailabilityProps } from '@/pages/Home/components/ShelterListItem/types';
-import { cn, getAvailabilityProps, group } from '@/lib/utils';
+import {
+  cn, getAvailabilityProps,
+  group
+} from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ShelterCategoryItems } from './components';
 import {
@@ -23,7 +26,11 @@ import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
 import { ShelterSupplyServices } from '@/service';
 import { useToast } from '@/components/ui/use-toast';
 import { clearCache } from '@/api/cache';
-import { ShelterCategory } from '@/hooks/useShelter/types';
+import { ShelterCategory, ShelterCategoryName } from '@/hooks/useShelter/types';
+import { DataTable } from '../../components/ShelterSupplyEditableDataTable/components/data-table';
+import { columns } from '../../components/ShelterSupplyEditableDataTable/components/columns';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 const Shelter = () => {
   const params = useParams();
@@ -46,6 +53,7 @@ const Shelter = () => {
         })),
       }));
   }, [shelter?.shelterSupplies]);
+
   const { availability, className: availabilityClassName } =
     useMemo<IShelterAvailabilityProps>(
       () =>
@@ -90,6 +98,11 @@ const Shelter = () => {
       });
   }, [refresh, selectedTags, shelterId, toast]);
 
+  const [showEditableTableData, setShowEditableTableData] = useState<boolean>(false)
+  const shelterSupplyData = useMemo(() => {
+    return shelter?.shelterSupplies ?? [];
+  }, [shelter?.shelterSupplies]);
+
   if (loading) return <LoadingScreen />;
 
   return (
@@ -107,16 +120,19 @@ const Shelter = () => {
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full h-full ">
-        <div className="flex items-center gap-1">
-          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-            {shelter.name}
-          </h1>
-          {shelter.verified && <VerifiedBadge />}
-        </div>
-        <div className="flex items-center justify-between pr-4">
+      <div className="p-4 flex flex-col max-w-5xl w-full h-full gap-y-4">
+        <div className="flex flex-col gap-1">
+          <div className="flex gap-1 items-center">
+            {ShelterCategoryName[shelter.category]}
+            {shelter.verified && <VerifiedBadge />}
+          </div>
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
+          </h1>
+        </div>
+        <div className="flex items-center justify-between">
+          <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+            {shelter.name}
           </h1>
           <Authenticated
             role="DistributionCenter"
@@ -124,40 +140,57 @@ const Shelter = () => {
           >
             <Button
               variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+              className="font-medium text-sm text-red-600 flex gap-2 items-center hover:text-red-500 active:text-red-700 hover:bg-transparent"
               onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
             >
               Editar
-              <Pencil size={17} className="stroke-blue-600" />
+              <Pencil size={17} className="stroke-red-600" />
             </Button>
           </Authenticated>
         </div>
-        <div className="p-4">
+        <div className="">
           <CardAboutShelter shelter={shelter} />
         </div>
-        <div className="flex justify-between p-4 items-center">
+        {shelter.updatedAt && (
+          <div className="flex justify-between items-center pb-4">
+            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+            </small>
+          </div>
+        )}
+        <div className="flex justify-between items-center">
           <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-          <div className="flex gap-2 items-center ">
-            <Button
-              variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-              onClick={() => navigate(`/abrigo/${shelterId}/items`)}
+          <div className="flex gap-2 items-center group">
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor=""
+                  className={cn(showEditableTableData && 'text-red-500')}
+                >
+                  Editar itens
+                </Label>
+                <Switch
+                  id="editSupplies"
+                  className='data-[state=checked]:bg-red-500'
+                  checked={showEditableTableData}
+                  onCheckedChange={(checked: boolean) => {
+                    setShowEditableTableData(checked)
+                  }}
+                />
+              </div>
+            </div>
+            {/* <Button
+                variant="ghost"
+              className="font-medium text-[16px] text-gray-400 flex gap-2 items-center group-hover:text-red-500 group-active:text-red-700"
+              // onClick={() => navigate(`/abrigo/${shelterId}/items`)}
+              onClick={() => setShowEditableTableData(!showEditableTableData)}
             >
               Editar itens
-              <Pencil size={17} className="stroke-blue-600" />
-            </Button>
-            <Button
-              variant="ghost"
-              className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
-              onClick={() => navigate(`/abrigo/${shelterId}/items/tabela`)}
-            >
-              Mostrar tabela de itens
-              <Pencil size={17} className="stroke-blue-600" />
-            </Button>
+              <Pencil size={17} className="stroke-gray-400 group-hover:stroke-red-500" />
+            </Button> */}
           </div>
         </div>
-        <div className="flex flex-col gap-8 p-4 ">
-          {shelterCategories.map((categoryProps, idx) => (
+        <div className="flex flex-col gap-8 w-full">
+          {!showEditableTableData && shelterCategories.map((categoryProps, idx) => (
             <ShelterCategoryItems
               onSelectTag={handleSelectTag}
               selectedTags={selectedTags}
@@ -165,14 +198,12 @@ const Shelter = () => {
               {...categoryProps}
             />
           ))}
+          {shelterSupplyData && showEditableTableData &&
+            <DataTable data={shelterSupplyData} columns={columns} />
+          }
         </div>
-        {shelter.updatedAt && (
-          <div className="flex justify-between p-4 items-center">
-            <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
-              Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
-            </small>
-          </div>
-        )}
+
+       
         <Authenticated role="DistributionCenter">
           <div className="flex w-full p-4">
             <Button

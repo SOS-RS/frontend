@@ -5,23 +5,22 @@ const formatShelterAddressFields = (
     Pick<IUseShelterData, 'street' | 'streetNumber' | 'neighbourhood'>
   >
 ): string => {
-  const { street, streetNumber, neighbourhood } = payload;
-  return [street, streetNumber, neighbourhood].filter(Boolean).join(', ');
+  const { street, streetNumber, neighbourhood} = payload;
+  return [street, streetNumber].filter(Boolean).join(', ').concat(' - ',[neighbourhood].filter(Boolean).join('-'));
 };
 
 const checkAndFormatAddress = (
   payload: Partial<
     Pick<
       IUseShelterData,
-      'address' | 'city' | 'street' | 'streetNumber' | 'neighbourhood'
+      'address' | 'city' | 'street' | 'streetNumber' | 'neighbourhood' | 'zipCode'
     >
   >,
   showCity = true
 ): string => {
-  const { address, city, ...rest } = payload;
+  const { city, zipCode, ...rest } = payload;
   return (
-    address ??
-    `${formatShelterAddressFields(rest)}${showCity ? ` - ${city}` : ''}`
+    `${formatShelterAddressFields(rest)}${showCity ? `, ${city} - RS` : ''}${zipCode ? `, ${zipCode}`: ''}`
   );
 };
 

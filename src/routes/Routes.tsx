@@ -12,7 +12,6 @@ import {
   AboutUs,
   Supporters,
 } from '@/pages';
-import { ShelterSupplyTable } from '@/pages/ShelterSupplyTable/ShelterSupplyTable';
 
 const Routes = () => {
   return (
@@ -21,7 +20,6 @@ const Routes = () => {
       <Route path="/abrigo/:shelterId/atualizar" element={<UpdateShelter />} />
       <Route path="/abrigo/cadastrar" element={<CreateShelter />} />
       <Route path="/abrigo/:shelterId/items" element={<EditShelterSupply />} />
-      <Route path="/abrigo/:shelterId/items/tabela" element={<ShelterSupplyTable />} />
       <Route
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}

@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 // import { Row } from "@tanstack/react-table"
 import { Trash2, Undo } from "lucide-react"
 
@@ -18,6 +19,7 @@ export function DataTableRowAction(
     // column,
     row,
     table
+    // TODO: change any 
   }: any) {
   const { toast } = useToast();
 
@@ -32,18 +34,22 @@ export function DataTableRowAction(
     table.options.meta?.removeRowUpdate(supplyId)
   }
 
-  function handleDeleteSupply(supplyId: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function handleDeleteSupply({supplyId}: { supplyId: string }) {
+
+    // TODO: add delete shelter supply endpoint here
+
     toast({
       title: 'Suprimento excluído com sucesso',
     });
   }
 
   return (
-    <div>
-      <div className="hidden md:flex max-w-[100px] items-center">
+    <div className="ml-6 sm:max-w-[100px]">
+      <div className="md:flex items-center gap-4">
         <Button
-          variant={'ghost'}
-          className={!rowIsModified ? 'collapse' : 'active'}
+          variant={'link'}
+          className={cn("p-0 m-0", !rowIsModified ? 'collapse' : 'active')}
           disabled={!rowIsModified}
           onClick={() => handleResetToInitialValues({
             supplyId
@@ -53,14 +59,14 @@ export function DataTableRowAction(
           <Undo className="h-4 w-4" />
         </Button>
         <Button
-          variant={'ghost'}
-          className=""
+          variant={'link'}
+          className="p-0 m-0"
           onClick={() => handleDeleteSupply({
             supplyId
           })}
           aria-label="Excluir item"
         >
-          <Trash2 className="h-5 w-5 stroke-red-600" />
+          <Trash2 className="h-4 w-4 stroke-red-600" />
         </Button>
       </div>
     </div>

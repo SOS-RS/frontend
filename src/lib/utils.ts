@@ -56,12 +56,12 @@ function getAvailabilityProps(props: {
   } else if (capacity && (shelteredPeople || shelteredPeople === 0)) {
     if (shelteredPeople < capacity)
       return {
-        availability: 'Abrigo disponível',
+        availability: 'disponível',
         className: 'text-green-600',
       };
     else
       return {
-        availability: 'Abrigo lotado',
+        availability: 'lotado',
         className: 'text-red-400',
       };
   } else

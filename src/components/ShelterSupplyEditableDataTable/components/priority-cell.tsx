@@ -1,9 +1,20 @@
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+// import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  // SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { cn, getSupplyPriorityProps, priorityOptions,
   //  separateClasses 
   } from "@/lib/utils"
 import { SupplyPriority } from "@/service/supply/types"
 import { useEffect, useState } from "react"
+import { CircleIcon } from "lucide-react"
+import { getColorClass } from "./utils"
 
 export const PriorityCell = ({ getValue, row, column, table }: any) => {
   const supplyId = row.original.supply.id as string
@@ -32,8 +43,9 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
   }
 
   return (
-    <div className="flex items-center">
-      <ToggleGroup
+    <div className="flex items-center w-64">
+      {/* Maybe show this component to mobile devices */}
+      {/* <ToggleGroup
         type="single"
         value={getSupplyPriorityProps(selectedPriority).label}
         onValueChange={(value) => {
@@ -50,7 +62,6 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
           const isEqual = selectedPriority === value
           // const result = separateClasses(circleClassNameItem);
           const selectedItemClassName = `data-[state=on]:bg-red-500 data-[state=on]:text-white`
-          
           // console.log({isEqual})
           // do not working
           // const selectedItemClassName = `data-[state=on]:${result.bgClass}`
@@ -64,7 +75,7 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
               variant={'outline'}
               
               className={cn(
-                initialPriority === value && !isEqual ? ' data-[state=off]:border-red-400' : '',
+                initialPriority === value && !isEqual ? ' data-[state=off]:border-red-400 text-gray-400' : '',
                 isEqual ? selectedItemClassName : '',
               )}
             >
@@ -72,7 +83,37 @@ export const PriorityCell = ({ getValue, row, column, table }: any) => {
             </ToggleGroupItem>
           )
         })}
-      </ToggleGroup>
+      </ToggleGroup> */}
+
+      <Select 
+        value={getSupplyPriorityProps(selectedPriority).label} onValueChange={(value) => {
+          const priorityValue = Object.entries(SupplyPriority).find(([, val]) => priorityOptions[val as SupplyPriority] === value)
+          if (priorityValue) {
+            handleUpdatePriority(Number(priorityValue[1]))
+          }
+        }}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Selecione a prioridade" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {/* <SelectLabel>Prioridades</SelectLabel> */}
+            {Object.values(SupplyPriority).filter(value => typeof value === 'number').map((value) => {
+              const { label: labelItem } = getSupplyPriorityProps(value as SupplyPriority)
+              const colorPriorityClass =  getColorClass(value) 
+              
+              return (
+                <SelectItem key={value} value={labelItem} className="">
+                  <div className="flex items-center">
+                  <CircleIcon className={cn("mr-2 h-4 w-4", colorPriorityClass)} /> 
+                  {labelItem}
+                  </div>
+                </SelectItem>
+              )
+            })}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   )
 }

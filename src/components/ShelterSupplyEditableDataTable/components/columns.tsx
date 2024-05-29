@@ -10,6 +10,7 @@ import { QuantityCell } from "./quantity-cell"
 import { DataTableRowAction } from "./data-table-row-actions"
 // import { Checkbox } from "@/components/ui/checkbox"
 
+
 export const columns: ColumnDef<IUseShelterDataSupply>[] = [
   // {
   //   id: "select",
@@ -47,14 +48,14 @@ export const columns: ColumnDef<IUseShelterDataSupply>[] = [
     ),
     cell: ({ row }) => (
       <div className="flex-col md:flex-row md:space-x-2">
-        <span className="max-[100px] md:max-w-[500px] md:truncate font-medium">
+        <p className="max-[100px] md:max-w-[500px] md:truncate font-medium">
           {row.original.supply.name}
-        </span>
-        <Badge variant="outline"
+        </p>
+        <span 
         className="md:hidden text-[10px] md:text-xs"
         >
           {row.original.supply.supplyCategory.name}
-          </Badge>
+          </span>
       </div>
     ),
     filterFn: (row, id, value) => {
@@ -79,9 +80,10 @@ export const columns: ColumnDef<IUseShelterDataSupply>[] = [
       </div>
     ),
     filterFn: (row, id, value) => {
-      const searchValue = value.toLowerCase();
-      const rowValue = (row.getValue(id) as string).toLowerCase();
-      return rowValue.includes(searchValue);
+      // const searchValue = value
+      // const rowValue = (row.getValue(id) as string)
+      // return rowValue.includes(searchValue);
+      return value.includes(row.getValue(id))
     },
     enableGrouping: true,
   },

@@ -1,12 +1,9 @@
 import {
   Home,
   UsersRound,
-  HandHeart,
   PawPrint,
-  Landmark,
-  Smartphone,
-  Building,
-  MapPinned,
+  DollarSign,
+  Phone,
 } from 'lucide-react';
 
 import { Card } from '../ui/card';
@@ -22,21 +19,33 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
   };
-  const formatAddress = checkAndFormatAddress(shelter, false);
+
+  const formatAddress = checkAndFormatAddress(shelter, true);
 
   return (
-    <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
-      <div className="text-[#646870] font-medium">Sobre o abrigo</div>
+    <Card className="flex flex-col gap-2 p-4 bg-gray-50 border-none text-sm">
+      <div className="text-[#646870] font-medium">Sobre</div>
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={formatAddress} />
-        {Boolean(shelter.city) && (
-          <InfoRow icon={<Building />} label="Cidade:" value={shelter.city} />
-        )}
-        {Boolean(shelter.zipCode) && (
-          <InfoRow icon={<MapPinned />} label="CEP:" value={shelter.zipCode} />
-        )}
+        <InfoRow
+          icon={<Phone />}
+          label="Contato:"
+          value={
+            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+          }
+          clipboardButton={check(shelter.contact)}
+        />
         {shelter.category === ShelterCategory.Shelter && (
           <Fragment>
+            <InfoRow
+              icon={<UsersRound />}
+              label={`Acolhendo`}
+              value={
+                check(shelter.capacity)
+                  ? `${shelter.shelteredPeople} de ${shelter.capacity} vagas`
+                  : 'Não informado'
+              }
+            />
             <InfoRow
               icon={<PawPrint />}
               label={
@@ -55,37 +64,11 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                 )
               }
             />
-            <InfoRow
-              icon={<HandHeart />}
-              label="Pessoas abrigadas:"
-              value={
-                check(shelter.shelteredPeople)
-                  ? `${shelter.shelteredPeople} pessoas`
-                  : 'Não informado'
-              }
-            />
-            <InfoRow
-              icon={<UsersRound />}
-              label="Capacidade do abrigo:"
-              value={
-                check(shelter.capacity)
-                  ? `${shelter.capacity} pessoas`
-                  : 'Não informado'
-              }
-            />
           </Fragment>
         )}
         <InfoRow
-          icon={<Smartphone />}
-          label="Contato:"
-          value={
-            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
-          }
-          clipboardButton={check(shelter.contact)}
-        />
-        <InfoRow
-          icon={<Landmark />}
-          label="Chave Pix:"
+          icon={<DollarSign />}
+          label="Pix:"
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
           clipboardButton={check(shelter.pix)}
         />

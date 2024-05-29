@@ -42,14 +42,14 @@ export const QuantityCell = ({ getValue, row, column, table }: any) => {
         value={newQuantity ? newQuantity : ''}
       />
 
-      <div className="max-w-[20px]">
-        <p className={initialQuantity !== newQuantity ? 'visible' : 'collapse'}>
+      {/* <div className="max-w-[20px]">
+        <p className={initialQuantity !== newQuantity ? 'visible text-gray-400' : 'collapse'}>
           Anterior:
           <span className="text-red-500">
             {' '}{initialQuantity ? initialQuantity : '0'}
           </span>
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }
