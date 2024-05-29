@@ -7,7 +7,7 @@ export interface ISelectField<T = string> {
 
 export interface IFilterFormProps {
   search: string;
-  priority: string[];
+  priorities: string[];
   supplyCategoryIds: string[];
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
@@ -20,7 +20,7 @@ export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'
 
 export interface IFilterFormikProps {
   search: string;
-  priority: ISelectField[];
+  priorities: ISelectField[];
   supplyCategories: ISelectField[];
   supplies: ISelectField[];
   shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
