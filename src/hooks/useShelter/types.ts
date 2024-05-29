@@ -3,6 +3,11 @@ export enum ShelterCategory {
   DistributionCenter = 'DistributionCenter',
 }
 
+export enum ShelterCategoryName {
+  Shelter = 'Abrigo',
+  DistributionCenter = 'Centro de Distribuição',
+}
+
 export interface IUseShelterData {
   id: string;
   name: string;
