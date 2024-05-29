@@ -14,6 +14,10 @@ export interface IFilterFormProps {
   cities: string[];
 }
 
+export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'>{
+  priority: string;
+}
+
 export interface IFilterFormikProps {
   search: string;
   priority: ISelectField[];
