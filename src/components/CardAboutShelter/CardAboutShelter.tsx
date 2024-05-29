@@ -1,5 +1,4 @@
 import {
-  Home,
   UsersRound,
   HandHeart,
   PawPrint,
@@ -12,9 +11,9 @@ import {
 import { Card } from '../ui/card';
 import { ICardAboutShelter } from './types';
 import { InfoRow } from './components';
-import { checkAndFormatAddress } from './utils';
 import { ShelterCategory } from '@/hooks/useShelter/types';
 import { Fragment } from 'react/jsx-runtime';
+import { AddressInfoRow } from './components/AddressInfoRow';
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
@@ -22,13 +21,12 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
   };
-  const formatAddress = checkAndFormatAddress(shelter, false);
 
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm">
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
-        <InfoRow icon={<Home />} label={formatAddress} />
+        <AddressInfoRow shelter={shelter} />
         {Boolean(shelter.city) && (
           <InfoRow icon={<Building />} label="Cidade:" value={shelter.city} />
         )}
