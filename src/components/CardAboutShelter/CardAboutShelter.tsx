@@ -5,6 +5,7 @@ import {
   PawPrint,
   Landmark,
   Smartphone,
+  MapPin,
   Building,
   MapPinned,
 } from 'lucide-react';
@@ -29,6 +30,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       <div className="text-[#646870] font-medium">Sobre o abrigo</div>
       <div className="flex flex-col flex-wrap gap-3">
         <InfoRow icon={<Home />} label={formatAddress} />
+        <InfoRow icon={<MapPin />} label={shelter?.location ? 'Localização: ' : 'Localização no mapa indisponível'} value={shelter?.location}/>
         {Boolean(shelter.city) && (
           <InfoRow icon={<Building />} label="Cidade:" value={shelter.city} />
         )}
