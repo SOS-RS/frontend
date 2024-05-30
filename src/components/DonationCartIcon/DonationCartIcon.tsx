@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { HandHeart } from 'lucide-react';
 
 import { Button } from '../ui/button';
-import { DonationCartContext } from '@/contexts/DonationCartContext';
+import { DonationCartContext } from '@/contexts';
 import { IDonationCartIconProps } from './types';
 
 const DonationCartIcon = (props: IDonationCartIconProps) => {

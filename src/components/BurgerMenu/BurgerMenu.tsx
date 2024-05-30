@@ -21,6 +21,7 @@ import { usePartners } from '@/hooks';
 import { Button } from '../ui/button';
 import { DialogClose, DialogFooter } from '../ui/dialog';
 
+
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
   const { data: partners } = usePartners();

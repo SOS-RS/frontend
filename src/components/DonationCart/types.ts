@@ -1,5 +1,5 @@
 export interface IDonationCart {
-    shelterId: string;
-    opened: boolean;
-    onClose: () => void;
-  }
+  shelterId: string;
+  opened: boolean;
+  onClose: () => void;
+}

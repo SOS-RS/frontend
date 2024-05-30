@@ -1,6 +1,6 @@
 import {
-    DonationCartContext,
-    DonationCartProvider,
-  } from './DonationCartContext';
-  
-  export { DonationCartContext, DonationCartProvider };
+  DonationCartContext,
+  DonationCartProvider,
+} from './DonationCartContext';
+
+export { DonationCartContext, DonationCartProvider };

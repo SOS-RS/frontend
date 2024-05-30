@@ -1,7 +1,7 @@
 import { api } from '../../api';
 
 import { IServerResponse } from '@/types';
-import { ICreateUser, IUpdateUser } from './types';
+import { ICreateUser, IFindUserResponse, IUpdateUser, IUser } from './types';
 
 const UserServices = {
   create: async (payload: ICreateUser): Promise<IServerResponse> => {
@@ -15,6 +15,15 @@ const UserServices = {
     const { data } = await api.put<IServerResponse>(
       `/users/${userId}`,
       payload
+    );
+    return data;
+  },
+  find: async (
+    field: keyof IUser,
+    value: string
+  ): Promise<IServerResponse<IFindUserResponse>> => {
+    const { data } = await api.get<IServerResponse<IFindUserResponse>>(
+      `/users/find/${field}/${value}`
     );
     return data;
   },
