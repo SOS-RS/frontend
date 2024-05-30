@@ -29,7 +29,7 @@ const BackToTop =() => {
 
 return (isVisible && (
     <button 
-    className=" fixed ease-in-out hidden sm:flex justify-center items-center duration-300 
+    className=" fixed ease-in-out flex justify-center items-center duration-300 
     bg-red-600/75 focus:bg-red-700 hover:bg-red-700 z-[100] shadow-slate-600/75
     right-6 bottom-6 rounded-full shadow-md
     w-12 h-12 "
