@@ -112,9 +112,9 @@ const Shelter = () => {
           <h1 className="text-[#2f2f2f] font-semibold text-2xl">
             {shelter.name}
           </h1>
-          {shelter.verified && <VerifiedBadge />}
+          <div>{shelter.verified && <VerifiedBadge />}</div>
         </div>
-        <div className="flex items-center justify-between pr-4">
+        <div className="flex items-center justify-between pr-4 mt-4">
           <h1 className={cn(availabilityClassName, 'font-semibold')}>
             {availability}
           </h1>
