@@ -49,19 +49,19 @@ export const mapSupplyCategories = (supplyCategories: ISupplyCategory[]) =>
     {} as Record<string, ISupplyCategory>
   );
 
+export const mapSupplies = (supplies: IUseSuppliesData[]) => 
+  supplies.reduce(
+    (prev, current) => ({ ...prev, [current.id]: current }),
+    {} as Record<string, IUseSuppliesData>
+  );
+
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
-  const mappedSupplyCategories = useMemo(() =>
-    mapSupplyCategories(supplyCategories), [supplyCategories]);
-  const mappedSupplies = useMemo(() => {
-    return supplies.reduce(
-      (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, IUseSuppliesData>
-    );
-  }, [supplies]);
+  const mappedSupplyCategories = useMemo(() => mapSupplyCategories(supplyCategories), [supplyCategories]);
+  const mappedSupplies = useMemo(() => mapSupplies(supplies), [supplies]);
 
   const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
     {

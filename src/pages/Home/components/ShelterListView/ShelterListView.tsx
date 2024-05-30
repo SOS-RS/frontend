@@ -14,7 +14,8 @@ import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { IFilterFormProps } from '../Filter/types';
 import { useSupplyCategories } from '@/hooks/useSupplyCategories';
-import { mapSupplyCategories } from '../Filter/Filter';
+import { mapSupplies, mapSupplyCategories } from '../Filter/Filter';
+import { useSupplies } from '@/hooks/useSupplies';
 
 
 function removeFilter({ from: filterData, filter: item } : { from: IFilterFormProps, filter: string }): IFilterFormProps {
@@ -63,7 +64,9 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     const { data: supplyCategories } = useSupplyCategories();
     const mappedSupplyCategories = useMemo(() =>
       mapSupplyCategories(supplyCategories), [supplyCategories]);
-
+    const { data: supplies } = useSupplies();
+    const mappedSupplies = useMemo(() => mapSupplies(supplies), [supplies]);
+    
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
@@ -122,8 +125,18 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           
           ))}
 
+          {filterData.supplyIds?.map((supplyId) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={supplyId}
+              onClick={() =>
+                onCitiesChange?.(removeFilter({from: filterData, filter: supplyId}))
+              }
+            >
+              <span className="pr-1">{mappedSupplies[supplyId]?.name}</span> <X className="h-4 w-4" />
+            </div>
           
-
+          ))}
 
         </div>
         <div className="flex flex-row">
