@@ -66,6 +66,16 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       mapSupplyCategories(supplyCategories), [supplyCategories]);
     const { data: supplies } = useSupplies();
     const mappedSupplies = useMemo(() => mapSupplies(supplies), [supplies]);
+
+    const renderFilterBadge = (filterKey: string, filterLabel: string) => {
+      return <div
+        className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+        key={filterKey}
+        onClick={() => onCitiesChange?.(removeFilter({ from: filterData, filter: filterKey }))}
+      >
+        <span className="pr-1">{filterLabel}</span> <X className="h-4 w-4" />
+      </div>;
+    };
     
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -87,70 +97,15 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           }
         />
         <div className="flex flex-wrap gap-1 items-center">
-          {filterData.cities?.map((city) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={city}
-              onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, filter: city}))
-              }
-            >
-              <span className="pr-1">{city}</span> <X className="h-4 w-4" />
-            </div>
-          ))}
-
-          {filterData.priority?.map((priorityLevel) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={priorityLevel}
-              onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, filter: priorityLevel}))
-              }
-            >
-              <span className="pr-1">{getSupplyPriorityProps(+priorityLevel).label}</span> <X className="h-4 w-4" />
-            </div>
-          
-          ))}
-
-          {filterData.supplyCategoryIds?.map((supplyCategoryId) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={supplyCategoryId}
-              onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, filter: supplyCategoryId}))
-              }
-            >
-              <span className="pr-1">{mappedSupplyCategories[supplyCategoryId]?.name}</span> <X className="h-4 w-4" />
-            </div>
-          
-          ))}
-
-          {filterData.supplyIds?.map((supplyId) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={supplyId}
-              onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, filter: supplyId}))
-              }
-            >
-              <span className="pr-1">{mappedSupplies[supplyId]?.name}</span> <X className="h-4 w-4" />
-            </div>
-          
-          ))}
-
-          {filterData.shelterStatus?.map((statusLabel) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={statusLabel}
-              onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, filter: statusLabel}))
-              }
-            >
-              <span className="pr-1">{ShelterAvailabilityStatusMapped[statusLabel]}</span> <X className="h-4 w-4" />
-            </div>
-          
-          ))}
-
+          {filterData.cities?.map((city) => renderFilterBadge(city, city))}
+          {filterData.priority?.map((priorityLevel) =>
+            renderFilterBadge(priorityLevel, getSupplyPriorityProps(+priorityLevel).label))}
+          {filterData.supplyCategoryIds?.map((supplyCategoryId) =>
+            renderFilterBadge(supplyCategoryId, mappedSupplyCategories[supplyCategoryId]?.name))}
+          {filterData.supplyIds?.map((supplyId) =>
+            renderFilterBadge(supplyId, mappedSupplies[supplyId]?.name))}
+          {filterData.shelterStatus?.map((statusLabel) =>
+            renderFilterBadge(statusLabel, ShelterAvailabilityStatusMapped[statusLabel]))}
         </div>
         <div className="flex flex-row">
           <Button
