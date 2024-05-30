@@ -43,17 +43,19 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
   {} as Record<SupplyPriority, string>
 );
 
+const dataKeyToIdValueToObj =
+  (
+    prev: Record<string, IUseSuppliesData | ISupplyCategory>,
+    current: ISupplyCategory | IUseSuppliesData
+  ) =>
+    ({ ...prev, [current.id]: current });
+
+
 export const mapSupplyCategories = (supplyCategories: ISupplyCategory[]) => 
-  supplyCategories.reduce(
-    (prev, current) => ({ ...prev, [current.id]: current }),
-    {} as Record<string, ISupplyCategory>
-  );
+  supplyCategories.reduce(dataKeyToIdValueToObj, {} as Record<string, ISupplyCategory>);
 
 export const mapSupplies = (supplies: IUseSuppliesData[]) => 
-  supplies.reduce(
-    (prev, current) => ({ ...prev, [current.id]: current }),
-    {} as Record<string, IUseSuppliesData>
-  );
+  supplies.reduce(dataKeyToIdValueToObj, {} as Record<string, IUseSuppliesData>);
 
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
