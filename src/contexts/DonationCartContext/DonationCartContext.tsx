@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { IDonationCartContext, IDonationCartItem } from './types';
 
@@ -16,7 +16,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
     getDonationCart()
   );
 
-  const addItem = (shelterId: string, item: IDonationCartItem) => {
+  const addItem = useCallback((shelterId: string, item: IDonationCartItem) => {
     setCarts((state) => {
       const prev = state[shelterId] ?? [];
       if (prev.some((p) => p.id === item.id))
@@ -30,37 +30,49 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
         };
       else return { ...state, [shelterId]: [...prev, item] };
     });
-  };
+  }, []);
 
-  const updateItem = (
-    shelterId: string,
-    supplyId: string,
-    payload: Partial<Omit<IDonationCartItem, 'id'>>
-  ) => {
-    setCarts((state) => {
-      const prev = state[shelterId] ?? [];
-      if (prev.some((p) => p.id === supplyId))
-        return {
-          ...state,
-          [shelterId]: prev.map((p) =>
-            p.id === supplyId ? { ...p, ...payload } : p
-          ),
-        };
-      else return state;
-    });
-  };
+  const updateItem = useCallback(
+    (
+      shelterId: string,
+      supplyId: string,
+      payload: Partial<Omit<IDonationCartItem, 'id'>>
+    ) => {
+      setCarts((state) => {
+        const prev = state[shelterId] ?? [];
+        if (prev.some((p) => p.id === supplyId))
+          return {
+            ...state,
+            [shelterId]: prev.map((p) =>
+              p.id === supplyId ? { ...p, ...payload } : p
+            ),
+          };
+        else return state;
+      });
+    },
+    []
+  );
 
-  const removeItem = (shelterId: string, supplyId: string) => {
+  const removeItem = useCallback((shelterId: string, supplyId: string) => {
     setCarts((state) => {
       const prev = state[shelterId] ?? [];
       return { ...state, [shelterId]: prev.filter((p) => p.id !== supplyId) };
     });
-  };
+  }, []);
 
-  const toggleOpened = () => setOpened((prev) => !prev);
+  const toggleOpened = useCallback(() => setOpened((prev) => !prev), []);
 
-  const clearCart = (shelterId: string) =>
-    setCarts((state) => ({ ...state, [shelterId]: [] }));
+  const clearCart = useCallback(
+    (shelterId: string) => setCarts((state) => ({ ...state, [shelterId]: [] })),
+    []
+  );
+
+  const updateCart = useCallback(
+    (shelterId: string, items: IDonationCartItem[]) => {
+      setCarts((prev) => ({ ...prev, [shelterId]: items }));
+    },
+    []
+  );
 
   useEffect(() => {
     localStorage.setItem('shelter-carts', JSON.stringify(carts));
@@ -76,6 +88,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
         opened,
         toggleOpened,
         clearCart,
+        updateCart,
       }}
     >
       {children}

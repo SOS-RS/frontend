@@ -21,4 +21,5 @@ export interface IDonationCartContext {
     payload: Partial<Omit<IDonationCartItem, 'id'>>
   ) => void;
   clearCart: (shelterId: string) => void;
+  updateCart: (shelterId: string, items: IDonationCartItem[]) => void;
 }
