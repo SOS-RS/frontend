@@ -26,7 +26,7 @@ import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
 
-const ShelterAvailabilityStatusMapped: Record<
+export const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
   string
 > = {

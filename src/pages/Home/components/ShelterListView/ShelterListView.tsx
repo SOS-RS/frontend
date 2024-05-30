@@ -14,7 +14,7 @@ import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { IFilterFormProps } from '../Filter/types';
 import { useSupplyCategories } from '@/hooks/useSupplyCategories';
-import { mapSupplies, mapSupplyCategories } from '../Filter/Filter';
+import { ShelterAvailabilityStatusMapped, mapSupplies, mapSupplyCategories } from '../Filter/Filter';
 import { useSupplies } from '@/hooks/useSupplies';
 
 
@@ -134,6 +134,19 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               }
             >
               <span className="pr-1">{mappedSupplies[supplyId]?.name}</span> <X className="h-4 w-4" />
+            </div>
+          
+          ))}
+
+          {filterData.shelterStatus?.map((statusLabel) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={statusLabel}
+              onClick={() =>
+                onCitiesChange?.(removeFilter({from: filterData, filter: statusLabel}))
+              }
+            >
+              <span className="pr-1">{ShelterAvailabilityStatusMapped[statusLabel]}</span> <X className="h-4 w-4" />
             </div>
           
           ))}
