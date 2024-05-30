@@ -23,7 +23,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
-      onCitiesChange,
+      onFilterBadgeClicked,
       onFetchMoreData,
       className = '',
       onOpenModal,
@@ -54,7 +54,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           }
         />
 
-        <FilterBadges filterData={filterData} onCitiesChange={onCitiesChange} />
+        <FilterBadges filterData={filterData} onBadgeClicked={onFilterBadgeClicked} />
 
         <div className="flex flex-row">
           <Button

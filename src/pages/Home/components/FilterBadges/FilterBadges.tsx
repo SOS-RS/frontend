@@ -30,13 +30,13 @@ function removeFilter({ from: filterData, filter: item } : { from: IFilterFormPr
     });
   
     return newFilterData;
-  }
+}
 
 const FilterBadges = React.forwardRef<
   HTMLDivElement,
   IFilterBadgesProps
 >((props, ref) => {
-    const { filterData, onCitiesChange } = props;
+    const { filterData, onBadgeClicked } = props;
 
     const { data: supplyCategories } = useSupplyCategories();
     const mappedSupplyCategories = useMemo(() =>
@@ -48,7 +48,8 @@ const FilterBadges = React.forwardRef<
         return <div
           className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
           key={filterKey}
-          onClick={() => onCitiesChange?.(removeFilter({ from: filterData, filter: filterKey }))}
+          onClick={() =>
+            onBadgeClicked?.(removeFilter({ from: filterData, filter: filterKey }))}
         >
           <span className="pr-1">{filterLabel}</span> <X className="h-4 w-4" />
         </div>;
