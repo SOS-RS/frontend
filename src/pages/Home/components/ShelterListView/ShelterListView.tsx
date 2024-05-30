@@ -12,6 +12,32 @@ import { cn, getSupplyPriorityProps } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
+import { IFilterFormProps } from '../Filter/types';
+
+
+function removeFilter({ from: filterData, filter: item } : { from: IFilterFormProps, filter: string }): IFilterFormProps {
+  const filterFormPropsListNames = Object.keys(filterData);
+  const onlyArrayProps = filterFormPropsListNames.filter((prop) => Array.isArray(filterData[prop as keyof IFilterFormProps]));
+  const newFilterData: IFilterFormProps = {
+    search: "",
+    priority: [],
+    supplyCategoryIds: [],
+    supplyIds: [],
+    shelterStatus: [],
+    cities: []
+  }
+
+  onlyArrayProps.forEach((property: string) => {
+    const propertyValue = filterData[property as keyof IFilterFormProps];
+
+    if (Array.isArray(propertyValue)) {
+        const newValues =  propertyValue.filter((it) => it !== item) as typeof propertyValue;
+        newFilterData[property] = [...newValues];
+    }
+  });
+
+  return newFilterData;
+}
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -53,27 +79,45 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           }
         />
         <div className="flex flex-wrap gap-1 items-center">
-          {filterData.cities?.map((item) => (
+          {filterData.cities?.map((city) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={city}
+              onClick={() =>
+                onCitiesChange?.(removeFilter({from: filterData, filter: city}))
+              }
+            >
+              <span className="pr-1">{city}</span> <X className="h-4 w-4" />
+            </div>
+          ))}
+
+          {filterData.priority?.map((priorityLevel) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={priorityLevel}
+              onClick={() =>
+                onCitiesChange?.(removeFilter({from: filterData, filter: priorityLevel}))
+              }
+            >
+              <span className="pr-1">{getSupplyPriorityProps(+priorityLevel).label}</span> <X className="h-4 w-4" />
+            </div>
+          
+          ))}
+{/* 
+          {filterData.supplyCategoryIds?.map((item) => (
             <div
               className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
               key={item}
               onClick={() =>
-                onCitiesChange?.(filterData.cities.filter((it) => it !== item))
+                onCitiesChange?.(removeFilter({from: filterData, in: item}))
               }
-            >
-              <span className="pr-1">{item}</span> <X className="h-4 w-4" />
-            </div>
-          ))}
-
-          {filterData.priority?.map((item) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={item}
             >
               <span className="pr-1">{getSupplyPriorityProps(+item).label}</span> <X className="h-4 w-4" />
             </div>
           
-          ))}
+          ))} */}
+
+          
 
 
         </div>
