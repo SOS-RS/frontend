@@ -1,4 +1,4 @@
-import { ShelterCategory } from '@/hooks/useShelter/types';
+import { ShelterCategory, SupplyMeasure } from '@/hooks/useShelter/types';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
 import {
   ShelterTagInfo,
@@ -150,6 +150,14 @@ function checkIsNull(v?: any | null) {
   return v !== null && v !== undefined;
 }
 
+const SupplyMeasureMap: Record<SupplyMeasure, string> = {
+  Box: 'caixa(s)',
+  Kg: 'kg',
+  Litters: 'litro(s)',
+  Piece: 'peça(s)',
+  Unit: 'un',
+};
+
 export {
   cn,
   getAvailabilityProps,
@@ -160,4 +168,5 @@ export {
   removeDuplicatesByField,
   normalizedCompare,
   checkIsNull,
+  SupplyMeasureMap,
 };

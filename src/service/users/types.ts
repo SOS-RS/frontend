@@ -22,3 +22,7 @@ export interface ICreateUser {
   lastName: string;
   phone: string;
 }
+
+export interface IFindUserResponse {
+  exists: boolean;
+}

@@ -46,10 +46,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         />
         <SearchInput
           value={searchValue}
-          onChange={(ev) =>
-            onSearchValueChange
-              ? onSearchValueChange(ev.target.value ?? '')
-              : undefined
+          onChange={(value) =>
+            onSearchValueChange ? onSearchValueChange(value) : undefined
           }
         />
         <div className="flex flex-wrap gap-1 items-center">

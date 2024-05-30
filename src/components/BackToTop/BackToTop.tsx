@@ -1,41 +1,45 @@
-import { useState } from "react"
-import { ArrowUp } from "lucide-react"
+import { useState } from 'react';
+import { ArrowUp } from 'lucide-react';
 
+const BackToTop = () => {
+  const [isVisible, setVisibility] = useState(false);
 
-const BackToTop =() => {
-
-    const [isVisible, setVisibility] = useState(false)
-
-    const scrollToTop = () => {
-        let root = document.getElementById('root')
-        if (!root) {return}
-
-        root.scrollTo({top:0, behavior:"smooth"})
-        
+  const scrollToTop = () => {
+    const root = document.getElementById('root');
+    if (!root) {
+      return;
     }
 
-    document.getElementById("root")?.addEventListener('scroll', (e) => {
-        if (e.target === null) {return}
-        let CurrentScrollHeight = (e.target as HTMLElement).scrollTop 
-        let WindowHeight = window.innerHeight
+    root.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-        if ( CurrentScrollHeight > WindowHeight / 2) {
-            setVisibility(true)
-        } else {
-            setVisibility(false)
-        }
-    })
+  document.getElementById('root')?.addEventListener('scroll', (e) => {
+    if (e.target === null) {
+      return;
+    }
+    const CurrentScrollHeight = (e.target as HTMLElement).scrollTop;
+    const WindowHeight = window.innerHeight;
 
+    if (CurrentScrollHeight > WindowHeight / 2) {
+      setVisibility(true);
+    } else {
+      setVisibility(false);
+    }
+  });
 
-return (isVisible && (
-    <button 
-    className=" fixed ease-in-out hidden sm:flex justify-center items-center duration-300 
+  return (
+    isVisible && (
+      <button
+        className=" fixed ease-in-out hidden sm:flex justify-center items-center duration-300 
     bg-red-600/75 focus:bg-red-700 hover:bg-red-700 z-[100] shadow-slate-600/75
     right-6 bottom-6 rounded-full shadow-md
     w-12 h-12 "
-    onClick={scrollToTop}
-    ><ArrowUp color="white" /></button>
-));
-}
+        onClick={scrollToTop}
+      >
+        <ArrowUp color="white" />
+      </button>
+    )
+  );
+};
 
 export { BackToTop };

@@ -157,9 +157,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
-                onChange={(ev) =>
-                  setFieldValue('search', ev.target.value ?? '')
-                }
+                onChange={(v) => setFieldValue('search', v)}
               />
             </div>
             <Separator className="mt-2" />
