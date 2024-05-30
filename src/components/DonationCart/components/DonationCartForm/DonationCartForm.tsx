@@ -17,7 +17,7 @@ import { IDonationCartItem } from '@/contexts/DonationCartContext/types';
 import {
   DonationOrderServices,
   SessionServices,
-  ShelterSupplyServices,
+  // ShelterSupplyServices,
   UserServices,
 } from '@/service';
 import { IDonateItem } from '@/service/donationOrder/types';
@@ -52,28 +52,28 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
       [shelterId, updateItem]
     );
 
-    const verifyCartItems = useCallback(
-      async (
-        shelterId: string,
-        items: IDonateItem[]
-      ): Promise<Record<string, string>> => {
-        const { data } = await ShelterSupplyServices.getAll(shelterId);
-        const newErrors = items.reduce((prev, current) => {
-          const finded = data.find((d) => d.supply.id === current.id);
-          const ok = current.quantity <= (finded?.quantity ?? 0);
-          if (ok || !finded) return prev;
-          else {
-            const measure = SupplyMeasureMap[finded.supply.measure];
-            return {
-              ...prev,
-              [current.id]: `A doação de ${finded.supply.name} não pode ser maior que a quantidade máxima de ${finded.quantity}${measure} `,
-            };
-          }
-        }, {});
-        return newErrors;
-      },
-      []
-    );
+    // const verifyCartItems = useCallback(
+    //   async (
+    //     shelterId: string,
+    //     items: IDonateItem[]
+    //   ): Promise<Record<string, string>> => {
+    //     const { data } = await ShelterSupplyServices.getAll(shelterId);
+    //     const newErrors = items.reduce((prev, current) => {
+    //       const finded = data.find((d) => d.supply.id === current.id);
+    //       const ok = current.quantity <= (finded?.quantity ?? 0);
+    //       if (ok || !finded) return prev;
+    //       else {
+    //         const measure = SupplyMeasureMap[finded.supply.measure];
+    //         return {
+    //           ...prev,
+    //           [current.id]: `A doação de ${finded.supply.name} não pode ser maior que a quantidade máxima de ${finded.quantity}${measure} `,
+    //         };
+    //       }
+    //     }, {});
+    //     return newErrors;
+    //   },
+    //   []
+    // );
 
     const verifyAccountExists = useCallback(async (phone: string) => {
       const { data } = await UserServices.find('phone', phone);
@@ -128,16 +128,17 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
               (prev, [key, value]) => [...prev, { id: key, quantity: +value }],
               [] as IDonateItem[]
             );
-            const errorsData = await verifyCartItems(shelterId, items);
-            setErrors(errorsData);
-            if (Object.keys(errorsData).length === 0) {
-              const resp = await DonationOrderServices.store({
-                shelterId,
-                supplies: items,
-              });
-              if (onSuccess) onSuccess(resp.data.id);
-              clearCart(shelterId);
-            }
+            //TODO: discutir produto se vai e como será verificado os "erros" do carrinho
+            // const errorsData = await verifyCartItems(shelterId, items);
+            // setErrors(errorsData);
+            // if (Object.keys(errorsData).length === 0) {
+            const resp = await DonationOrderServices.store({
+              shelterId,
+              supplies: items,
+            });
+            if (onSuccess) onSuccess(resp.data.id);
+            clearCart(shelterId);
+            // }
           }
         } catch (err) {
           console.log('Ocorreu um erro ao realizar a doação');
@@ -145,7 +146,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           setLoading(false);
         }
       },
-      [clearCart, handleCreateAccount, onSuccess, shelterId, verifyCartItems]
+      [clearCart, handleCreateAccount, onSuccess, shelterId]
     );
 
     return (

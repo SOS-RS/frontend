@@ -1,4 +1,4 @@
-import { Fragment, useContext, useMemo, useState } from 'react';
+import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -31,6 +31,7 @@ import { SupplyPriority } from '@/service/supply/types';
 import { ShelterCategoryList } from './components';
 import { Separator } from '@/components/ui/separator';
 import { DonationCartContext } from '@/contexts';
+import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
 
 const defaultPriorities: SupplyPriority[] = [
   SupplyPriority.Urgent,
@@ -80,6 +81,24 @@ const Shelter = () => {
         : [...prev, priority]
     );
   };
+
+  const handleDonate = useCallback(
+    (item: ShelterCategoryListItemProps) => {
+      if (!opened) {
+        const hasViewedCart =
+          localStorage.getItem('has-viewed-cart') === 'true';
+        if (!hasViewedCart) {
+          localStorage.setItem('has-viewed-cart', 'true');
+          toggleOpened();
+        }
+      }
+      addItem(shelterId, {
+        ...item,
+        quantity: item.quantity || 1,
+      });
+    },
+    [addItem, opened, shelterId, toggleOpened]
+  );
 
   if (loading) return <LoadingScreen />;
 
@@ -191,13 +210,7 @@ const Shelter = () => {
                         priority: l.priority,
                         quantity: l.quantity,
                       }))}
-                      onDonate={(item) => {
-                        if (!opened) toggleOpened();
-                        addItem(shelterId, {
-                          ...item,
-                          quantity: item.quantity || 1,
-                        });
-                      }}
+                      onDonate={handleDonate}
                     />
                     {!isLastElement && <Separator />}
                   </Fragment>
