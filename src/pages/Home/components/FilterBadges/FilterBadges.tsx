@@ -6,7 +6,7 @@ import { useSupplyCategories } from '@/hooks/useSupplyCategories';
 import { useSupplies } from '@/hooks/useSupplies';
 import { ShelterAvailabilityStatusMapped, mapSupplies, mapSupplyCategories } from '../Filter/Filter';
 import { IFilterBadgesProps } from './types';
-import { IFilterFormProps } from '../Filter/types';
+import { IFilterFormProps, ShelterAvailabilityStatus } from '../Filter/types';
 
 function removeFilter({ from: filterData, filter: item } : { from: IFilterFormProps, filter: string }): IFilterFormProps {
     const filterFormPropsListNames = Object.keys(filterData);
@@ -31,6 +31,21 @@ function removeFilter({ from: filterData, filter: item } : { from: IFilterFormPr
   
     return newFilterData;
 }
+
+const ensureDataIsArray = (data: string[] | ShelterAvailabilityStatus[] | string): string[] | ShelterAvailabilityStatus[] => {
+
+    try {
+        if (Array.isArray(data)) {
+            return data;
+        }
+        
+        throw new Error("Filter URI query is not an array.");
+    } catch (error) {
+        console.error(error);
+    }
+
+    return [];
+};
 
 const FilterBadges = React.forwardRef<
   HTMLDivElement,
@@ -57,15 +72,15 @@ const FilterBadges = React.forwardRef<
 
     return (
         <div ref={ref} className="flex flex-wrap gap-1 items-center">
-            {filterData.cities?.map((city) => renderFilterBadge(city, city))}
-            {filterData.priority?.map((priorityLevel) =>
+            {ensureDataIsArray(filterData.cities)?.map((city) => renderFilterBadge(city, city))}
+            {ensureDataIsArray(filterData.priority)?.map((priorityLevel) =>
                 renderFilterBadge(priorityLevel, getSupplyPriorityProps(+priorityLevel).label))}
-            {filterData.supplyCategoryIds?.map((supplyCategoryId) =>
+            {ensureDataIsArray(filterData.supplyCategoryIds)?.map((supplyCategoryId) =>
                 renderFilterBadge(supplyCategoryId, mappedSupplyCategories[supplyCategoryId]?.name))}
-            {filterData.supplyIds?.map((supplyId) =>
+            {ensureDataIsArray(filterData.supplyIds)?.map((supplyId) =>
                 renderFilterBadge(supplyId, mappedSupplies[supplyId]?.name))}
-            {filterData.shelterStatus?.map((statusLabel) =>
-                renderFilterBadge(statusLabel, ShelterAvailabilityStatusMapped[statusLabel]))}
+            {ensureDataIsArray(filterData.shelterStatus)?.map((statusLabel) =>
+                renderFilterBadge(statusLabel, ShelterAvailabilityStatusMapped[statusLabel as ShelterAvailabilityStatus]))}
         </div>
     );
 });
