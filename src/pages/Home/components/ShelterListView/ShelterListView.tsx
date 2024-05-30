@@ -103,19 +103,19 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </div>
           
           ))}
-{/* 
-          {filterData.supplyCategoryIds?.map((item) => (
+
+          {filterData.supplyCategoryIds?.map((supplyCategoryId) => (
             <div
               className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={item}
+              key={supplyCategoryId}
               onClick={() =>
-                onCitiesChange?.(removeFilter({from: filterData, in: item}))
+                onCitiesChange?.(removeFilter({from: filterData, filter: supplyCategoryId}))
               }
             >
-              <span className="pr-1">{getSupplyPriorityProps(+item).label}</span> <X className="h-4 w-4" />
+              <span className="pr-1">{supplyCategoryId}</span> <X className="h-4 w-4" />
             </div>
           
-          ))} */}
+          ))}
 
           
 
