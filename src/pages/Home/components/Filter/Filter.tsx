@@ -43,17 +43,19 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
   {} as Record<SupplyPriority, string>
 );
 
+export const mapSupplyCategories = (supplyCategories: ISupplyCategory[]) => 
+  supplyCategories.reduce(
+    (prev, current) => ({ ...prev, [current.id]: current }),
+    {} as Record<string, ISupplyCategory>
+  );
+
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
-  const mappedSupplyCategories = useMemo(() => {
-    return supplyCategories.reduce(
-      (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, ISupplyCategory>
-    );
-  }, [supplyCategories]);
+  const mappedSupplyCategories = useMemo(() =>
+    mapSupplyCategories(supplyCategories), [supplyCategories]);
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),

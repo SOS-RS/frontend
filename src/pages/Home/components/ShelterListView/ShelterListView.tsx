@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
@@ -13,6 +13,8 @@ import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { IFilterFormProps } from '../Filter/types';
+import { useSupplyCategories } from '@/hooks/useSupplyCategories';
+import { mapSupplyCategories } from '../Filter/Filter';
 
 
 function removeFilter({ from: filterData, filter: item } : { from: IFilterFormProps, filter: string }): IFilterFormProps {
@@ -58,6 +60,9 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     } = props;
 
     const [searchParams] = useSearchParams();
+    const { data: supplyCategories } = useSupplyCategories();
+    const mappedSupplyCategories = useMemo(() =>
+      mapSupplyCategories(supplyCategories), [supplyCategories]);
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -112,7 +117,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
                 onCitiesChange?.(removeFilter({from: filterData, filter: supplyCategoryId}))
               }
             >
-              <span className="pr-1">{supplyCategoryId}</span> <X className="h-4 w-4" />
+              <span className="pr-1">{mappedSupplyCategories[supplyCategoryId]?.name}</span> <X className="h-4 w-4" />
             </div>
           
           ))}
