@@ -11,7 +11,7 @@ import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
-  priority: null,
+  priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
@@ -54,21 +54,36 @@ const Home = () => {
     [shelters.page, shelters.perPage, shelters.count]
   );
 
+  const factorySearchArgs = useCallback((values: IFilterFormProps) => {
+    const searchQueryArgs = {
+      search: values.search,
+      priorities: values.priorities,
+      supplyCategoryIds: values.supplyCategoryIds,
+      supplyIds: values.supplyIds,
+      shelterStatus: values.shelterStatus,
+      cities: values.cities,
+    };
+    return searchQueryArgs;
+  }, []);
+
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
       setOpenModal(false);
       setFilterData(values);
-      const searchQuery = qs.stringify(values, {
+
+      const searchQuery = qs.stringify(factorySearchArgs(values), {
         skipNulls: true,
       });
+
       setSearchParams(searchQuery);
+
       refresh({
         params: {
           search: searchQuery,
         },
       });
     },
-    [refresh, setSearchParams]
+    [refresh, setSearchParams, factorySearchArgs]
   );
 
   const handleFetchMore = useCallback(() => {
@@ -76,7 +91,7 @@ const Home = () => {
       ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
-      search: qs.stringify(filterData),
+      search: qs.stringify(factorySearchArgs(filterData)),
     };
 
     refresh(
@@ -85,7 +100,14 @@ const Home = () => {
       },
       true
     );
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
+  }, [
+    refresh,
+    filterData,
+    shelters.filters,
+    shelters.page,
+    shelters.perPage,
+    factorySearchArgs,
+  ]);
 
   return (
     <div className="flex flex-col h-screen items-center">
