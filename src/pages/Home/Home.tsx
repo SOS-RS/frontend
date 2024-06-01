@@ -16,6 +16,7 @@ const initialFilterData: IFilterFormProps = {
   supplyIds: [],
   shelterStatus: [],
   cities: [],
+  pix: false,
 };
 
 const Home = () => {
@@ -62,6 +63,7 @@ const Home = () => {
       supplyIds: values.supplyIds,
       shelterStatus: values.shelterStatus,
       cities: values.cities,
+      pix: values.pix,
     };
     return searchQueryArgs;
   }, []);
