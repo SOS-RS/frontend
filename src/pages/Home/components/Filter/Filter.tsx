@@ -149,7 +149,7 @@ const Filter = (props: IFilterProps) => {
   );
   const handleTogglePix = useCallback(
     (checked: boolean) => {
-      setFieldValue('pix', checked ? String(checked) : "");
+      setFieldValue('pix', checked ? String(checked) : undefined);
     },
     [setFieldValue]
   );
