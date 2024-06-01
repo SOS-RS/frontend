@@ -25,6 +25,8 @@ import { priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
+import TitleSection from './TitleSection';
+import Section from './Section';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -144,6 +146,15 @@ const Filter = (props: IFilterProps) => {
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
+  function helpFromDistanceSection(): import("react").ReactNode {
+    return (
+      <Section>
+        <TitleSection title="Ajuda a distância" />
+
+      </Section>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="rounded-md overflow-y-scroll max-h-[85vh] mt-8">
@@ -154,12 +165,12 @@ const Filter = (props: IFilterProps) => {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
-            <div className="flex flex-col gap-2 w-full my-4">
+            <Section>
               <SearchInput
                 value={values.search}
                 onChange={(v) => setFieldValue('search', v)}
               />
-            </div>
+            </Section>
             <Separator className="mt-2" />
             <CitiesFilter
               cities={values.cities}
@@ -168,7 +179,7 @@ const Filter = (props: IFilterProps) => {
               }}
             />
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
+            <Section>
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
                 Você pode buscar pelo item que os abrigos precisam com urgência
@@ -221,12 +232,10 @@ const Filter = (props: IFilterProps) => {
                   onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
-            </div>
+            </Section>
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Status do abrigo
-              </p>
+            <Section>
+              <TitleSection title="Status do abrigo" />
               <div>
                 <label className="flex items-center mb-4">
                   <input
@@ -275,7 +284,9 @@ const Filter = (props: IFilterProps) => {
                   Sem informação de disponibilidade
                 </label>
               </div>
-            </div>
+            </Section>
+            <Separator className="mt-2" />
+            {helpFromDistanceSection()}
           </div>
           <DialogFooter className="sticky bg-white -bottom-6">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
