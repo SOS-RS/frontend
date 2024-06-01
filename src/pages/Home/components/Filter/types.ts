@@ -12,6 +12,7 @@ export interface IFilterFormProps {
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
   cities: string[];
+  pix: boolean;
 }
 
 export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'>{
@@ -25,6 +26,7 @@ export interface IFilterFormikProps {
   supplies: ISelectField[];
   shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
   cities: string[];
+  pix: boolean;
 }
 
 export interface IFilterProps {

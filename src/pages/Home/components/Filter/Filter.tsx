@@ -27,6 +27,7 @@ import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
 import TitleSection from './TitleSection';
 import Section from './Section';
+import CheckBoxFilter from './CheckBoxFilter';
 
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
@@ -84,6 +85,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
+        pix: data.pix ?? false,
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -100,6 +102,7 @@ const Filter = (props: IFilterProps) => {
           supplies,
           supplyCategories,
           cities,
+          pix,
         } = values;
         onSubmit({
           priorities: priorities.map((p) => p.value),
@@ -108,6 +111,7 @@ const Filter = (props: IFilterProps) => {
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
           cities,
+          pix,
         });
       },
     }
@@ -143,6 +147,12 @@ const Filter = (props: IFilterProps) => {
     },
     [setFieldValue, values.shelterStatus]
   );
+  const handleTogglePix = useCallback(
+    (checked: boolean) => {
+      setFieldValue('pix', checked);
+    },
+    [setFieldValue]
+  );
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
@@ -150,7 +160,11 @@ const Filter = (props: IFilterProps) => {
     return (
       <Section>
         <TitleSection title="Ajuda a distância" />
-
+        <CheckBoxFilter
+          label="Possui chave pix"
+          onChangeCheck={(ev) => handleTogglePix(ev.target.checked)}
+          defaultChecked={!!values.pix}
+        />
       </Section>
     );
   }
