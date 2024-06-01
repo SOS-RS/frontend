@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Routes } from './routes/Routes';
 import { DonationCartProvider, SessionProvider } from './contexts';
 import { Toaster } from './components/ui/toaster';
-import { BackToTop } from '@/components';
+import { BackToTop } from '@/components/BackToTop';
+
 
 const App = () => {
   return (
