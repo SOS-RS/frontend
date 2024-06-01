@@ -16,7 +16,7 @@ const initialFilterData: IFilterFormProps = {
   supplyIds: [],
   shelterStatus: [],
   cities: [],
-  pix: false,
+  pix: '',
 };
 
 const Home = () => {

@@ -85,7 +85,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
-        pix: data.pix ?? false,
+        pix: data.pix === "true" ? data.pix : "",
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -149,7 +149,7 @@ const Filter = (props: IFilterProps) => {
   );
   const handleTogglePix = useCallback(
     (checked: boolean) => {
-      setFieldValue('pix', checked);
+      setFieldValue('pix', checked ? String(checked) : "");
     },
     [setFieldValue]
   );
@@ -163,7 +163,7 @@ const Filter = (props: IFilterProps) => {
         <CheckBoxFilter
           label="Possui chave pix"
           onChangeCheck={(ev) => handleTogglePix(ev.target.checked)}
-          defaultChecked={!!values.pix}
+          defaultChecked={values.pix === "true" ? true : false}
         />
       </Section>
     );
