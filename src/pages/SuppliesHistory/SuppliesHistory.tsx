@@ -80,6 +80,14 @@ const SuppliesHistory = () => {
 
   if (loading && historiesLoading) return <LoadingScreen />;
 
+  if (!histories || !histories.results) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center">
+        <p>Nenhum histórico de edição disponível</p>
+      </div>
+    );
+  }
+
   const groupedHistories = groupByDateTime(histories.results);
 
   return (
