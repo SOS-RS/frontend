@@ -161,6 +161,13 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue]
   );
 
+  const onShelterStatusCheckChangeTo = (status: ShelterAvailabilityStatus) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+    handleToggleShelterStatus(ev.target.checked, status)
+  };
+
+  const defaultCheckedTo = (status: ShelterAvailabilityStatus): boolean => 
+    values.shelterStatus.some((s) => s.value === status);
+
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
   function helpFromDistanceSection(): import("react").ReactNode {
@@ -264,30 +271,18 @@ const Filter = (props: IFilterProps) => {
               <TitleSection title="Status do abrigo" />
               <CheckBoxFilter
                 label="Abrigo Disponivel"
-                onChangeCheck={(ev) =>
-                  handleToggleShelterStatus(ev.target.checked, 'available')
-                }
-                defaultChecked={values.shelterStatus.some(
-                  (s) => s.value === 'available'
-                )}
+                onChangeCheck={onShelterStatusCheckChangeTo('available')}
+                defaultChecked={defaultCheckedTo('available')}
               />
               <CheckBoxFilter
                 label="Abrigo Indisponivel"
-                onChangeCheck={(ev) =>
-                  handleToggleShelterStatus(ev.target.checked, 'unavailable')
-                }
-                defaultChecked={values.shelterStatus.some(
-                  (s) => s.value === 'unavailable'
-                )}
+                onChangeCheck={onShelterStatusCheckChangeTo('unavailable')}
+                defaultChecked={defaultCheckedTo('unavailable')}
               />
               <CheckBoxFilter
                 label="Sem informação de disponibilidade"
-                onChangeCheck={(ev) =>
-                  handleToggleShelterStatus(ev.target.checked, 'waiting')
-                }
-                defaultChecked={values.shelterStatus.some(
-                  (s) => s.value === 'waiting'
-                )}
+                onChangeCheck={onShelterStatusCheckChangeTo('waiting')}
+                defaultChecked={defaultCheckedTo('waiting')}
               />
             </Section>
             <Separator className="mt-2" />
