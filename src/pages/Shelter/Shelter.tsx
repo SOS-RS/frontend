@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
+import { ChevronLeft, ChevronRight, History, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -32,6 +32,7 @@ import { ShelterCategoryList } from './components';
 import { Separator } from '@/components/ui/separator';
 import { DonationCartContext } from '@/contexts';
 import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
+import { format } from 'date-fns';
 
 const defaultPriorities: SupplyPriority[] = [
   SupplyPriority.Urgent,
@@ -217,6 +218,29 @@ const Shelter = () => {
                 );
               })}
           </div>
+          {shelter.updatedAt && (
+            <div>
+              <div className="flex justify-between items-center">
+                <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+                  Atualizado em {format(shelter.updatedAt, 'dd/MM/yyyy HH:mm')}
+                </small>
+              </div>
+
+              <div>
+                <Button
+                  variant="ghost"
+                  className="font-medium text-[16px] w-full sm:w-72 flex gap-2 justify-between bg-[#F6F8FC] hover:text-blue-500 border-[#E8F0F8]"
+                  onClick={() => navigate(`/abrigo/${shelterId}/history`)}
+                >
+                  <div className="flex gap-2 items-center">
+                    <History size={17} />
+                    Histórico de edições
+                  </div>
+                  <ChevronRight size={17} />
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Fragment>
