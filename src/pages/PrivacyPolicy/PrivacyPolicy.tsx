@@ -1,4 +1,5 @@
 import { BurgerMenu, Header } from '@/components';
+import { LifeBuoy } from 'lucide-react';
 
 const PrivacyPolicy = () => {
   return (
@@ -9,11 +10,15 @@ const PrivacyPolicy = () => {
           Política de privacidade
         </h3>
         <p className="text-justify text-md">
-          Ao entrar para o <b>SOS RS 🛟</b>, você nos confia uma série de
-          informações. E nós cuidamos e protegemos essas informações, para você.
-          Aqui você vai entender quais informações coletamos e o porquê de
-          fazermos isso. E, ainda, como você pode atualizar, acompanhar ou, até
-          mesmo, excluir esses dados.
+          Ao entrar para o <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          , você nos confia uma série de informações. E nós cuidamos e
+          protegemos essas informações, para você. Aqui você vai entender quais
+          informações coletamos e o porquê de fazermos isso. E, ainda, como você
+          pode atualizar, acompanhar ou, até mesmo, excluir esses dados.
         </p>
         <p className="text-justify text-md">
           Desenvolvemos um mapa dinâmico que consolida diversas informações
@@ -24,9 +29,14 @@ const PrivacyPolicy = () => {
           deles.
         </p>
         <p className="text-justify text-md">
-          O <b>SOS RS 🛟</b> declara manter sigilo e confidencialidade sobre os
-          dados pessoais cadastrados, mas, como a plataforma é alimentada por
-          toda a comunidade, não nos responsabilizamos pela:
+          O <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          declara manter sigilo e confidencialidade sobre os dados pessoais
+          cadastrados, mas, como a plataforma é alimentada por toda a
+          comunidade, não nos responsabilizamos pela:
         </p>
         <ul>
           <li>1. Veracidade das informações;</li>
@@ -44,7 +54,11 @@ const PrivacyPolicy = () => {
         <p className="text-justify text-md">
           Coletamos apenas informações imprescindíveis para desempenhar nosso
           propósito. As informações coletadas e como essas informações são
-          utilizadas dependem de como e do quanto você utiliza o <b>SOS RS 🛟</b>
+          utilizadas dependem de como e do quanto você utiliza o <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
           . Armazenamos as informações que coletamos.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
@@ -101,10 +115,15 @@ const PrivacyPolicy = () => {
           solicitação governamental ou judicial não abusiva.
         </p>
         <p className="text-justify text-md">
-          Se o <b>SOS RS 🛟</b> realizar fusão, aquisição ou venda, continuará a
-          garantir a confidencialidade das suas informações pessoais e avisará
-          os afetados antes que as informações sejam transferidas ou submetidas
-          a uma política de privacidade diferente.
+          Se o <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          realizar fusão, aquisição ou venda, continuará a garantir a
+          confidencialidade das suas informações pessoais e avisará os afetados
+          antes que as informações sejam transferidas ou submetidas a uma
+          política de privacidade diferente.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
           Mantemos suas informações seguras
@@ -143,13 +162,17 @@ const PrivacyPolicy = () => {
         </p>
         <p className="text-justify text-md">
           Eventualmente os dados serão descartados após o encerramento do
-          propósito do <b>SOS RS 🛟</b>. A nossa política de exclusão garante que
-          os dados fornecidos sejam removidos de forma segura e completa dos
-          nossos servidores. Para manter as suas informações protegidas em caso
-          de exclusão acidental, pode haver um espaço de tempo entre o momento
-          em que você solicita excluir ou exclui algo e o momento em que as
-          cópias são definitivamente excluídas dos nossos sistemas ativos e de
-          backup.
+          propósito do <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          . A nossa política de exclusão garante que os dados fornecidos sejam
+          removidos de forma segura e completa dos nossos servidores. Para
+          manter as suas informações protegidas em caso de exclusão acidental,
+          pode haver um espaço de tempo entre o momento em que você solicita
+          excluir ou exclui algo e o momento em que as cópias são
+          definitivamente excluídas dos nossos sistemas ativos e de backup.
         </p>
         <h5 className="text-2xl pt-4 font-bold !text-zinc-900">
           Você pode, a qualquer momento:
@@ -171,10 +194,14 @@ const PrivacyPolicy = () => {
           Quando esta política se aplica e alterações
         </h5>
         <p className="text-justify text-md">
-          Esta Política de Privacidade se aplica ao <b>SOS RS 🛟</b>. Nos
-          reservamos ao direito de alterar este documento periodicamente, porém
-          não reduziremos seus direitos nesta Política de Privacidade, sem seu
-          consentimento e aviso prévio.
+          Esta Política de Privacidade se aplica ao <b>SOS RS </b>
+          <LifeBuoy
+            className="align-middle inline-block relative max-h-6 padding pb-0.5"
+            size={18}
+          />{' '}
+          . Nos reservamos ao direito de alterar este documento periodicamente,
+          porém não reduziremos seus direitos nesta Política de Privacidade, sem
+          seu consentimento e aviso prévio.
         </p>
       </div>
     </div>
