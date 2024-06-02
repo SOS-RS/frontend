@@ -26,7 +26,7 @@ import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
 
-const ShelterAvailabilityStatusMapped: Record<
+export const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
   string
 > = {
@@ -43,23 +43,27 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
   {} as Record<SupplyPriority, string>
 );
 
+const dataKeyToIdValueToObj =
+  (
+    prev: Record<string, IUseSuppliesData | ISupplyCategory>,
+    current: ISupplyCategory | IUseSuppliesData
+  ) =>
+    ({ ...prev, [current.id]: current });
+
+
+export const mapSupplyCategories = (supplyCategories: ISupplyCategory[]) => 
+  supplyCategories.reduce(dataKeyToIdValueToObj, {} as Record<string, ISupplyCategory>);
+
+export const mapSupplies = (supplies: IUseSuppliesData[]) => 
+  supplies.reduce(dataKeyToIdValueToObj, {} as Record<string, IUseSuppliesData>);
+
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
-  const mappedSupplyCategories = useMemo(() => {
-    return supplyCategories.reduce(
-      (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, ISupplyCategory>
-    );
-  }, [supplyCategories]);
-  const mappedSupplies = useMemo(() => {
-    return supplies.reduce(
-      (prev, current) => ({ ...prev, [current.id]: current }),
-      {} as Record<string, IUseSuppliesData>
-    );
-  }, [supplies]);
+  const mappedSupplyCategories = useMemo(() => mapSupplyCategories(supplyCategories), [supplyCategories]);
+  const mappedSupplies = useMemo(() => mapSupplies(supplies), [supplies]);
 
   const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
     {

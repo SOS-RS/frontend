@@ -11,7 +11,7 @@ export interface IShelterListViewProps
   onOpenModal?: () => void;
   onClearSearch?: () => void;
   onSearchValueChange?: (v: string) => void;
-  onCitiesChange?: (v: string[]) => void;
+  onFilterBadgeClicked?: (v: IFilterFormProps) => void;
   onFetchMoreData?: () => void;
   onSelectShelter?: (shelter: IUseSheltersData) => void;
   filterData: IFilterFormProps;

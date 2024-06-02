@@ -12,6 +12,7 @@ export interface IFilterFormProps {
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
   cities: string[];
+  [key: string]: string | string[];
 }
 
 export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'>{

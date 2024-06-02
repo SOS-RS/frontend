@@ -138,10 +138,10 @@ const Home = () => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
         }}
-        onCitiesChange={(v) => {
-          setFilterData((prev) => ({ ...prev, cities: v }));
+        onFilterBadgeClicked={(newFilterData) => {
+          setFilterData((prev) => ({ ...prev, ...newFilterData }));
           const searchQuery = qs.stringify(
-            { ...filterData, cities: v },
+            { ...filterData, ...newFilterData },
             {
               skipNulls: true,
             }

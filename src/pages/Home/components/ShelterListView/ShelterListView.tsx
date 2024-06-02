@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { CircleAlert, ListFilter, X } from 'lucide-react';
+import { CircleAlert, ListFilter } from 'lucide-react';
 
 import {
   Alert,
@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
+import { FilterBadges } from '../FilterBadges';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -22,7 +23,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
-      onCitiesChange,
+      onFilterBadgeClicked,
       onFetchMoreData,
       className = '',
       onOpenModal,
@@ -50,19 +51,9 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             onSearchValueChange ? onSearchValueChange(value) : undefined
           }
         />
-        <div className="flex flex-wrap gap-1 items-center">
-          {filterData.cities?.map((item) => (
-            <div
-              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
-              key={item}
-              onClick={() =>
-                onCitiesChange?.(filterData.cities.filter((it) => it !== item))
-              }
-            >
-              <span className="pr-1">{item}</span> <X className="h-4 w-4" />
-            </div>
-          ))}
-        </div>
+
+        <FilterBadges filterData={filterData} onBadgeClicked={onFilterBadgeClicked} />
+
         <div className="flex flex-row">
           <Button
             variant="ghost"
