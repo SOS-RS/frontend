@@ -1,5 +1,5 @@
 import { ShelterTagType } from '@/pages/Home/components/ShelterListItem/types';
-import { ShelterCategory } from '../useShelter/types';
+import { ShelterCategory, SupplyMeasure } from '../useShelter/types';
 
 export interface IUseSheltersData {
   id: string;
@@ -29,6 +29,7 @@ export interface IUseSheltersData {
 export interface IUseSheltersDataSupplyData {
   supply: {
     name: string;
+    measure: SupplyMeasure;
     supplyCategory: { name: string };
   };
   priority: number;
