@@ -262,54 +262,33 @@ const Filter = (props: IFilterProps) => {
             <Separator className="mt-2" />
             <Section>
               <TitleSection title="Status do abrigo" />
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'available')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'available'
-                    )}
-                  />
-                  Abrigo Disponivel
-                </label>
-              </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(
-                        ev.target.checked,
-                        'unavailable'
-                      )
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'unavailable'
-                    )}
-                  />
-                  Abrigo Indisponível
-                </label>
-              </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'waiting')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'waiting'
-                    )}
-                  />
-                  Sem informação de disponibilidade
-                </label>
-              </div>
+              <CheckBoxFilter
+                label="Abrigo Disponivel"
+                onChangeCheck={(ev) =>
+                  handleToggleShelterStatus(ev.target.checked, 'available')
+                }
+                defaultChecked={values.shelterStatus.some(
+                  (s) => s.value === 'available'
+                )}
+              />
+              <CheckBoxFilter
+                label="Abrigo Indisponivel"
+                onChangeCheck={(ev) =>
+                  handleToggleShelterStatus(ev.target.checked, 'unavailable')
+                }
+                defaultChecked={values.shelterStatus.some(
+                  (s) => s.value === 'unavailable'
+                )}
+              />
+              <CheckBoxFilter
+                label="Sem informação de disponibilidade"
+                onChangeCheck={(ev) =>
+                  handleToggleShelterStatus(ev.target.checked, 'waiting')
+                }
+                defaultChecked={values.shelterStatus.some(
+                  (s) => s.value === 'waiting'
+                )}
+              />
             </Section>
             <Separator className="mt-2" />
             {helpFromDistanceSection()}
