@@ -46,6 +46,9 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
   {} as Record<SupplyPriority, string>
 );
 
+const ensureTrueAsString = (data: string): string =>
+  data === "true" ? data : "";
+
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
@@ -85,7 +88,8 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
-        pix: data.pix === "true" ? data.pix : "",
+        pix: ensureTrueAsString(data.pix),
+        contact: ensureTrueAsString(data.contact),
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -103,6 +107,7 @@ const Filter = (props: IFilterProps) => {
           supplyCategories,
           cities,
           pix,
+          contact,
         } = values;
         onSubmit({
           priorities: priorities.map((p) => p.value),
@@ -112,6 +117,7 @@ const Filter = (props: IFilterProps) => {
           supplyIds: supplies.map((s) => s.value),
           cities,
           pix,
+          contact,
         });
       },
     }
@@ -147,9 +153,10 @@ const Filter = (props: IFilterProps) => {
     },
     [setFieldValue, values.shelterStatus]
   );
-  const handleTogglePix = useCallback(
-    (checked: boolean) => {
-      setFieldValue('pix', checked ? String(checked) : undefined);
+
+  const handleToggleTo = useCallback(
+    (data: string, checked: boolean, ) => {
+      setFieldValue(data, checked ? String(checked) : undefined);
     },
     [setFieldValue]
   );
@@ -162,8 +169,13 @@ const Filter = (props: IFilterProps) => {
         <TitleSection title="Ajuda a distância" />
         <CheckBoxFilter
           label="Possui chave pix"
-          onChangeCheck={(ev) => handleTogglePix(ev.target.checked)}
+          onChangeCheck={(ev) => handleToggleTo('pix', ev.target.checked)}
           defaultChecked={values.pix === "true" ? true : false}
+        />
+        <CheckBoxFilter
+          label="Possui contato telefônico"
+          onChangeCheck={(ev) => handleToggleTo('contact', ev.target.checked)}
+          defaultChecked={values.contact === "true" ? true : false}
         />
       </Section>
     );
