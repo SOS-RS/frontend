@@ -218,7 +218,6 @@ const Shelter = () => {
                 );
               })}
           </div>
-
           {shelter.updatedAt && (
           <div>
             <div className="flex justify-between p-4 items-center">
