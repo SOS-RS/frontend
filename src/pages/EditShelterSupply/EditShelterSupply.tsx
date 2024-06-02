@@ -1,12 +1,12 @@
-import { ChevronLeft, PlusCircle } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { DialogSelector, Header, LoadingScreen, TextField } from '@/components';
+import { DialogSelector, Header, LoadingScreen } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useShelter, useSupplies, useThrottle } from '@/hooks';
 import { group, normalizedCompare } from '@/lib/utils';
-import { SupplyRow } from './components';
+import { SupplyRow, SupplySearch } from './components';
 import { IDialogSelectorProps } from '@/components/DialogSelector/types';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
 import { ShelterSupplyServices } from '@/service';
@@ -25,19 +25,50 @@ const EditShelterSupply = () => {
   const [filteredSupplies, setFilteredSupplies] = useState<IUseSuppliesData[]>(
     []
   );
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [, setSearch] = useThrottle<string>(
+  const [searchedSupplies, setSearchedSupplies] = useState<IUseSuppliesData[]>(
+    []
+  );
+  const shelterSupplyData = useMemo(() => {
+    return (shelter?.shelterSupplies ?? []).reduce(
+      (prev, current) => ({ ...prev, [current.supply.id]: current }),
+      {} as Record<string, IUseShelterDataSupply>
+    );
+  }, [shelter?.shelterSupplies]);
+  
+  const [, setSearchSupplies] = useThrottle<string>(
     {
-      throttle: 400,
-      callback: (v) => {
-        if (v) {
-          setFilteredSupplies(
-            supplies.filter((s) => normalizedCompare(s.name, v))
+      throttle: 200,
+      callback: (value) => {
+        if (value) {
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, value)
           );
-        } else setFilteredSupplies(supplies);
+          setSearchedSupplies(filteredSupplies);
+        } else {
+          setSearchedSupplies([]);
+          setSearch('');
+        }
       },
     },
     [supplies]
+  );
+
+  const [, setSearch] = useThrottle<string>(
+    {
+      throttle: 400,
+      callback: (value) => {
+        if (value) {
+          const filteredSupplies = supplies.filter((s) =>
+            normalizedCompare(s.name, value)
+          );
+          setFilteredSupplies(filteredSupplies);
+        } else {
+          const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
+          setFilteredSupplies(storedSupplies);
+        }
+      },
+    },
+    [supplies, shelterSupplyData]
   );
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -45,12 +76,7 @@ const EditShelterSupply = () => {
     IDialogSelectorProps,
     'value' | 'onSave' | 'quantity'
   > | null>();
-  const shelterSupplyData = useMemo(() => {
-    return (shelter?.shelterSupplies ?? []).reduce(
-      (prev, current) => ({ ...prev, [current.supply.id]: current }),
-      {} as Record<string, IUseShelterDataSupply>
-    );
-  }, [shelter?.shelterSupplies]);
+
   const supplyGroups = useMemo(
     () =>
       group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
@@ -112,8 +138,9 @@ const EditShelterSupply = () => {
   );
 
   useEffect(() => {
-    setFilteredSupplies(supplies);
-  }, [supplies]);
+    const storedSupplies = supplies.filter((s) => !!shelterSupplyData[s.id]);
+    setFilteredSupplies(storedSupplies);
+  }, [supplies, shelterSupplyData]);
 
   if (loading) return <LoadingScreen />;
 
@@ -126,7 +153,7 @@ const EditShelterSupply = () => {
           title="Escolha a prioridade do item"
           options={[
             {
-              label: 'Precisa urgente',
+              label: 'Precisa com urgência',
               value: `${SupplyPriority.Urgent}`,
             },
             {
@@ -163,27 +190,26 @@ const EditShelterSupply = () => {
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
-            Para cada item da lista abaixo, informe a disponibilidade no abrigo
-            selecionado
+            Antes de adicionar um novo item, confira na busca abaixo se ele já não foi cadastrado.
           </p>
-          <Button
-            variant="ghost"
-            className="flex gap-2 text-blue-500 [&_svg]:stroke-blue-500 font-medium text-lg hover:text-blue-600"
-            onClick={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
-          >
-            <PlusCircle />
-            Cadastrar novo item
-          </Button>
           <div className="w-full my-2">
-            <TextField
-              label="Buscar"
-              value={searchValue}
-              onChange={(ev) => {
-                setSearchValue(ev.target.value);
-                setSearch(ev.target.value);
+            <SupplySearch
+              supplyItems={searchedSupplies}
+              limit={5}
+              onSearch={(value) => 
+                setSearchSupplies(value)
+              }
+              onSelectItem={(item) =>  {
+                setSearch(item.name);
+                setSearchedSupplies([]);
               }}
+              onAddNewItem={() => navigate(`/abrigo/${shelterId}/item/cadastrar`)}
             />
           </div>
+
+          <p className="text-muted-foreground mt-3">
+            Para cada item da lista abaixo, informe a disponibilidade no abrigo selecionado. 
+          </p>
           <div className="flex flex-col gap-2 w-full my-4">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
