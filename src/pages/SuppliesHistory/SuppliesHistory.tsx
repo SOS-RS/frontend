@@ -80,16 +80,6 @@ const SuppliesHistory = () => {
 
   if (loading && historiesLoading) return <LoadingScreen />;
 
-  if (!histories || !histories.results) {
-    return (
-      <div className="flex flex-col h-screen items-center justify-center">
-        <p>Nenhum histórico de edição disponível</p>
-      </div>
-    );
-  }
-
-  const groupedHistories = groupByDateTime(histories.results);
-
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
@@ -130,41 +120,49 @@ const SuppliesHistory = () => {
             </CardContent>
           </Card>
         </div>
-        {Object.entries(groupedHistories).map(([dateTime, histories]) => (
-          <div key={dateTime} className="py-4 flex flex-col gap-2 border-b">
-            <div className="flex justify-between items-center">
-              <p className="font-semibold text-[18px]">{dateTime}</p>
-            </div>
-            <p className="text-[#677183] font-normal text-md mt-2">
-              Modificações
-            </p>
-            {Object.entries(groupByPriority(histories)).map(
-              ([priority, items], index) => (
-                <div key={index} className="flex flex-col gap-2">
-                  <p className="font-semibold text-md flex gap-2 items-center">
-                    <CircleStatus className={items.className} />
-                    {priority}
-                  </p>
-                  <SuppliesHistoryGroup
-                    title="Excluído"
-                    items={items.excluded}
-                    className={items.className}
-                  />
-                  <SuppliesHistoryGroup
-                    title="Editado"
-                    items={items.edited}
-                    className={items.className}
-                  />
-                  <SuppliesHistoryGroup
-                    title="Adicionado"
-                    items={items.added}
-                    className={items.className}
-                  />
+        {histories && histories?.results ? (
+          Object.entries(groupByDateTime(histories.results)).map(
+            ([dateTime, histories]) => (
+              <div key={dateTime} className="py-4 flex flex-col gap-2 border-b">
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold text-[18px]">{dateTime}</p>
                 </div>
-              )
-            )}
+                <p className="text-[#677183] font-normal text-md mt-2">
+                  Modificações
+                </p>
+                {Object.entries(groupByPriority(histories)).map(
+                  ([priority, items], index) => (
+                    <div key={index} className="flex flex-col gap-2">
+                      <p className="font-semibold text-md flex gap-2 items-center">
+                        <CircleStatus className={items.className} />
+                        {priority}
+                      </p>
+                      <SuppliesHistoryGroup
+                        title="Excluído"
+                        items={items.excluded}
+                        className={items.className}
+                      />
+                      <SuppliesHistoryGroup
+                        title="Editado"
+                        items={items.edited}
+                        className={items.className}
+                      />
+                      <SuppliesHistoryGroup
+                        title="Adicionado"
+                        items={items.added}
+                        className={items.className}
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            )
+          )
+        ) : (
+          <div className="flex flex-col h-screen items-center justify-center">
+            <p className='text-[#677183]'>Nenhum histórico de edição disponível</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
