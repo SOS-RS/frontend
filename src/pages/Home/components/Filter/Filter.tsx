@@ -38,6 +38,11 @@ const ShelterAvailabilityStatusMapped: Record<
   waiting: 'Sem informação de disponibilidade',
 };
 
+const shelterAvailabilityStatus = Object.keys(ShelterAvailabilityStatusMapped);
+const AVAILABLE_STATUS = shelterAvailabilityStatus[0] as ShelterAvailabilityStatus;
+const UNAVAILABLE_STATUS = shelterAvailabilityStatus[1] as ShelterAvailabilityStatus;
+const WAITING_STATUS = shelterAvailabilityStatus[2] as ShelterAvailabilityStatus;
+
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
     priority === `${SupplyPriority.NotNeeded}`
@@ -271,18 +276,18 @@ const Filter = (props: IFilterProps) => {
               <TitleSection title="Status do abrigo" />
               <CheckBoxFilter
                 label="Abrigo Disponivel"
-                onChangeCheck={onShelterStatusCheckChangeTo('available')}
-                defaultChecked={defaultCheckedTo('available')}
+                onChangeCheck={onShelterStatusCheckChangeTo(AVAILABLE_STATUS)}
+                defaultChecked={defaultCheckedTo(AVAILABLE_STATUS)}
               />
               <CheckBoxFilter
                 label="Abrigo Indisponivel"
-                onChangeCheck={onShelterStatusCheckChangeTo('unavailable')}
-                defaultChecked={defaultCheckedTo('unavailable')}
+                onChangeCheck={onShelterStatusCheckChangeTo(UNAVAILABLE_STATUS)}
+                defaultChecked={defaultCheckedTo(UNAVAILABLE_STATUS)}
               />
               <CheckBoxFilter
                 label="Sem informação de disponibilidade"
-                onChangeCheck={onShelterStatusCheckChangeTo('waiting')}
-                defaultChecked={defaultCheckedTo('waiting')}
+                onChangeCheck={onShelterStatusCheckChangeTo(WAITING_STATUS)}
+                defaultChecked={defaultCheckedTo(WAITING_STATUS)}
               />
             </Section>
             <Separator className="mt-2" />
