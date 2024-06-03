@@ -166,11 +166,11 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue]
   );
 
-  const onShelterStatusCheckChangeTo = (status: ShelterAvailabilityStatus) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const toggleShelterStatusTo = (status: ShelterAvailabilityStatus) => (ev: React.ChangeEvent<HTMLInputElement>) => {
     handleToggleShelterStatus(ev.target.checked, status)
   };
 
-  const defaultCheckedTo = (status: ShelterAvailabilityStatus): boolean => 
+  const someShelterStatusEqualTo = (status: ShelterAvailabilityStatus): boolean => 
     values.shelterStatus.some((s) => s.value === status);
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
@@ -276,18 +276,18 @@ const Filter = (props: IFilterProps) => {
               <TitleSection title="Status do abrigo" />
               <CheckBoxFilter
                 label="Abrigo Disponivel"
-                onChangeCheck={onShelterStatusCheckChangeTo(AVAILABLE_STATUS)}
-                defaultChecked={defaultCheckedTo(AVAILABLE_STATUS)}
+                onChangeCheck={toggleShelterStatusTo(AVAILABLE_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(AVAILABLE_STATUS)}
               />
               <CheckBoxFilter
                 label="Abrigo Indisponivel"
-                onChangeCheck={onShelterStatusCheckChangeTo(UNAVAILABLE_STATUS)}
-                defaultChecked={defaultCheckedTo(UNAVAILABLE_STATUS)}
+                onChangeCheck={toggleShelterStatusTo(UNAVAILABLE_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(UNAVAILABLE_STATUS)}
               />
               <CheckBoxFilter
                 label="Sem informação de disponibilidade"
-                onChangeCheck={onShelterStatusCheckChangeTo(WAITING_STATUS)}
-                defaultChecked={defaultCheckedTo(WAITING_STATUS)}
+                onChangeCheck={toggleShelterStatusTo(WAITING_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(WAITING_STATUS)}
               />
             </Section>
             <Separator className="mt-2" />
