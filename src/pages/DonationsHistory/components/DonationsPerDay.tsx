@@ -14,7 +14,7 @@ const DonationsPerDay = ({ donations, viewOption }: IDonationsPerDayProps) => {
       updatedAt: donation.updatedAt || null,
       items: donation.donationOrderSupplies,
     };
-    console.log(` Donation: `, donation);
+
     return (
       <Donation
         viewOption={viewOption}
