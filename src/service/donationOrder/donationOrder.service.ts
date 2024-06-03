@@ -1,5 +1,6 @@
 import { api } from '@/api';
 import {
+  DonateOrderStatus,
   ICreateDonateResponse,
   ICreateDonationOrderProps,
   IDonateOrderItem,
@@ -26,6 +27,13 @@ const DonationOrderServices = {
   find: async (id: string) => {
     const { data } = await api.get<IServerResponse<IDonateOrderItem>>(
       `/donation/order/${id}`
+    );
+    return data;
+  },
+  update: async (id: string, payload: { status: DonateOrderStatus }) => {
+    const { data } = await api.put<IServerResponse<IDonateOrderItem>>(
+      `/donation/order/${id}`,
+      payload
     );
     return data;
   },
