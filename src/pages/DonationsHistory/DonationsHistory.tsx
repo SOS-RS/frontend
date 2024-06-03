@@ -109,29 +109,8 @@ const DonationsHistory = () => {
       );
     });
     console.log(`segmentedDonationsDisplay `, segmentedDonationsDisplay);
-    //Instantiates a DonationsPerDay container for each day
-    // console.log(`donationsGivenPerDay `, donationsGivenPerDay);
-    // console.log(`donationsReceivedPerDay `, donationsReceivedPerDay);
-    //   const segmentedDonationsDisplay = dailyDonations[viewOption].map((day) => {
-    //     console.log(`day is `, day);
-    //     return (
-    //       <>
-    //         <h3 className="font-semibold text-lg h-full">{day}</h3>
-    //         <div className="">
-    //           <DonationsPerDay
-    //             // donations={dailyDonations[viewOption][day]}
-    //             donations={day}
-    //             viewOption={viewOption}
-    //             key={`${viewOption}-${dailyDonations[viewOption][day]}`}
-    //           />
-    //         </div>
-    //       </>
-    //     );
-    //   });
-    // }
-    // console.log('donationsPerDay ', donationsPerDay);
-    // const dailyDonatedDonations = donationsPerDay.map((donation)=>{if(donation.shelter.id != shelterId)})
     if (donationsLoading) return <LoadingScreen />;
+
     return (
       <div className="flex flex-col h-screen items-center">
         <Header
