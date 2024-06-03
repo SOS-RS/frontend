@@ -32,6 +32,16 @@ const DonationsHistory = () => {
     );
   }; //Toggles between donates items and received items
 
+  // Util to format date as per design
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  };
+
   //Groups donations per day
   const donationGroupedByDate = (donations: IDonations): IDonationsPerDay => {
     return donations.reduce<IDonationsPerDay>((acc, donation) => {
@@ -89,7 +99,7 @@ const DonationsHistory = () => {
     ).map((day) => {
       return (
         <div key={day} className="mb-4">
-          <h3 className="font-semibold text-lg">{day}</h3>
+          <h3 className="font-semibold text-lg">{formatDate(day)}</h3>
           <DonationsPerDay
             donations={dailyDonations[viewOption][day]}
             viewOption={viewOption}

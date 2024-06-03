@@ -8,7 +8,7 @@ import { IDonationProps, ViewOptions } from '../types';
 import { Chip } from '@/components';
 import { DonationOrderServices } from '@/service/donationOrder/donationOrder.service';
 import { DonateOrderStatus } from '@/service/donationOrder/types';
-import { ConfirmationDialog } from './ConfirmationDialog'; // Adjust the import path according to your file structure
+import { ConfirmationDialog } from './ConfirmationDialog';
 
 const Donation = ({ viewOption, donation }: IDonationProps) => {
   const [opened, setOpened] = useState<boolean>(false);
