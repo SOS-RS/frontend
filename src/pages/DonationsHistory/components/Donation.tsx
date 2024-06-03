@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { X, Printer, PackageCheck, CircleX } from 'lucide-react';
+import { Printer, PackageCheck, CircleX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ChevronDown, ChevronUp } from 'lucide-react';

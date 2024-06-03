@@ -28,7 +28,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   confirmLabel,
   cancelLabel,
   onConfirm,
-  onCancel,
+
   triggerLabel,
   Icon,
 }) => {
