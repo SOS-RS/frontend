@@ -10,7 +10,6 @@ export interface IDonationsInGivenDay {
   donations: IDonations;
 }
 
-// export type ViewOption = 'donated' | 'received';
 export enum ViewOptions {
   Donated = 'donated',
   Received = 'received',
