@@ -11,14 +11,20 @@ import { SupplyMeasureMap, cn } from '@/lib/utils';
 import { useDonationOrder } from '@/hooks';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
   (props, ref) => {
     const { donationOrderId, className = '', ...rest } = props;
     const { data: donation, loading } = useDonationOrder(donationOrderId);
+    const navigate = useNavigate();
 
     if (loading)
       return <Loader className="stroke-gray-500 w-6 h-6 animate-spin" />;
+
+    const handleRedirect = () => {
+      navigate(`/abrigo/${donation.shelter.id}/doacoes`);
+    };
 
     return (
       <div ref={ref} className={cn('contents', className)} {...rest}>
@@ -71,7 +77,11 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
           </div>
         </div>
         <div className="px-4 py-6 flex justify-center items-center border-t-[1px] border-border">
-          <Button className="w-full" variant="destructive">
+          <Button
+            className="w-full"
+            variant="destructive"
+            onClick={handleRedirect}
+          >
             Verificar histórico de doações
           </Button>
         </div>
