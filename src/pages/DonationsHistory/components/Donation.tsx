@@ -12,17 +12,23 @@ import { IDonationProps, ViewOptions } from '../types';
 import { Printer, PackageCheck, CircleX } from 'lucide-react';
 
 import { Chip } from '@/components';
+import { DonationOrderServices } from '@/service/donationOrder/donationOrder.service';
+import { DonateOrderStatus } from '@/service/donationOrder/types';
 
 const Donation = ({ viewOption, donation }: IDonationProps) => {
   const [opened, setOpened] = useState<boolean>(false);
+  const [status, setStatus] = useState<DonateOrderStatus>(donation.status);
   const Icon = !opened ? ChevronUp : ChevronDown;
   const btnLabel = !opened ? 'Ocultar itens doados' : 'Mostrar itens doados';
   console.log(`donationdonation `, donation);
+
   //Cretes list of all items to be displayed
   const listOfItems = donation.items.map((item: string, index) => {
     return (
       <li key={`$${index}`} className="px-3">
-        {`${item.quantity} ${item.supply.measure} ${item.supply.name}`}
+        {`${item.quantity} ${
+          item.supply.measure == 'Unit' ? 'unidade(s)' : item.supply.measure
+        } ${item.supply.name}`}
       </li>
     );
   });
@@ -38,10 +44,22 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
       return 'moreInfo';
     }
   };
-
   // Obtém o status da doação
-  const status = donation.status;
+  // let status = donation.status;
   const variant = getStatusVariant(status);
+  const handleConfirm = async () => {
+    let statusUpdate = await DonationOrderServices.update(donation.donationId, {
+      status: DonateOrderStatus.Complete,
+    });
+    setStatus(DonateOrderStatus.Complete);
+  };
+  const handleCancel = async () => {
+    let statusUpdate = await DonationOrderServices.update(donation.donationId, {
+      status: DonateOrderStatus.Canceled,
+    });
+    setStatus(DonateOrderStatus.Canceled);
+    console.log(`Canceled donation ${donation.id}`);
+  };
 
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm my-2 w-full">
@@ -76,13 +94,23 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
             Imprimir doação
           </span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex gap-1 items-center">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="flex gap-1 items-center"
+          onClick={handleCancel}
+        >
           <CircleX className="h-5 w-5 stroke-red-500" />
           <span className="text-lg font-normal text-red-500">
             Cancelar entrega
           </span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex gap-1 items-center">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="flex gap-1 items-center"
+          onClick={handleConfirm}
+        >
           <PackageCheck className="h-5 w-5 stroke-red-500" />
           <span className="text-lg font-normal text-red-500">
             Confirmar entrega
