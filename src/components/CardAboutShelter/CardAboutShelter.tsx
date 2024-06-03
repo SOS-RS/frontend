@@ -109,7 +109,11 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
       {(petsRsShelterUrl != '') ? (
           <InfoRow
             icon={<Link />}
-            label={<a target="_blank" href={petsRsShelterUrl}>Confira o abrigo em petsrs.com.br</a>}
+            label={
+              <a target="_blank" href={petsRsShelterUrl} className="font-semibold text-blue-600">
+                Confira o abrigo em petsrs.com.br
+              </a>
+            }
           />
         ) : ''}
       </div>
