@@ -1,27 +1,3 @@
-import { IDonations } from '@/pages/DonationsHistory/types';
-import { exitCode } from 'process';
-
-// export interface IUseDonationsData {
-//   shelterId: string;
-//   shelterName: string;
-//   donated: IDonations;
-//   received: IDonations;
-// }
-
-// const IUseDonationsData = {
-//   id: string;
-//   userId: string;
-//   shelterId: string;
-//   status: enum([
-//     DonationOrderStatus.Canceled,
-//     DonationOrderStatus.Complete,
-//     DonationOrderStatus.Pending,
-//   ]),
-//   supplies:
-//   createdAt: string;
-//   updatedAt: string || null;
-// }
-
 export interface IUseDonationsData {
   page: number;
   perPage: number;
@@ -47,18 +23,3 @@ export interface IDonationsData {
   createdAt: string;
   updatedAt: string;
 }
-
-// interface IDonationOrderSupplies {}
-// const CreateDonationOrderScheme = {
-//   id: true,
-//   status: true,
-//   createdAt: true,
-//   updatedAt: true,
-// }).extend({
-//   supplies: array(
-//     object({
-//       id: string;
-//       quantity: number().min(1),
-//     }),
-//   ),
-// });
