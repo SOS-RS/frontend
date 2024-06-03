@@ -13,6 +13,7 @@ import { ConfirmationDialog } from './ConfirmationDialog';
 const Donation = ({ viewOption, donation }: IDonationProps) => {
   const [opened, setOpened] = useState<boolean>(false);
   const [status, setStatus] = useState<DonateOrderStatus>(donation.status);
+  const [error, setError] = useState<string | null>(null);
 
   const getDisplayDate = (status: string): DonateOrderStatus => {
     if (status === DonateOrderStatus.Complete) {
@@ -61,20 +62,26 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
   const statusVariant = getStatusVariant(status);
 
   const handleConfirm = async () => {
-    await DonationOrderServices.update(donation.donationId, {
-      status: DonateOrderStatus.Complete,
-    });
-    setStatus(DonateOrderStatus.Complete);
+    try {
+      await DonationOrderServices.update(donation.donationId, {
+        status: DonateOrderStatus.Complete,
+      });
+      setStatus(DonateOrderStatus.Complete);
+    } catch (err) {
+      setError('Failed to confirm the delivery. Please try again.');
+    }
   };
 
   const handleCancel = async () => {
-    await DonationOrderServices.update(donation.donationId, {
-      status: DonateOrderStatus.Canceled,
-    });
-    setStatus(DonateOrderStatus.Canceled);
-    console.log(`Canceled donation ${donation.id}`);
+    try {
+      await DonationOrderServices.update(donation.donationId, {
+        status: DonateOrderStatus.Canceled,
+      });
+      setStatus(DonateOrderStatus.Canceled);
+    } catch (err) {
+      setError('Failed to cancel the delivery. Please try again.');
+    }
   };
-
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm my-2 w-full">
       <div className="flex items-center justify-between text-[#646870] font-small">
@@ -113,8 +120,8 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
           status !== DonateOrderStatus.Canceled && (
             <>
               <ConfirmationDialog
-                title="Cancelar Entrega"
-                description="Você realmente deseja cancelar esta doação? Esta ação não pode ser desfeita."
+                title="Você realmente deseja cancelar esta doação?"
+                description="Esta ação não pode ser desfeita."
                 confirmLabel="Sim"
                 cancelLabel="Não"
                 onConfirm={handleCancel}
@@ -127,10 +134,10 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
                 Icon={CircleX}
               />
               <ConfirmationDialog
-                title="Confirmar Entrega"
-                description="Você realmente deseja confirmar a entrega desta doação?"
+                title="Você realmente deseja confirmar a entrega desta doação?"
+                description="Esta ação não pode ser desfeita."
                 confirmLabel="Confirmar"
-                cancelLabel="Cancelar"
+                cancelLabel="Não"
                 onConfirm={handleConfirm}
                 onCancel={() => {}}
                 triggerLabel={

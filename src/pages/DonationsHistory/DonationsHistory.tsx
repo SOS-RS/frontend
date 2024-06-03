@@ -32,7 +32,7 @@ const DonationsHistory = () => {
     );
   }; //Toggles between donates items and received items
 
-  // Util to format date as per design
+  // Util to format date as per Figma design
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('pt-BR', {
