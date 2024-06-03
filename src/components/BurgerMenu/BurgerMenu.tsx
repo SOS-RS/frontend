@@ -21,6 +21,42 @@ import { DialogClose } from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
 import { DialogFooter } from '../ui/dialog';
 
+const MENU_ITEMS = [
+  {
+    label: 'Sobre nós',
+    link: '/sobre-nos',
+    icon: <Info className="w-5 h-5" />,
+  },
+  {
+    label: 'Cadastrar abrigo',
+    link: 'https://forms.gle/2S7L2gR529Dc8P3T9',
+    icon: <CirclePlus className="w-5 h-5" />,
+    openExternal: true,
+  },
+  {
+    label: 'Canal de Denúncias',
+    link: 'https://contatoseguro.com.br/sos_rs',
+    icon: <ShieldAlert className="w-5 h-5" />,
+    openExternal: true,
+  },
+  {
+    label: 'Como Ajudar',
+    link: 'https://www.instagram.com/reel/C613CfGuh4b',
+    icon: <CircleHelp className="w-5 h-5" />,
+    openExternal: true,
+  },
+  {
+    label: 'Política de Privacidade',
+    link: '/politica-de-privacidade',
+    icon: <Info className="w-5 h-5" />,
+  },
+  {
+    label: 'Apoiadores',
+    link: '/apoiadores',
+    icon: <HeartHandshake className="w-5 h-5" />,
+  },
+];
+
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
   const { data: partners } = usePartners();
@@ -58,46 +94,22 @@ const BurgerMenu = () => {
               <Separator />
             </Fragment>
           )}
-          <BurguerMenuItem
-            label="Sobre nós"
-            link="/sobre-nos"
-            icon={<Info className="w-5 h-5" />}
-          />
-          <BurguerMenuItem
-            label="Cadastrar abrigo"
-            link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon={<CirclePlus className="w-5 h-5" />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label="Canal de Denúncias"
-            link="https://contatoseguro.com.br/sos_rs"
-            icon={<ShieldAlert className="w-5 h-5" />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label="Como Ajudar"
-            link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon={<CircleHelp className="w-5 h-5" />}
-            openExternal={true}
-          />
-          <BurguerMenuItem
-            label="Política de Privacidade"
-            link="/politica-de-privacidade"
-            icon={<Info className="w-5 h-5" />}
-          />
-          <BurguerMenuItem
-            label="Apoiadores"
-            link="/apoiadores"
-            icon={<HeartHandshake className="w-5 h-5" />}
-          />
+          {MENU_ITEMS.map((item) => (
+            <BurguerMenuItem
+              key={item.label}
+              label={item.label}
+              link={item.link}
+              icon={item.icon}
+              openExternal={item.openExternal}
+            />
+          ))}
           <Separator />
           {partners.length > 0 && (
             <Fragment>
               <span>Parcerias</span>
-              {partners.map((partner, idx) => (
+              {partners.map((partner) => (
                 <BurguerMenuItem
-                  key={idx}
+                  key={partner.id}
                   label={partner.name}
                   link={partner.link}
                   icon={<LinkIcon className="w-4 h-4" />}
