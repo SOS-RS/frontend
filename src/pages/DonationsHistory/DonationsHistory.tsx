@@ -7,6 +7,8 @@ import { IDonations, IDonationsPerDay, ViewOptions } from './types';
 import { useDonations } from '@/hooks/useDonations';
 import { useEffect, useState } from 'react';
 import { DonationsPerDay } from './components/DonationsPerDay';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const DonationsHistory = () => {
   const navigate = useNavigate();
@@ -30,19 +32,8 @@ const DonationsHistory = () => {
         ? ViewOptions.Received
         : ViewOptions.Donated
     );
-  }; //Toggles between donates items and received items
-
-  // Util to format date as per Figma design
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    }).format(date);
   };
 
-  //Groups donations per day
   const donationGroupedByDate = (donations: IDonations): IDonationsPerDay => {
     return donations.reduce<IDonationsPerDay>((acc, donation) => {
       const date = donation.createdAt.split('T')[0];
@@ -56,7 +47,6 @@ const DonationsHistory = () => {
     }, {});
   };
 
-  // Filters donations into received and given based on shelterId
   const filterDonationsByCase = (
     donations: IDonationsPerDay,
     shelterId: string
@@ -93,13 +83,15 @@ const DonationsHistory = () => {
       donated: donationsGivenPerDay,
       received: donationsReceivedPerDay,
     };
-    // Instantiates a DonationsPerDay container for each day
+
     const segmentedDonationsDisplay = Object.keys(
       dailyDonations[viewOption]
     ).map((day) => {
       return (
         <div key={day} className="mb-4">
-          <h3 className="font-semibold text-lg">{formatDate(day)}</h3>
+          <h3 className="font-semibold text-lg">
+            {format(day, "dd 'de' MMMM yyyy ", { locale: ptBR })}
+          </h3>
           <DonationsPerDay
             donations={dailyDonations[viewOption][day]}
             viewOption={viewOption}
