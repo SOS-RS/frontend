@@ -29,6 +29,7 @@ import TitleSection from './TitleSection';
 import Section from './Section';
 import CheckBoxFilter from './CheckBoxFilter';
 
+const BOOLEAN_AS_STRING_FROM_QUERY_URL = "true";
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
   string
@@ -166,12 +167,15 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue]
   );
 
-  const toggleShelterStatusTo = (status: ShelterAvailabilityStatus) => (ev: React.ChangeEvent<HTMLInputElement>) => {
-    handleToggleShelterStatus(ev.target.checked, status)
-  };
+  const toggleShelterStatusTo = (status: ShelterAvailabilityStatus) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
+      handleToggleShelterStatus(ev.target.checked, status);
 
   const someShelterStatusEqualTo = (status: ShelterAvailabilityStatus): boolean => 
     values.shelterStatus.some((s) => s.value === status);
+  
+  const ensureBooleanValueTo = (data: string): boolean =>
+    data === BOOLEAN_AS_STRING_FROM_QUERY_URL;
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
@@ -182,12 +186,12 @@ const Filter = (props: IFilterProps) => {
         <CheckBoxFilter
           label="Possui chave pix"
           onChangeCheck={(ev) => handleToggleTo('pix', ev.target.checked)}
-          defaultChecked={values.pix === "true" ? true : false}
+          defaultChecked={ensureBooleanValueTo(values.pix)}
         />
         <CheckBoxFilter
           label="Possui contato telefônico"
           onChangeCheck={(ev) => handleToggleTo('contact', ev.target.checked)}
-          defaultChecked={values.contact === "true" ? true : false}
+          defaultChecked={ensureBooleanValueTo(values.contact)}
         />
       </Section>
     );
