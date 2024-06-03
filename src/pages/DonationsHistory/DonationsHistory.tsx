@@ -34,7 +34,6 @@ const DonationsHistory = () => {
 
   //Groups donations per day
   const donationGroupedByDate = (donations: IDonations): IDonationsPerDay => {
-    console.log(`donations: `, donations);
     return donations.reduce<IDonationsPerDay>((acc, donation) => {
       const date = donation.createdAt.split('T')[0];
 
@@ -85,30 +84,21 @@ const DonationsHistory = () => {
       received: donationsReceivedPerDay,
     };
     // Instantiates a DonationsPerDay container for each day
-    console.log('givenDonations ', donationsGivenPerDay);
-    console.log('receivedDonations ', donationsReceivedPerDay);
     const segmentedDonationsDisplay = Object.keys(
       dailyDonations[viewOption]
     ).map((day) => {
-      console.log(
-        `dailyDonations[viewOption][day] `,
-        dailyDonations[viewOption][day]
-      );
       return (
-        <div key={day}>
-          <h3 className="font-semibold text-lg h-full">{day}</h3>
-          <div className="">
-            <DonationsPerDay
-              donations={dailyDonations[viewOption][day]}
-              // donations={day}
-              viewOption={viewOption}
-              key={`${viewOption}-${day}`}
-            />
-          </div>
+        <div key={day} className="mb-4">
+          <h3 className="font-semibold text-lg">{day}</h3>
+          <DonationsPerDay
+            donations={dailyDonations[viewOption][day]}
+            viewOption={viewOption}
+            key={`${viewOption}-${day}`}
+          />
         </div>
       );
     });
-    console.log(`segmentedDonationsDisplay `, segmentedDonationsDisplay);
+
     if (donationsLoading) return <LoadingScreen />;
 
     return (
@@ -134,7 +124,7 @@ const DonationsHistory = () => {
           </div>
           <div className="flex p-0 m-0 gap-4">
             <div
-              className={`flex items-center  justify-center p-0 m-0 border-b-2 border-transparent ${
+              className={`flex items-center justify-center p-0 m-0 border-b-2 border-transparent ${
                 viewOption === ViewOptions.Donated ? 'border-red-500' : ''
               }`}
               onClick={() => toggleViewOption()}
@@ -144,7 +134,7 @@ const DonationsHistory = () => {
               </h3>
             </div>
             <div
-              className={`flex items-center  justify-center p-0 m-0 border-b-2 border-transparent ${
+              className={`flex items-center justify-center p-0 m-0 border-b-2 border-transparent ${
                 viewOption === ViewOptions.Received ? 'border-red-500' : ''
               }`}
               onClick={() => toggleViewOption()}
