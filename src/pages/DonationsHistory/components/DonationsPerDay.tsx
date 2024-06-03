@@ -2,7 +2,6 @@ import { IDonationsPerDayProps } from '../types';
 import { Donation } from './Donation';
 
 const DonationsPerDay = ({ donations, viewOption }: IDonationsPerDayProps) => {
-  console.log(`donations `, donations);
   const donationsOfDay = donations.map((donation) => {
     donation = {
       donationId: donation.id,
@@ -15,16 +14,16 @@ const DonationsPerDay = ({ donations, viewOption }: IDonationsPerDayProps) => {
       updatedAt: donation.updatedAt || null,
       items: donation.donationOrderSupplies,
     };
+    console.log(` Donation: `, donation);
     return (
       <Donation
         viewOption={viewOption}
         donation={donation}
-        key={`${viewOption}-${donation.id}`}
+        key={`${viewOption}-${donation.donationId}`}
       />
     );
   });
-  console.log(`viewOption in donationsperDay `, viewOption);
-  console.log(`donationsOfDay `, donationsOfDay);
+
   return (
     <div className="flex items-center">
       <div className="text-[#2f2f2f] font-semibold text-2xl"></div>

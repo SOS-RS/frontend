@@ -1,28 +1,43 @@
-/*
- * - [ ] Needs to adapt field "Doação para" to include "Doação de" when "Recebido" is selected;
- * - [ ] Needs refactoring when oficial data structure comes is;
- *
- */
-
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { X, Printer, PackageCheck, CircleX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useState } from 'react';
 import { IDonationProps, ViewOptions } from '../types';
-import { Printer, PackageCheck, CircleX } from 'lucide-react';
-
 import { Chip } from '@/components';
 import { DonationOrderServices } from '@/service/donationOrder/donationOrder.service';
 import { DonateOrderStatus } from '@/service/donationOrder/types';
+import { ConfirmationDialog } from './ConfirmationDialog'; // Adjust the import path according to your file structure
 
 const Donation = ({ viewOption, donation }: IDonationProps) => {
   const [opened, setOpened] = useState<boolean>(false);
   const [status, setStatus] = useState<DonateOrderStatus>(donation.status);
+
+  const getDisplayDate = (status: string): DonateOrderStatus => {
+    if (status === DonateOrderStatus.Complete) {
+      return `Entregue no dia ${donation.createdAt.split('T')[0]} às
+      ${donation.createdAt.split('T')[1].slice(0, -5)}`;
+    } else if (status === DonateOrderStatus.Pending) {
+      return `Criado no dia ${donation.createdAt.split('T')[0]} às
+      ${donation.createdAt.split('T')[1].slice(0, -5)}`;
+    } else if (status === DonateOrderStatus.Canceled) {
+      return `Cancelado no dia ${donation.createdAt.split('T')[0]} às
+      ${donation.createdAt.split('T')[1].slice(0, -5)}`;
+    }
+  };
+
+  const [displayDate, setDisplayDate] = useState(getDisplayDate(status));
+
+  useEffect(() => {
+    const displayDate = getDisplayDate(status);
+    setDisplayDate(displayDate);
+  }, [status]);
+
   const Icon = !opened ? ChevronUp : ChevronDown;
   const btnLabel = !opened ? 'Ocultar itens doados' : 'Mostrar itens doados';
-  console.log(`donationdonation `, donation);
 
-  //Cretes list of all items to be displayed
+  //Creates list of all items to be displayed
   const listOfItems = donation.items.map((item: string, index) => {
     return (
       <li key={`$${index}`} className="px-3">
@@ -33,28 +48,27 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
     );
   });
 
-  const getStatusVariant = (
-    status: string
-  ): 'success' | 'danger' | 'moreInfo' => {
-    if (status === 'Entregue') {
-      return 'success';
-    } else if (status === 'Pendente') {
-      return 'danger';
+  const getStatusVariant = (status: string) => {
+    if (status === DonateOrderStatus.Complete) {
+      return { label: 'Entregue', color: '#A9CB9D' };
+    } else if (status === DonateOrderStatus.Pending) {
+      return { label: 'Pendente', color: '#F69F9D' };
     } else {
-      return 'moreInfo';
+      return { label: 'Cancelado', color: '#D3D3D3' };
     }
   };
-  // Obtém o status da doação
-  // let status = donation.status;
-  const variant = getStatusVariant(status);
+
+  const statusVariant = getStatusVariant(status);
+
   const handleConfirm = async () => {
-    let statusUpdate = await DonationOrderServices.update(donation.donationId, {
+    await DonationOrderServices.update(donation.donationId, {
       status: DonateOrderStatus.Complete,
     });
     setStatus(DonateOrderStatus.Complete);
   };
+
   const handleCancel = async () => {
-    let statusUpdate = await DonationOrderServices.update(donation.donationId, {
+    await DonationOrderServices.update(donation.donationId, {
       status: DonateOrderStatus.Canceled,
     });
     setStatus(DonateOrderStatus.Canceled);
@@ -65,16 +79,17 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm my-2 w-full">
       <div className="flex items-center justify-between text-[#646870] font-small">
         {viewOption == ViewOptions.Received ? 'Doação para' : 'Doação de'}
-        <Chip label={status ?? 'Pendente'} variant={variant} />
+        <Chip
+          label={statusVariant.label}
+          style={{ backgroundColor: statusVariant.color }}
+        />
       </div>
       <div className="text-[#2f2f2f] font-semibold text-xl">
         {viewOption == ViewOptions.Received
           ? donation.donatorName
           : donation.shelterName}
       </div>
-      <div className="text-[#646870] font-medium">
-        Criada às {donation.createdAt.split('T')[0]}
-      </div>
+      <div className="text-[#646870] font-medium">{displayDate}</div>
       <div>
         <Button
           variant="ghost"
@@ -94,28 +109,39 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
             Imprimir doação
           </span>
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="flex gap-1 items-center"
-          onClick={handleCancel}
-        >
-          <CircleX className="h-5 w-5 stroke-red-500" />
-          <span className="text-lg font-normal text-red-500">
-            Cancelar entrega
-          </span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="flex gap-1 items-center"
-          onClick={handleConfirm}
-        >
-          <PackageCheck className="h-5 w-5 stroke-red-500" />
-          <span className="text-lg font-normal text-red-500">
-            Confirmar entrega
-          </span>
-        </Button>
+        {status !== DonateOrderStatus.Complete &&
+          status !== DonateOrderStatus.Canceled && (
+            <>
+              <ConfirmationDialog
+                title="Cancelar Entrega"
+                description="Você realmente deseja cancelar esta doação? Esta ação não pode ser desfeita."
+                confirmLabel="Sim"
+                cancelLabel="Não"
+                onConfirm={handleCancel}
+                onCancel={() => {}}
+                triggerLabel={
+                  <span className="text-lg font-normal text-red-500">
+                    Cancelar entrega
+                  </span>
+                }
+                Icon={CircleX}
+              />
+              <ConfirmationDialog
+                title="Confirmar Entrega"
+                description="Você realmente deseja confirmar a entrega desta doação?"
+                confirmLabel="Confirmar"
+                cancelLabel="Cancelar"
+                onConfirm={handleConfirm}
+                onCancel={() => {}}
+                triggerLabel={
+                  <span className="text-lg font-normal text-red-500">
+                    Confirmar entrega
+                  </span>
+                }
+                Icon={PackageCheck}
+              />
+            </>
+          )}
       </div>
     </Card>
   );
