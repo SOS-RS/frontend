@@ -1,57 +1,54 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw, LogOutIcon, PlusIcon } from 'lucide-react';
+import { RotateCw} from 'lucide-react';
 import qs from 'qs';
 
-import { Footer, Header } from '@/components';
+import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
-import { SessionContext } from '@/contexts';
-import { Filter } from './components/Filter';
-import { ShelterListView } from './components/ShelterListView';
+import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
-  priority: null,
+  priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
   shelterStatus: [],
+  cities: [],
+};
+
+const loadFilterData = (): IFilterFormProps => {
+  const storedFilterData = JSON.parse(localStorage.getItem('filter-data') || '{}');
+  return { ...initialFilterData, ...storedFilterData, ...qs.parse(new URLSearchParams(window.location.search).toString()) };
+};
+
+const saveFilterData = (filterData: IFilterFormProps) => {
+  localStorage.setItem('filter-data', JSON.stringify(filterData));
 };
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
-  const {
-    loading: loadingSession,
-    refreshSession,
-    session,
-  } = useContext(SessionContext);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>({
-    ...initialFilterData,
-    ...qs.parse(new URLSearchParams(window.location.search).toString()),
-  });
+  const [filterData, setFilterData] = useState<IFilterFormProps>(loadFilterData());
 
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
-      callback: (v) => {
-        const params: Record<string, string> = {
-          search: v ? qs.stringify(filterData) : '',
-        };
-        setSearchParams(params.search);
-        refresh({
-          params: params,
-        });
+      callback: () => {
+        const params = new URLSearchParams(qs.stringify(filterData));
+        setSearchParams(params);
+        refresh({ params });
       },
     },
-    []
+    [filterData]
   );
 
   const clearSearch = useCallback(() => {
     setSearch('');
     setFilterData(initialFilterData);
+    localStorage.removeItem('filter-data');
     setSearchParams('');
     refresh();
   }, [refresh, setSearch, setSearchParams]);
@@ -61,19 +58,26 @@ const Home = () => {
     [shelters.page, shelters.perPage, shelters.count]
   );
 
+  const factorySearchArgs = useCallback((values: IFilterFormProps) => {
+    const searchQueryArgs = {
+      search: values.search,
+      priorities: values.priorities,
+      supplyCategoryIds: values.supplyCategoryIds,
+      supplyIds: values.supplyIds,
+      shelterStatus: values.shelterStatus,
+      cities: values.cities,
+    };
+    return searchQueryArgs;
+  }, []);
+
   const onSubmitFilterForm = useCallback(
     (values: IFilterFormProps) => {
       setOpenModal(false);
       setFilterData(values);
-      const searchQuery = qs.stringify(values, {
-        skipNulls: true,
-      });
+      const searchQuery = qs.stringify(values, { skipNulls: true });
       setSearchParams(searchQuery);
-      refresh({
-        params: {
-          search: searchQuery,
-        },
-      });
+      saveFilterData(values);
+      refresh({ params: { search: searchQuery } });
     },
     [refresh, setSearchParams]
   );
@@ -83,16 +87,18 @@ const Home = () => {
       ...shelters.filters,
       page: shelters.page + 1,
       perPage: shelters.perPage,
-      search: qs.stringify(filterData),
+      search: qs.stringify(factorySearchArgs(filterData)),
     };
+    refresh({ params }, true);
+  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
 
-    refresh(
-      {
-        params: params,
-      },
-      true
-    );
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
+  useEffect(() => {
+    if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0){
+      setSearchParams(qs.stringify(filterData));
+      refresh({ params: { search: qs.stringify(filterData) } });
+    }
+    saveFilterData(filterData);
+  }, [filterData, refresh, setSearchParams]);
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -106,24 +112,9 @@ const Home = () => {
       )}
       <Header
         title="SOS Rio Grande do Sul"
+        startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
-            {session && (
-              <h3 className="text-white font-thin">
-                Bem vindo, {session.name}
-              </h3>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white gap-1 flex flex-gap items-center [&_svg]:hover:stroke-black"
-              onClick={() =>
-                window.open('https://forms.gle/2S7L2gR529Dc8P3T9', '_blank')
-              }
-            >
-              <PlusIcon className="h-5 w-5 stroke-white" />
-              Cadastrar abrigo
-            </Button>
             <Button
               loading={loading}
               variant="ghost"
@@ -133,20 +124,6 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-            {session && (
-              <Button
-                loading={loadingSession}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  refreshSession();
-                }}
-                className="disabled:bg-red-500 hover:bg-red-400"
-              >
-                <LogOutIcon size={20} className="stroke-white" />
-              </Button>
-            )}
           </div>
         }
       />
@@ -154,11 +131,27 @@ const Home = () => {
         loading={loading}
         count={shelters.count}
         data={shelters.results}
+        filterData={filterData}
         onFetchMoreData={handleFetchMore}
         searchValue={filterData.search}
         onSearchValueChange={(v) => {
           setFilterData((prev) => ({ ...prev, search: v }));
           setSearch(v);
+        }}
+        onCitiesChange={(v) => {
+          setFilterData((prev) => ({ ...prev, cities: v }));
+          const searchQuery = qs.stringify(
+            { ...filterData, cities: v },
+            {
+              skipNulls: true,
+            }
+          );
+          setSearchParams(searchQuery);
+          refresh({
+            params: {
+              search: searchQuery,
+            },
+          });
         }}
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}

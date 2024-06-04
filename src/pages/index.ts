@@ -1,12 +1,13 @@
 import { SignIn } from './SignIn';
-
 import { Home } from './Home';
 import { Shelter } from './Shelter';
 import { EditShelterSupply } from './EditShelterSupply';
 import { CreateSupply } from './CreateSupply';
 import { CreateShelter } from './CreateShelter';
 import { UpdateShelter } from './UpdateShelter';
-import { Filter } from './Home/components/Filter';
+import { PrivacyPolicy } from './PrivacyPolicy';
+import { AboutUs } from './AboutUs';
+import { Supporters } from './Supporters';
 
 export {
   SignIn,
@@ -16,5 +17,7 @@ export {
   CreateSupply,
   CreateShelter,
   UpdateShelter,
-  Filter
+  PrivacyPolicy,
+  AboutUs,
+  Supporters,
 };

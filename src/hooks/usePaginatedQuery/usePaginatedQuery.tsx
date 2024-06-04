@@ -6,7 +6,10 @@ import { PaginatedQueryPath } from './paths';
 import { IPaginatedResponse } from './types';
 import { IServerResponse } from '@/types';
 
-function usePaginatedQuery<T = any>(path: string | PaginatedQueryPath) {
+function usePaginatedQuery<T = any>(
+  path: string | PaginatedQueryPath,
+  defaultConfig: AxiosRequestConfig<any> = {}
+) {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IPaginatedResponse<T>>({
     count: 0,
@@ -16,14 +19,17 @@ function usePaginatedQuery<T = any>(path: string | PaginatedQueryPath) {
   });
 
   const refresh = useCallback(
-    (config?: AxiosRequestConfig<any>) => {
+    (config: AxiosRequestConfig<any> = {}) => {
       setLoading(true);
       api
-        .get<IServerResponse<IPaginatedResponse<T>>>(path, config)
+        .get<IServerResponse<IPaginatedResponse<T>>>(path, {
+          ...defaultConfig,
+          ...config,
+        })
         .then(({ data }) => setData(data.data))
         .finally(() => setLoading(false));
     },
-    [path]
+    [defaultConfig, path]
   );
 
   useEffect(() => {

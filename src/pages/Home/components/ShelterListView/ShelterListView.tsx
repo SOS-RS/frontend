@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { CircleAlert, ListFilter, Loader } from 'lucide-react';
+import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
   Alert,
@@ -17,6 +17,7 @@ import { LatLngExpression } from 'leaflet';
 import { Map } from '@/components/Map';
 import { UserLocationControl } from '@/components/UserLocationControl';
 import { CircleMarker, Marker, Popup } from 'react-leaflet';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -27,10 +28,12 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
+      onCitiesChange,
       onFetchMoreData,
       className = '',
       onOpenModal,
       onClearSearch,
+      filterData,
       ...rest
     } = props;
 
@@ -77,7 +80,10 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Abrigos disponíveis ({count})
+          {searchParams.toString()
+            ? `Abrigos encontrados (${count})`
+            : `Total de abrigos  (${count})`
+          }
         </h1>
         <Alert
           description="Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações."
@@ -87,12 +93,23 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         />
         <SearchInput
           value={searchValue}
-          onChange={(ev) =>
-            onSearchValueChange
-              ? onSearchValueChange(ev.target.value ?? '')
-              : undefined
+          onChange={(value) =>
+            onSearchValueChange ? onSearchValueChange(value) : undefined
           }
         />
+        <div className="flex flex-wrap gap-1 items-center">
+          {filterData.cities?.map((item) => (
+            <div
+              className="flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200"
+              key={item}
+              onClick={() =>
+                onCitiesChange?.(filterData.cities.filter((it) => it !== item))
+              }
+            >
+              <span className="pr-1">{item}</span> <X className="h-4 w-4" />
+            </div>
+          ))}
+        </div>
         <div className="flex flex-row">
           <Button
             variant="ghost"
@@ -117,7 +134,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
-            <Loader className="justify-self-center self-center w-5 h-5 animate-spin" />
+            <LoadingSkeleton amountItems={4} />
           ) : data.length === 0 ? (
             <NoFoundSearch />
           ) : (
@@ -148,10 +165,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
                 </Map>
               </div>
               {data.map((s, idx) => (
-                <ShelterListItem
-                  key={idx}
-                  data={s}
-                />
+                <ShelterListItem key={idx} data={s} />
               ))}
               {hasMoreItems ? (
                 <Button
