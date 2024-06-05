@@ -22,10 +22,6 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
     if (loading)
       return <Loader className="stroke-gray-500 w-6 h-6 animate-spin" />;
 
-    const handleRedirect = () => {
-      navigate(`/abrigo/${donation.shelter.id}/doacoes`);
-    };
-
     return (
       <div ref={ref} className={cn('contents', className)} {...rest}>
         <SheetHeader className="px-4">
@@ -80,7 +76,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
           <Button
             className="w-full"
             variant="destructive"
-            onClick={handleRedirect}
+            onClick={() => navigate('/doacoes')}
           >
             Verificar histórico de doações
           </Button>

@@ -10,6 +10,7 @@ import {
   ShieldAlert,
   X,
 } from 'lucide-react';
+import clsx from 'clsx';
 
 import { SessionServices } from '@/service';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -17,9 +18,8 @@ import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
-import { DialogClose } from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
-import { DialogFooter } from '../ui/dialog';
+import { DialogClose, DialogFooter } from '../ui/dialog';
 
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
@@ -62,6 +62,12 @@ const BurgerMenu = () => {
             label="Sobre nós"
             link="/sobre-nos"
             icon={<Info className="w-5 h-5" />}
+          />
+          <BurguerMenuItem
+            label="Minhas Doações"
+            link="/doacoes"
+            icon={<HeartHandshake className="w-5 h-5" />}
+            className={clsx({ hidden: !session })}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"

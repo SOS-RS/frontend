@@ -1,9 +1,11 @@
 import { ShelterCategory, SupplyMeasure } from '@/hooks/useShelter/types';
 import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
+import { ShelterAvailabilityStatus } from '@/pages/Home/components/Filter/types';
 import {
   ShelterTagInfo,
   ShelterTagType,
 } from '@/pages/Home/components/ShelterListItem/types';
+import { DonateOrderStatus } from '@/service/donationOrder/types';
 import { SupplyPriority } from '@/service/supply/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -158,6 +160,19 @@ const SupplyMeasureMap: Record<SupplyMeasure, string> = {
   Unit: 'un',
 };
 
+const ShelterAvailabilityStatusMap: Record<ShelterAvailabilityStatus, string> =
+  {
+    available: 'Abrigo Disponivel',
+    unavailable: 'Abrigo Indisponivel',
+    waiting: 'Sem informação de disponibilidade',
+  };
+
+const DonationStatusMap: Record<DonateOrderStatus, string> = {
+  [DonateOrderStatus.Canceled]: 'Cancelado',
+  [DonateOrderStatus.Pending]: 'Pendente',
+  [DonateOrderStatus.Complete]: 'Entregue',
+};
+
 export {
   cn,
   getAvailabilityProps,
@@ -169,4 +184,6 @@ export {
   normalizedCompare,
   checkIsNull,
   SupplyMeasureMap,
+  ShelterAvailabilityStatusMap,
+  DonationStatusMap,
 };

@@ -17,6 +17,7 @@ import { BurgerMenu } from './BurgerMenu';
 import { BackToTop } from './BackToTop';
 import { DonationCartIcon } from './DonationCartIcon';
 import { DonationCart } from './DonationCart';
+import { Loader } from './Loader';
 
 export {
   LoadingScreen,
@@ -38,4 +39,5 @@ export {
   BackToTop,
   DonationCartIcon,
   DonationCart,
+  Loader,
 };
