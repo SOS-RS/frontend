@@ -120,9 +120,12 @@ const Home = () => {
               variant="ghost"
               size="sm"
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
+              className="group disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
+              <span className="absolute pointer-events-none -right-20 top-9 z-20 mt-3 -translate-x-1/2 whitespace-nowrap duration-900 rounded bg-black px-4 py-[6px] text-sm font-semibold text-white opacity-0 group-hover:opacity-100">
+                Atualizar abrigos disponíveis
+              </span>
             </Button>
           </div>
         }
