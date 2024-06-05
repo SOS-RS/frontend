@@ -14,7 +14,7 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
       className,
       error,
       helperText,
-      value = '',
+      value,
       ...rest
     } = props;
 

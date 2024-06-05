@@ -12,6 +12,7 @@ import {
   PrivacyPolicy,
   AboutUs,
   Supporters,
+  DonationsHistory,
 } from '@/pages';
 
 const Routes = () => {
@@ -26,6 +27,7 @@ const Routes = () => {
         element={<CreateSupply />}
       />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/abrigo/:shelterId/doacoes" element={<DonationsHistory />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />

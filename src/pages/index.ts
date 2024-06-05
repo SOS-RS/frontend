@@ -10,6 +10,7 @@ import { PrivacyPolicy } from './PrivacyPolicy';
 import { AboutUs } from './AboutUs';
 import { Filter } from './Home/components';
 import { Supporters } from './Supporters';
+import { DonationsHistory } from './DonationsHistory';
 
 export {
   SignIn,
@@ -24,4 +25,5 @@ export {
   PrivacyPolicy,
   AboutUs,
   Supporters,
+  DonationsHistory,
 };

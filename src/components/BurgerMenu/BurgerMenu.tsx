@@ -8,6 +8,7 @@ import {
   LinkIcon,
   Menu,
   ShieldAlert,
+  X,
 } from 'lucide-react';
 
 import { SessionServices } from '@/service';
@@ -16,6 +17,9 @@ import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
+import { DialogClose } from '@radix-ui/react-dialog';
+import { Button } from '../ui/button';
+import { DialogFooter } from '../ui/dialog';
 
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
@@ -37,7 +41,14 @@ const BurgerMenu = () => {
       <SheetTrigger>
         <Menu color="white" className="ml-2 mr-2" />
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col">
+      <SheetContent side="left" className="pt-[96px] flex flex-col z-[90]">
+        <DialogFooter className="absolute top-16 right-4">
+          <DialogClose asChild>
+            <Button type="button" variant="ghost">
+              <X className="stroke-muted-foreground" />
+            </Button>
+          </DialogClose>
+        </DialogFooter>
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
