@@ -3,7 +3,6 @@ import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import ReactSelect from 'react-select';
-
 import {
   Authenticated,
   Header,
@@ -24,6 +23,8 @@ import { cn } from '@/lib/utils';
 import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
 import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
 import { ShelterCategory } from '@/hooks/useShelter/types';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -46,6 +47,8 @@ const UpdateShelter = () => {
     initialValues: {
       shelteredPeople: shelter.shelteredPeople,
       petFriendly: shelter.petFriendly ?? false,
+      shelteredPets: shelter.shelteredPets ?? 0,
+      petsCapacity: shelter.petsCapacity ?? 0,
       verified: shelter.verified,
       address: shelter.address ?? '',
       capacity: shelter.capacity,
@@ -64,6 +67,7 @@ const UpdateShelter = () => {
     validateOnMount: false,
     validationSchema: session ? FullUpdateShelterSchema : UpdateShelterSchema,
     onSubmit: async (values) => {
+
       try {
         if (isAuthenticated)
           await ShelterServices.adminUpdate(shelterId, values);
@@ -195,16 +199,15 @@ const UpdateShelter = () => {
                 error={!!errors.contact}
                 helperText={errors.contact}
               />
-              {shelter.category === ShelterCategory.Shelter && (
-                <TextField
-                  type="number"
-                  label="Capacidade total do abrigo"
-                  {...getFieldProps('capacity')}
-                  error={!!errors.capacity}
-                  helperText={errors.capacity}
-                />
-              )}
+              <TextField
+                type="number"
+                label="Capacidade total do abrigo"
+                {...getFieldProps('capacity')}
+                error={!!errors.capacity}
+                helperText={errors.capacity}
+              />
             </Authenticated>
+
             {shelter.category === ShelterCategory.Shelter && (
               <Fragment>
                 <TextField
@@ -214,17 +217,49 @@ const UpdateShelter = () => {
                   error={!!errors.shelteredPeople}
                   helperText={errors.shelteredPeople}
                 />
-                <SelectField
-                  label="O abrigo aceita animais"
-                  value={values.petFriendly ? 'true' : 'false'}
-                  onSelectChange={(v) =>
-                    setFieldValue('petFriendly', v === 'true')
-                  }
-                  options={[
-                    { value: 'true', label: 'Sim' },
-                    { value: 'false', label: 'Não' },
-                  ]}
-                />
+                <Authenticated role="User">
+                  <div className="flex items-center space-x-2">
+                    <Switch id="petFriendly"
+                      {...getFieldProps('petFriendly')}
+                      className='data-[state=checked]:bg-blue-500'
+                      checked={values.petFriendly}
+                      onCheckedChange={(checked: boolean) => {
+                        setFieldValue('petFriendly', checked);
+                        if (!checked) {
+                          setFieldValue('petsCapacity', 0);
+                          setFieldValue('shelteredPets', 0);
+                        }
+                      }}
+                    />
+                    <Label htmlFor=""
+                      className={cn(values.petFriendly && 'text-blue-500')}
+                    >
+                      Acolhe pets
+                      </Label>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4 w-full">
+                    <TextField
+                      type="number"
+                      label="Capacidade de ocupação animal"
+                      placeholder="Insira quantos animais pode abrigar"
+                      {...getFieldProps('petsCapacity')}
+                      error={!!errors.petsCapacity}
+                      helperText={errors.petsCapacity}
+                      disabled={!values.petFriendly}
+                      className='disabled:text-opacity-50'
+                    />
+                    <TextField
+                      type="number"
+                      label="Ocupação animal atual"
+                      placeholder="Insira quantos animais está abrigando"
+                      {...getFieldProps('shelteredPets')}
+                      error={!!errors.shelteredPets}
+                      helperText={errors.shelteredPets}
+                      disabled={!values.petFriendly}
+                    />
+                  </div>
+                </Authenticated>
+
                 <Authenticated role="Staff">
                   <SelectField
                     label="O abrigo é verificado"
@@ -240,6 +275,7 @@ const UpdateShelter = () => {
                 </Authenticated>
               </Fragment>
             )}
+
             <Authenticated role="Staff">
               <TextField
                 label="Pix"
@@ -248,15 +284,15 @@ const UpdateShelter = () => {
                 helperText={errors.pix}
               />
             </Authenticated>
-          </div>
-          <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
-            <Button
-              loading={isSubmitting}
-              type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
-            >
-              Atualizar
-            </Button>
+            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+              <Button
+                loading={isSubmitting}
+                type="submit"
+                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              >
+                Atualizar
+              </Button>
+            </div>
           </div>
         </form>
       </div>

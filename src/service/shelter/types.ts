@@ -8,7 +8,9 @@ export interface IShelter {
   streetNumber?: string | null;
   zipCode?: string;
   address?: string;
-  petFriendly?: boolean | null;
+  petFriendly?: boolean;
+  shelteredPets?: number | null;
+  petsCapacity?: number | null;
   verified: boolean;
   shelteredPeople?: number | null;
   capacity?: number | null;

@@ -37,24 +37,38 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
         )}
         {shelter.category === ShelterCategory.Shelter && (
           <Fragment>
-            <InfoRow
-              icon={<PawPrint />}
-              label={
-                check(shelter.petFriendly) ? (
-                  shelter.petFriendly ? (
-                    <p>
-                      O abrigo <b>aceita</b> animais
-                    </p>
-                  ) : (
-                    <p>
-                      O abrigo <b>não</b> aceita animais
-                    </p>
-                  )
-                ) : (
-                  <b>Não informado se aceita animais</b>
-                )
-              }
-            />
+            {shelter.petFriendly && (
+              <>
+                <InfoRow
+                  icon={<PawPrint />}
+                  label={
+                    check(shelter.petFriendly) ? (
+                      shelter.petFriendly ? (
+                        <p>
+                          O abrigo <b>aceita</b> animais
+                        </p>
+                      ) : (
+                        <p>
+                          O abrigo <b>não</b> aceita animais
+                        </p>
+                      )
+                    ) : (
+                      <b>Não informado se aceita animais</b>
+                    )
+                  }
+                />
+                <InfoRow
+                  icon={<PawPrint />}
+                  label="Vagas pet disponíveis: "
+                  value={
+                    check(shelter.shelteredPets)
+                      ? `${shelter.shelteredPets} de ${shelter.petsCapacity}`
+                      : 'Não informado'
+                  }
+                />
+              </>
+            )}
+
             <InfoRow
               icon={<HandHeart />}
               label="Pessoas abrigadas:"
@@ -64,6 +78,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                   : 'Não informado'
               }
             />
+
             <InfoRow
               icon={<UsersRound />}
               label="Capacidade do abrigo:"
@@ -73,22 +88,22 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
                   : 'Não informado'
               }
             />
+            <InfoRow
+              icon={<Smartphone />}
+              label="Contato:"
+              value={
+                check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+              }
+            />
+
+            <InfoRow
+              icon={<Landmark />}
+              label="Chave Pix:"
+              value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+              clipboardButton={check(shelter.pix)}
+            />
           </Fragment>
         )}
-        <InfoRow
-          icon={<Smartphone />}
-          label="Contato:"
-          value={
-            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
-          }
-          clipboardButton={check(shelter.contact)}
-        />
-        <InfoRow
-          icon={<Landmark />}
-          label="Chave Pix:"
-          value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
-          clipboardButton={check(shelter.pix)}
-        />
       </div>
     </Card>
   );
