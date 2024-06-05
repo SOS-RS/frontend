@@ -25,7 +25,11 @@ import { priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
+import TitleSection from './TitleSection';
+import Section from './Section';
+import CheckBoxFilter from './CheckBoxFilter';
 
+const BOOLEAN_AS_STRING_FROM_QUERY_URL = "true";
 const ShelterAvailabilityStatusMapped: Record<
   ShelterAvailabilityStatus,
   string
@@ -35,6 +39,11 @@ const ShelterAvailabilityStatusMapped: Record<
   waiting: 'Sem informação de disponibilidade',
 };
 
+const shelterAvailabilityStatus = Object.keys(ShelterAvailabilityStatusMapped);
+const AVAILABLE_STATUS = shelterAvailabilityStatus[0] as ShelterAvailabilityStatus;
+const UNAVAILABLE_STATUS = shelterAvailabilityStatus[1] as ShelterAvailabilityStatus;
+const WAITING_STATUS = shelterAvailabilityStatus[2] as ShelterAvailabilityStatus;
+
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
     priority === `${SupplyPriority.NotNeeded}`
@@ -42,6 +51,9 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
       : { ...prev, [priority]: label },
   {} as Record<SupplyPriority, string>
 );
+
+const ensureTrueAsString = (data: string): string =>
+  data === "true" ? data : "";
 
 const Filter = (props: IFilterProps) => {
   const { data, onClose, onSubmit, open } = props;
@@ -82,6 +94,8 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
+        pix: ensureTrueAsString(data.pix),
+        contact: ensureTrueAsString(data.contact),
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -98,6 +112,8 @@ const Filter = (props: IFilterProps) => {
           supplies,
           supplyCategories,
           cities,
+          pix,
+          contact,
         } = values;
         onSubmit({
           priorities: priorities.map((p) => p.value),
@@ -106,6 +122,8 @@ const Filter = (props: IFilterProps) => {
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
           cities,
+          pix,
+          contact,
         });
       },
     }
@@ -142,7 +160,42 @@ const Filter = (props: IFilterProps) => {
     [setFieldValue, values.shelterStatus]
   );
 
+  const handleToggleTo = useCallback(
+    (data: string, checked: boolean, ) => {
+      setFieldValue(data, checked ? String(checked) : undefined);
+    },
+    [setFieldValue]
+  );
+
+  const toggleShelterStatusTo = (status: ShelterAvailabilityStatus) =>
+    (ev: React.ChangeEvent<HTMLInputElement>) =>
+      handleToggleShelterStatus(ev.target.checked, status);
+
+  const someShelterStatusEqualTo = (status: ShelterAvailabilityStatus): boolean => 
+    values.shelterStatus.some((s) => s.value === status);
+  
+  const ensureBooleanValueTo = (data: string): boolean =>
+    data === BOOLEAN_AS_STRING_FROM_QUERY_URL;
+
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
+
+  function helpFromDistanceSection(): import("react").ReactNode {
+    return (
+      <Section>
+        <TitleSection title="Ajuda a distância" />
+        <CheckBoxFilter
+          label="Possui chave pix"
+          onChangeCheck={(ev) => handleToggleTo('pix', ev.target.checked)}
+          defaultChecked={ensureBooleanValueTo(values.pix)}
+        />
+        <CheckBoxFilter
+          label="Possui contato telefônico"
+          onChangeCheck={(ev) => handleToggleTo('contact', ev.target.checked)}
+          defaultChecked={ensureBooleanValueTo(values.contact)}
+        />
+      </Section>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -154,12 +207,12 @@ const Filter = (props: IFilterProps) => {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
-            <div className="flex flex-col gap-2 w-full my-4">
+            <Section>
               <SearchInput
                 value={values.search}
                 onChange={(v) => setFieldValue('search', v)}
               />
-            </div>
+            </Section>
             <Separator className="mt-2" />
             <CitiesFilter
               cities={values.cities}
@@ -168,7 +221,7 @@ const Filter = (props: IFilterProps) => {
               }}
             />
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
+            <Section>
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
                 Você pode buscar pelo item que os abrigos precisam com urgência
@@ -221,61 +274,28 @@ const Filter = (props: IFilterProps) => {
                   onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
-            </div>
+            </Section>
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Status do abrigo
-              </p>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'available')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'available'
-                    )}
-                  />
-                  Abrigo Disponivel
-                </label>
-              </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(
-                        ev.target.checked,
-                        'unavailable'
-                      )
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'unavailable'
-                    )}
-                  />
-                  Abrigo Indisponível
-                </label>
-              </div>
-              <div>
-                <label className="flex items-center mb-4">
-                  <input
-                    type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, 'waiting')
-                    }
-                    defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === 'waiting'
-                    )}
-                  />
-                  Sem informação de disponibilidade
-                </label>
-              </div>
-            </div>
+            <Section>
+              <TitleSection title="Status do abrigo" />
+              <CheckBoxFilter
+                label="Abrigo Disponivel"
+                onChangeCheck={toggleShelterStatusTo(AVAILABLE_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(AVAILABLE_STATUS)}
+              />
+              <CheckBoxFilter
+                label="Abrigo Indisponivel"
+                onChangeCheck={toggleShelterStatusTo(UNAVAILABLE_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(UNAVAILABLE_STATUS)}
+              />
+              <CheckBoxFilter
+                label="Sem informação de disponibilidade"
+                onChangeCheck={toggleShelterStatusTo(WAITING_STATUS)}
+                defaultChecked={someShelterStatusEqualTo(WAITING_STATUS)}
+              />
+            </Section>
+            <Separator className="mt-2" />
+            {helpFromDistanceSection()}
           </div>
           <DialogFooter className="sticky bg-white -bottom-6">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
