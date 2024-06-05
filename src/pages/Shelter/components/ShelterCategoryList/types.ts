@@ -13,4 +13,5 @@ export interface ShelterCategoryListProps {
   name: string;
   onDonate: (item: ShelterCategoryListItemProps) => void;
   items: ShelterCategoryListItemProps[];
+  shelterId: string;
 }

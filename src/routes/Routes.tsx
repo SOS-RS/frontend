@@ -25,7 +25,7 @@ const Routes = () => {
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
       />
-      <Route path="/abrigo/:shelterId/doacoes" element={<DonationsHistory />} />
+      <Route path="/doacoes" element={<DonationsHistory />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />

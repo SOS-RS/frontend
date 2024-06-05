@@ -211,6 +211,7 @@ const Shelter = () => {
                         quantity: l.quantity,
                       }))}
                       onDonate={handleDonate}
+                      shelterId={shelterId}
                     />
                     {!isLastElement && <Separator />}
                   </Fragment>

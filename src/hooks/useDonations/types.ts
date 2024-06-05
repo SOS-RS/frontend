@@ -1,3 +1,6 @@
+import { DonateOrderStatus } from '@/service/donationOrder/types';
+import { SupplyMeasure } from '../useShelter/types';
+
 export interface IUseDonationsData {
   page: number;
   perPage: number;
@@ -8,7 +11,7 @@ export interface IUseDonationsData {
 export interface IDonationsData {
   id: string;
   userId: string;
-  status: string;
+  status: DonateOrderStatus;
   shelter: {
     id: string;
     name: string;
@@ -16,10 +19,10 @@ export interface IDonationsData {
   donationOrderSupplies: {
     quantity: number;
     supply: {
-      measure: string;
+      measure: SupplyMeasure;
       name: string;
     };
-  };
+  }[];
   createdAt: string;
   updatedAt: string;
 }
