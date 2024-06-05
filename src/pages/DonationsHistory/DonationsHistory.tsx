@@ -90,7 +90,7 @@ const DonationsHistoryComponent = () => {
               Recebido
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="made">
+          <TabsContent value="made" className="flex flex-col gap-2">
             <Loader loading={loadingDonations}>
               {donations.results.length === 0 ? (
                 <p>Nenhuma doação encontrada</p>
@@ -117,7 +117,7 @@ const DonationsHistoryComponent = () => {
               )}
             </Loader>
           </TabsContent>
-          <TabsContent value="received">
+          <TabsContent value="received" className="flex flex-col gap-2">
             <Loader loading={loadingDonations}>
               {donations.results.length === 0 ? (
                 <p>Nenhuma doação encontrada</p>
