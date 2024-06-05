@@ -101,6 +101,8 @@ module.exports = {
           'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       screens: {
+        // min mobile dimension
+        base: '320px',
         // max mobile dimension
         sm: '425px',
       },
