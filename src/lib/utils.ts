@@ -173,7 +173,6 @@ const DonationStatusMap: Record<DonateOrderStatus, string> = {
   [DonateOrderStatus.Complete]: 'Entregue',
 };
 
-
 export {
   cn,
   getAvailabilityProps,
