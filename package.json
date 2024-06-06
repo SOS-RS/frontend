@@ -36,6 +36,7 @@
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
+    "react-to-print": "^2.15.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "yup": "^1.4.0"

@@ -10,11 +10,17 @@ export interface IUseDonationsData {
 
 export interface IDonationsData {
   id: string;
-  userId: string;
+  user: {
+    id: string;
+    name: string;
+    lastName: string;
+    phone: string;
+  };
   status: DonateOrderStatus;
   shelter: {
     id: string;
     name: string;
+    address: string;
   };
   donationOrderSupplies: {
     quantity: number;
