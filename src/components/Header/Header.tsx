@@ -1,4 +1,7 @@
+
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { IHeader } from './types';
 import { cn } from '@/lib/utils';
 
@@ -23,11 +26,11 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     >
       <div className="flex gap-1 items-center">
         {startAdornment}
-        <h3 className="font-medium text-white">{title}</h3>
+        <Link className="font-medium text-white" to="/">
+          {title}
+        </Link>
       </div>
-      <div className="flex w-auto items-center justify-between">
-        <div className="cursor-pointer">{endAdornment}</div>
-      </div>
+      <div className="flex items-center gap-1">{endAdornment}</div>
     </header>
   );
 });

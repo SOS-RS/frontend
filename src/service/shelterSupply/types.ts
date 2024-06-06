@@ -1,3 +1,4 @@
+import { SupplyMeasure } from '@/hooks/useShelter/types';
 import { SupplyPriority } from '../supply/types';
 
 export interface IShelterSupply {
@@ -18,3 +19,25 @@ export type ICreateShelterSupply = Pick<
   IShelterSupply,
   'priority' | 'shelterId' | 'supplyId' | 'quantity'
 >;
+
+export interface IShelterSupplyData {
+  priority: number;
+  quantity: number;
+  supply: IShelterSupplyDataSupply;
+  createdAt: string;
+  updatedAt?: string | null;
+}
+
+export interface IShelterSupplyDataSupply {
+  id: string;
+  name: string;
+  measure: SupplyMeasure;
+  supplyCategory: IShelterSupplyDataSupplyCategory;
+  createdAt: string;
+  updatedAt?: string | null;
+}
+
+export interface IShelterSupplyDataSupplyCategory {
+  id: string;
+  name: string;
+}

@@ -8,6 +8,10 @@ import {
   EditShelterSupply,
   SignIn,
   UpdateShelter,
+  PrivacyPolicy,
+  AboutUs,
+  Supporters,
+  DonationsHistory,
 } from '@/pages';
 
 const Routes = () => {
@@ -21,8 +25,12 @@ const Routes = () => {
         path="/abrigo/:shelterId/item/cadastrar"
         element={<CreateSupply />}
       />
+      <Route path="/doacoes" element={<DonationsHistory />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
+      <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+      <Route path="/sobre-nos" element={<AboutUs />} />
+      <Route path="/apoiadores" element={<Supporters />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Switch>
   );

@@ -1,8 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { ChevronLeft, Loader } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import ReactSelect from 'react-select';
 
 import {
@@ -22,6 +21,9 @@ import { clearCache } from '@/api/cache';
 import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
 import { useDebouncedValue, useViaCep } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
+import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
+import { ShelterCategory } from '@/hooks/useShelter/types';
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const UpdateShelter = () => {
   const { shelterId = '-1' } = params;
   const { data: shelter, loading } = useShelter(shelterId);
   const { session } = useContext(SessionContext);
+  const isAuthenticated = useAuthRoles('Staff');
 
   const {
     errors,
@@ -47,11 +50,11 @@ const UpdateShelter = () => {
       address: shelter.address ?? '',
       capacity: shelter.capacity,
       contact: shelter.contact ?? '',
-      pix: shelter.pix,
+      pix: shelter.pix ?? '',
       street: shelter.street ?? '',
       neighbourhood: shelter.neighbourhood ?? '',
       city: shelter.city ?? '',
-      streetNumber: shelter.streetNumber ?? null,
+      streetNumber: shelter.streetNumber ?? '',
       zipCode: shelter.zipCode ?? '',
       name: shelter.name,
     },
@@ -59,25 +62,11 @@ const UpdateShelter = () => {
     validateOnBlur: false,
     validateOnChange: false,
     validateOnMount: false,
-    validationSchema: Yup.object().shape({
-      shelteredPeople: Yup.number().nullable(),
-      petFriendly: Yup.bool().required('Este campo deve ser preenchido'),
-      verified: Yup.bool(),
-      address: Yup.string().nullable(),
-      capacity: Yup.string().nullable(),
-      pix: Yup.string().nullable(),
-      name: Yup.string(),
-      street: Yup.string().required('Este campo deve ser preenchido'),
-      neighbourhood: Yup.string().required('Este campo deve ser preenchido'),
-      city: Yup.string().required('Este campo deve ser preenchido'),
-      streetNumber: Yup.string()
-        .min(0, 'O valor mínimo para este campo é 1')
-        .required('Este campo deve ser preenchido'),
-      zipCode: Yup.string().nullable(),
-    }),
+    validationSchema: session ? FullUpdateShelterSchema : UpdateShelterSchema,
     onSubmit: async (values) => {
       try {
-        if (session) await ShelterServices.adminUpdate(shelterId, values);
+        if (isAuthenticated)
+          await ShelterServices.adminUpdate(shelterId, values);
         else await ShelterServices.update(shelterId, values);
         toast({
           title: 'Atualização feita com sucesso',
@@ -93,6 +82,7 @@ const UpdateShelter = () => {
       }
     },
   });
+
   const debouncedZipcode = useDebouncedValue(
     touched?.zipCode ? values?.zipCode ?? '' : '',
     500
@@ -107,14 +97,12 @@ const UpdateShelter = () => {
     if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
     if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
     if (cepData.localidade) setFieldValue('city', cepData.localidade);
-
-    setErrors({});
   }, [cepData, setFieldValue, setErrors]);
 
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col items-center h-[calc(var(--vh,1vh)*100)] md:h-screen">
       <Header
         title="Atualização cadastral"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
@@ -130,9 +118,9 @@ const UpdateShelter = () => {
       />
       <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
         <form className="contents" onSubmit={handleSubmit}>
-          <h6 className="text-2xl font-semibold">Atualizar abrigo</h6>
+          <h6 className="text-2xl font-semibold">Atualização cadastral</h6>
           <p className="text-muted-foreground">
-            Atualize as informações desejadas sobre o abrigo.
+            Atualize as informações desejadas.
           </p>
           <div className=" flex flex-col max-w-5xl w-full gap-6 items-start">
             <Authenticated role="Staff">
@@ -207,40 +195,52 @@ const UpdateShelter = () => {
                 error={!!errors.contact}
                 helperText={errors.contact}
               />
-              <TextField
-                type="number"
-                label="Capacidade total do abrigo"
-                {...getFieldProps('capacity')}
-                error={!!errors.capacity}
-                helperText={errors.capacity}
-              />
+              {shelter.category === ShelterCategory.Shelter && (
+                <TextField
+                  type="number"
+                  label="Capacidade total do abrigo"
+                  {...getFieldProps('capacity')}
+                  error={!!errors.capacity}
+                  helperText={errors.capacity}
+                />
+              )}
             </Authenticated>
-            <TextField
-              type="number"
-              label="Quantidade de pessoas abrigadas"
-              {...getFieldProps('shelteredPeople')}
-              error={!!errors.shelteredPeople}
-              helperText={errors.shelteredPeople}
-            />
-            <SelectField
-              label="O abrigo aceita animais"
-              value={values.petFriendly ? 'true' : 'false'}
-              onSelectChange={(v) => setFieldValue('petFriendly', v === 'true')}
-              options={[
-                { value: 'true', label: 'Sim' },
-                { value: 'false', label: 'Não' },
-              ]}
-            />
+            {shelter.category === ShelterCategory.Shelter && (
+              <Fragment>
+                <TextField
+                  type="number"
+                  label="Quantidade de pessoas abrigadas"
+                  {...getFieldProps('shelteredPeople')}
+                  error={!!errors.shelteredPeople}
+                  helperText={errors.shelteredPeople}
+                />
+                <SelectField
+                  label="O abrigo aceita animais"
+                  value={values.petFriendly ? 'true' : 'false'}
+                  onSelectChange={(v) =>
+                    setFieldValue('petFriendly', v === 'true')
+                  }
+                  options={[
+                    { value: 'true', label: 'Sim' },
+                    { value: 'false', label: 'Não' },
+                  ]}
+                />
+                <Authenticated role="Staff">
+                  <SelectField
+                    label="O abrigo é verificado"
+                    value={values.verified ? 'true' : 'false'}
+                    onSelectChange={(v) =>
+                      setFieldValue('verified', v === 'true')
+                    }
+                    options={[
+                      { value: 'true', label: 'Sim' },
+                      { value: 'false', label: 'Não' },
+                    ]}
+                  />
+                </Authenticated>
+              </Fragment>
+            )}
             <Authenticated role="Staff">
-              <SelectField
-                label="O abrigo é verificado"
-                value={values.verified ? 'true' : 'false'}
-                onSelectChange={(v) => setFieldValue('verified', v === 'true')}
-                options={[
-                  { value: 'true', label: 'Sim' },
-                  { value: 'false', label: 'Não' },
-                ]}
-              />
               <TextField
                 label="Pix"
                 {...getFieldProps('pix')}

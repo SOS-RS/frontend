@@ -13,7 +13,8 @@ function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
   const refresh = useCallback(
     (config?: AxiosRequestConfig<any>) => {
       const headers = config?.headers ?? {};
-      if (cache) headers['x-app-cache'] = 'true';
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
+        headers['x-app-cache'] = 'true';
       setLoading(true);
 
       if (path) {
