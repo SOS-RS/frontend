@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { AxiosRequestConfig } from 'axios';
 
+
 import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
@@ -56,7 +57,6 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     },
     [cache]
   );
-
   useEffect(() => {
     refresh();
   }, [refresh]);

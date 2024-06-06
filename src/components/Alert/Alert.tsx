@@ -7,7 +7,7 @@ const Alert = (props: IAlert) => {
   return (
     <Card className="p-3 flex gap-3 border-zinc-200 border-[1px] rounded-md select-none w-full items-center text-justify">
       <div>{startAdornment}</div>
-      <span className="text-sm text-zinc-600">{description}</span>
+      <span className="text-sm text-zinc-600 max-sm:text-center">{description}</span>
     </Card>
   );
 };

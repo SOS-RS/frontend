@@ -36,4 +36,4 @@ function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
   return { data, loading, refresh };
 }
 
-export { useFetch };
+export { useFetch }

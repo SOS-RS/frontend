@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw} from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { BurgerMenu, Footer, Header } from '@/components';
@@ -26,6 +26,7 @@ const loadFilterData = (): IFilterFormProps => {
 const saveFilterData = (filterData: IFilterFormProps) => {
   localStorage.setItem('filter-data', JSON.stringify(filterData));
 };
+
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
@@ -93,12 +94,30 @@ const Home = () => {
   }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
 
   useEffect(() => {
-    if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0){
+    if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0) {
       setSearchParams(qs.stringify(filterData));
       refresh({ params: { search: qs.stringify(filterData) } });
     }
     saveFilterData(filterData);
   }, [filterData, refresh, setSearchParams]);
+
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   return (
     <div className="flex flex-col h-screen items-center">
@@ -111,7 +130,7 @@ const Home = () => {
         />
       )}
       <Header
-        title="SOS Rio Grande do Sul"
+        title={windowSize.width <= 434 ? "SOS RS" : "SOS Rio Grande do Sul"}
         startAdornment={<BurgerMenu />}
         endAdornment={
           <div className="flex gap-2 items-center">
@@ -124,7 +143,8 @@ const Home = () => {
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
-          </div>
+
+          </div >
         }
       />
       <ShelterListView

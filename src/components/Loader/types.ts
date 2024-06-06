@@ -1,4 +1,4 @@
 export interface ILoader {
-  loading: boolean;
-  children?: React.ReactNode;
+    loading: boolean;
+    children?: React.ReactNode;
 }
