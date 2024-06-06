@@ -49,3 +49,4 @@ export interface IDonateOrderSupply {
   name: string;
   measure: SupplyMeasure;
 }
+

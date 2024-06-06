@@ -179,7 +179,7 @@ const Home = () => {
         className="flex-1 p-4 max-w-4xl"
       />
       <Footer />
-    </div >
+    </div>
   );
 };
 
