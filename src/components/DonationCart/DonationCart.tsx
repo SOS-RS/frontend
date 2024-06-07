@@ -27,7 +27,10 @@ const DonationCart = (props: IDonationCart) => {
 
   return (
     <Sheet open={opened} onOpenChange={onClose}>
-      <SheetContent side="right" className="z-[120] flex flex-col pb-0 px-0">
+      <SheetContent
+        side="right"
+        className="z-[120] flex flex-col pb-0 px-0 overflow-y-auto"
+      >
         {donationOrderId ? (
           <DonationSuccess donationOrderId={donationOrderId} />
         ) : (

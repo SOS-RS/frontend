@@ -28,6 +28,7 @@ const Routes = () => {
       />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/abrigo/:shelterId/doacoes" element={<DonationsHistory />} />
+      <Route path="/doacoes" element={<DonationsHistory />} />
       <Route path="/" element={<Home />} />
       <Route path="/entrar" element={<SignIn />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
