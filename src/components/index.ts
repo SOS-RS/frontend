@@ -18,6 +18,7 @@ import { BackToTop } from './BackToTop';
 import { DonationCartIcon } from './DonationCartIcon';
 import { DonationCart } from './DonationCart';
 import { Loader } from './Loader';
+import { DonationVoucher } from './DonationVoucher';
 
 export {
   LoadingScreen,
@@ -40,4 +41,5 @@ export {
   DonationCartIcon,
   DonationCart,
   Loader,
+  DonationVoucher,
 };

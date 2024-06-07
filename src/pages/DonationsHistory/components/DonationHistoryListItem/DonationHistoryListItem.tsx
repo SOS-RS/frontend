@@ -1,4 +1,4 @@
-import { Fragment, createRef, useMemo, useState } from 'react';
+import React, { Fragment, createRef, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import {
   ChevronDown,
@@ -16,8 +16,12 @@ import { SupplyMeasureMap, cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { DonateOrderStatus } from '@/service/donationOrder/types';
 import { DonationHistoryStatus } from '../DonationHistoryStatus';
+import { DonationVoucher } from '@/components';
 
-const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
+const DonationHistoryListItem = React.forwardRef<
+  HTMLDivElement,
+  IDonationHistoryListItem
+>((props, ref) => {
   const {
     data: donation,
     onCancel,
@@ -30,7 +34,6 @@ const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
   const divRef = createRef<HTMLDivElement>();
   const handlePrint = useReactToPrint({
     removeAfterPrint: true,
-    onBeforePrint: () => setVisible(true),
   });
   const accordeonLabel = useMemo(
     () => (visible ? 'Ocultar itens doados' : 'Mostrar itens doados'),
@@ -45,33 +48,26 @@ const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
 
   return (
     <div
-      ref={divRef}
+      ref={ref}
       className={cn(
-        'flex flex-col gap-2 items-start bg-slate-100 rounded-md p-4 print:bg-white print:m-4',
+        'flex flex-col gap-2 items-start bg-slate-100 rounded-md p-4',
         className
       )}
       {...rest}
     >
-      <div className="w-full flex-col items-center justify-center hidden print:flex">
-        <h1 className="text-3xl font-bold">🛟 SOS RS</h1>
-        <h4 className="text-md font-thin">sos-rs.com</h4>
-        <h2 className="text-lg font-medium mt-2">
-          O Rio Grande do Sul agradece sua doação
-        </h2>
-        <h4 className="text-md font-normal">Cada doação importa</h4>
-        <h4 className="text-md font-normal mb-2">Juntos somos mais fortes!</h4>
-      </div>
+      <DonationVoucher
+        ref={divRef}
+        data={donation}
+        className="hidden print:flex"
+      />
       <div className="flex flex-col gap-1 relative w-full">
         <DonationHistoryStatus
           status={donation.status}
           className="absolute top-0 right-0 flex items-center justify-center gap-2"
-          chipProps={{
-            className: 'print:bg-transparent',
-          }}
         >
           <Printer
             onClick={() => handlePrint(null, () => divRef.current)}
-            className="stroke-gray-900 hover:stroke-gray-700 active:stroke-gray-800 h-5 w-5 cursor-pointer print:hidden"
+            className="stroke-gray-900 hover:stroke-gray-700 active:stroke-gray-800 h-5 w-5 cursor-pointer"
           />
         </DonationHistoryStatus>
         <small className="font-medium !text-muted-foreground">Doação de</small>
@@ -89,13 +85,13 @@ const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
       <Button
         variant="ghost"
         size="sm"
-        className="!text-red-500 font-medium hover:bg-transparent active:bg-transparent px-0 py-0 rounded-md flex gap-2 mt-2 hover:!text-red-400 [&_svg]:hover:stroke-red-400 print:hidden"
+        className="!text-red-500 font-medium hover:bg-transparent active:bg-transparent px-0 py-0 rounded-md flex gap-2 mt-2 hover:!text-red-400 [&_svg]:hover:stroke-red-400"
         onClick={() => setVisible((prev) => !prev)}
       >
         {accordeonLabel}
         <AccordeonIcon className="stroke-red-500" />
       </Button>
-      <ul className={clsx('print:mt-4', { hidden: !visible })}>
+      <ul className={clsx({ hidden: !visible })}>
         {donation.donationOrderSupplies.map((s, idx) => (
           <li
             key={idx}
@@ -107,7 +103,7 @@ const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
           </li>
         ))}
       </ul>
-      <div className="flex gap-2 justify-between w-full md:justify-end flex-wrap print:hidden">
+      <div className="flex gap-2 justify-between w-full md:justify-end flex-wrap">
         <Button
           variant="ghost"
           size="sm"
@@ -141,6 +137,6 @@ const DonationHistoryListItem = (props: IDonationHistoryListItem) => {
       </div>
     </div>
   );
-};
+});
 
 export { DonationHistoryListItem };
