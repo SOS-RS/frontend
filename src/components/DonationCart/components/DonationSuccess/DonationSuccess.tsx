@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { createRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Circle, HeartHandshake, Loader, Printer } from 'lucide-react';
+import { useReactToPrint } from 'react-to-print';
+import { format } from 'date-fns';
 
 import {
   SheetHeader,
@@ -9,21 +12,29 @@ import {
 import { IDonationSuccessProps } from './types';
 import { SupplyMeasureMap, cn } from '@/lib/utils';
 import { useDonationOrder } from '@/hooks';
-import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { DonationVoucher } from '@/components';
 
 const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
   (props, ref) => {
     const { donationOrderId, className = '', ...rest } = props;
     const { data: donation, loading } = useDonationOrder(donationOrderId);
     const navigate = useNavigate();
+    const divRef = createRef<HTMLDivElement>();
+    const handlePrint = useReactToPrint({
+      removeAfterPrint: true,
+    });
 
     if (loading)
       return <Loader className="stroke-gray-500 w-6 h-6 animate-spin" />;
 
     return (
       <div ref={ref} className={cn('contents', className)} {...rest}>
+        <DonationVoucher
+          ref={divRef}
+          data={donation}
+          className="hidden print:flex"
+        />
         <SheetHeader className="px-4">
           <SheetTitle>O RS agradece sua doação</SheetTitle>
           <SheetDescription className="flex justify-center items-center">
@@ -66,6 +77,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
               variant="ghost"
               size="sm"
               className="text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md flex gap-2 mt-2 hover:text-red-700 [&>svg]:hover:stroke-red-700"
+              onClick={() => handlePrint(null, () => divRef.current)}
             >
               <Printer className="stroke-red-600" />
               Imprimir doação
