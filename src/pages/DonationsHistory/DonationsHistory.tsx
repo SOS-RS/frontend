@@ -17,12 +17,10 @@ const DonationsHistory = () => {
   const { data: shelter, loading: shelterLoading } = useShelter(shelterId);
   const { data: shelterDonations, loading: donationsLoading } =
     useDonations(shelterId);
-  const [donationsReceivedPerDay, setDonationsReceivedPerDay] = useState<
-    IDonationsPerDay | {}
-  >([]);
-  const [donationsGivenPerDay, setDonationsGivenPerDay] = useState<
-    IDonationsPerDay | {}
-  >([]);
+  const [donationsReceivedPerDay, setDonationsReceivedPerDay] =
+    useState<IDonationsPerDay | null>(null);
+  const [donationsGivenPerDay, setDonationsGivenPerDay] =
+    useState<IDonationsPerDay | null>(null);
 
   const [viewOption, setViewOption] = useState(ViewOptions.Donated);
 
@@ -76,7 +74,7 @@ const DonationsHistory = () => {
       setDonationsGivenPerDay(givenDonations);
       setDonationsReceivedPerDay(receivedDonations);
     }
-  }, [donationsLoading]);
+  }, [donationsLoading, shelterDonations.results, shelterId]);
 
   if (!donationsLoading) {
     const dailyDonations = {
@@ -85,7 +83,7 @@ const DonationsHistory = () => {
     };
 
     const segmentedDonationsDisplay = Object.keys(
-      dailyDonations[viewOption]
+      dailyDonations[viewOption] || {}
     ).map((day) => {
       return (
         <div key={day} className="mb-4">
@@ -93,7 +91,7 @@ const DonationsHistory = () => {
             {format(day, "dd 'de' MMMM yyyy ", { locale: ptBR })}
           </h3>
           <DonationsPerDay
-            donations={dailyDonations[viewOption][day]}
+            donations={dailyDonations[viewOption]?.[day]} // Added null check
             viewOption={viewOption}
             key={`${viewOption}-${day}`}
           />
@@ -101,7 +99,7 @@ const DonationsHistory = () => {
       );
     });
 
-    if (donationsLoading) return <LoadingScreen />;
+    if (donationsLoading || shelterLoading) return <LoadingScreen />;
 
     return (
       <div className="flex flex-col h-screen items-center">

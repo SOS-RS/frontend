@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Printer, PackageCheck, CircleX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -14,31 +14,34 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
   const [status, setStatus] = useState<DonateOrderStatus>(donation.status);
   const [error, setError] = useState<string | null>(null);
 
-  const getDisplayDate = (status: string): DonateOrderStatus => {
-    if (status === DonateOrderStatus.Complete) {
-      return `Entregue no dia ${donation.createdAt.split('T')[0]} às
+  const getDisplayDate = useCallback(
+    (status: DonateOrderStatus) => {
+      if (status === DonateOrderStatus.Complete) {
+        return `Entregue no dia ${donation.createdAt.split('T')[0]} às
       ${donation.createdAt.split('T')[1].slice(0, -5)}`;
-    } else if (status === DonateOrderStatus.Pending) {
-      return `Criado no dia ${donation.createdAt.split('T')[0]} às
+      } else if (status === DonateOrderStatus.Pending) {
+        return `Criado no dia ${donation.createdAt.split('T')[0]} às
       ${donation.createdAt.split('T')[1].slice(0, -5)}`;
-    } else if (status === DonateOrderStatus.Canceled) {
-      return `Cancelado no dia ${donation.createdAt.split('T')[0]} às
+      } else if (status === DonateOrderStatus.Canceled) {
+        return `Cancelado no dia ${donation.createdAt.split('T')[0]} às
       ${donation.createdAt.split('T')[1].slice(0, -5)}`;
-    }
-  };
+      }
+    },
+    [donation.createdAt]
+  );
 
   const [displayDate, setDisplayDate] = useState(getDisplayDate(status));
 
   useEffect(() => {
     const displayDate = getDisplayDate(status);
     setDisplayDate(displayDate);
-  }, [status]);
+  }, [getDisplayDate, status]);
 
   const Icon = !opened ? ChevronUp : ChevronDown;
   const btnLabel = !opened ? 'Ocultar itens doados' : 'Mostrar itens doados';
 
   //Creates list of all items to be displayed
-  const listOfItems = donation.items.map((item: string, index) => {
+  const listOfItems = donation.items.map((item, index) => {
     return (
       <li key={`$${index}`} className="px-3">
         {`${item.quantity} ${
@@ -81,6 +84,7 @@ const Donation = ({ viewOption, donation }: IDonationProps) => {
       setError('Failed to cancel the delivery. Please try again.');
     }
   };
+  if (error) return null;
   return (
     <Card className="flex flex-col gap-2 p-4 bg-[#E8F0F8] text-sm my-2 w-full">
       <div className="flex items-center justify-between text-[#646870] font-small">

@@ -1,9 +1,9 @@
-import { IDonationsPerDayProps } from '../types';
+import { IDonation, IDonationsPerDayProps } from '../types';
 import { Donation } from './Donation';
 
 const DonationsPerDay = ({ donations, viewOption }: IDonationsPerDayProps) => {
-  const donationsOfDay = donations.map((donation) => {
-    donation = {
+  const donationsOfDay = donations?.map((donation) => {
+    const refactDonation: IDonation = {
       donationId: donation.id,
       donatorName: donation.shelter.name,
       donatorId: donation.userId,
@@ -11,15 +11,15 @@ const DonationsPerDay = ({ donations, viewOption }: IDonationsPerDayProps) => {
       shelterName: donation.shelter.name,
       status: donation.status,
       createdAt: donation.createdAt,
-      updatedAt: donation.updatedAt || null,
+      updatedAt: donation.updatedAt,
       items: donation.donationOrderSupplies,
     };
 
     return (
       <Donation
         viewOption={viewOption}
-        donation={donation}
-        key={`${viewOption}-${donation.donationId}`}
+        donation={refactDonation}
+        key={`${viewOption}-${refactDonation.donationId}`}
       />
     );
   });
