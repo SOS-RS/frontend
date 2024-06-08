@@ -56,10 +56,11 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   }, [data.shelterSupplies]);
 
   const getChipProps = useCallback((s: IUseSheltersDataSupplyData) => {
-    const { className } = getSupplyPriorityProps(s.priority);
+    const { className, label: priority } = getSupplyPriorityProps(s.priority);
     return {
       label: s.supply.name,
       className,
+      priority,
     };
   }, []);
 

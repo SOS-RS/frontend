@@ -1,14 +1,14 @@
-import { Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-
+import { TooltipProvider } from './components/ui/tooltip';
 import { Routes } from './routes/Routes';
 import { DonationCartProvider, SessionProvider } from './contexts';
 import { Toaster } from './components/ui/toaster';
 import { BackToTop } from '@/components';
 
+
 const App = () => {
   return (
-    <Fragment>
+    <TooltipProvider>
       <Toaster />
       <BrowserRouter>
         <SessionProvider>
@@ -18,7 +18,7 @@ const App = () => {
           </DonationCartProvider>
         </SessionProvider>
       </BrowserRouter>
-    </Fragment>
+    </TooltipProvider>
   );
 };
 
