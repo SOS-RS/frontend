@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
@@ -18,33 +18,45 @@ const initialFilterData: IFilterFormProps = {
   cities: [],
 };
 
+const loadFilterData = (): IFilterFormProps => {
+  const storedFilterData = JSON.parse(
+    localStorage.getItem('filter-data') || '{}'
+  );
+  return {
+    ...initialFilterData,
+    ...storedFilterData,
+    ...qs.parse(new URLSearchParams(window.location.search).toString()),
+  };
+};
+
+const saveFilterData = (filterData: IFilterFormProps) => {
+  localStorage.setItem('filter-data', JSON.stringify(filterData));
+};
+
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>({
-    ...initialFilterData,
-    ...qs.parse(new URLSearchParams(window.location.search).toString()),
-  });
+  const [filterData, setFilterData] = useState<IFilterFormProps>(
+    loadFilterData()
+  );
 
   const [, setSearch] = useThrottle<string>(
     {
       throttle: 400,
       callback: () => {
         const params = new URLSearchParams(qs.stringify(filterData));
-
         setSearchParams(params);
-        refresh({
-          params: params,
-        });
+        refresh({ params });
       },
     },
-    []
+    [filterData]
   );
 
   const clearSearch = useCallback(() => {
     setSearch('');
     setFilterData(initialFilterData);
+    localStorage.removeItem('filter-data');
     setSearchParams('');
     refresh();
   }, [refresh, setSearch, setSearchParams]);
@@ -70,18 +82,10 @@ const Home = () => {
     (values: IFilterFormProps) => {
       setOpenModal(false);
       setFilterData(values);
-
-      const searchQuery = qs.stringify(factorySearchArgs(values), {
-        skipNulls: true,
-      });
-
+      const searchQuery = qs.stringify(values, { skipNulls: true });
       setSearchParams(searchQuery);
-
-      refresh({
-        params: {
-          search: searchQuery,
-        },
-      });
+      saveFilterData(values);
+      refresh({ params: { search: searchQuery } });
     },
     [refresh, setSearchParams, factorySearchArgs]
   );
@@ -93,13 +97,7 @@ const Home = () => {
       perPage: shelters.perPage,
       search: qs.stringify(factorySearchArgs(filterData)),
     };
-
-    refresh(
-      {
-        params: params,
-      },
-      true
-    );
+    refresh({ params }, true);
   }, [
     refresh,
     filterData,
@@ -108,6 +106,21 @@ const Home = () => {
     shelters.perPage,
     factorySearchArgs,
   ]);
+
+  useEffect(() => {
+    if (
+      filterData.search ||
+      filterData.cities.length > 0 ||
+      filterData.priorities.length > 0 ||
+      filterData.shelterStatus.length > 0 ||
+      filterData.supplyCategoryIds.length > 0 ||
+      filterData.supplyIds.length > 0
+    ) {
+      setSearchParams(qs.stringify(filterData));
+      refresh({ params: { search: qs.stringify(filterData) } });
+    }
+    saveFilterData(filterData);
+  }, [filterData, refresh, setSearchParams]);
 
   return (
     <div className="flex flex-col h-screen items-center">

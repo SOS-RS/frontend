@@ -19,6 +19,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "axios": "^1.6.8",
@@ -35,6 +36,7 @@
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
+    "react-to-print": "^2.15.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "yup": "^1.4.0"

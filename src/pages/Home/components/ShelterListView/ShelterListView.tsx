@@ -36,7 +36,10 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
-          Abrigos disponíveis ({count})
+          {searchParams.toString()
+            ? `Abrigos encontrados (${count})`
+            : `Total de abrigos  (${count})`
+          }
         </h1>
         <Alert
           description="Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações."
@@ -46,10 +49,8 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         />
         <SearchInput
           value={searchValue}
-          onChange={(ev) =>
-            onSearchValueChange
-              ? onSearchValueChange(ev.target.value ?? '')
-              : undefined
+          onChange={(value) =>
+            onSearchValueChange ? onSearchValueChange(value) : undefined
           }
         />
         <div className="flex flex-wrap gap-1 items-center">

@@ -21,19 +21,10 @@ import {
   IFilterProps,
   ShelterAvailabilityStatus,
 } from './types';
-import { priorityOptions } from '@/lib/utils';
+import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
-
-const ShelterAvailabilityStatusMapped: Record<
-  ShelterAvailabilityStatus,
-  string
-> = {
-  available: 'Abrigo Disponivel',
-  unavailable: 'Abrigo Indisponivel',
-  waiting: 'Sem informação de disponibilidade',
-};
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -71,7 +62,7 @@ const Filter = (props: IFilterProps) => {
         })),
         search: data.search,
         shelterStatus: data.shelterStatus.map((s) => ({
-          label: ShelterAvailabilityStatusMapped[s],
+          label: ShelterAvailabilityStatusMap[s],
           value: s,
         })),
         supplyCategories: data.supplyCategoryIds.map((id) => ({
@@ -134,7 +125,7 @@ const Filter = (props: IFilterProps) => {
         checked
           ? [
               ...values.shelterStatus,
-              { label: ShelterAvailabilityStatusMapped[status], value: status },
+              { label: ShelterAvailabilityStatusMap[status], value: status },
             ]
           : values.shelterStatus.filter((s) => s.value !== status)
       );
@@ -157,9 +148,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
-                onChange={(ev) =>
-                  setFieldValue('search', ev.target.value ?? '')
-                }
+                onChange={(v) => setFieldValue('search', v)}
               />
             </div>
             <Separator className="mt-2" />
