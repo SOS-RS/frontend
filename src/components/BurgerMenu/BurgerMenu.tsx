@@ -8,7 +8,9 @@ import {
   LinkIcon,
   Menu,
   ShieldAlert,
+  X,
 } from 'lucide-react';
+import clsx from 'clsx';
 
 import { SessionServices } from '@/service';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -16,6 +18,8 @@ import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
+import { Button } from '../ui/button';
+import { DialogClose, DialogFooter } from '../ui/dialog';
 
 const BurgerMenu = () => {
   const { session } = useContext(SessionContext);
@@ -37,7 +41,14 @@ const BurgerMenu = () => {
       <SheetTrigger>
         <Menu color="white" className="ml-2 mr-2" />
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col">
+      <SheetContent side="left" className="pt-[96px] flex flex-col z-[90]">
+        <DialogFooter className="absolute top-16 right-4">
+          <DialogClose asChild>
+            <Button type="button" variant="ghost">
+              <X className="stroke-muted-foreground" />
+            </Button>
+          </DialogClose>
+        </DialogFooter>
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
@@ -51,6 +62,12 @@ const BurgerMenu = () => {
             label="Sobre nós"
             link="/sobre-nos"
             icon={<Info className="w-5 h-5" />}
+          />
+          <BurguerMenuItem
+            label="Minhas Doações"
+            link="/doacoes"
+            icon={<HeartHandshake className="w-5 h-5" />}
+            className={clsx({ hidden: !session })}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"

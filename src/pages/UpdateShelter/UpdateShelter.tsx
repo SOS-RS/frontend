@@ -102,7 +102,7 @@ const UpdateShelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col items-center h-[calc(var(--vh,1vh)*100)] md:h-screen">
       <Header
         title="Atualização cadastral"
         className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
