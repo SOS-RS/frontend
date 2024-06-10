@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RotateCw} from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 import qs from 'qs';
 
 import { BurgerMenu, Footer, Header } from '@/components';
@@ -19,8 +19,14 @@ const initialFilterData: IFilterFormProps = {
 };
 
 const loadFilterData = (): IFilterFormProps => {
-  const storedFilterData = JSON.parse(localStorage.getItem('filter-data') || '{}');
-  return { ...initialFilterData, ...storedFilterData, ...qs.parse(new URLSearchParams(window.location.search).toString()) };
+  const storedFilterData = JSON.parse(
+    localStorage.getItem('filter-data') || '{}'
+  );
+  return {
+    ...initialFilterData,
+    ...storedFilterData,
+    ...qs.parse(new URLSearchParams(window.location.search).toString()),
+  };
 };
 
 const saveFilterData = (filterData: IFilterFormProps) => {
@@ -31,7 +37,9 @@ const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>(loadFilterData());
+  const [filterData, setFilterData] = useState<IFilterFormProps>(
+    loadFilterData()
+  );
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -79,7 +87,7 @@ const Home = () => {
       saveFilterData(values);
       refresh({ params: { search: searchQuery } });
     },
-    [refresh, setSearchParams]
+    [refresh, setSearchParams, factorySearchArgs]
   );
 
   const handleFetchMore = useCallback(() => {
@@ -90,10 +98,24 @@ const Home = () => {
       search: qs.stringify(factorySearchArgs(filterData)),
     };
     refresh({ params }, true);
-  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage, factorySearchArgs]);
+  }, [
+    refresh,
+    filterData,
+    shelters.filters,
+    shelters.page,
+    shelters.perPage,
+    factorySearchArgs,
+  ]);
 
   useEffect(() => {
-    if (filterData.search || filterData.cities.length > 0 || filterData.priorities.length > 0 || filterData.shelterStatus.length > 0 || filterData.supplyCategoryIds.length > 0 || filterData.supplyIds.length > 0){
+    if (
+      filterData.search ||
+      filterData.cities.length > 0 ||
+      filterData.priorities.length > 0 ||
+      filterData.shelterStatus.length > 0 ||
+      filterData.supplyCategoryIds.length > 0 ||
+      filterData.supplyIds.length > 0
+    ) {
       setSearchParams(qs.stringify(filterData));
       refresh({ params: { search: qs.stringify(filterData) } });
     }
