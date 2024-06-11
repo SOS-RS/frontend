@@ -25,4 +25,8 @@ const checkAndFormatAddress = (
   );
 };
 
-export { checkAndFormatAddress };
+function getShelterNameBeforeSeparator(input: string): string {
+  return input.replace(/[(\-[{].*$/, '');
+}
+
+export { checkAndFormatAddress, getShelterNameBeforeSeparator };

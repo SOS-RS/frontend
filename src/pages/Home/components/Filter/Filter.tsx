@@ -19,24 +19,15 @@ import {
 import {
   IFilterFormikProps,
   IFilterProps,
-  ISelectField,
   ShelterAvailabilityStatus,
 } from './types';
 import { priorityOptions } from '@/lib/utils';
 import { SupplyPriority } from '@/service/supply/types';
 import { useSearchParams } from 'react-router-dom';
 import { initialFilterData } from '../../Home';
+import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-
-const ShelterAvailabilityStatusMapped: Record<
-  ShelterAvailabilityStatus,
-  string
-> = {
-  available: 'Abrigo Disponivel',
-  unavailable: 'Abrigo Indisponivel',
-  waiting: 'Sem informação de disponibilidade',
-};
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -70,12 +61,10 @@ const Filter = (props: IFilterProps) => {
 
   const initialFormValues = {
     cities: data.cities ?? [],
-    priority: data.priority
-      ? {
-          label: priorityOpts[data.priority],
-          value: data.priority,
-        }
-      : null,
+     priorities: data.priorities.map((p: string) => ({
+          label: priorityOpts[Number(p) as SupplyPriority],
+          value: p,
+        })),
     search: data.search,
     shelterStatus: data.shelterStatus.map((s) => ({
       label: ShelterAvailabilityStatusMapped[s],
@@ -103,7 +92,7 @@ const Filter = (props: IFilterProps) => {
       }),
       onSubmit: (values) => {
         const {
-          priority,
+          priorities,
           search,
           shelterStatus,
           supplies,
@@ -111,7 +100,7 @@ const Filter = (props: IFilterProps) => {
           cities,
         } = values;
         onSubmit({
-          priority: priority?.value ? +priority.value : null,
+          priorities: priorities.map((p) => p.value),
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
@@ -144,7 +133,7 @@ const Filter = (props: IFilterProps) => {
         checked
           ? [
               ...values.shelterStatus,
-              { label: ShelterAvailabilityStatusMapped[status], value: status },
+              { label: ShelterAvailabilityStatusMap[status], value: status },
             ]
           : values.shelterStatus.filter((s) => s.value !== status)
       );
@@ -166,20 +155,18 @@ const Filter = (props: IFilterProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="rounded-md overflow-y-scroll max-h-[90vh]">
+      <DialogContent className="rounded-md overflow-y-scroll max-h-[85vh] mt-8">
         <DialogHeader>
           <DialogTitle className="text-base font-medium">
             Faça sua busca:
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start h-full">
+          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
-                onChange={(ev) =>
-                  setFieldValue('search', ev.target.value ?? '')
-                }
+                onChange={(v) => setFieldValue('search', v)}
               />
             </div>
             <Separator className="mt-2" />
@@ -193,7 +180,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <p className="text-sm md:text-lg font-medium">Busca avançada</p>
               <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                Você pode buscar pelo item que os abrigos precisam urgentemente
+                Você pode buscar pelo item que os abrigos precisam com urgência
                 de doação ou por itens que os abrigos tem disponibilidade para
                 doar.
               </p>
@@ -203,21 +190,15 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={values.priority}
+                  value={values.priorities}
+                  isMulti
                   options={Object.entries(priorityOpts).map(
-                    ([priority, label]) =>
-                      ({
-                        label,
-                        value: +priority,
-                      } as ISelectField<SupplyPriority>)
+                    ([priority, label]) => ({
+                      label,
+                      value: priority,
+                    })
                   )}
-                  onChange={(v) => {
-                    const newValue = {
-                      ...v,
-                      value: v ? +v.value : SupplyPriority.Urgent,
-                    };
-                    setFieldValue('priority', newValue);
-                  }}
+                  onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
