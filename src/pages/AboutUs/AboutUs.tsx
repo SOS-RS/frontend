@@ -81,7 +81,7 @@ const AboutUs = () => {
         <h3 className="text-2xl font-medium text-muted-foreground mt-8">
           Como tudo começou
         </h3>
-        <p className="text-justify text-md md:text-lg font-medium [&>a]:text-blue-500 [&>a]:hover:text-blue-600 [&>a]:active:text-blue-700">
+        <p className="text-justify text-md md:text-lg font-medium [&>a]:text-green-500 [&>a]:hover:text-green-600 [&>a]:active:text-green-700">
           Iniciado no domingo (04/05) e concluído na segunda (05/05), após 18
           horas seguidas de desenvolvimento, nosso webapp <b>SOS RS 🛟</b>,
           idealizado e desenvolvido por{' '}
@@ -188,7 +188,7 @@ const AboutUs = () => {
           continuar trabalhando juntos para fazer a diferença. Acesse:{' '}
           <a
             href="https://sos-rs.com"
-            className="hover:underline text-blue-500 hover:text-blue-600 active:text-blue-700"
+            className="hover:underline text-green-500 hover:text-green-600 active:text-green-700"
           >
             sos-rs.com
           </a>

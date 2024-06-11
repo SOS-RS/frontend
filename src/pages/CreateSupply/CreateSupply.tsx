@@ -176,7 +176,7 @@ const CreateSupply = () => {
           startAdornment={
             <Button
               variant="ghost"
-              className="[&_svg]:stroke-blue-500"
+              className="[&_svg]:stroke-green-500"
               onClick={() => navigate(-1)}
             >
               <ChevronLeft size={20} />
@@ -289,7 +289,7 @@ const CreateSupply = () => {
                 loading={isSubmitting}
                 type="submit"
                 disabled={filteredSupplies.length > 0}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+                className="flex gap-2 text-white font-medium text-lg bg-green-500 hover:bg-green-600 w-full"
               >
                 Salvar
               </Button>

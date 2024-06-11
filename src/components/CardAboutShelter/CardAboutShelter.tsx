@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
-  const [ petsRsShelterUrl, setPetsRsShelterUrl ] = useState('');
+  const [petsRsShelterUrl, setPetsRsShelterUrl] = useState('');
 
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
@@ -29,16 +29,18 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
 
   const getPetsRsShelterUrl = async (name: string) => {
     const cleanShelterName = getShelterNameBeforeSeparator(name);
-    const data  = await PetsRsShelterServices.getByName(cleanShelterName);
-    const petsRsShelterUrl = data?.id ? `https://petsrs.com.br/abrigo/${data.id}` : 'https://petsrs.com.br/abrigos';
+    const data = await PetsRsShelterServices.getByName(cleanShelterName);
+    const petsRsShelterUrl = data?.id
+      ? `https://petsrs.com.br/abrigo/${data.id}`
+      : 'https://petsrs.com.br/abrigos';
     return petsRsShelterUrl;
   };
 
   useEffect(() => {
-      if(shelter.petFriendly) {
-        getPetsRsShelterUrl(shelter.name).then((url) => setPetsRsShelterUrl(url) );
-      }
-  },[shelter.petFriendly, shelter.name]);
+    if (shelter.petFriendly) {
+      getPetsRsShelterUrl(shelter.name).then((url) => setPetsRsShelterUrl(url));
+    }
+  }, [shelter.petFriendly, shelter.name]);
 
   const formatAddress = checkAndFormatAddress(shelter, false);
   return (
@@ -106,16 +108,22 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
           clipboardButton={check(shelter.pix)}
         />
-      {(petsRsShelterUrl != '') ? (
+        {petsRsShelterUrl != '' ? (
           <InfoRow
             icon={<Link />}
             label={
-              <a target="_blank" href={petsRsShelterUrl} className="font-semibold text-blue-600">
+              <a
+                target="_blank"
+                href={petsRsShelterUrl}
+                className="font-semibold text-green-600"
+              >
                 Confira o abrigo em petsrs.com.br
               </a>
             }
           />
-        ) : ''}
+        ) : (
+          ''
+        )}
       </div>
     </Card>
   );

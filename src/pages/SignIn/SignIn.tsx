@@ -73,7 +73,7 @@ const SignInComponent = () => {
           <Button
             loading={isSubmitting}
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full"
+            className="bg-green-500 hover:bg-green-600 active:bg-green-400 w-full"
           >
             Entrar
           </Button>
