@@ -19,6 +19,7 @@ import { DonationCartIcon } from './DonationCartIcon';
 import { DonationCart } from './DonationCart';
 import { Loader } from './Loader';
 import { DonationVoucher } from './DonationVoucher';
+import { ToggleThemeButton } from "./Theme"
 
 export {
   LoadingScreen,
@@ -37,9 +38,5 @@ export {
   SelectField,
   Authenticated,
   BurgerMenu,
-  BackToTop,
-  DonationCartIcon,
-  DonationCart,
-  Loader,
-  DonationVoucher,
+  ToggleThemeButton
 };

@@ -25,6 +25,7 @@ import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
+import { useTheme } from '@/components/Theme/provider';
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -35,6 +36,8 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
 );
 
 const Filter = (props: IFilterProps) => {
+  const { theme } = useTheme();
+
   const { data, onClose, onSubmit, open } = props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
@@ -107,8 +110,8 @@ const Filter = (props: IFilterProps) => {
       .filter((v) => {
         return values.supplyCategories.length > 0
           ? values.supplyCategories.some(
-              (categoryItem) => categoryItem.value === v.supplyCategory.id
-            )
+            (categoryItem) => categoryItem.value === v.supplyCategory.id
+          )
           : true;
       })
       .map((el: IUseSuppliesData) => ({
@@ -124,9 +127,9 @@ const Filter = (props: IFilterProps) => {
         'shelterStatus',
         checked
           ? [
-              ...values.shelterStatus,
-              { label: ShelterAvailabilityStatusMap[status], value: status },
-            ]
+            ...values.shelterStatus,
+            { label: ShelterAvailabilityStatusMap[status], value: status },
+          ]
           : values.shelterStatus.filter((s) => s.value !== status)
       );
     },
@@ -181,6 +184,21 @@ const Filter = (props: IFilterProps) => {
                     })
                   )}
                   onChange={(v) => setFieldValue('priorities', v)}
+                  styles={{
+                    control: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    menu: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    option: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#5B6367" : "#E1EAFF",
+                      color: "#000000",
+                    }),
+                  }}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
@@ -198,6 +216,21 @@ const Filter = (props: IFilterProps) => {
                     }))
                     .sort((a, b) => a.label.localeCompare(b.label))}
                   onChange={(v) => setFieldValue('supplyCategories', v)}
+                  styles={{
+                    control: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    menu: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    option: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#5B6367" : "#E1EAFF",
+                      color: "#000000",
+                    }),
+                  }}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -210,6 +243,21 @@ const Filter = (props: IFilterProps) => {
                   value={values.supplies}
                   options={supplyOptions}
                   onChange={(v) => setFieldValue('supplies', v)}
+                  styles={{
+                    control: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    menu: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#1C1C1C" : "#FFFFFF",
+                    }),
+                    option: (baseStyles) => ({
+                      ...baseStyles,
+                      backgroundColor: theme === "dark" ? "#5B6367" : "#E1EAFF",
+                      color: "#000000",
+                    }),
+                  }}
                 />
               </div>
             </div>
@@ -268,7 +316,7 @@ const Filter = (props: IFilterProps) => {
               </div>
             </div>
           </div>
-          <DialogFooter className="sticky bg-white -bottom-6">
+          <DialogFooter className="sticky bg-white -bottom-6 dark:bg-[#2B2B2B]">
             <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
               <Button
                 type="submit"

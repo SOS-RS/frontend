@@ -5,6 +5,7 @@ import { Routes } from './routes/Routes';
 import { DonationCartProvider, SessionProvider } from './contexts';
 import { Toaster } from './components/ui/toaster';
 import { BackToTop } from '@/components';
+import { SessionProvider } from './contexts';
 
 const App = () => {
   return (
@@ -13,8 +14,10 @@ const App = () => {
       <BrowserRouter>
         <SessionProvider>
           <DonationCartProvider>
-            <BackToTop />
-            <Routes />
+            <ThemeProvider>
+              <BackToTop />
+              <Routes />
+            </ThemeProvider>
           </DonationCartProvider>
         </SessionProvider>
       </BrowserRouter>
