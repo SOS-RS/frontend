@@ -20,14 +20,15 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
       const headers = config.headers ?? {};
-      if (cache) headers['x-app-cache'] = 'true';
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
+        headers['x-app-cache'] = 'true';
       if (!append) setLoading(true);
       api
         .get<IServerResponse<any>>('/shelters', {
           ...config,
           headers,
           params: {
-            orderBy: 'prioritySum',
+            orderBy: 'updatedAt',
             order: 'desc',
             search:
               search ?? new URLSearchParams(window.location.search).toString(),
@@ -53,7 +54,7 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           if (!append) setLoading(false);
         });
     },
-    []
+    [cache]
   );
 
   useEffect(() => {
