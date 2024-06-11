@@ -108,7 +108,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
           clipboardButton={check(shelter.pix)}
         />
-        {petsRsShelterUrl != '' ? (
+        {petsRsShelterUrl != '' && (
           <InfoRow
             icon={<Link />}
             label={
@@ -121,8 +121,6 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
               </a>
             }
           />
-        ) : (
-          ''
         )}
       </div>
     </Card>

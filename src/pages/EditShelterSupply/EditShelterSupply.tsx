@@ -190,7 +190,7 @@ const EditShelterSupply = () => {
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
             Antes de adicionar um novo item, confira na busca abaixo se ele já
-            não foi cadastrado.
+            está cadastrado.
           </p>
           <div className="w-full my-2">
             <SupplySearch
