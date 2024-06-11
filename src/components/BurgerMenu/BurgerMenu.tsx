@@ -18,8 +18,7 @@ import { BurguerMenuItem } from './components';
 import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
-import { Button } from '../ui/button';
-import { DialogClose, DialogFooterButton } from '../ui/dialog';
+import { ToggleThemeButton } from '@/components';
 
 const BurgerMenu = (props: IBurgerMenu) => {
 	const { session } = props;
@@ -71,7 +70,7 @@ const BurgerMenu = (props: IBurgerMenu) => {
 							</li>
 						</Link>
             <li className='inline-flex items-center mb-5 gap-2'>
-              <ToggleTheme /> 
+              <ToggleThemeButton /> 
               Mudar Tema
             </li>
 					</ul>
