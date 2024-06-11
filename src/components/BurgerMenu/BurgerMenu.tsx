@@ -19,7 +19,7 @@ import { Separator } from '../ui/separator';
 import { SessionContext } from '@/contexts';
 import { usePartners } from '@/hooks';
 import { Button } from '../ui/button';
-import { DialogClose, DialogFooter } from '../ui/dialog';
+import { DialogClose, DialogFooterButton } from '../ui/dialog';
 
 const BurgerMenu = (props: IBurgerMenu) => {
 	const { session } = props;
