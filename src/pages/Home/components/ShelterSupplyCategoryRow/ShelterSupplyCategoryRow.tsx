@@ -1,15 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
-import { Chip } from "@/components";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import type { IShelterSupplyCategoryRowProps } from "./types";
+import { Separator } from '@/components/ui/separator';
+import { IShelterSupplyCategoryRowProps } from './types';
+import { Chip } from '@/components';
+import { cn } from '@/lib/utils';
 
 const ShelterSupplyCategoryRow = React.forwardRef<
 	HTMLDivElement,
 	IShelterSupplyCategoryRowProps
 >((props, ref) => {
-	const { description, tags, title, className = "", ...rest } = props;
+	const { description, tags, title, className = '', ...rest } = props;
 
 	if (tags.length === 0) return <Fragment />;
 
@@ -18,13 +18,13 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   };
 
 	return (
-		<div className={cn("flex flex-col gap-3", className)} ref={ref} {...rest}>
-			<Separator className="mt-2" />
-			<p className="text-muted-foreground text-sm md:text-lg font-medium ">
+		<div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
+			<Separator className='mt-2' />
+			<p className='text-muted-foreground text-sm md:text-lg font-medium '>
 				{title}
 			</p>
 			{description && <p>{description}</p>}
-			<div className="flex gap-2 flex-wrap">
+			<div className='flex gap-2 flex-wrap'>
 				{tags.slice(0, 10).map((s, idx) => (
 					<Chip key={idx} {...s} />
 				))}

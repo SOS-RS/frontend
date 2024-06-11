@@ -1,5 +1,5 @@
 import { Card } from '../ui/card';
-import type { IAlert } from './types';
+import { IAlert } from './types';
 
 const Alert = (props: IAlert) => {
 	const { description, startAdornment } = props;

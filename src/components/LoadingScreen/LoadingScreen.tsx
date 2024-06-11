@@ -1,12 +1,13 @@
-import { cva } from 'class-variance-authority';
 import { Loader } from 'lucide-react';
+import { cva } from 'class-variance-authority';
 
-import type { ILoadingScreen } from './types';
+import { ILoadingScreen } from './types';
 
 const LoadingScreen = (props: ILoadingScreen) => {
 	const { variant = 'full', className, ...rest } = props;
 
 	const variants = cva(
+		'bg-zinc-800 opacity-60 w-full flex items-center justify-center min-h-screen z-50',
 		'bg-zinc-800 opacity-60 w-full flex items-center justify-center min-h-screen z-50',
 		{
 			variants: {

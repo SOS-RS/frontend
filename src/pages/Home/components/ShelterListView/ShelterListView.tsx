@@ -7,11 +7,11 @@ import {
   SearchInput,
   ShelterListItem,
 } from '@/components';
-import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
-import type { IShelterListViewProps } from './types';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
 	(props, ref) => {
@@ -52,6 +52,19 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               : undefined
           }
         />
+        <div className='flex flex-wrap gap-1 items-center'>
+          {filterData.cities?.map((item) => (
+            <div
+              className='flex items-center px-4 py-1 font-normal text-sm md:text-md rounded-3xl bg-gray-300 justify-center cursor-pointer hover:opacity-80 transition-all duration-200'
+              key={item}
+              onClick={() =>
+                onCitiesChange?.(filterData.cities.filter((it) => it !== item))
+              }
+            >
+              <span className='pr-1'>{item}</span> <X className='h-4 w-4' />
+            </div>
+          ))}
+        </div>
         <div className='flex flex-row'>
           <Button
             variant='ghost'

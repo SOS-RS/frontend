@@ -53,17 +53,16 @@ const Home = () => {
     [filterData]
   );
 
-	const clearSearch = useCallback(() => {
-		setSearch('');
-		setFilterData(initialFilterData);
-    localStorage.removeItem('filter-data');
-		setSearchParams('');
-		refresh();
-	}, [refresh, setSearch, setSearchParams]);
+  const clearSearch = useCallback(() => {
+    setSearch('');
+    setFilterData(initialFilterData);
+    setSearchParams('');
+    refresh();
+  }, [refresh, setSearch, setSearchParams]);
 
 	const hasMore = useMemo(
 		() => shelters.page * shelters.perPage < shelters.count,
-		[shelters.page, shelters.perPage, shelters.count],
+		[shelters.page, shelters.perPage, shelters.count]
 	);
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
@@ -97,30 +96,14 @@ const Home = () => {
       perPage: shelters.perPage,
       search: qs.stringify(factorySearchArgs(filterData)),
     };
-    refresh({ params }, true);
-  }, [
-    refresh,
-    filterData,
-    shelters.filters,
-    shelters.page,
-    shelters.perPage,
-    factorySearchArgs,
-  ]);
 
-  useEffect(() => {
-    if (
-      filterData.search ||
-      filterData.cities.length > 0 ||
-      filterData.priorities.length > 0 ||
-      filterData.shelterStatus.length > 0 ||
-      filterData.supplyCategoryIds.length > 0 ||
-      filterData.supplyIds.length > 0
-    ) {
-      setSearchParams(qs.stringify(filterData));
-      refresh({ params: { search: qs.stringify(filterData) } });
-    }
-    saveFilterData(filterData);
-  }, [filterData, refresh, setSearchParams]);
+    refresh(
+      {
+        params: params,
+      },
+      true
+    );
+  }, [refresh, filterData, shelters.filters, shelters.page, shelters.perPage]);
 
   return (
     <div className='flex flex-col h-screen items-center'>

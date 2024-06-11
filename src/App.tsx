@@ -14,7 +14,7 @@ const App = () => {
       <BrowserRouter>
         <SessionProvider>
           <DonationCartProvider>
-            <ThemeProvider defaultTheme='light'>
+            <ThemeProvider>
               <BackToTop />
               <Routes />
             </ThemeProvider>

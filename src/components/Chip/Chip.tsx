@@ -1,9 +1,9 @@
-import { cva } from 'class-variance-authority';
 import React from 'react';
-import type { IChipProps } from './types';
+import { IChipProps } from './types';
+import { cva } from 'class-variance-authority';
 
 const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
-	const { label, className, variant = 'info', ...rest } = props;
+  const { label, className, variant = 'info', ...rest } = props;
 
   const variants = cva(
     'px-4 py-1.5 font-medium text-sm md:text-md rounded-2xl dark:text-black',
