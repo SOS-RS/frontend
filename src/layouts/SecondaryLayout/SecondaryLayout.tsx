@@ -2,21 +2,21 @@ import { Header } from '@/components';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
+import { PropsWithChildren } from 'react';
 
-type SecondaryLayoutProps = {
+type ISecondaryLayout = {
   header: {
     title: string;
     className?: string;
   };
   onBackClick?: () => void;
-  children: React.ReactNode;
 };
 
 const SecondaryLayout = ({
   header,
   onBackClick,
   children,
-}: SecondaryLayoutProps) => {
+}: PropsWithChildren<ISecondaryLayout>) => {
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
