@@ -1,5 +1,5 @@
-import { ChevronLeft, Pencil } from 'lucide-react';
 import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
+import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -9,18 +9,9 @@ import {
   DonationCart,
   DonationCartIcon,
   LoadingScreen,
-  SearchInput
+  SearchInput,
 } from '@/components';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { DonationCartContext } from '@/contexts';
 import { useShelter } from '@/hooks';
-import {
-  IUseShelterDataSupply,
-  ShelterCategory,
-} from '@/hooks/useShelter/types';
-import { MainLayout } from '@/layouts';
 import {
   cn,
   getAvailabilityProps,
@@ -28,10 +19,19 @@ import {
   group,
   normalizedCompare,
 } from '@/lib/utils';
-import { SupplyPriority } from '@/service/supply/types';
+import { Button } from '@/components/ui/button';
+import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
+import {
+  IUseShelterDataSupply,
+  ShelterCategory,
+} from '@/hooks/useShelter/types';
 import { IShelterAvailabilityProps } from '../Home/components/ShelterListItem/types';
+import { SupplyPriority } from '@/service/supply/types';
 import { ShelterCategoryList } from './components';
+import { Separator } from '@/components/ui/separator';
+import { DonationCartContext } from '@/contexts';
 import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
+import { MainLayout } from '@/layouts';
 
 const defaultPriorities: SupplyPriority[] = [
   SupplyPriority.Urgent,
