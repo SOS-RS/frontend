@@ -3,5 +3,6 @@ export enum PaginatedQueryPath {
   ShelterCities = '/shelters/cities',
   SupplyCategories = '/supply-categories',
   Supplies = '/supplies',
+  Dashboard = '/dashboard',
   DonationOrder = '/donation/order',
 }

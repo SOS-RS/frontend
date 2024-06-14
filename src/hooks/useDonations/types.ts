@@ -8,6 +8,14 @@ export interface IUseDonationsData {
   results: IDonationsData[];
 }
 
+export interface IDonationOrderSupplies {
+  quantity: number;
+  supply: {
+    measure: string;
+    name: string;
+  };
+}
+
 export interface IDonationsData {
   id: string;
   user: {
