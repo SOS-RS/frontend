@@ -186,6 +186,7 @@ const EditShelterSupply = () => {
               <ChevronLeft size={20} />
             </Button>
           }
+          to={`/abrigo/${shelterId}`}
         />
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
