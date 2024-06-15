@@ -24,6 +24,8 @@ import { IDonateItem } from '@/service/donationOrder/types';
 import { TextField } from '../../../TextField';
 import { ICreateUser } from '@/service/users/types';
 import { IDonationCartForm } from './types';
+import { ConfirmDialog } from '@/components/ConfirmDialog/ConfirmDialog';
+import { toast } from '@/components/ui/use-toast';
 
 const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
   (props, ref) => {
@@ -39,6 +41,9 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
     const handleCancelCart = useCallback(() => {
       clearCart(shelterId);
       if (onCancel) onCancel();
+      toast({
+        title: 'Doação cancelada com sucesso',
+      });
     }, [clearCart, onCancel, shelterId]);
 
     const handleChangeQuantity = useCallback(
@@ -251,9 +256,15 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
         </div>
         <SheetFooter className="border-t-[1px] border-border">
           <div className="w-full flex justify-between p-4">
-            <Button size="sm" variant="ghost" onClick={handleCancelCart}>
-              Cancelar
-            </Button>
+            <ConfirmDialog
+              variant="ghost"
+              label="Cancelar"
+              title="Você realmente deseja cancelar esta doação?"
+              description="Essa ação não pode ser desfeita"
+              labelOnConfirm="Sim"
+              labelOnCancel="Não"
+              onClickConfirm={handleCancelCart}>
+              </ConfirmDialog>
             <Button
               type="submit"
               disabled={cart.length === 0}
