@@ -1,5 +1,5 @@
-import React, { Fragment, createRef, useMemo, useState } from "react";
-import { format } from "date-fns";
+import React, { Fragment, createRef, useMemo, useState } from 'react';
+import { format } from 'date-fns';
 import {
   ChevronDown,
   ChevronUp,
@@ -7,16 +7,16 @@ import {
   CircleX,
   PackageCheck,
   Printer,
-} from "lucide-react";
-import clsx from "clsx";
-import { useReactToPrint } from "react-to-print";
+} from 'lucide-react';
+import clsx from 'clsx';
+import { useReactToPrint } from 'react-to-print';
 
-import { IDonationHistoryListItem } from "./types";
-import { SupplyMeasureMap, cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { DonateOrderStatus } from "@/service/donationOrder/types";
-import { DonationHistoryStatus } from "../DonationHistoryStatus";
-import { DonationVoucher } from "@/components";
+import { IDonationHistoryListItem } from './types';
+import { SupplyMeasureMap, cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { DonateOrderStatus } from '@/service/donationOrder/types';
+import { DonationHistoryStatus } from '../DonationHistoryStatus';
+import { DonationVoucher } from '@/components';
 
 const DonationHistoryListItem = React.forwardRef<
   HTMLDivElement,
@@ -27,7 +27,7 @@ const DonationHistoryListItem = React.forwardRef<
     onCancel,
     onConfirm,
     loading,
-    className = "",
+    className = '',
     ...rest
   } = props;
   const [visible, setVisible] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const DonationHistoryListItem = React.forwardRef<
     removeAfterPrint: true,
   });
   const accordeonLabel = useMemo(
-    () => (visible ? "Ocultar itens doados" : "Mostrar itens doados"),
+    () => (visible ? 'Ocultar itens doados' : 'Mostrar itens doados'),
     [visible],
   );
   const AccordeonIcon = useMemo(
@@ -50,7 +50,7 @@ const DonationHistoryListItem = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex flex-col gap-2 items-start bg-slate-100 rounded-md p-4",
+        'flex flex-col gap-2 items-start bg-slate-100 rounded-md p-4',
         className,
       )}
       {...rest}
@@ -108,7 +108,7 @@ const DonationHistoryListItem = React.forwardRef<
           variant="ghost"
           size="sm"
           className={clsx(
-            "!text-red-500 font-medium hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md flex gap-2 mt-2 hover:!text-red-400 [&_svg]:hover:stroke-red-400",
+            '!text-red-500 font-medium hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md flex gap-2 mt-2 hover:!text-red-400 [&_svg]:hover:stroke-red-400',
             {
               hidden: donation.status !== DonateOrderStatus.Pending,
             },
@@ -123,7 +123,7 @@ const DonationHistoryListItem = React.forwardRef<
           variant="ghost"
           size="sm"
           className={clsx(
-            "!text-green-600 font-medium hover:bg-green-100 active:bg-green-200 px-4 py-1 rounded-md flex gap-2 mt-2 hover:!text-green-500 [&_svg]:hover:stroke-green-500",
+            '!text-green-600 font-medium hover:bg-green-100 active:bg-green-200 px-4 py-1 rounded-md flex gap-2 mt-2 hover:!text-green-500 [&_svg]:hover:stroke-green-500',
             {
               hidden: donation.status !== DonateOrderStatus.Pending,
             },

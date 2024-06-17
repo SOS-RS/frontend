@@ -1,3 +1,3 @@
-import { LoadingSkeleton } from "./LoadingSkeleton";
+import { LoadingSkeleton } from './LoadingSkeleton';
 
 export { LoadingSkeleton };

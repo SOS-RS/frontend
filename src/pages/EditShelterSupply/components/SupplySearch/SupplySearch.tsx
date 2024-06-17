@@ -1,9 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { IUseSuppliesData } from "@/hooks/useSupplies/types";
-import { Search, PlusCircle, X } from "lucide-react";
-import { useState } from "react";
-import { Fragment } from "react/jsx-runtime";
-import { ISupplySearchProps } from "./types";
+import { Input } from '@/components/ui/input';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { Search, PlusCircle, X } from 'lucide-react';
+import { useState } from 'react';
+import { Fragment } from 'react/jsx-runtime';
+import { ISupplySearchProps } from './types';
 
 export const SupplySearch = ({
   supplyItems,
@@ -12,7 +12,7 @@ export const SupplySearch = ({
   onSelectItem,
   onAddNewItem,
 }: ISupplySearchProps) => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<IUseSuppliesData | null>(
     null,
   );
@@ -35,8 +35,8 @@ export const SupplySearch = ({
 
   function onClearClickHandler() {
     setSelectedItem(null);
-    setSearchValue("");
-    onSearch("");
+    setSearchValue('');
+    onSearch('');
   }
 
   return (

@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { CircleStatus } from "@/components";
-import { ISupplyRowInfoProps } from "./types";
-import { getSupplyPriorityProps } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import { CircleStatus } from '@/components';
+import { ISupplyRowInfoProps } from './types';
+import { getSupplyPriorityProps } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 const SupplyRowInfo = (props: ISupplyRowInfoProps) => {
   const { name, priority, quantity, onClick } = props;

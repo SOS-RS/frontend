@@ -1,5 +1,5 @@
-import { BadgeCheck } from "lucide-react";
-import WithTooltip from "@/components/ui/with-tooltip.tsx";
+import { BadgeCheck } from 'lucide-react';
+import WithTooltip from '@/components/ui/with-tooltip.tsx';
 
 const VerifiedBadge = () => {
   return (

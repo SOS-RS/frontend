@@ -1,30 +1,30 @@
-import { useCallback, useMemo } from "react";
-import Select from "react-select";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useCallback, useMemo } from 'react';
+import Select from 'react-select';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-import { LoadingScreen, SearchInput } from "@/components";
-import { Separator } from "@/components/ui/separator";
-import { useSupplyCategories } from "@/hooks";
-import { ISupplyCategory } from "@/hooks/useSupplyCategories/types";
-import { useSupplies } from "@/hooks/useSupplies";
-import { Button } from "@/components/ui/button";
+import { LoadingScreen, SearchInput } from '@/components';
+import { Separator } from '@/components/ui/separator';
+import { useSupplyCategories } from '@/hooks';
+import { ISupplyCategory } from '@/hooks/useSupplyCategories/types';
+import { useSupplies } from '@/hooks/useSupplies';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   IFilterFormikProps,
   IFilterProps,
   ShelterAvailabilityStatus,
-} from "./types";
-import { ShelterAvailabilityStatusMap, priorityOptions } from "@/lib/utils";
-import CitiesFilter from "./CitiesFilter";
-import { IUseSuppliesData } from "@/hooks/useSupplies/types";
-import { SupplyPriority } from "@/service/supply/types";
+} from './types';
+import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
+import CitiesFilter from './CitiesFilter';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { SupplyPriority } from '@/service/supply/types';
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -121,7 +121,7 @@ const Filter = (props: IFilterProps) => {
   const handleToggleShelterStatus = useCallback(
     (checked: boolean, status: ShelterAvailabilityStatus) => {
       setFieldValue(
-        "shelterStatus",
+        'shelterStatus',
         checked
           ? [
               ...values.shelterStatus,
@@ -148,14 +148,14 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
-                onChange={(v) => setFieldValue("search", v)}
+                onChange={(v) => setFieldValue('search', v)}
               />
             </div>
             <Separator className="mt-2" />
             <CitiesFilter
               cities={values.cities}
               setCities={(cities: string[]) => {
-                setFieldValue("cities", cities);
+                setFieldValue('cities', cities);
               }}
             />
             <Separator className="mt-2" />
@@ -180,7 +180,7 @@ const Filter = (props: IFilterProps) => {
                       value: priority,
                     }),
                   )}
-                  onChange={(v) => setFieldValue("priorities", v)}
+                  onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
@@ -197,7 +197,7 @@ const Filter = (props: IFilterProps) => {
                       value: el.id,
                     }))
                     .sort((a, b) => a.label.localeCompare(b.label))}
-                  onChange={(v) => setFieldValue("supplyCategories", v)}
+                  onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -209,7 +209,7 @@ const Filter = (props: IFilterProps) => {
                   isMulti
                   value={values.supplies}
                   options={supplyOptions}
-                  onChange={(v) => setFieldValue("supplies", v)}
+                  onChange={(v) => setFieldValue('supplies', v)}
                 />
               </div>
             </div>
@@ -224,10 +224,10 @@ const Filter = (props: IFilterProps) => {
                     type="checkbox"
                     className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, "available")
+                      handleToggleShelterStatus(ev.target.checked, 'available')
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === "available",
+                      (s) => s.value === 'available',
                     )}
                   />
                   Abrigo Disponivel
@@ -241,11 +241,11 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(
                         ev.target.checked,
-                        "unavailable",
+                        'unavailable',
                       )
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === "unavailable",
+                      (s) => s.value === 'unavailable',
                     )}
                   />
                   Abrigo Indisponível
@@ -257,10 +257,10 @@ const Filter = (props: IFilterProps) => {
                     type="checkbox"
                     className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     onChange={(ev) =>
-                      handleToggleShelterStatus(ev.target.checked, "waiting")
+                      handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
                     defaultChecked={values.shelterStatus.some(
-                      (s) => s.value === "waiting",
+                      (s) => s.value === 'waiting',
                     )}
                   />
                   Sem informação de disponibilidade

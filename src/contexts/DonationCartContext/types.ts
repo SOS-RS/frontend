@@ -1,5 +1,5 @@
-import { SupplyMeasure } from "@/hooks/useShelter/types";
-import { SupplyPriority } from "@/service/supply/types";
+import { SupplyMeasure } from '@/hooks/useShelter/types';
+import { SupplyPriority } from '@/service/supply/types';
 
 export interface IDonationCartItem {
   id: string;
@@ -18,7 +18,7 @@ export interface IDonationCartContext {
   updateItem: (
     shelterId: string,
     supplyId: string,
-    payload: Partial<Omit<IDonationCartItem, "id">>,
+    payload: Partial<Omit<IDonationCartItem, 'id'>>,
   ) => void;
   clearCart: (shelterId: string) => void;
   updateCart: (shelterId: string, items: IDonationCartItem[]) => void;

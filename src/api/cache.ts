@@ -1,5 +1,5 @@
-import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import qs from "qs";
+import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import qs from 'qs';
 
 const defaultTtl: number = 1000 * 60 * 5;
 
@@ -19,11 +19,11 @@ function checkCacheHasExpired(
 function clearCache(onlyExpired: boolean = true) {
   log(
     onlyExpired
-      ? "cache - checando caches expirados..."
-      : "cache - limpando cache...",
+      ? 'cache - checando caches expirados...'
+      : 'cache - limpando cache...',
   );
   Object.keys(localStorage)
-    .filter((key: string) => key.startsWith("cache:"))
+    .filter((key: string) => key.startsWith('cache:'))
     .forEach((key) => {
       const data = localStorage.getItem(key);
       if (data) {
@@ -37,11 +37,11 @@ function clearCache(onlyExpired: boolean = true) {
 
 function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
   if (
-    config.method === "get" &&
+    config.method === 'get' &&
     config.url &&
-    config.headers["x-app-cache"] === "true"
+    config.headers['x-app-cache'] === 'true'
   ) {
-    const url = "cache:" + config.url + "?" + qs.stringify(config.params);
+    const url = 'cache:' + config.url + '?' + qs.stringify(config.params);
     const cache = localStorage.getItem(url);
     if (cache) {
       const { data, timestamp } = JSON.parse(cache);
@@ -59,11 +59,11 @@ function getCacheRequestData(config: InternalAxiosRequestConfig<any>) {
 
 function handleCacheResponse(resp: AxiosResponse<any, any>) {
   const url =
-    "cache:" + resp.config.url + "?" + qs.stringify(resp.config.params);
+    'cache:' + resp.config.url + '?' + qs.stringify(resp.config.params);
   if (
-    resp.config.method === "get" &&
+    resp.config.method === 'get' &&
     resp.config.url &&
-    resp.config.headers["x-app-cache"] === "true" &&
+    resp.config.headers['x-app-cache'] === 'true' &&
     resp.status >= 200 &&
     resp.status < 300
   ) {

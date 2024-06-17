@@ -1,19 +1,19 @@
-import { IUseShelterData } from "@/hooks/useShelter/types";
+import { IUseShelterData } from '@/hooks/useShelter/types';
 
 const formatShelterAddressFields = (
   payload: Partial<
-    Pick<IUseShelterData, "street" | "streetNumber" | "neighbourhood">
+    Pick<IUseShelterData, 'street' | 'streetNumber' | 'neighbourhood'>
   >,
 ): string => {
   const { street, streetNumber, neighbourhood } = payload;
-  return [street, streetNumber, neighbourhood].filter(Boolean).join(", ");
+  return [street, streetNumber, neighbourhood].filter(Boolean).join(', ');
 };
 
 const checkAndFormatAddress = (
   payload: Partial<
     Pick<
       IUseShelterData,
-      "address" | "city" | "street" | "streetNumber" | "neighbourhood"
+      'address' | 'city' | 'street' | 'streetNumber' | 'neighbourhood'
     >
   >,
   showCity = true,
@@ -21,12 +21,12 @@ const checkAndFormatAddress = (
   const { address, city, ...rest } = payload;
   return (
     address ??
-    `${formatShelterAddressFields(rest)}${showCity ? ` - ${city}` : ""}`
+    `${formatShelterAddressFields(rest)}${showCity ? ` - ${city}` : ''}`
   );
 };
 
 function getShelterNameBeforeSeparator(input: string): string {
-  return input.replace(/[(\-[{].*$/, "");
+  return input.replace(/[(\-[{].*$/, '');
 }
 
 export { checkAndFormatAddress, getShelterNameBeforeSeparator };

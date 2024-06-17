@@ -1,17 +1,17 @@
-import { useCallback, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { cva } from "class-variance-authority";
+import { useCallback, useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
+import { cva } from 'class-variance-authority';
 
-import { BurgerMenu, Header, Loader } from "@/components";
-import { useDonations } from "@/hooks/useDonations";
-import { DonationHistoryListItem } from "./components";
-import { DonationOrderServices } from "@/service";
-import { DonateOrderStatus } from "@/service/donationOrder/types";
-import { useToast } from "@/components/ui/use-toast";
-import { withAuth } from "@/hocs";
+import { BurgerMenu, Header, Loader } from '@/components';
+import { useDonations } from '@/hooks/useDonations';
+import { DonationHistoryListItem } from './components';
+import { DonationOrderServices } from '@/service';
+import { DonateOrderStatus } from '@/service/donationOrder/types';
+import { useToast } from '@/components/ui/use-toast';
+import { withAuth } from '@/hocs';
 
 const DonationsHistoryComponent = () => {
-  const [selectedTab, setSelectedTab] = useState<"made" | "received">("made");
+  const [selectedTab, setSelectedTab] = useState<'made' | 'received'>('made');
   const {
     data: donations,
     loading: loadingDonations,
@@ -21,7 +21,7 @@ const DonationsHistoryComponent = () => {
   const { toast } = useToast();
 
   const handleChangeTab = useCallback(
-    (newStatus: "made" | "received") => {
+    (newStatus: 'made' | 'received') => {
       setSelectedTab(newStatus);
       refresh({
         params: {
@@ -41,7 +41,7 @@ const DonationsHistoryComponent = () => {
         })
         .catch((err) => {
           toast({
-            title: "Ocorreu um erro ao atualizar o status da doação",
+            title: 'Ocorreu um erro ao atualizar o status da doação',
             description: `${err?.response?.data?.message ?? err}`,
           });
         })
@@ -52,15 +52,15 @@ const DonationsHistoryComponent = () => {
     [refresh, selectedTab, toast],
   );
 
-  const tabsVariants = cva("font-semibold text-lg border-b-2 !text-black", {
+  const tabsVariants = cva('font-semibold text-lg border-b-2 !text-black', {
     variants: {
       variant: {
-        active: "border-red-500",
-        default: "border-transparent",
+        active: 'border-red-500',
+        default: 'border-transparent',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
   });
 
@@ -73,18 +73,18 @@ const DonationsHistoryComponent = () => {
           <TabsList className="space-x-4">
             <TabsTrigger
               value="made"
-              onClick={() => handleChangeTab("made")}
+              onClick={() => handleChangeTab('made')}
               className={tabsVariants({
-                variant: selectedTab === "made" ? "active" : "default",
+                variant: selectedTab === 'made' ? 'active' : 'default',
               })}
             >
               Doado
             </TabsTrigger>
             <TabsTrigger
               value="received"
-              onClick={() => handleChangeTab("received")}
+              onClick={() => handleChangeTab('received')}
               className={tabsVariants({
-                variant: selectedTab === "received" ? "active" : "default",
+                variant: selectedTab === 'received' ? 'active' : 'default',
               })}
             >
               Recebido

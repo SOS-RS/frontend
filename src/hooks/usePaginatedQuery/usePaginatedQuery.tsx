@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import { AxiosRequestConfig } from "axios";
+import { useCallback, useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
-import { api } from "@/api";
-import { PaginatedQueryPath } from "./paths";
-import { IPaginatedResponse } from "./types";
-import { IServerResponse } from "@/types";
+import { api } from '@/api';
+import { PaginatedQueryPath } from './paths';
+import { IPaginatedResponse } from './types';
+import { IServerResponse } from '@/types';
 
 function usePaginatedQuery<T = any>(
   path: string | PaginatedQueryPath,

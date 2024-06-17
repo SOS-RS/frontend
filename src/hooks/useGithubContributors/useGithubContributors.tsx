@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import axios, { AxiosRequestConfig } from "axios";
+import { useCallback, useEffect, useState } from 'react';
+import axios, { AxiosRequestConfig } from 'axios';
 
-import { IGithubContributor } from "./types";
+import { IGithubContributor } from './types';
 
 function useGithubContributors(owner: string, repo: string) {
   const [loading, setLoading] = useState<boolean>(true);

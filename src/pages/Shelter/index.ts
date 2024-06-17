@@ -1,3 +1,3 @@
-import { Shelter } from "./Shelter";
+import { Shelter } from './Shelter';
 
 export { Shelter };

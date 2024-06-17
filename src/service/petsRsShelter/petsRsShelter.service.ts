@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { IPetsRsShelter } from "./types";
+import { IPetsRsShelter } from './types';
 
 const PetsRsShelterServices = {
   getByName: async (name: string): Promise<IPetsRsShelter> => {
