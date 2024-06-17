@@ -1,13 +1,13 @@
-import axios, { AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
-import { clearCache, getCacheRequestData, handleCacheResponse } from './cache';
-import { getHmacHeaders } from './hmac';
+import axios, { AxiosRequestHeaders, InternalAxiosRequestConfig } from "axios";
+import { clearCache, getCacheRequestData, handleCacheResponse } from "./cache";
+import { getHmacHeaders } from "./hmac";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:4000/',
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:4000/",
 });
 
 function handleRequestAuthToken(config: InternalAxiosRequestConfig<any>) {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
 }
 
@@ -27,7 +27,7 @@ api.interceptors.request.use((config) => {
       method: config.method?.toUpperCase(),
       url: [config.url, new URLSearchParams(config.params).toString()]
         .filter((p) => !!p)
-        .join('?'),
+        .join("?"),
       body: config.data,
     });
     Object.assign(config.headers, hmacHeaders);
@@ -43,10 +43,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       clearCache(false);
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export { api };

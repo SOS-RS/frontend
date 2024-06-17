@@ -1,33 +1,33 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import React, { useCallback, useContext, useMemo, useState } from "react";
+import { Trash2 } from "lucide-react";
 
 import {
   SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from '../../../ui/sheet';
-import { DonationCartContext, SessionContext } from '@/contexts';
-import { Input } from '../../../ui/input';
-import { Button } from '../../../ui/button';
-import { SupplyMeasureMap, cn, getSupplyPriorityProps } from '@/lib/utils';
-import { CircleStatus } from '../../../CircleStatus';
-import { Separator } from '../../../ui/separator';
-import { IDonationCartItem } from '@/contexts/DonationCartContext/types';
+} from "../../../ui/sheet";
+import { DonationCartContext, SessionContext } from "@/contexts";
+import { Input } from "../../../ui/input";
+import { Button } from "../../../ui/button";
+import { SupplyMeasureMap, cn, getSupplyPriorityProps } from "@/lib/utils";
+import { CircleStatus } from "../../../CircleStatus";
+import { Separator } from "../../../ui/separator";
+import { IDonationCartItem } from "@/contexts/DonationCartContext/types";
 import {
   DonationOrderServices,
   SessionServices,
   // ShelterSupplyServices,
   UserServices,
-} from '@/service';
-import { IDonateItem } from '@/service/donationOrder/types';
-import { TextField } from '../../../TextField';
-import { ICreateUser } from '@/service/users/types';
-import { IDonationCartForm } from './types';
+} from "@/service";
+import { IDonateItem } from "@/service/donationOrder/types";
+import { TextField } from "../../../TextField";
+import { ICreateUser } from "@/service/users/types";
+import { IDonationCartForm } from "./types";
 
 const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
   (props, ref) => {
-    const { shelterId, onCancel, onSuccess, className = '', ...rest } = props;
+    const { shelterId, onCancel, onSuccess, className = "", ...rest } = props;
     const { refreshSession, session } = useContext(SessionContext);
     const { carts, removeItem, clearCart, updateItem } =
       useContext(DonationCartContext);
@@ -49,7 +49,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
         }));
         updateItem(shelterId, item.id, { quantity });
       },
-      [shelterId, updateItem]
+      [shelterId, updateItem],
     );
 
     // const verifyCartItems = useCallback(
@@ -76,11 +76,11 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
     // );
 
     const verifyAccountExists = useCallback(async (phone: string) => {
-      const { data } = await UserServices.find('phone', phone);
+      const { data } = await UserServices.find("phone", phone);
       if (data.exists) {
         setErrors({
           phone:
-            'Já existe um usuário com este telefone. Faça login ou tente outro telefone',
+            "Já existe um usuário com este telefone. Faça login ou tente outro telefone",
         });
         return false;
       }
@@ -99,18 +99,18 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
             name: name.toString(),
             lastName: lastName.toString(),
           });
-          const parsedPhone = phone.toString().replace(/[^0-9]/g, '');
+          const parsedPhone = phone.toString().replace(/[^0-9]/g, "");
           const resp = await SessionServices.auth({
             login: parsedPhone,
             password: parsedPhone,
           });
-          localStorage.setItem('token', resp.token);
+          localStorage.setItem("token", resp.token);
           refreshSession();
         }
 
         return true;
       },
-      [refreshSession, verifyAccountExists]
+      [refreshSession, verifyAccountExists],
     );
 
     const handleDonate = useCallback(
@@ -126,7 +126,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           if (ok) {
             const items = Object.entries(rest).reduce(
               (prev, [key, value]) => [...prev, { id: key, quantity: +value }],
-              [] as IDonateItem[]
+              [] as IDonateItem[],
             );
             //TODO: discutir produto se vai e como será verificado os "erros" do carrinho
             // const errorsData = await verifyCartItems(shelterId, items);
@@ -141,24 +141,24 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
             // }
           }
         } catch (err) {
-          console.log('Ocorreu um erro ao realizar a doação');
+          console.log("Ocorreu um erro ao realizar a doação");
         } finally {
           setLoading(false);
         }
       },
-      [clearCart, handleCreateAccount, onSuccess, shelterId]
+      [clearCart, handleCreateAccount, onSuccess, shelterId],
     );
 
     return (
       <form
-        className={cn('contents', className)}
+        className={cn("contents", className)}
         onSubmit={handleDonate}
         ref={ref}
         {...rest}
       >
         <SheetHeader className="px-4">
           <SheetTitle>
-            {[session?.name, 'Revise sua doação'].filter((p) => !!p).join(', ')}
+            {[session?.name, "Revise sua doação"].filter((p) => !!p).join(", ")}
           </SheetTitle>
           <SheetDescription>
             Ajuste a quantidade que gostaria de doar em cada item
@@ -176,7 +176,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
                 <div className="flex justify-between gap-2 flex-nowrap">
                   <div className="flex flex-1 gap-1 items-center">
                     <CircleStatus
-                      className={cn(className, 'rounded-full w-3 h-3')}
+                      className={cn(className, "rounded-full w-3 h-3")}
                     />
                     <span className="text-sm font-medium">{item.name}</span>
                   </div>
@@ -267,7 +267,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
         </SheetFooter>
       </form>
     );
-  }
+  },
 );
 
 export { DonationCartForm };

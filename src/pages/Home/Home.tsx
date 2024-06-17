@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { RotateCw } from 'lucide-react';
-import qs from 'qs';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { RotateCw } from "lucide-react";
+import qs from "qs";
 
-import { BurgerMenu, Footer, Header } from '@/components';
-import { useShelters, useThrottle } from '@/hooks';
-import { Button } from '@/components/ui/button';
-import { Filter, ShelterListView } from './components';
-import { IFilterFormProps } from './components/Filter/types';
+import { BurgerMenu, Footer, Header } from "@/components";
+import { useShelters, useThrottle } from "@/hooks";
+import { Button } from "@/components/ui/button";
+import { Filter, ShelterListView } from "./components";
+import { IFilterFormProps } from "./components/Filter/types";
 
 const initialFilterData: IFilterFormProps = {
-  search: '',
+  search: "",
   priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
@@ -20,7 +20,7 @@ const initialFilterData: IFilterFormProps = {
 
 const loadFilterData = (): IFilterFormProps => {
   const storedFilterData = JSON.parse(
-    localStorage.getItem('filter-data') || '{}'
+    localStorage.getItem("filter-data") || "{}",
   );
   return {
     ...initialFilterData,
@@ -30,16 +30,15 @@ const loadFilterData = (): IFilterFormProps => {
 };
 
 const saveFilterData = (filterData: IFilterFormProps) => {
-  localStorage.setItem('filter-data', JSON.stringify(filterData));
+  localStorage.setItem("filter-data", JSON.stringify(filterData));
 };
 
 const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>(
-    loadFilterData()
-  );
+  const [filterData, setFilterData] =
+    useState<IFilterFormProps>(loadFilterData());
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -50,20 +49,20 @@ const Home = () => {
         refresh({ params });
       },
     },
-    [filterData]
+    [filterData],
   );
 
   const clearSearch = useCallback(() => {
-    setSearch('');
+    setSearch("");
     setFilterData(initialFilterData);
-    localStorage.removeItem('filter-data');
-    setSearchParams('');
+    localStorage.removeItem("filter-data");
+    setSearchParams("");
     refresh();
   }, [refresh, setSearch, setSearchParams]);
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
-    [shelters.page, shelters.perPage, shelters.count]
+    [shelters.page, shelters.perPage, shelters.count],
   );
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
@@ -87,7 +86,7 @@ const Home = () => {
       saveFilterData(values);
       refresh({ params: { search: searchQuery } });
     },
-    [refresh, setSearchParams, factorySearchArgs]
+    [refresh, setSearchParams],
   );
 
   const handleFetchMore = useCallback(() => {
@@ -166,7 +165,7 @@ const Home = () => {
             { ...filterData, cities: v },
             {
               skipNulls: true,
-            }
+            },
           );
           setSearchParams(searchQuery);
           refresh({

@@ -1,6 +1,6 @@
-import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
-import { ChevronLeft, Pencil } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Fragment, useCallback, useContext, useMemo, useState } from "react";
+import { ChevronLeft, Pencil } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   Authenticated,
@@ -11,27 +11,27 @@ import {
   Header,
   LoadingScreen,
   SearchInput,
-} from '@/components';
-import { useShelter } from '@/hooks';
+} from "@/components";
+import { useShelter } from "@/hooks";
 import {
   cn,
   getAvailabilityProps,
   getSupplyPriorityProps,
   group,
   normalizedCompare,
-} from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
+} from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { VerifiedBadge } from "@/components/VerifiedBadge/VerifiedBadge.tsx";
 import {
   IUseShelterDataSupply,
   ShelterCategory,
-} from '@/hooks/useShelter/types';
-import { IShelterAvailabilityProps } from '../Home/components/ShelterListItem/types';
-import { SupplyPriority } from '@/service/supply/types';
-import { ShelterCategoryList } from './components';
-import { Separator } from '@/components/ui/separator';
-import { DonationCartContext } from '@/contexts';
-import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
+} from "@/hooks/useShelter/types";
+import { IShelterAvailabilityProps } from "../Home/components/ShelterListItem/types";
+import { SupplyPriority } from "@/service/supply/types";
+import { ShelterCategoryList } from "./components";
+import { Separator } from "@/components/ui/separator";
+import { DonationCartContext } from "@/contexts";
+import { ShelterCategoryListItemProps } from "./components/ShelterCategoryList/types";
 
 const defaultPriorities: SupplyPriority[] = [
   SupplyPriority.Urgent,
@@ -41,7 +41,7 @@ const defaultPriorities: SupplyPriority[] = [
 
 const Shelter = () => {
   const params = useParams();
-  const { shelterId = '-1' } = params;
+  const { shelterId = "-1" } = params;
   const navigate = useNavigate();
   const { toggleOpened, addItem, opened, carts } =
     useContext(DonationCartContext);
@@ -54,31 +54,34 @@ const Shelter = () => {
           shelteredPeople: shelter?.shelteredPeople,
           category: shelter?.category,
         }),
-      [shelter?.capacity, shelter?.shelteredPeople, shelter?.category]
+      [shelter?.capacity, shelter?.shelteredPeople, shelter?.category],
     );
   const [priorities, setPriorities] =
     useState<SupplyPriority[]>(defaultPriorities);
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
 
   const supplyGroups = useMemo(() => {
     if (!shelter?.shelterSupplies) return {};
-    const groups = group(shelter.shelterSupplies, 'supply.supplyCategory.name');
-    return Object.entries(groups).reduce((prev, [name, list]) => {
-      const filtered = list.filter(
-        (l) =>
-          priorities.includes(l.priority) &&
-          (!search || normalizedCompare(l.supply.name, search))
-      );
-      if (filtered.length > 0) return { [name]: filtered, ...prev };
-      else return prev;
-    }, {} as Record<string, IUseShelterDataSupply[]>);
+    const groups = group(shelter.shelterSupplies, "supply.supplyCategory.name");
+    return Object.entries(groups).reduce(
+      (prev, [name, list]) => {
+        const filtered = list.filter(
+          (l) =>
+            priorities.includes(l.priority) &&
+            (!search || normalizedCompare(l.supply.name, search)),
+        );
+        if (filtered.length > 0) return { [name]: filtered, ...prev };
+        else return prev;
+      },
+      {} as Record<string, IUseShelterDataSupply[]>,
+    );
   }, [shelter, priorities, search]);
 
   const handleSelectPriority = (priority: SupplyPriority) => {
     setPriorities((prev) =>
       prev.includes(priority)
         ? prev.filter((p) => p !== priority)
-        : [...prev, priority]
+        : [...prev, priority],
     );
   };
 
@@ -86,9 +89,9 @@ const Shelter = () => {
     (item: ShelterCategoryListItemProps) => {
       if (!opened) {
         const hasViewedCart =
-          localStorage.getItem('has-viewed-cart') === 'true';
+          localStorage.getItem("has-viewed-cart") === "true";
         if (!hasViewedCart) {
-          localStorage.setItem('has-viewed-cart', 'true');
+          localStorage.setItem("has-viewed-cart", "true");
           toggleOpened();
         }
       }
@@ -97,7 +100,7 @@ const Shelter = () => {
         quantity: item.quantity || 1,
       });
     },
-    [addItem, opened, shelterId, toggleOpened]
+    [addItem, opened, shelterId, toggleOpened],
   );
 
   if (loading) return <LoadingScreen />;
@@ -117,7 +120,7 @@ const Shelter = () => {
               size="sm"
               variant="ghost"
               className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
             >
               <ChevronLeft size={20} />
             </Button>
@@ -134,7 +137,7 @@ const Shelter = () => {
             {shelter.verified && <VerifiedBadge />}
           </div>
           <div className="flex items-center justify-between pr-4">
-            <h1 className={cn(availabilityClassName, 'font-semibold')}>
+            <h1 className={cn(availabilityClassName, "font-semibold")}>
               {availability}
             </h1>
             <Authenticated
@@ -172,7 +175,7 @@ const Shelter = () => {
               value={search}
               onChange={(value) => setSearch(value)}
               inputProps={{
-                placeholder: 'Digite o item a doar',
+                placeholder: "Digite o item a doar",
               }}
             />
           </div>
@@ -184,10 +187,10 @@ const Shelter = () => {
                   key={idx}
                   label={label}
                   className={cn(
-                    'bg-transparent border-[1px] border-border cursor-pointer',
+                    "bg-transparent border-[1px] border-border cursor-pointer",
                     priorities.includes(priority)
                       ? className
-                      : 'hover:bg-gray-100'
+                      : "hover:bg-gray-100",
                   )}
                   onClick={() => handleSelectPriority(priority)}
                 />

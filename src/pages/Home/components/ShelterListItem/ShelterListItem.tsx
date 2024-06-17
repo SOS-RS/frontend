@@ -1,23 +1,23 @@
-import { useCallback, useMemo } from 'react';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { useCallback, useMemo } from "react";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 
 import {
   IShelterListItemProps,
   IShelterAvailabilityProps,
   ShelterTagInfo,
-} from './types';
+} from "./types";
 import {
   cn,
   getAvailabilityProps,
   getSupplyPriorityProps,
   groupShelterSuppliesByTag,
-} from '@/lib/utils';
-import { Button } from '../../../../components/ui/button';
-import { VerifiedBadge } from '@/components/VerifiedBadge/VerifiedBadge.tsx';
-import { IUseSheltersDataSupplyData } from '@/hooks/useShelters/types';
-import { ShelterSupplyCategoryRow } from '../ShelterSupplyCategoryRow';
+} from "@/lib/utils";
+import { Button } from "../../../../components/ui/button";
+import { VerifiedBadge } from "@/components/VerifiedBadge/VerifiedBadge.tsx";
+import { IUseSheltersDataSupplyData } from "@/hooks/useShelters/types";
+import { ShelterSupplyCategoryRow } from "../ShelterSupplyCategoryRow";
 
 const Wrapper = ({
   children,
@@ -48,7 +48,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
           shelteredPeople,
           category: data.category,
         }),
-      [capacity, shelteredPeople, data.category]
+      [capacity, shelteredPeople, data.category],
     );
 
   const tags: ShelterTagInfo<IUseSheltersDataSupplyData[]> = useMemo(() => {
@@ -64,8 +64,8 @@ const ShelterListItem = (props: IShelterListItemProps) => {
   }, []);
 
   const updatedAtDate = data.updatedAt
-    ? format(data.updatedAt, 'dd/MM/yyyy HH:mm')
-    : '(sem informação)';
+    ? format(data.updatedAt, "dd/MM/yyyy HH:mm")
+    : "(sem informação)";
 
   return (
     <Wrapper link={`/abrigo/${data.id}`} active={data.actived}>
@@ -87,7 +87,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             </Button>
           )}
         </div>
-        <h6 className={cn('font-semibold text-md', availabilityClassName)}>
+        <h6 className={cn("font-semibold text-md", availabilityClassName)}>
           {availability}
         </h6>
         <h6 className="text-muted-foreground text-sm md:text-lg font-medium">

@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import { useCallback, useEffect, useState } from "react";
+import axios, { AxiosRequestConfig } from "axios";
 
-import { IGithubContributor } from './types';
+import { IGithubContributor } from "./types";
 
 function useGithubContributors(owner: string, repo: string) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -13,12 +13,12 @@ function useGithubContributors(owner: string, repo: string) {
       axios
         .get(
           `https://api.github.com/repos/${owner}/${repo}/contributors`,
-          config
+          config,
         )
         .then(({ data }) => setData(data))
         .finally(() => setLoading(false));
     },
-    [owner, repo]
+    [owner, repo],
   );
 
   useEffect(() => {

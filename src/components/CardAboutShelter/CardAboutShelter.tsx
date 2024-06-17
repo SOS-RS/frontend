@@ -8,20 +8,20 @@ import {
   Building,
   MapPinned,
   Link,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Card } from '../ui/card';
-import { ICardAboutShelter } from './types';
-import { InfoRow } from './components';
-import { checkAndFormatAddress, getShelterNameBeforeSeparator } from './utils';
-import { ShelterCategory } from '@/hooks/useShelter/types';
-import { Fragment } from 'react/jsx-runtime';
-import { PetsRsShelterServices } from '@/service/petsRsShelter/petsRsShelter.service';
-import { useEffect, useState } from 'react';
+import { Card } from "../ui/card";
+import { ICardAboutShelter } from "./types";
+import { InfoRow } from "./components";
+import { checkAndFormatAddress, getShelterNameBeforeSeparator } from "./utils";
+import { ShelterCategory } from "@/hooks/useShelter/types";
+import { Fragment } from "react/jsx-runtime";
+import { PetsRsShelterServices } from "@/service/petsRsShelter/petsRsShelter.service";
+import { useEffect, useState } from "react";
 
 const CardAboutShelter = (props: ICardAboutShelter) => {
   const { shelter } = props;
-  const [ petsRsShelterUrl, setPetsRsShelterUrl ] = useState('');
+  const [petsRsShelterUrl, setPetsRsShelterUrl] = useState("");
 
   const check = (v?: string | number | boolean | null) => {
     return v !== undefined && v !== null;
@@ -29,16 +29,18 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
 
   const getPetsRsShelterUrl = async (name: string) => {
     const cleanShelterName = getShelterNameBeforeSeparator(name);
-    const data  = await PetsRsShelterServices.getByName(cleanShelterName);
-    const petsRsShelterUrl = data?.id ? `https://petsrs.com.br/abrigo/${data.id}` : 'https://petsrs.com.br/abrigos';
+    const data = await PetsRsShelterServices.getByName(cleanShelterName);
+    const petsRsShelterUrl = data?.id
+      ? `https://petsrs.com.br/abrigo/${data.id}`
+      : "https://petsrs.com.br/abrigos";
     return petsRsShelterUrl;
   };
 
   useEffect(() => {
-      if(shelter.petFriendly) {
-        getPetsRsShelterUrl(shelter.name).then((url) => setPetsRsShelterUrl(url) );
-      }
-  },[shelter.petFriendly, shelter.name]);
+    if (shelter.petFriendly) {
+      getPetsRsShelterUrl(shelter.name).then((url) => setPetsRsShelterUrl(url));
+    }
+  }, [shelter.petFriendly, shelter.name]);
 
   const formatAddress = checkAndFormatAddress(shelter, false);
   return (
@@ -78,7 +80,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
               value={
                 check(shelter.shelteredPeople)
                   ? `${shelter.shelteredPeople} pessoas`
-                  : 'Não informado'
+                  : "Não informado"
               }
             />
             <InfoRow
@@ -87,7 +89,7 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
               value={
                 check(shelter.capacity)
                   ? `${shelter.capacity} pessoas`
-                  : 'Não informado'
+                  : "Não informado"
               }
             />
           </Fragment>
@@ -96,26 +98,32 @@ const CardAboutShelter = (props: ICardAboutShelter) => {
           icon={<Smartphone />}
           label="Contato:"
           value={
-            check(shelter.contact) ? `${shelter.contact}` : 'Não informado'
+            check(shelter.contact) ? `${shelter.contact}` : "Não informado"
           }
           clipboardButton={check(shelter.contact)}
         />
         <InfoRow
           icon={<Landmark />}
           label="Chave Pix:"
-          value={check(shelter.pix) ? `${shelter.pix}` : 'Não informado'}
+          value={check(shelter.pix) ? `${shelter.pix}` : "Não informado"}
           clipboardButton={check(shelter.pix)}
         />
-      {(petsRsShelterUrl != '') ? (
+        {petsRsShelterUrl != "" ? (
           <InfoRow
             icon={<Link />}
             label={
-              <a target="_blank" href={petsRsShelterUrl} className="font-semibold text-blue-600">
+              <a
+                target="_blank"
+                href={petsRsShelterUrl}
+                className="font-semibold text-blue-600"
+              >
                 Confira o abrigo em petsrs.com.br
               </a>
             }
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
       </div>
     </Card>
   );

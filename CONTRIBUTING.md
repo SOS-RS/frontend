@@ -79,10 +79,10 @@ de forma desnecessária.
 5. Faça um push para o seu repositório com `git push`.
 6. [Sincronize seu repositório](#-sincronizando).
 7. [Abra um pull request](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
-  Não deixe de informar, no seu pull request, qual a issue que está fechando.
-  Idealmente coloque um comentário no PR que já fechará a issue, como
-  `fixes #xxxx` ou `closes #xxxx` (onde `xxxx` é o número do issue). Veja
-  [como isso funciona](https://docs.github.com/pt/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests).
+   Não deixe de informar, no seu pull request, qual a issue que está fechando.
+   Idealmente coloque um comentário no PR que já fechará a issue, como
+   `fixes #xxxx` ou `closes #xxxx` (onde `xxxx` é o número do issue). Veja
+   [como isso funciona](https://docs.github.com/pt/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests).
 8. Acompanhe a revisão do PR. Algumas verificações automáticas serão feitas (o
    Github Actions rodará o build do Vite, por exemplo). Se uma delas falhar, corrija-a, a
    revisão humana só começa quando estas checagem estão passando. Após abrir o

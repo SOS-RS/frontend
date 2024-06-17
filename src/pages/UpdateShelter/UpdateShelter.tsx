@@ -1,8 +1,8 @@
-import { Fragment, useContext, useEffect } from 'react';
-import { ChevronLeft, Loader } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useFormik } from 'formik';
-import ReactSelect from 'react-select';
+import { Fragment, useContext, useEffect } from "react";
+import { ChevronLeft, Loader } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import ReactSelect from "react-select";
 
 import {
   Authenticated,
@@ -10,28 +10,28 @@ import {
   LoadingScreen,
   SelectField,
   TextField,
-} from '@/components';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { ShelterServices } from '@/service';
-import { useShelter } from '@/hooks';
-import { IUpdateShelter } from '@/service/shelter/types';
-import { SessionContext } from '@/contexts';
-import { clearCache } from '@/api/cache';
-import { hardCodedRsCities } from '../CreateShelter/hardcodedCities';
-import { useDebouncedValue, useViaCep } from '@/hooks';
-import { cn } from '@/lib/utils';
-import { FullUpdateShelterSchema, UpdateShelterSchema } from './types';
-import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
-import { ShelterCategory } from '@/hooks/useShelter/types';
+} from "@/components";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { ShelterServices } from "@/service";
+import { useShelter } from "@/hooks";
+import { IUpdateShelter } from "@/service/shelter/types";
+import { SessionContext } from "@/contexts";
+import { clearCache } from "@/api/cache";
+import { hardCodedRsCities } from "../CreateShelter/hardcodedCities";
+import { useDebouncedValue, useViaCep } from "@/hooks";
+import { cn } from "@/lib/utils";
+import { FullUpdateShelterSchema, UpdateShelterSchema } from "./types";
+import { useAuthRoles } from "@/hooks/useAuthRoles/useAuthRoles";
+import { ShelterCategory } from "@/hooks/useShelter/types";
 
 const UpdateShelter = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const { shelterId = '-1' } = params;
+  const { shelterId = "-1" } = params;
   const { data: shelter, loading } = useShelter(shelterId);
   const { session } = useContext(SessionContext);
-  const isAuthenticated = useAuthRoles('Staff');
+  const isAuthenticated = useAuthRoles("Staff");
 
   const {
     errors,
@@ -47,15 +47,15 @@ const UpdateShelter = () => {
       shelteredPeople: shelter.shelteredPeople,
       petFriendly: shelter.petFriendly ?? false,
       verified: shelter.verified,
-      address: shelter.address ?? '',
+      address: shelter.address ?? "",
       capacity: shelter.capacity,
-      contact: shelter.contact ?? '',
-      pix: shelter.pix ?? '',
-      street: shelter.street ?? '',
-      neighbourhood: shelter.neighbourhood ?? '',
-      city: shelter.city ?? '',
-      streetNumber: shelter.streetNumber ?? '',
-      zipCode: shelter.zipCode ?? '',
+      contact: shelter.contact ?? "",
+      pix: shelter.pix ?? "",
+      street: shelter.street ?? "",
+      neighbourhood: shelter.neighbourhood ?? "",
+      city: shelter.city ?? "",
+      streetNumber: shelter.streetNumber ?? "",
+      zipCode: shelter.zipCode ?? "",
       name: shelter.name,
     },
     enableReinitialize: true,
@@ -69,14 +69,14 @@ const UpdateShelter = () => {
           await ShelterServices.adminUpdate(shelterId, values);
         else await ShelterServices.update(shelterId, values);
         toast({
-          title: 'Atualização feita com sucesso',
+          title: "Atualização feita com sucesso",
         });
         clearCache(false);
         navigate(`/abrigo/${shelterId}`);
       } catch (err: any) {
         toast({
-          variant: 'destructive',
-          title: 'Ocorreu um erro ao tentar atualizar',
+          variant: "destructive",
+          title: "Ocorreu um erro ao tentar atualizar",
           description: `${err?.response?.data?.message ?? err}`,
         });
       }
@@ -84,8 +84,8 @@ const UpdateShelter = () => {
   });
 
   const debouncedZipcode = useDebouncedValue(
-    touched?.zipCode ? values?.zipCode ?? '' : '',
-    500
+    touched?.zipCode ? values?.zipCode ?? "" : "",
+    500,
   );
 
   const { data: cepData, loading: isLoadingZipCodeData } =
@@ -94,9 +94,9 @@ const UpdateShelter = () => {
   useEffect(() => {
     if (!cepData) return;
 
-    if (cepData.logradouro) setFieldValue('street', cepData.logradouro);
-    if (cepData.bairro) setFieldValue('neighbourhood', cepData.bairro);
-    if (cepData.localidade) setFieldValue('city', cepData.localidade);
+    if (cepData.logradouro) setFieldValue("street", cepData.logradouro);
+    if (cepData.bairro) setFieldValue("neighbourhood", cepData.bairro);
+    if (cepData.localidade) setFieldValue("city", cepData.localidade);
   }, [cepData, setFieldValue, setErrors]);
 
   if (loading) return <LoadingScreen />;
@@ -126,13 +126,13 @@ const UpdateShelter = () => {
             <Authenticated role="Staff">
               <TextField
                 label="Nome do abrigo"
-                {...getFieldProps('name')}
+                {...getFieldProps("name")}
                 error={!!errors.name}
                 helperText={errors.name}
               />
               <TextField
                 label="CEP"
-                {...getFieldProps('zipCode')}
+                {...getFieldProps("zipCode")}
                 error={!!errors.zipCode}
                 helperText={errors.zipCode}
               />
@@ -141,19 +141,19 @@ const UpdateShelter = () => {
               )}
               <TextField
                 label="Logradouro (Rua/avenida)"
-                {...getFieldProps('street')}
+                {...getFieldProps("street")}
                 error={!!errors.street}
                 helperText={errors.street}
               />
               <TextField
                 label="Número"
-                {...getFieldProps('streetNumber')}
+                {...getFieldProps("streetNumber")}
                 error={!!errors.streetNumber}
                 helperText={errors.streetNumber}
               />
               <TextField
                 label="Bairro"
-                {...getFieldProps('neighbourhood')}
+                {...getFieldProps("neighbourhood")}
                 error={!!errors.neighbourhood}
                 helperText={errors.neighbourhood}
               />
@@ -173,25 +173,25 @@ const UpdateShelter = () => {
                     label: item,
                   }))}
                   onChange={(v) => {
-                    setFieldValue('city', v?.value);
+                    setFieldValue("city", v?.value);
                   }}
-                  className={cn('w-full', {
-                    'border-[1px] border-red-600 rounded-md': errors.city,
+                  className={cn("w-full", {
+                    "border-[1px] border-red-600 rounded-md": errors.city,
                   })}
                 />
                 {errors.city && (
-                  <p className={'text-red-600 text-sm'}>{errors.city}</p>
+                  <p className={"text-red-600 text-sm"}>{errors.city}</p>
                 )}
               </div>
               <TextField
                 label="Endereço"
-                {...getFieldProps('address')}
+                {...getFieldProps("address")}
                 error={!!errors.address}
                 helperText={errors.address}
               />
               <TextField
                 label="Contato"
-                {...getFieldProps('contact')}
+                {...getFieldProps("contact")}
                 error={!!errors.contact}
                 helperText={errors.contact}
               />
@@ -199,7 +199,7 @@ const UpdateShelter = () => {
                 <TextField
                   type="number"
                   label="Capacidade total do abrigo"
-                  {...getFieldProps('capacity')}
+                  {...getFieldProps("capacity")}
                   error={!!errors.capacity}
                   helperText={errors.capacity}
                 />
@@ -210,31 +210,31 @@ const UpdateShelter = () => {
                 <TextField
                   type="number"
                   label="Quantidade de pessoas abrigadas"
-                  {...getFieldProps('shelteredPeople')}
+                  {...getFieldProps("shelteredPeople")}
                   error={!!errors.shelteredPeople}
                   helperText={errors.shelteredPeople}
                 />
                 <SelectField
                   label="O abrigo aceita animais"
-                  value={values.petFriendly ? 'true' : 'false'}
+                  value={values.petFriendly ? "true" : "false"}
                   onSelectChange={(v) =>
-                    setFieldValue('petFriendly', v === 'true')
+                    setFieldValue("petFriendly", v === "true")
                   }
                   options={[
-                    { value: 'true', label: 'Sim' },
-                    { value: 'false', label: 'Não' },
+                    { value: "true", label: "Sim" },
+                    { value: "false", label: "Não" },
                   ]}
                 />
                 <Authenticated role="Staff">
                   <SelectField
                     label="O abrigo é verificado"
-                    value={values.verified ? 'true' : 'false'}
+                    value={values.verified ? "true" : "false"}
                     onSelectChange={(v) =>
-                      setFieldValue('verified', v === 'true')
+                      setFieldValue("verified", v === "true")
                     }
                     options={[
-                      { value: 'true', label: 'Sim' },
-                      { value: 'false', label: 'Não' },
+                      { value: "true", label: "Sim" },
+                      { value: "false", label: "Não" },
                     ]}
                   />
                 </Authenticated>
@@ -243,7 +243,7 @@ const UpdateShelter = () => {
             <Authenticated role="Staff">
               <TextField
                 label="Pix"
-                {...getFieldProps('pix')}
+                {...getFieldProps("pix")}
                 error={!!errors.pix}
                 helperText={errors.pix}
               />

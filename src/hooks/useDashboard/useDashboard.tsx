@@ -1,11 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
-import { AxiosRequestConfig } from 'axios';
+import { useState, useCallback, useEffect } from "react";
+import { AxiosRequestConfig } from "axios";
 
-import { api } from '@/api';
-import { IServerResponse } from '@/types';
+import { api } from "@/api";
+import { IServerResponse } from "@/types";
 
-import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
-import { IUseDashboardData, IUseDashboardOptions } from './types';
+import { PaginatedQueryPath } from "../usePaginatedQuery/paths";
+import { IUseDashboardData, IUseDashboardOptions } from "./types";
 
 const useDashboard = (options: IUseDashboardOptions = {}) => {
   const { cache } = options;
@@ -21,7 +21,7 @@ const useDashboard = (options: IUseDashboardOptions = {}) => {
   const refresh = useCallback(
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const headers = config.headers ?? {};
-      if (cache) headers['x-app-cache'] = 'true';
+      if (cache) headers["x-app-cache"] = "true";
       if (!append) setLoading(true);
       api
         .get<IServerResponse<any>>(PaginatedQueryPath.Dashboard, {
@@ -45,7 +45,7 @@ const useDashboard = (options: IUseDashboardOptions = {}) => {
           if (!append) setLoading(false);
         });
     },
-    [cache]
+    [cache],
   );
 
   useEffect(() => {

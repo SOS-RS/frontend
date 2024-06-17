@@ -1,4 +1,4 @@
-import { IDialogSelectorItemProps } from '@/components/DialogSelector/types';
+import { IDialogSelectorItemProps } from "@/components/DialogSelector/types";
 
 export interface IProps {
   open: boolean;
@@ -13,7 +13,7 @@ export interface IProps {
       };
       quantity: number;
       priority: string;
-    }
+    },
   ];
   supplyId: string;
   shelterId: string;

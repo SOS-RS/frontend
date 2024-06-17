@@ -1,4 +1,4 @@
-export type ShelterAvailabilityStatus = 'available' | 'unavailable' | 'waiting';
+export type ShelterAvailabilityStatus = "available" | "unavailable" | "waiting";
 
 export interface ISelectField<T = string> {
   label: string;
@@ -14,7 +14,8 @@ export interface IFilterFormProps {
   cities: string[];
 }
 
-export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'>{
+export interface IFilterSubmittionForm
+  extends Omit<IFilterFormProps, "priority"> {
   priority: string;
 }
 

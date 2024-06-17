@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
-import { type VariantProps } from 'class-variance-authority';
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { type VariantProps } from "class-variance-authority";
 
-import { cn } from '@/lib/utils';
-import { Loader } from 'lucide-react';
-import { buttonVariants } from './button-variants';
+import { cn } from "@/lib/utils";
+import { Loader } from "lucide-react";
+import { buttonVariants } from "./button-variants";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -25,9 +25,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const Comp = asChild ? Slot : 'button';
+    const Comp = asChild ? Slot : "button";
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
@@ -38,8 +38,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? <Loader className="w-4 h-4 animate-spin" /> : children}
       </Comp>
     );
-  }
+  },
 );
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 export { Button };

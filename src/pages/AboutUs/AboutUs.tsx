@@ -1,71 +1,71 @@
-import { Fragment, useMemo } from 'react';
-import { HandHeart, Home, LifeBuoy, Loader, Users } from 'lucide-react';
+import { Fragment, useMemo } from "react";
+import { HandHeart, Home, LifeBuoy, Loader, Users } from "lucide-react";
 
-import { BurgerMenu, Header } from '@/components';
-import { AboutCardInfo, ServicedFrontInfo } from './components';
-import { frontItems } from './frontItems';
-import { useGithubContributors } from '@/hooks';
-import WithTooltip from '@/components/ui/with-tooltip';
-import { removeDuplicatesByField } from '@/lib/utils';
-import { IAboutUsPerson } from './types';
+import { BurgerMenu, Header } from "@/components";
+import { AboutCardInfo, ServicedFrontInfo } from "./components";
+import { frontItems } from "./frontItems";
+import { useGithubContributors } from "@/hooks";
+import WithTooltip from "@/components/ui/with-tooltip";
+import { removeDuplicatesByField } from "@/lib/utils";
+import { IAboutUsPerson } from "./types";
 
 const AboutUs = () => {
   const { data: frontendContributors, loading: loadingFrontendContributors } =
-    useGithubContributors('sos-rs', 'frontend');
+    useGithubContributors("sos-rs", "frontend");
   const { data: backendContributors, loading: loadingBackendContributors } =
-    useGithubContributors('sos-rs', 'backend');
+    useGithubContributors("sos-rs", "backend");
 
   const persons: IAboutUsPerson[] = [
     {
-      name: 'Klaus Riffel',
-      link: 'https://www.linkedin.com/in/klaus-riffel-69441928/',
+      name: "Klaus Riffel",
+      link: "https://www.linkedin.com/in/klaus-riffel-69441928/",
     },
     {
-      name: 'Rhuam Estevam',
-      link: 'https://www.linkedin.com/in/rhuam/',
+      name: "Rhuam Estevam",
+      link: "https://www.linkedin.com/in/rhuam/",
     },
     {
-      name: 'José Fagundes',
-      link: 'https://www.linkedin.com/in/jos%C3%A9-fagundes/',
+      name: "José Fagundes",
+      link: "https://www.linkedin.com/in/jos%C3%A9-fagundes/",
     },
     {
-      name: 'Manoel Júnior',
-      link: 'https://www.linkedin.com/in/manoelfpjunior/',
+      name: "Manoel Júnior",
+      link: "https://www.linkedin.com/in/manoelfpjunior/",
     },
     {
-      name: 'Vinicius Arantes',
-      link: 'https://www.linkedin.com/in/viniciusrnt/',
+      name: "Vinicius Arantes",
+      link: "https://www.linkedin.com/in/viniciusrnt/",
     },
     {
-      name: 'Thiago Marins',
-      link: 'https://www.linkedin.com/in/thiago-dable',
+      name: "Thiago Marins",
+      link: "https://www.linkedin.com/in/thiago-dable",
     },
     {
-      name: 'Gabriel Mancuso',
-      link: 'https://www.linkedin.com/in/luizgabrielmancuso/',
+      name: "Gabriel Mancuso",
+      link: "https://www.linkedin.com/in/luizgabrielmancuso/",
     },
     {
-      name: 'Max Riffel',
-      link: 'https://www.linkedin.com/in/max-riffel-07a134a1/',
+      name: "Max Riffel",
+      link: "https://www.linkedin.com/in/max-riffel-07a134a1/",
     },
     {
-      name: 'Kiwi Bertola',
-      link: 'https://www.linkedin.com/in/kiwi-bertola-10079073/',
+      name: "Kiwi Bertola",
+      link: "https://www.linkedin.com/in/kiwi-bertola-10079073/",
     },
   ];
 
   const loading = useMemo(
     () => loadingBackendContributors || loadingFrontendContributors,
-    [loadingBackendContributors, loadingFrontendContributors]
+    [loadingBackendContributors, loadingFrontendContributors],
   );
   const contributors = useMemo(
     () =>
       removeDuplicatesByField(
-        'login',
+        "login",
         frontendContributors,
-        backendContributors
+        backendContributors,
       ),
-    [frontendContributors, backendContributors]
+    [frontendContributors, backendContributors],
   );
 
   return (
@@ -84,16 +84,16 @@ const AboutUs = () => {
         <p className="text-justify text-md md:text-lg font-medium [&>a]:text-blue-500 [&>a]:hover:text-blue-600 [&>a]:active:text-blue-700">
           Iniciado no domingo (04/05) e concluído na segunda (05/05), após 18
           horas seguidas de desenvolvimento, nosso webapp <b>SOS RS 🛟</b>,
-          idealizado e desenvolvido por{' '}
+          idealizado e desenvolvido por{" "}
           {persons.slice(0, -1).map((p, idx) => (
             <Fragment key={idx}>
               <a className="hover:underline" href={p.link} target="_blank">
                 {p.name}
               </a>
-              {', '}
+              {", "}
             </Fragment>
-          ))}{' '}
-          e{' '}
+          ))}{" "}
+          e{" "}
           <a
             className="hover:underline"
             href={persons.at(-1)?.link}
@@ -108,7 +108,7 @@ const AboutUs = () => {
           seu modelo colaborativo. Alcançamos rapidamente o nível de todas as
           outras iniciativas de gestão de demanda combinadas e lançamos nossa
           comunidade open source, recebendo uma enxurrada de contribuições:
-          nosso projeto alcançou <b>600 estrelas no GitHub</b> e foi{' '}
+          nosso projeto alcançou <b>600 estrelas no GitHub</b> e foi{" "}
           <b>forkeado mais de 350 vezes!</b>
         </p>
         <h3 className="text-2xl font-medium text-muted-foreground mt-8">
@@ -146,7 +146,7 @@ const AboutUs = () => {
           <LifeBuoy
             className="align-middle inline-block relative max-h-6 padding pb-0.5"
             size={18}
-          />{' '}
+          />{" "}
           apoia a gestão das demandas e necessidades dos abrigos do Rio Grande
           do Sul com informações públicas, atualizadas, confiáveis e auditáveis.
         </p>
@@ -185,7 +185,7 @@ const AboutUs = () => {
       <div className="bg-black [&>p]:text-white p-8 w-full flex justify-center mt-4">
         <p className="text-justify text-md md:text-lg">
           Agradecemos a todos que têm tornado este impacto possível! Vamos
-          continuar trabalhando juntos para fazer a diferença. Acesse:{' '}
+          continuar trabalhando juntos para fazer a diferença. Acesse:{" "}
           <a
             href="https://sos-rs.com"
             className="hover:underline text-blue-500 hover:text-blue-600 active:text-blue-700"

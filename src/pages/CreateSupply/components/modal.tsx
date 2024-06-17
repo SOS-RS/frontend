@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import {
   Dialog,
@@ -7,21 +7,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ShelterSupplyServices } from '@/service';
-import { Link } from 'react-router-dom';
-import { IMessage, IProps, ISupplies } from './types';
+} from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ShelterSupplyServices } from "@/service";
+import { Link } from "react-router-dom";
+import { IMessage, IProps, ISupplies } from "./types";
 
 const ModalCreateSupply = (props: IProps) => {
   const {
     open,
     onClose,
     title,
-    description = '',
+    description = "",
     options,
     supplies,
     supplyId,
@@ -29,13 +29,13 @@ const ModalCreateSupply = (props: IProps) => {
   } = props;
   const [data, setData] = useState({
     quantity: 0,
-    priority: '10',
+    priority: "10",
   });
   const [message, setMessage] = useState<IMessage>({
     error: false,
     register: false,
     successSub: false,
-    message: '',
+    message: "",
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const ModalCreateSupply = (props: IProps) => {
         setMessage((prev) => ({
           ...prev,
           register: true,
-          message: 'Verificamos que você já tem esse item registrado.',
+          message: "Verificamos que você já tem esse item registrado.",
         }));
         setData({
           quantity: element.quantity,
@@ -66,13 +66,13 @@ const ModalCreateSupply = (props: IProps) => {
           setMessage((prev) => ({
             ...prev,
             successSub: true,
-            message: 'Registro salvo com sucesso!',
+            message: "Registro salvo com sucesso!",
           }));
         })
         .catch(() =>
           alert(
-            'Ocorreu um erro. Por favor, tente novamente ou entre em contato com o suporte.'
-          )
+            "Ocorreu um erro. Por favor, tente novamente ou entre em contato com o suporte.",
+          ),
         );
     } else {
       ShelterSupplyServices.update(shelterId, supplyId, {
@@ -83,13 +83,13 @@ const ModalCreateSupply = (props: IProps) => {
           setMessage((prev) => ({
             ...prev,
             successSub: true,
-            message: 'Registro salvo com sucesso!',
+            message: "Registro salvo com sucesso!",
           }));
         })
         .catch(() =>
           alert(
-            'Ocorreu um erro. Por favor, tente novamente ou entre em contato com o suporte.'
-          )
+            "Ocorreu um erro. Por favor, tente novamente ou entre em contato com o suporte.",
+          ),
         );
     }
   };

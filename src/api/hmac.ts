@@ -1,4 +1,4 @@
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 export interface IHmacProps {
   method: string;
@@ -14,12 +14,12 @@ function getHmacHeaders(props: Partial<IHmacProps>) {
 
   const signature = CryptoJS.HmacSHA256(
     payload,
-    import.meta.env.VITE_HMAC_SECRET_KEY
+    import.meta.env.VITE_HMAC_SECRET_KEY,
   ).toString(CryptoJS.enc.Hex);
 
   return {
-    'x-hmac-signature': signature,
-    'x-hmac-timestamp': `${timestamp}`,
+    "x-hmac-signature": signature,
+    "x-hmac-timestamp": `${timestamp}`,
   };
 }
 

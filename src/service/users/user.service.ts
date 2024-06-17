@@ -1,29 +1,29 @@
-import { api } from '../../api';
+import { api } from "../../api";
 
-import { IServerResponse } from '@/types';
-import { ICreateUser, IFindUserResponse, IUpdateUser, IUser } from './types';
+import { IServerResponse } from "@/types";
+import { ICreateUser, IFindUserResponse, IUpdateUser, IUser } from "./types";
 
 const UserServices = {
   create: async (payload: ICreateUser): Promise<IServerResponse> => {
-    const { data } = await api.post<IServerResponse>('/users', payload);
+    const { data } = await api.post<IServerResponse>("/users", payload);
     return data;
   },
   update: async (
     userId: string,
-    payload: IUpdateUser
+    payload: IUpdateUser,
   ): Promise<IServerResponse> => {
     const { data } = await api.put<IServerResponse>(
       `/users/${userId}`,
-      payload
+      payload,
     );
     return data;
   },
   find: async (
     field: keyof IUser,
-    value: string
+    value: string,
   ): Promise<IServerResponse<IFindUserResponse>> => {
     const { data } = await api.get<IServerResponse<IFindUserResponse>>(
-      `/users/find/${field}/${value}`
+      `/users/find/${field}/${value}`,
     );
     return data;
   },

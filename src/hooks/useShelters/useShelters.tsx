@@ -1,11 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
-import { AxiosRequestConfig } from 'axios';
+import { useState, useCallback, useEffect } from "react";
+import { AxiosRequestConfig } from "axios";
 
-import { api } from '@/api';
-import { IServerResponse } from '@/types';
-import { IPaginatedResponse } from '../usePaginatedQuery/types';
-import { IUseShelterOptions, IUseSheltersData } from './types';
-import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
+import { api } from "@/api";
+import { IServerResponse } from "@/types";
+import { IPaginatedResponse } from "../usePaginatedQuery/types";
+import { IUseShelterOptions, IUseSheltersData } from "./types";
+import { PaginatedQueryPath } from "../usePaginatedQuery/paths";
 
 const useShelters = (options: IUseShelterOptions = {}) => {
   const { cache } = options;
@@ -21,16 +21,16 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
       const headers = config.headers ?? {};
-      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
-        headers['x-app-cache'] = 'true';
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== "false")
+        headers["x-app-cache"] = "true";
       if (!append) setLoading(true);
       api
         .get<IServerResponse<any>>(PaginatedQueryPath.Shelters, {
           ...config,
           headers,
           params: {
-            orderBy: 'updatedAt',
-            order: 'desc',
+            orderBy: "updatedAt",
+            order: "desc",
             search:
               search ?? new URLSearchParams(window.location.search).toString(),
             ...rest,
@@ -47,7 +47,7 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           setLoading(!append);
         });
     },
-    [cache]
+    [cache],
   );
 
   useEffect(() => {

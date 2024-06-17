@@ -1,18 +1,18 @@
-import React from 'react';
-import { Circle } from 'lucide-react';
-import { format } from 'date-fns';
+import React from "react";
+import { Circle } from "lucide-react";
+import { format } from "date-fns";
 
-import { DonationStatusMap, SupplyMeasureMap, cn } from '@/lib/utils';
-import { IDonationVoucher } from './types';
+import { DonationStatusMap, SupplyMeasureMap, cn } from "@/lib/utils";
+import { IDonationVoucher } from "./types";
 
 const DonationVoucher = React.forwardRef<HTMLDivElement, IDonationVoucher>(
   (props, ref) => {
-    const { data, className = '', ...rest } = props;
+    const { data, className = "", ...rest } = props;
 
     return (
       <div
         ref={ref}
-        className={cn('h-screen p-8 m-0 flex flex-col gap-4', className)}
+        className={cn("h-screen p-8 m-0 flex flex-col gap-4", className)}
         {...rest}
       >
         <div className="flex items-center gap-4">
@@ -53,14 +53,14 @@ const DonationVoucher = React.forwardRef<HTMLDivElement, IDonationVoucher>(
         </ul>
         <div className="flex-1 flex items-end justify-center">
           <p className="text-lg">
-            Criada às{' '}
+            Criada às{" "}
             {format(new Date(data.createdAt), "HH'h'mm 'de' dd/MM/yy")} pela
             plataforma sos-rs.com
           </p>
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { DonationVoucher };

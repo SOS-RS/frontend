@@ -1,8 +1,8 @@
-import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import React from "react";
+import { ExternalLink } from "lucide-react";
 
-import { IBurguerMenuItemProps } from './types';
-import { cn } from '@/lib/utils';
+import { IBurguerMenuItemProps } from "./types";
+import { cn } from "@/lib/utils";
 
 const BurguerMenuItem = React.forwardRef<
   HTMLAnchorElement,
@@ -13,7 +13,7 @@ const BurguerMenuItem = React.forwardRef<
     label,
     onClick,
     link,
-    className = '',
+    className = "",
     openExternal,
     ...rest
   } = props;
@@ -23,12 +23,12 @@ const BurguerMenuItem = React.forwardRef<
       ref={ref}
       href={link}
       className={cn(
-        'hover:font-semibold flex gap-2 items-center text-zinc-600 [&_svg]:stroke-zinc-500',
-        className
+        "hover:font-semibold flex gap-2 items-center text-zinc-600 [&_svg]:stroke-zinc-500",
+        className,
       )}
       onClick={onClick}
       {...rest}
-      target={openExternal ? '_blank' : undefined}
+      target={openExternal ? "_blank" : undefined}
     >
       {icon}
       {label}

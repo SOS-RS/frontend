@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { ThrottleOptions } from './types';
+import { ThrottleOptions } from "./types";
 
 function useThrottle<T>(
   options: ThrottleOptions<T>,
-  deps: any[]
+  deps: any[],
 ): [T | null, React.Dispatch<React.SetStateAction<T | null>>] {
   const { throttle = 400, callback } = options;
   const [value, setValue] = useState<T | null>(null);

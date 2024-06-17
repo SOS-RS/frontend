@@ -1,19 +1,19 @@
-import { useContext, useMemo } from 'react';
-import clsx from 'clsx';
+import { useContext, useMemo } from "react";
+import clsx from "clsx";
 
-import { SupplyMeasureMap, cn, getSupplyPriorityProps } from '@/lib/utils';
-import { ShelterCategoryListProps } from './types';
-import { CircleStatus } from '@/components';
-import { SupplyPriority } from '@/service/supply/types';
-import { DonationCartContext } from '@/contexts';
-import { IDonationCartItem } from '@/contexts/DonationCartContext/types';
+import { SupplyMeasureMap, cn, getSupplyPriorityProps } from "@/lib/utils";
+import { ShelterCategoryListProps } from "./types";
+import { CircleStatus } from "@/components";
+import { SupplyPriority } from "@/service/supply/types";
+import { DonationCartContext } from "@/contexts";
+import { IDonationCartItem } from "@/contexts/DonationCartContext/types";
 
 const ShelterCategoryList = (props: ShelterCategoryListProps) => {
   const { items, name, onDonate, shelterId } = props;
   const { carts } = useContext(DonationCartContext);
   const cart: IDonationCartItem[] = useMemo(
     () => carts[shelterId] ?? [],
-    [carts, shelterId]
+    [carts, shelterId],
   );
 
   return (
@@ -32,7 +32,7 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
                 className="flex gap-2 items-center justify-between p-1 hover:bg-gray-50"
               >
                 <div className="flex gap-2 items-center">
-                  <CircleStatus className={cn('rounded-full', className)} />
+                  <CircleStatus className={cn("rounded-full", className)} />
                   <span className="font-semibold">{item.name}</span>
                 </div>
                 <div className="flex gap-4 items-center">
@@ -46,10 +46,10 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
                     onClick={() => onDonate(item)}
                     disabled={cart.some((c) => c.id === item.id)}
                     className={clsx(
-                      'text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md disabled:bg-gray-50 disabled:text-gray-300 disabled:hover:bg-gray-50 disabled:active:bg-gray-100 disabled:cursor-not-allowed',
+                      "text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md disabled:bg-gray-50 disabled:text-gray-300 disabled:hover:bg-gray-50 disabled:active:bg-gray-100 disabled:cursor-not-allowed",
                       {
                         invisible: item.priority === SupplyPriority.Remaining,
-                      }
+                      },
                     )}
                   >
                     doar

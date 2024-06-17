@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { IHeader } from './types';
-import { cn } from '@/lib/utils';
+import { IHeader } from "./types";
+import { cn } from "@/lib/utils";
 
 const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
   const {
     endAdornment,
     startAdornment,
     title,
-    className = '',
+    className = "",
     ...rest
   } = props;
 
@@ -17,8 +17,8 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     <header
       ref={ref}
       className={cn(
-        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[100]',
-        className
+        "bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[100]",
+        className,
       )}
       {...rest}
     >
