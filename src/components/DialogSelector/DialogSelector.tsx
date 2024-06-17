@@ -77,13 +77,14 @@ const DialogSelector = (props: IDialogSelectorProps) => {
                 <Label htmlFor={option.value} className="cursor-pointer">
                   {option.label}
                 </Label>
+
               </div>
             ))}
           </RadioGroup>
         </div>
         <DialogFooter>
           <Button
-            className="w-full bg-blue-700 text-white hover:bg-blue-600 active:bg-blue-500"
+            className="w-full text-white bg-blue-700 hover:bg-blue-600 active:bg-blue-500"
             size="sm"
             onClick={() =>
               onSave ? onSave(selectedItem, quantity) : undefined
