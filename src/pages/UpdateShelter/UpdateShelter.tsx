@@ -105,18 +105,17 @@ const UpdateShelter = () => {
     <div className="flex flex-col items-center h-[calc(var(--vh,1vh)*100)] md:h-screen">
       <Header
         title="Atualização cadastral"
-        className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
         startAdornment={
           <Button
             variant="ghost"
-            className="[&_svg]:stroke-blue-500"
+            className="[&_svg]:stroke-black"
             onClick={() => navigate(-1)}
           >
             <ChevronLeft size={20} />
           </Button>
         }
       />
-      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+      <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full pt-20">
         <form className="contents" onSubmit={handleSubmit}>
           <h6 className="text-2xl font-semibold">Atualização cadastral</h6>
           <p className="text-muted-foreground">
@@ -253,7 +252,7 @@ const UpdateShelter = () => {
             <Button
               loading={isSubmitting}
               type="submit"
-              className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+              className="font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
             >
               Atualizar
             </Button>

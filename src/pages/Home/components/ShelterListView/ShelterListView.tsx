@@ -38,8 +38,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           {searchParams.toString()
             ? `Abrigos encontrados (${count})`
-            : `Total de abrigos  (${count})`
-          }
+            : `Total de abrigos (${count})`}
         </h1>
         <Alert
           description="Você pode consultar a lista de abrigos disponíveis. Ver e editar os itens que necessitam de doações."
@@ -70,20 +69,20 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
           <Button
             variant="ghost"
             size="sm"
-            className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+            className="group flex gap-2 items-center bg-btn-base hover:btn-hover hover:text-black active:btn-hover border-[1px] border-input"
             onClick={onOpenModal}
           >
-            <ListFilter className="h-5 w-5 stroke-blue-500" />
+            <ListFilter className="h-5 w-5" />
             Filtros
           </Button>
           {searchParams.toString() && (
             <Button
               variant="ghost"
               size="sm"
-              className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
+              className="group flex gap-2 items-center bg-btn-base hover:btn-hover hover:text-black active:btn-hover border-[1px] border-input"
               onClick={onClearSearch}
             >
-              <CircleAlert className="h-5 w-5 stroke-blue-500" />
+              <CircleAlert className="h-5 w-5" />
               Limpar Filtros
             </Button>
           )}
@@ -100,7 +99,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               ))}
               {hasMoreItems ? (
                 <Button
-                  className="bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700"
+                  className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
                   size="sm"
                   loading={loading}
                   onClick={onFetchMoreData}

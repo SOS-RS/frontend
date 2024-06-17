@@ -1,7 +1,6 @@
 import { Fragment, useCallback, useContext, useMemo, useState } from 'react';
 import { ChevronLeft, Pencil } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import {
   Authenticated,
   CardAboutShelter,
@@ -143,11 +142,11 @@ const Shelter = () => {
             >
               <Button
                 variant="ghost"
-                className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+                className="bg-primary-green hover:bg-light-green text-white font-medium text-xs md:text-base py-2 px-1 md:py-2 md:px-4 rounded-full gap-2"
                 onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
               >
                 Editar
-                <Pencil size={17} className="stroke-blue-600" />
+                <Pencil size={17} className="stroke-white" />
               </Button>
             </Authenticated>
           </div>
@@ -159,11 +158,11 @@ const Shelter = () => {
             <div className="flex gap-2 items-center ">
               <Button
                 variant="ghost"
-                className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+                className="font-medium text-[16px] text-green-600 flex gap-2 items-center hover:text-green-500 active:text-green-700"
                 onClick={() => navigate(`/abrigo/${shelterId}/items`)}
               >
                 Editar itens
-                <Pencil size={17} className="stroke-blue-600" />
+                <Pencil size={17} className="stroke-green-600" />
               </Button>
             </div>
           </div>

@@ -17,7 +17,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant,
+      variant = 'default',
       size,
       loading = false,
       disabled,

@@ -55,11 +55,18 @@ const CreateSupply = () => {
     validationSchema: Yup.object().shape({
       shelterId: Yup.string().required('Este campo deve ser preenchido'),
       name: Yup.string()
-      .matches(/^[a-zA-ZÀ-ÿ0-9\s]*$/, "O nome não deve conter caracteres especiais")
-      .test('min-letters', 'O nome deve conter pelo menos 3 letras', value => {
-        const letterCount = (value?.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
-        return letterCount >= 3;
-      })
+        .matches(
+          /^[a-zA-ZÀ-ÿ0-9\s]*$/,
+          'O nome não deve conter caracteres especiais'
+        )
+        .test(
+          'min-letters',
+          'O nome deve conter pelo menos 3 letras',
+          (value) => {
+            const letterCount = (value?.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
+            return letterCount >= 3;
+          }
+        )
         .min(3, 'Insira no mínimo 3 caracteres')
         .required('Este campo deve ser preenchido'),
       quantity: Yup.number()
@@ -113,7 +120,7 @@ const CreateSupply = () => {
       : [];
 
   const renderSupplies = (element: IUseSuppliesData, key: number) => {
-        if (values.name.length < 3 || key > 30) return <></>;
+    if (values.name.length < 3 || key > 30) return <></>;
 
     return (
       <Fragment key={key}>
@@ -169,7 +176,7 @@ const CreateSupply = () => {
           startAdornment={
             <Button
               variant="ghost"
-              className="[&_svg]:stroke-blue-500"
+              className="[&_svg]:stroke-green-500"
               onClick={() => navigate(-1)}
             >
               <ChevronLeft size={20} />
@@ -282,7 +289,7 @@ const CreateSupply = () => {
                 loading={isSubmitting}
                 type="submit"
                 disabled={filteredSupplies.length > 0}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+                className="flex gap-2 text-white font-medium text-lg bg-green-500 hover:bg-green-600 w-full"
               >
                 Salvar
               </Button>

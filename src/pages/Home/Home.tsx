@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RotateCw } from 'lucide-react';
 import qs from 'qs';
-
 import { BurgerMenu, Footer, Header } from '@/components';
 import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
@@ -123,7 +122,7 @@ const Home = () => {
   }, [filterData, refresh, setSearchParams]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex flex-col min-h-screen max-w-full items-center">
       {isModalOpen && (
         <Filter
           open={isModalOpen}
@@ -142,7 +141,6 @@ const Home = () => {
               variant="ghost"
               size="sm"
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>

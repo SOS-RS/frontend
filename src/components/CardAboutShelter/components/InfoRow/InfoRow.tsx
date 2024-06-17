@@ -18,7 +18,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     ) : isLink ? (
       <a
         href={value}
-        className="text-blue-500 break-all cursor-pointer hover:underline"
+        className="text-btn-base break-all cursor-pointer hover:underline"
       >
         {value}
       </a>
@@ -47,7 +47,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {ValueComp}
             {clipboardButton && value && (
               <div
-                className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
+                className="text-green-600 mx-2 hover:cursor-pointer active:text-green-800"
                 onClick={() => navigator.clipboard.writeText(value)}
               >
                 copiar
