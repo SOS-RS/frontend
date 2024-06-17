@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { ICircleStatus } from "./types";
-import { cn } from "@/lib/utils";
+import { ICircleStatus } from './types';
+import { cn } from '@/lib/utils';
 
 const CircleStatus = React.forwardRef<HTMLDivElement, ICircleStatus>(
   (props, ref) => {

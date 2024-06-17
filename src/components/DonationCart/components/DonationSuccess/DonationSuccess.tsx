@@ -1,23 +1,23 @@
-import React, { createRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Circle, HeartHandshake, Loader, Printer } from "lucide-react";
-import { useReactToPrint } from "react-to-print";
-import { format } from "date-fns";
+import React, { createRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Circle, HeartHandshake, Loader, Printer } from 'lucide-react';
+import { useReactToPrint } from 'react-to-print';
+import { format } from 'date-fns';
 
 import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { IDonationSuccessProps } from "./types";
-import { SupplyMeasureMap, cn } from "@/lib/utils";
-import { useDonationOrder } from "@/hooks";
-import { Button } from "@/components/ui/button";
-import { DonationVoucher } from "@/components";
+} from '@/components/ui/sheet';
+import { IDonationSuccessProps } from './types';
+import { SupplyMeasureMap, cn } from '@/lib/utils';
+import { useDonationOrder } from '@/hooks';
+import { Button } from '@/components/ui/button';
+import { DonationVoucher } from '@/components';
 
 const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
   (props, ref) => {
-    const { donationOrderId, className = "", ...rest } = props;
+    const { donationOrderId, className = '', ...rest } = props;
     const { data: donation, loading } = useDonationOrder(donationOrderId);
     const navigate = useNavigate();
     const divRef = createRef<HTMLDivElement>();
@@ -29,7 +29,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
       return <Loader className="stroke-gray-500 w-6 h-6 animate-spin" />;
 
     return (
-      <div ref={ref} className={cn("contents", className)} {...rest}>
+      <div ref={ref} className={cn('contents', className)} {...rest}>
         <DonationVoucher
           ref={divRef}
           data={donation}
@@ -57,7 +57,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
               </small>
               <h3 className="font-semibold">{donation.shelter.name}</h3>
               <small className="text-xs text-semibold">
-                às{" "}
+                às{' '}
                 {format(new Date(donation.createdAt), "HH'h'mm 'de' dd/MM/yy")}
               </small>
             </div>
@@ -88,7 +88,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
           <Button
             className="w-full"
             variant="destructive"
-            onClick={() => navigate("/doacoes")}
+            onClick={() => navigate('/doacoes')}
           >
             Verificar histórico de doações
           </Button>

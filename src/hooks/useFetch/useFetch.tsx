@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { AxiosRequestConfig } from "axios";
+import { useCallback, useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
-import { api } from "@/api";
-import { IServerResponse } from "@/types";
-import { IUseFetchOptions } from "./types";
+import { api } from '@/api';
+import { IServerResponse } from '@/types';
+import { IUseFetchOptions } from './types';
 
 function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
   const { cache, initialValue } = options;
@@ -13,8 +13,8 @@ function useFetch<T = any>(path?: string, options: IUseFetchOptions<T> = {}) {
   const refresh = useCallback(
     (config?: AxiosRequestConfig<any>) => {
       const headers = config?.headers ?? {};
-      if (cache && import.meta.env.VITE_REQUEST_CACHE !== "false")
-        headers["x-app-cache"] = "true";
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
+        headers['x-app-cache'] = 'true';
       setLoading(true);
 
       if (path) {

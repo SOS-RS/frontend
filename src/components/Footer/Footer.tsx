@@ -1,24 +1,24 @@
-import React from "react";
-import { Heart } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { Heart } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const Footer = React.forwardRef<
   HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
+  React.ComponentPropsWithoutRef<'div'>
 >((props, ref) => {
-  const { className = "", ...rest } = props;
+  const { className = '', ...rest } = props;
 
   return (
     <footer
       ref={ref}
       {...rest}
       className={cn(
-        "flex w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 gap-3 justify-center flex-wrap items-center bg-red-600",
+        'flex w-full flex-col md:flex-row py-8 md:py-4 px-2 md-p4 gap-3 justify-center flex-wrap items-center bg-red-600',
         className,
       )}
     >
       <p className="text-white">
-        Para cadastrar novos abrigos clique{" "}
+        Para cadastrar novos abrigos clique{' '}
         <a
           href="https://forms.gle/2S7L2gR529Dc8P3T9"
           className="underline hover:text-gray-300"
@@ -29,7 +29,7 @@ const Footer = React.forwardRef<
       </p>
       <span className="text-white hidden md:block">•</span>
       <span className="text-white flex flex-nowrap gap-2 items-center">
-        Projeto Open Source disponível em{" "}
+        Projeto Open Source disponível em{' '}
         <a
           className="underline hover:text-gray-300 flex"
           href="https://github.com/SOS-RS"

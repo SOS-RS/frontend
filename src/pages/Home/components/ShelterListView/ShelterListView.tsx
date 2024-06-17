@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
-import { CircleAlert, ListFilter, X } from "lucide-react";
+import React, { Fragment } from 'react';
+import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
   Alert,
   NoFoundSearch,
   SearchInput,
   ShelterListItem,
-} from "@/components";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { IShelterListViewProps } from "./types";
-import { useSearchParams } from "react-router-dom";
-import { LoadingSkeleton } from "@/components/LoadingSkeleton";
+} from '@/components';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { IShelterListViewProps } from './types';
+import { useSearchParams } from 'react-router-dom';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -19,12 +19,12 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       count,
       data,
       loading = false,
-      searchValue = "",
+      searchValue = '',
       hasMoreItems = false,
       onSearchValueChange,
       onCitiesChange,
       onFetchMoreData,
-      className = "",
+      className = '',
       onOpenModal,
       onClearSearch,
       filterData,
@@ -34,7 +34,7 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     const [searchParams] = useSearchParams();
 
     return (
-      <div className={cn(className, "flex flex-col gap-2")}>
+      <div className={cn(className, 'flex flex-col gap-2')}>
         <h1 className="text-[#2f2f2f] font-semibold text-2xl">
           {searchParams.toString()
             ? `Abrigos encontrados (${count})`

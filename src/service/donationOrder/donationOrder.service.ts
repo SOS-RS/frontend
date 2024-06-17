@@ -1,17 +1,17 @@
-import { api } from "@/api";
+import { api } from '@/api';
 import {
   DonateOrderStatus,
   ICreateDonateResponse,
   ICreateDonationOrderProps,
-} from "./types";
-import { IServerResponse } from "@/types";
-import { IPaginatedResponse } from "@/hooks/usePaginatedQuery/types";
-import { IDonationsData } from "@/hooks/useDonations/types";
+} from './types';
+import { IServerResponse } from '@/types';
+import { IPaginatedResponse } from '@/hooks/usePaginatedQuery/types';
+import { IDonationsData } from '@/hooks/useDonations/types';
 
 const DonationOrderServices = {
   store: async (payload: ICreateDonationOrderProps) => {
     const { data } = await api.post<IServerResponse<ICreateDonateResponse>>(
-      "/donation/order",
+      '/donation/order',
       payload,
     );
     return data;
@@ -19,7 +19,7 @@ const DonationOrderServices = {
   getAll: async (shelterId?: string) => {
     const { data } = await api.get<
       IServerResponse<IPaginatedResponse<IDonationsData>>
-    >("/donation/order", {
+    >('/donation/order', {
       params: { shelterId },
     });
     return data;

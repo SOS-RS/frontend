@@ -1,3 +1,3 @@
-import { BackToTop } from "./BackToTop";
+import { BackToTop } from './BackToTop';
 
 export { BackToTop };

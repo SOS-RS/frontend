@@ -1,9 +1,9 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import { IDonationCartContext, IDonationCartItem } from "./types";
+import { IDonationCartContext, IDonationCartItem } from './types';
 
 function getDonationCart(): Record<string, IDonationCartItem[]> {
-  const data = localStorage.getItem("shelter-carts");
+  const data = localStorage.getItem('shelter-carts');
   if (!data) return {};
   return JSON.parse(data);
 }
@@ -35,7 +35,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
     (
       shelterId: string,
       supplyId: string,
-      payload: Partial<Omit<IDonationCartItem, "id">>,
+      payload: Partial<Omit<IDonationCartItem, 'id'>>,
     ) => {
       setCarts((state) => {
         const prev = state[shelterId] ?? [];
@@ -74,7 +74,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
   );
 
   useEffect(() => {
-    localStorage.setItem("shelter-carts", JSON.stringify(carts));
+    localStorage.setItem('shelter-carts', JSON.stringify(carts));
   }, [carts]);
 
   return (

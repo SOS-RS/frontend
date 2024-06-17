@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { ThrottleOptions } from "./types";
+import { ThrottleOptions } from './types';
 
 function useThrottle<T>(
   options: ThrottleOptions<T>,

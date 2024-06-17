@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { RotateCw } from "lucide-react";
-import qs from "qs";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { RotateCw } from 'lucide-react';
+import qs from 'qs';
 
-import { BurgerMenu, Footer, Header } from "@/components";
-import { useShelters, useThrottle } from "@/hooks";
-import { Button } from "@/components/ui/button";
-import { Filter, ShelterListView } from "./components";
-import { IFilterFormProps } from "./components/Filter/types";
+import { BurgerMenu, Footer, Header } from '@/components';
+import { useShelters, useThrottle } from '@/hooks';
+import { Button } from '@/components/ui/button';
+import { Filter, ShelterListView } from './components';
+import { IFilterFormProps } from './components/Filter/types';
 
 const initialFilterData: IFilterFormProps = {
-  search: "",
+  search: '',
   priorities: [],
   supplyCategoryIds: [],
   supplyIds: [],
@@ -20,7 +20,7 @@ const initialFilterData: IFilterFormProps = {
 
 const loadFilterData = (): IFilterFormProps => {
   const storedFilterData = JSON.parse(
-    localStorage.getItem("filter-data") || "{}",
+    localStorage.getItem('filter-data') || '{}',
   );
   return {
     ...initialFilterData,
@@ -30,7 +30,7 @@ const loadFilterData = (): IFilterFormProps => {
 };
 
 const saveFilterData = (filterData: IFilterFormProps) => {
-  localStorage.setItem("filter-data", JSON.stringify(filterData));
+  localStorage.setItem('filter-data', JSON.stringify(filterData));
 };
 
 const Home = () => {
@@ -53,10 +53,10 @@ const Home = () => {
   );
 
   const clearSearch = useCallback(() => {
-    setSearch("");
+    setSearch('');
     setFilterData(initialFilterData);
-    localStorage.removeItem("filter-data");
-    setSearchParams("");
+    localStorage.removeItem('filter-data');
+    setSearchParams('');
     refresh();
   }, [refresh, setSearch, setSearchParams]);
 

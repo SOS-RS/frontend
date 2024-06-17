@@ -1,24 +1,24 @@
-import { ChevronLeft } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { ChevronLeft } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { DialogSelector, Header, LoadingScreen } from "@/components";
-import { Button } from "@/components/ui/button";
-import { useShelter, useSupplies, useThrottle } from "@/hooks";
-import { group, normalizedCompare } from "@/lib/utils";
-import { SupplyRow, SupplySearch } from "./components";
-import { IDialogSelectorProps } from "@/components/DialogSelector/types";
-import { ISupplyRowItemProps } from "./components/SupplyRow/types";
-import { ShelterSupplyServices } from "@/service";
-import { useToast } from "@/components/ui/use-toast";
-import { SupplyPriority } from "@/service/supply/types";
-import { IUseShelterDataSupply } from "@/hooks/useShelter/types";
-import { clearCache } from "@/api/cache";
-import { IUseSuppliesData } from "@/hooks/useSupplies/types";
+import { DialogSelector, Header, LoadingScreen } from '@/components';
+import { Button } from '@/components/ui/button';
+import { useShelter, useSupplies, useThrottle } from '@/hooks';
+import { group, normalizedCompare } from '@/lib/utils';
+import { SupplyRow, SupplySearch } from './components';
+import { IDialogSelectorProps } from '@/components/DialogSelector/types';
+import { ISupplyRowItemProps } from './components/SupplyRow/types';
+import { ShelterSupplyServices } from '@/service';
+import { useToast } from '@/components/ui/use-toast';
+import { SupplyPriority } from '@/service/supply/types';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
+import { clearCache } from '@/api/cache';
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
-  const { shelterId = "-1" } = useParams();
+  const { shelterId = '-1' } = useParams();
   const { toast } = useToast();
   const { data: shelter, loading, refresh } = useShelter(shelterId);
   const { data: supplies } = useSupplies();
@@ -46,7 +46,7 @@ const EditShelterSupply = () => {
           setSearchedSupplies(filteredSupplies);
         } else {
           setSearchedSupplies([]);
-          setSearch("");
+          setSearch('');
         }
       },
     },
@@ -76,12 +76,12 @@ const EditShelterSupply = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [modalData, setModalData] = useState<Pick<
     IDialogSelectorProps,
-    "value" | "onSave" | "quantity"
+    'value' | 'onSave' | 'quantity'
   > | null>();
 
   const supplyGroups = useMemo(
     () =>
-      group<IUseSuppliesData>(filteredSupplies ?? [], "supplyCategory.name"),
+      group<IUseSuppliesData>(filteredSupplies ?? [], 'supplyCategory.name'),
     [filteredSupplies],
   );
 
@@ -104,8 +104,8 @@ const EditShelterSupply = () => {
 
           const errorCallback = (err: any) => {
             toast({
-              variant: "destructive",
-              title: "Ocorreu um erro ao atualizar a categoria do suprimento",
+              variant: 'destructive',
+              title: 'Ocorreu um erro ao atualizar a categoria do suprimento',
               description: `${err}`,
             });
           };
@@ -155,19 +155,19 @@ const EditShelterSupply = () => {
           title="Escolha a prioridade do item"
           options={[
             {
-              label: "Precisa com urgência",
+              label: 'Precisa com urgência',
               value: `${SupplyPriority.Urgent}`,
             },
             {
-              label: "Precisa",
+              label: 'Precisa',
               value: `${SupplyPriority.Needing}`,
             },
             {
-              label: "Disponível para doação",
+              label: 'Disponível para doação',
               value: `${SupplyPriority.Remaining}`,
             },
             {
-              label: "Não preciso",
+              label: 'Não preciso',
               value: `${SupplyPriority.NotNeeded}`,
             },
           ]}

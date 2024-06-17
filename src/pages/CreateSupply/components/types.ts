@@ -1,4 +1,4 @@
-import { IDialogSelectorItemProps } from "@/components/DialogSelector/types";
+import { IDialogSelectorItemProps } from '@/components/DialogSelector/types';
 
 export interface IProps {
   open: boolean;

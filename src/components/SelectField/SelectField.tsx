@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Select,
@@ -6,9 +6,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { ISelectComponentProps } from "./types";
-import { cn } from "@/lib/utils";
+} from '../ui/select';
+import { ISelectComponentProps } from './types';
+import { cn } from '@/lib/utils';
 
 const SelectField = React.forwardRef<HTMLDivElement, ISelectComponentProps>(
   (props, ref) => {
@@ -17,12 +17,12 @@ const SelectField = React.forwardRef<HTMLDivElement, ISelectComponentProps>(
       options,
       value,
       label,
-      className = "",
+      className = '',
       ...rest
     } = props;
 
     return (
-      <div ref={ref} className={cn("w-full", className)} {...rest}>
+      <div ref={ref} className={cn('w-full', className)} {...rest}>
         <label className="text-muted-foreground">{label}</label>
         <Select
           value={value}

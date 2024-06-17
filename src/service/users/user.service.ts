@@ -1,11 +1,11 @@
-import { api } from "../../api";
+import { api } from '../../api';
 
-import { IServerResponse } from "@/types";
-import { ICreateUser, IFindUserResponse, IUpdateUser, IUser } from "./types";
+import { IServerResponse } from '@/types';
+import { ICreateUser, IFindUserResponse, IUpdateUser, IUser } from './types';
 
 const UserServices = {
   create: async (payload: ICreateUser): Promise<IServerResponse> => {
-    const { data } = await api.post<IServerResponse>("/users", payload);
+    const { data } = await api.post<IServerResponse>('/users', payload);
     return data;
   },
   update: async (

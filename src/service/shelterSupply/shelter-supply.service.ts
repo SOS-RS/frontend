@@ -1,10 +1,10 @@
-import { api } from "@/api";
-import { IServerResponse } from "@/types";
+import { api } from '@/api';
+import { IServerResponse } from '@/types';
 import {
   ICreateShelterSupply,
   IShelterSupplyData,
   IUpdateShelterSupply,
-} from "./types";
+} from './types';
 
 const ShelterSupplyServices = {
   update: async (
@@ -19,7 +19,7 @@ const ShelterSupplyServices = {
     return data;
   },
   create: async (payload: ICreateShelterSupply): Promise<IServerResponse> => {
-    const { data } = await api.post("/shelter/supplies", payload);
+    const { data } = await api.post('/shelter/supplies', payload);
     return data;
   },
   getAll: async (
