@@ -99,7 +99,7 @@ const ModalCreateSupply = (props: IProps) => {
       <DialogContent className="rounded-md">
         {message.successSub ? (
           <>
-            <div className="border rounded bg-green-600 p-2 text-white mt-5">
+            <div className="mt-5 rounded border bg-green-600 p-2 text-white">
               {message.message}
             </div>
             <DialogFooter>
@@ -124,7 +124,7 @@ const ModalCreateSupply = (props: IProps) => {
               )}
             </DialogHeader>
             {message.message && (
-              <div className="border rounded bg-green-600 p-2 text-white">
+              <div className="rounded border bg-green-600 p-2 text-white">
                 {message.message}
               </div>
             )}
@@ -132,7 +132,7 @@ const ModalCreateSupply = (props: IProps) => {
               <label htmlFor="quantity" className="text-muted-foreground">
                 Quantidade
               </label>
-              <div className="flex gap-2 items-center justify-center py-2">
+              <div className="flex items-center justify-center gap-2 py-2">
                 <Input
                   type="number"
                   name="quantity"
@@ -148,7 +148,7 @@ const ModalCreateSupply = (props: IProps) => {
                 />
               </div>
             </div>
-            <div className="px-2 max-h-[50vh] overflow-y-auto">
+            <div className="max-h-[50vh] overflow-y-auto px-2">
               <RadioGroup
                 value={data.priority}
                 onValueChange={(v) =>

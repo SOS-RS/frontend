@@ -11,7 +11,7 @@ const CircleStatus = React.forwardRef<HTMLDivElement, ICircleStatus>(
       <div
         ref={ref}
         className={cn(
-          `w-${size} h-${size} bg-orange-500 rounded-md`,
+          `w-${size} h-${size} rounded-md bg-orange-500`,
           className,
         )}
         {...rest}

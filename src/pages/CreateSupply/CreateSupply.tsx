@@ -125,7 +125,7 @@ const CreateSupply = () => {
     return (
       <Fragment key={key}>
         <div
-          className="flex cursor-pointer border m-1 p-2 rounded hover:scale-105"
+          className="m-1 flex cursor-pointer rounded border p-2 hover:scale-105"
           onClick={() => {
             setSupplyId(element.id);
             setModalOpened(true);
@@ -169,10 +169,10 @@ const CreateSupply = () => {
           onClose={() => setModalOpened(false)}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex h-screen flex-col items-center">
         <Header
           title="Cadastrar novo item"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+          className="border-b-[1px] border-b-border bg-white [&_*]:text-zinc-800"
           startAdornment={
             <Button
               variant="ghost"
@@ -183,14 +183,14 @@ const CreateSupply = () => {
             </Button>
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
+        <div className="flex h-full w-full max-w-5xl flex-col items-start gap-3 p-4">
           <form className="contents" onSubmit={handleSubmit}>
             <h6 className="text-2xl font-semibold">Cadastrar novo item</h6>
             <p className="text-muted-foreground">
               Informe o nome do item que você deseja cadastrar, a categoria e a
               prioridade
             </p>
-            <div className="flex flex-col gap-6 w-full mt-6">
+            <div className="mt-6 flex w-full flex-col gap-6">
               <TextField
                 label="Nome do item"
                 {...getFieldProps('name')}
@@ -199,7 +199,7 @@ const CreateSupply = () => {
               />
               <div className="flex flex-wrap">
                 {filteredSupplies.length > 0 && (
-                  <div className="border p-2 rounded bg-amber-200 text-gray-700">
+                  <div className="rounded border bg-amber-200 p-2 text-gray-700">
                     Foram encontrados registros com as informações fornecidas.
                     Para evitar registros duplicados, pedimos a gentileza de
                     verificar se alguns dos registros abaixo lhe atende:
@@ -207,7 +207,7 @@ const CreateSupply = () => {
                 )}
                 {filteredSupplies.map(renderSupplies)}
               </div>
-              <div className="flex flex-col w-full">
+              <div className="flex w-full flex-col">
                 <label className="text-muted-foreground">Categoria</label>
                 <Select
                   onValueChange={(v) => setFieldValue('supplyCategoryId', v)}
@@ -234,7 +234,7 @@ const CreateSupply = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                <div className="text-red-600 text-sm mt-0">
+                <div className="mt-0 text-sm text-red-600">
                   {errors.supplyCategoryId}
                 </div>
               </div>
@@ -244,7 +244,7 @@ const CreateSupply = () => {
                 error={!!errors.quantity}
                 helperText={errors.quantity}
               />
-              <div className="flex flex-col w-full">
+              <div className="flex w-full flex-col">
                 <label className="text-muted-foreground">Prioridade</label>
                 <Select
                   onValueChange={(v) => {
@@ -272,7 +272,7 @@ const CreateSupply = () => {
                           value={`${priority}`}
                           className="text-muted-foreground"
                         >
-                          <div className="flex gap-2 p-2 items-center">
+                          <div className="flex items-center gap-2 p-2">
                             <CircleStatus className={className} />
                             {label}
                           </div>
@@ -282,14 +282,14 @@ const CreateSupply = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="text-red-600 text-sm mt-0">{errors.priority}</div>
+              <div className="mt-0 text-sm text-red-600">{errors.priority}</div>
             </div>
-            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+            <div className="flex w-full flex-1 flex-col justify-end py-6 md:justify-start">
               <Button
                 loading={isSubmitting}
                 type="submit"
                 disabled={filteredSupplies.length > 0}
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+                className="flex w-full gap-2 bg-blue-500 text-lg font-medium text-white hover:bg-blue-600"
               >
                 Salvar
               </Button>

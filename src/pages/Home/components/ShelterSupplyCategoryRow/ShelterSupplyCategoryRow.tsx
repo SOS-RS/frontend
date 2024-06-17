@@ -20,11 +20,11 @@ const ShelterSupplyCategoryRow = React.forwardRef<
   return (
     <div className={cn('flex flex-col gap-3', className)} ref={ref} {...rest}>
       <Separator className="mt-2" />
-      <p className="text-muted-foreground text-sm md:text-lg font-medium">
+      <p className="text-sm font-medium text-muted-foreground md:text-lg">
         {title}
       </p>
       {description && <p>{description}</p>}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {tags.slice(0, 10).map((s, idx) => (
           <Chip key={idx} {...s} />
         ))}

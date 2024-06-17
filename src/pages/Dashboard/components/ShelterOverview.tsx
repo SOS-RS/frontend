@@ -16,7 +16,7 @@ const ShelterOverview = ({
 }: IShelterOverview) => {
   return (
     <section className="overview flex gap-2">
-      <div className="flex flex-col gap-2 justify-center align-center">
+      <div className="align-center flex flex-col justify-center gap-2">
         <TotalItemsCard
           total={totalShelters as number}
           text="Total de abrigos"

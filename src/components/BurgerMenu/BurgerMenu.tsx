@@ -41,8 +41,8 @@ const BurgerMenu = () => {
       <SheetTrigger>
         <Menu color="white" className="ml-2 mr-2" />
       </SheetTrigger>
-      <SheetContent side="left" className="pt-[96px] flex flex-col z-[90]">
-        <DialogFooter className="absolute top-16 right-4">
+      <SheetContent side="left" className="z-[90] flex flex-col pt-[96px]">
+        <DialogFooter className="absolute right-4 top-16">
           <DialogClose asChild>
             <Button type="button" variant="ghost">
               <X className="stroke-muted-foreground" />
@@ -52,7 +52,7 @@ const BurgerMenu = () => {
         <div className="flex flex-col gap-4">
           {session && (
             <Fragment>
-              <div className="inline-flex items-center text-semibold">
+              <div className="text-semibold inline-flex items-center">
                 Olá, {session.name}
               </div>
               <Separator />
@@ -61,46 +61,46 @@ const BurgerMenu = () => {
           <BurguerMenuItem
             label="Sobre nós"
             link="/sobre-nos"
-            icon={<Info className="w-5 h-5" />}
+            icon={<Info className="h-5 w-5" />}
           />
           <BurguerMenuItem
             label="Minhas Doações"
             link="/doacoes"
-            icon={<HeartHandshake className="w-5 h-5" />}
+            icon={<HeartHandshake className="h-5 w-5" />}
             className={clsx({ hidden: !session })}
           />
           <BurguerMenuItem
             label="Cadastrar abrigo"
             link="https://forms.gle/2S7L2gR529Dc8P3T9"
-            icon={<CirclePlus className="w-5 h-5" />}
+            icon={<CirclePlus className="h-5 w-5" />}
             openExternal={true}
           />
           <BurguerMenuItem
             label="Canal de Denúncias"
             link="https://contatoseguro.com.br/sos_rs"
-            icon={<ShieldAlert className="w-5 h-5" />}
+            icon={<ShieldAlert className="h-5 w-5" />}
             openExternal={true}
           />
           <BurguerMenuItem
             label="Como Ajudar"
             link="https://www.instagram.com/reel/C613CfGuh4b"
-            icon={<CircleHelp className="w-5 h-5" />}
+            icon={<CircleHelp className="h-5 w-5" />}
             openExternal={true}
           />
           <BurguerMenuItem
             label="Política de Privacidade"
             link="/politica-de-privacidade"
-            icon={<Info className="w-5 h-5" />}
+            icon={<Info className="h-5 w-5" />}
           />
           <BurguerMenuItem
             label="Apoiadores"
             link="/apoiadores"
-            icon={<HeartHandshake className="w-5 h-5" />}
+            icon={<HeartHandshake className="h-5 w-5" />}
           />
           <BurguerMenuItem
             label="Visão Geral"
             link="/dashboard"
-            icon={<Info className="w-4 h-4" />}
+            icon={<Info className="h-4 w-4" />}
           />
           <Separator />
           {partners.length > 0 && (
@@ -111,7 +111,7 @@ const BurgerMenu = () => {
                   key={idx}
                   label={partner.name}
                   link={partner.link}
-                  icon={<LinkIcon className="w-4 h-4" />}
+                  icon={<LinkIcon className="h-4 w-4" />}
                 />
               ))}
             </Fragment>
@@ -120,7 +120,7 @@ const BurgerMenu = () => {
         {session && (
           <div className="mt-auto">
             <span
-              className="inline-flex items-center hover:font-semibold cursor-pointer"
+              className="inline-flex cursor-pointer items-center hover:font-semibold"
               onClick={logout}
             >
               <DoorOpen className="mr-2" /> Sair

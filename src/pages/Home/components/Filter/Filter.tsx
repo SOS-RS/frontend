@@ -137,15 +137,15 @@ const Filter = (props: IFilterProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="rounded-md overflow-y-scroll max-h-[85vh] mt-8">
+      <DialogContent className="mt-8 max-h-[85vh] overflow-y-scroll rounded-md">
         <DialogHeader>
           <DialogTitle className="text-base font-medium">
             Faça sua busca:
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="pl-4 pr-4 pb-4 flex flex-col max-w-5xl w-full items-start">
-            <div className="flex flex-col gap-2 w-full my-4">
+          <div className="flex w-full max-w-5xl flex-col items-start pb-4 pl-4 pr-4">
+            <div className="my-4 flex w-full flex-col gap-2">
               <SearchInput
                 value={values.search}
                 onChange={(v) => setFieldValue('search', v)}
@@ -159,15 +159,15 @@ const Filter = (props: IFilterProps) => {
               }}
             />
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-sm md:text-lg font-medium">Busca avançada</p>
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+            <div className="my-4 flex w-full flex-col gap-2">
+              <p className="text-sm font-medium md:text-lg">Busca avançada</p>
+              <p className="text-sm font-medium text-muted-foreground md:text-lg">
                 Você pode buscar pelo item que os abrigos precisam com urgência
                 de doação ou por itens que os abrigos tem disponibilidade para
                 doar.
               </p>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+              <div className="flex w-full flex-col gap-1">
+                <label className="text-sm font-medium text-muted-foreground md:text-lg">
                   Status do item no abrigo
                 </label>
                 <Select
@@ -183,8 +183,8 @@ const Filter = (props: IFilterProps) => {
                   onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
-              <div className="flex flex-col gap-1 w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+              <div className="flex w-full flex-col gap-1">
+                <label className="text-sm font-medium text-muted-foreground md:text-lg">
                   Categoria
                 </label>
                 <Select
@@ -200,8 +200,8 @@ const Filter = (props: IFilterProps) => {
                   onChange={(v) => setFieldValue('supplyCategories', v)}
                 />
               </div>
-              <div className="flex flex-col w-full">
-                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+              <div className="flex w-full flex-col">
+                <label className="text-sm font-medium text-muted-foreground md:text-lg">
                   Itens
                 </label>
                 <Select
@@ -214,15 +214,15 @@ const Filter = (props: IFilterProps) => {
               </div>
             </div>
             <Separator className="mt-2" />
-            <div className="flex flex-col gap-2 w-full my-4">
-              <p className="text-muted-foreground text-sm md:text-lg font-medium">
+            <div className="my-4 flex w-full flex-col gap-2">
+              <p className="text-sm font-medium text-muted-foreground md:text-lg">
                 Status do abrigo
               </p>
               <div>
-                <label className="flex items-center mb-4">
+                <label className="mb-4 flex items-center">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
@@ -234,10 +234,10 @@ const Filter = (props: IFilterProps) => {
                 </label>
               </div>
               <div>
-                <label className="flex items-center mb-4">
+                <label className="mb-4 flex items-center">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(
                         ev.target.checked,
@@ -252,10 +252,10 @@ const Filter = (props: IFilterProps) => {
                 </label>
               </div>
               <div>
-                <label className="flex items-center mb-4">
+                <label className="mb-4 flex items-center">
                   <input
                     type="checkbox"
-                    className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
@@ -268,11 +268,11 @@ const Filter = (props: IFilterProps) => {
               </div>
             </div>
           </div>
-          <DialogFooter className="sticky bg-white -bottom-6">
-            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+          <DialogFooter className="sticky -bottom-6 bg-white">
+            <div className="flex w-full flex-1 flex-col justify-end py-6 md:justify-start">
               <Button
                 type="submit"
-                className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
+                className="flex w-full gap-2 bg-blue-500 text-lg font-medium text-white hover:bg-blue-600"
               >
                 Filtrar resultados
               </Button>

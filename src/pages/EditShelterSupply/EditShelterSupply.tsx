@@ -175,10 +175,10 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex h-screen flex-col items-center">
         <Header
           title="Editar Itens"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
+          className="border-b-[1px] border-b-border bg-white [&_*]:text-zinc-800"
           startAdornment={
             <Button
               variant="ghost"
@@ -189,13 +189,13 @@ const EditShelterSupply = () => {
             </Button>
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
+        <div className="flex w-full max-w-5xl flex-col items-start gap-3 p-4">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
             Antes de adicionar um novo item, confira na busca abaixo se ele já
             não foi cadastrado.
           </p>
-          <div className="w-full my-2">
+          <div className="my-2 w-full">
             <SupplySearch
               supplyItems={searchedSupplies}
               limit={5}
@@ -210,11 +210,11 @@ const EditShelterSupply = () => {
             />
           </div>
 
-          <p className="text-muted-foreground mt-3">
+          <p className="mt-3 text-muted-foreground">
             Para cada item da lista abaixo, informe a disponibilidade no abrigo
             selecionado.
           </p>
-          <div className="flex flex-col gap-2 w-full my-4">
+          <div className="my-4 flex w-full flex-col gap-2">
             {Object.entries(supplyGroups).map(([key, values], idx) => {
               const items: ISupplyRowItemProps[] = values
                 .map((v) => {

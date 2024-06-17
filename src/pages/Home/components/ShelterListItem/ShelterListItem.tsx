@@ -31,7 +31,7 @@ const Wrapper = ({
   if (active) return <Link to={link}>{children}</Link>;
   else
     return (
-      <div className="[&>div]:hover:bg-white [&_*]:text-muted-foreground [&>div]:blur-[1px]">
+      <div className="[&>div]:blur-[1px] [&>div]:hover:bg-white [&_*]:text-muted-foreground">
         {children}
       </div>
     );
@@ -69,10 +69,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
 
   return (
     <Wrapper link={`/abrigo/${data.id}`} active={data.actived}>
-      <div className="flex flex-col p-4 w-full border-2 border-border rounded-md gap-1 relative hover:bg-accent">
+      <div className="relative flex w-full flex-col gap-1 rounded-md border-2 border-border p-4 hover:bg-accent">
         <div className="inline-flex justify-between">
           <div className="flex flex-row items-center gap-1">
-            <h3 className="font-semibold text-lg h-full hover:cursor-pointer hover:text-slate-500">
+            <h3 className="h-full text-lg font-semibold hover:cursor-pointer hover:text-slate-500">
               {data.name}
             </h3>
             {data.verified && (
@@ -87,10 +87,10 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             </Button>
           )}
         </div>
-        <h6 className={cn('font-semibold text-md', availabilityClassName)}>
+        <h6 className={cn('text-md font-semibold', availabilityClassName)}>
           {availability}
         </h6>
-        <h6 className="text-muted-foreground text-sm md:text-lg font-medium">
+        <h6 className="text-sm font-medium text-muted-foreground md:text-lg">
           {data.address}
         </h6>
         {data.shelterSupplies.length > 0 && (
@@ -109,7 +109,7 @@ const ShelterListItem = (props: IShelterListItemProps) => {
             />
           </>
         )}
-        <small className="text-sm md:text-md font-light text-muted-foreground mt-2">
+        <small className="md:text-md mt-2 text-sm font-light text-muted-foreground">
           Atualizado em {updatedAtDate}
         </small>
       </div>

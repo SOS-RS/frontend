@@ -51,7 +51,7 @@ const DialogSelector = (props: IDialogSelectorProps) => {
           <label htmlFor="quantity" className="text-muted-foreground">
             Quantidade
           </label>
-          <div className="flex gap-2 items-center justify-center py-2">
+          <div className="flex items-center justify-center gap-2 py-2">
             <Input
               type="number"
               name="quantity"
@@ -62,7 +62,7 @@ const DialogSelector = (props: IDialogSelectorProps) => {
             />
           </div>
         </div>
-        <div className="px-2 max-h-[50vh] overflow-y-auto">
+        <div className="max-h-[50vh] overflow-y-auto px-2">
           <RadioGroup
             value={selectedItem}
             onValueChange={(v) => setSelectedItem(v)}

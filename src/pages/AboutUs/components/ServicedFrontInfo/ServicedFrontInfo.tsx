@@ -11,10 +11,10 @@ const ServicedFrontInfo = React.forwardRef<
 
   return (
     <div ref={ref} {...rest} className={cn(className, 'flex gap-2')}>
-      <div className="w-12 h-12 rounded-full bg-[#F6F8FC] flex items-center justify-center">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F6F8FC]">
         {icon}
       </div>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-1 flex-col">
         <b>{title}</b>
         <p>{description}</p>
       </div>

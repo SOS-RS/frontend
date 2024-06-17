@@ -13,12 +13,12 @@ const DonationCartIcon = (props: IDonationCartIconProps) => {
     <Button
       variant="ghost"
       size="sm"
-      className="disabled:bg-red-500 hover:bg-red-400 relative"
+      className="relative hover:bg-red-400 disabled:bg-red-500"
       onClick={toggleOpened}
     >
-      <HandHeart className="w-6 h-6 stroke-white" />
+      <HandHeart className="h-6 w-6 stroke-white" />
       {!!quantity && (
-        <span className="absolute right-0 top-0 w-4 h-4 flex justify-center items-center rounded-full p-2 bg-red-700 text-xs text-white border-red-600 border-[1px]">
+        <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full border-[1px] border-red-600 bg-red-700 p-2 text-xs text-white">
           {quantity}
         </span>
       )}

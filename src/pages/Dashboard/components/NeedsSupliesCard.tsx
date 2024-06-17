@@ -9,19 +9,19 @@ const NeedsSuppliesCard = ({ catergories }: INeedsSupliesCard) => {
   const cardClass =
     'flex flex-col justify-between text-center w-56 h-auto box-border border-2 rounded-xl border-gray-200';
   return (
-    <div className="grid gap-4 grid-cols-4 p-6">
+    <div className="grid grid-cols-4 gap-4 p-6">
       {catergories?.map((categorie) => (
         <div className={cardClass}>
           <Link
             to={`/?search=&supplyCategoryIds%5B0%5D=${categorie.categoryId}`}
           >
-            <p className="font-bold text-md py-8  px-2">
+            <p className="text-md px-2 py-8 font-bold">
               {categorie.categoryName}
             </p>
           </Link>
 
-          <div className="flex box-border border-2 rounded-xl">
-            <div className="w-full h-10 border-r-2 flex justify-center items-center">
+          <div className="box-border flex rounded-xl border-2">
+            <div className="flex h-10 w-full items-center justify-center border-r-2">
               <Link to={'/?search=&priority=100'}>
                 <p className="text-center text-red-300">
                   {categorie.priority100}
@@ -29,7 +29,7 @@ const NeedsSuppliesCard = ({ catergories }: INeedsSupliesCard) => {
               </Link>
             </div>
 
-            <div className="w-full h-10 border-r-2 flex justify-center items-center">
+            <div className="flex h-10 w-full items-center justify-center border-r-2">
               <Link to={'/?search=&priority=10'}>
                 <p className="text-center text-orange-300">
                   {categorie.priority10}
@@ -37,7 +37,7 @@ const NeedsSuppliesCard = ({ catergories }: INeedsSupliesCard) => {
               </Link>
             </div>
 
-            <div className="w-full h-10 flex justify-center items-center">
+            <div className="flex h-10 w-full items-center justify-center">
               <Link to={'/?search=&priority=1'}>
                 <p className="text-center text-green-300">
                   {categorie.priority1}

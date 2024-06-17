@@ -7,9 +7,9 @@ const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <div className={`${name !== '' ? 'gap-4 flex flex-col pb-6' : 'hidden'}`}>
+    <div className={`${name !== '' ? 'flex flex-col gap-4 pb-6' : 'hidden'}`}>
       <div className="flex w-full">
-        <h3 className="font-semibold text-lg border rounded p-2 flex items-center">
+        <h3 className="flex items-center rounded border p-2 text-lg font-semibold">
           <Archive className="mr-2 size-5" />
           {name.toUpperCase()}
         </h3>

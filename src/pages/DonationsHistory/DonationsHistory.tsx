@@ -65,10 +65,10 @@ const DonationsHistoryComponent = () => {
   });
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex h-screen flex-col items-center">
       <Header title="SOS Rio Grande do Sul" startAdornment={<BurgerMenu />} />
-      <div className="w-full flex flex-col gap-4 p-4 max-w-4xl [&_*]:text-zinc-500 pb-8">
-        <h3 className="text-3xl pt-4 font-bold !text-zinc-900">Suas Doações</h3>
+      <div className="flex w-full max-w-4xl flex-col gap-4 p-4 pb-8 [&_*]:text-zinc-500">
+        <h3 className="pt-4 text-3xl font-bold !text-zinc-900">Suas Doações</h3>
         <Tabs value={selectedTab} className="space-y-4">
           <TabsList className="space-x-4">
             <TabsTrigger

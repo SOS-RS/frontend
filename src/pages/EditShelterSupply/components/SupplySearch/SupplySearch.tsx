@@ -42,42 +42,42 @@ export const SupplySearch = ({
   return (
     <Fragment>
       <div
-        className="flex items-center rounded-md border border-input px-3 h-10"
+        className="flex h-10 items-center rounded-md border border-input px-3"
         cmdk-input-wrapper=""
       >
         <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         <Input
           type="text"
-          className="outline-none border-none focus-visible:ring-transparent h-8"
+          className="h-8 border-none outline-none focus-visible:ring-transparent"
           placeholder="Buscar itens..."
           value={searchValue}
           onChange={onChangeInputHandler}
         />
         <X
-          className="h-4 w-4 ml-2 hover:cursor-pointer"
+          className="ml-2 h-4 w-4 hover:cursor-pointer"
           onClick={onClearClickHandler}
         />
       </div>
 
       {!!searchValue && !selectedItem ? (
-        <div className="flex-col items-center rounded-md border border-input p-3 bg-slate-50 mt-1">
+        <div className="mt-1 flex-col items-center rounded-md border border-input bg-slate-50 p-3">
           {supplyItems
             .sort((a, b) => a.name.length - b.name.length)
             .slice(0, limit)
             .map((item) => (
               <div
                 key={item.id}
-                className="h-10 flex items-center rounded-md p-2 hover:bg-slate-100 hover:cursor-pointer"
+                className="flex h-10 items-center rounded-md p-2 hover:cursor-pointer hover:bg-slate-100"
                 onClick={() => onSelectItemHandler(item)}
               >
                 <span className="text-sm">{item.name}</span>
               </div>
             ))}
           <div
-            className="h-10 flex items-center rounded-md p-2 hover:bg-slate-100 hover:cursor-pointer"
+            className="flex h-10 items-center rounded-md p-2 hover:cursor-pointer hover:bg-slate-100"
             onClick={onAddNewItemHandler}
           >
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <PlusCircle size={16} color="#0284c7" />
               <span className="text-sm text-sky-600">Cadastrar novo item</span>
             </div>

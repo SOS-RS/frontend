@@ -26,10 +26,10 @@ export const CitiesFilter = ({
   }));
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <div className="flex flex-col gap-2 w-full my-4">
-        <p className="text-sm md:text-lg font-medium">Cidades</p>
-        <p className="text-muted-foreground text-sm md:text-md font-medium">
+    <div className="flex w-full flex-col gap-2">
+      <div className="my-4 flex w-full flex-col gap-2">
+        <p className="text-sm font-medium md:text-lg">Cidades</p>
+        <p className="md:text-md text-sm font-medium text-muted-foreground">
           Selecione uma ou mais cidades para pesquisar.
         </p>
 

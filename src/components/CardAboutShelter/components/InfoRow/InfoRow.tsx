@@ -18,7 +18,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     ) : isLink ? (
       <a
         href={value}
-        className="text-blue-500 break-all cursor-pointer hover:underline"
+        className="cursor-pointer break-all text-blue-500 hover:underline"
       >
         {value}
       </a>
@@ -30,7 +30,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
       <div
         ref={ref}
         className={cn(
-          'flex items-start gap-2 font-medium w-full',
+          'flex w-full items-start gap-2 font-medium',
           'md:flex',
           className,
         )}
@@ -39,7 +39,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
         {React.cloneElement(icon as any, {
           className: 'min-w-5 min-h-5 w-5 h-5 stroke-muted-foreground',
         })}
-        <div className={cn('flex flex-col gap-2 items-start', 'sm:flex-row')}>
+        <div className={cn('flex flex-col items-start gap-2', 'sm:flex-row')}>
           <span className={cn('font-normal', value ? 'text-nowrap' : '')}>
             {label}
           </span>
@@ -47,7 +47,7 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {ValueComp}
             {clipboardButton && value && (
               <div
-                className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
+                className="mx-2 text-blue-600 hover:cursor-pointer active:text-blue-800"
                 onClick={() => navigator.clipboard.writeText(value)}
               >
                 copiar
