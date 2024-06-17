@@ -45,7 +45,7 @@ const useDashboard = (options: IUseDashboardOptions = {}) => {
           if (!append) setLoading(false);
         });
     },
-    [cache]
+    [cache],
   );
 
   useEffect(() => {

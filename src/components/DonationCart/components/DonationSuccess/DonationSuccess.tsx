@@ -26,7 +26,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
     });
 
     if (loading)
-      return <Loader className="stroke-gray-500 w-6 h-6 animate-spin" />;
+      return <Loader className="h-6 w-6 animate-spin stroke-gray-500" />;
 
     return (
       <div ref={ref} className={cn('contents', className)} {...rest}>
@@ -37,12 +37,12 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
         />
         <SheetHeader className="px-4">
           <SheetTitle>O RS agradece sua doação</SheetTitle>
-          <SheetDescription className="flex justify-center items-center">
+          <SheetDescription className="flex items-center justify-center">
             <HeartHandshake className="h-24 w-24" strokeWidth={0.5} />
           </SheetDescription>
         </SheetHeader>
-        <div className="px-4 flex flex-col gap-2 mt-4 flex-1">
-          <div className="flex flex-col text-md font-medium">
+        <div className="mt-4 flex flex-1 flex-col gap-2 px-4">
+          <div className="text-md flex flex-col font-medium">
             <small className="text-muted-foreground">
               Cada doação importa.
             </small>
@@ -50,13 +50,13 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
               Juntos somos mais fortes!
             </small>
           </div>
-          <div className="flex flex-col items-start bg-slate-100 rounded-md p-4">
+          <div className="flex flex-col items-start rounded-md bg-slate-100 p-4">
             <div className="flex flex-col gap-1">
-              <small className="text-muted-foreground font-medium">
+              <small className="font-medium text-muted-foreground">
                 Doação para
               </small>
               <h3 className="font-semibold">{donation.shelter.name}</h3>
-              <small className="text-xs text-semibold">
+              <small className="text-semibold text-xs">
                 às{' '}
                 {format(new Date(donation.createdAt), "HH'h'mm 'de' dd/MM/yy")}
               </small>
@@ -65,9 +65,9 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
               {donation.donationOrderSupplies.map((s, idx) => (
                 <li
                   key={idx}
-                  className="pl-2 text-sm font-medium flex gap-2 items-center"
+                  className="flex items-center gap-2 pl-2 text-sm font-medium"
                 >
-                  <Circle className="w-1 h-1 fill-muted-foreground" />
+                  <Circle className="h-1 w-1 fill-muted-foreground" />
                   {s.quantity}
                   {SupplyMeasureMap[s.supply.measure]} de {s.supply.name}
                 </li>
@@ -76,7 +76,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
             <Button
               variant="ghost"
               size="sm"
-              className="text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md flex gap-2 mt-2 hover:text-red-700 [&>svg]:hover:stroke-red-700"
+              className="mt-2 flex gap-2 rounded-md px-4 py-1 font-semibold text-red-600 hover:bg-red-50 hover:text-red-700 active:bg-red-100 [&>svg]:hover:stroke-red-700"
               onClick={() => handlePrint(null, () => divRef.current)}
             >
               <Printer className="stroke-red-600" />
@@ -84,7 +84,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
             </Button>
           </div>
         </div>
-        <div className="px-4 py-6 flex justify-center items-center border-t-[1px] border-border">
+        <div className="flex items-center justify-center border-t-[1px] border-border px-4 py-6">
           <Button
             className="w-full"
             variant="destructive"
@@ -95,7 +95,7 @@ const DonationSuccess = React.forwardRef<HTMLDivElement, IDonationSuccessProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { DonationSuccess };

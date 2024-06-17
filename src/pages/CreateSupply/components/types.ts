@@ -13,7 +13,7 @@ export interface IProps {
       };
       quantity: number;
       priority: string;
-    }
+    },
   ];
   supplyId: string;
   shelterId: string;

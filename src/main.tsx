@@ -4,7 +4,7 @@ import './global.css';
 
 document.documentElement.style.setProperty(
   '--vh',
-  `${window.innerHeight * 0.01}px`
+  `${window.innerHeight * 0.01}px`,
 );
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />);

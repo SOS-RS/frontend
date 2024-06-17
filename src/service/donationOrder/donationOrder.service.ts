@@ -12,7 +12,7 @@ const DonationOrderServices = {
   store: async (payload: ICreateDonationOrderProps) => {
     const { data } = await api.post<IServerResponse<ICreateDonateResponse>>(
       '/donation/order',
-      payload
+      payload,
     );
     return data;
   },
@@ -26,14 +26,14 @@ const DonationOrderServices = {
   },
   find: async (id: string) => {
     const { data } = await api.get<IServerResponse<IDonationsData>>(
-      `/donation/order/${id}`
+      `/donation/order/${id}`,
     );
     return data;
   },
   update: async (id: string, payload: { status: DonateOrderStatus }) => {
     const { data } = await api.put<IServerResponse>(
       `/donation/order/${id}`,
-      payload
+      payload,
     );
     return data;
   },

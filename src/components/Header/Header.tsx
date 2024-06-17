@@ -17,12 +17,12 @@ const Header = React.forwardRef<HTMLDivElement, IHeader>((props, ref) => {
     <header
       ref={ref}
       className={cn(
-        'bg-red-600 flex h-[56px] justify-between items-center text-white p-3 gap-2 w-full z-[100]',
-        className
+        'z-[100] flex h-[56px] w-full items-center justify-between gap-2 bg-red-600 p-3 text-white',
+        className,
       )}
       {...rest}
     >
-      <div className="flex gap-1 items-center">
+      <div className="flex items-center gap-1">
         {startAdornment}
         <Link className="font-medium text-white" to="/">
           {title}

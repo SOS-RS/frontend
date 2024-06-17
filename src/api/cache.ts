@@ -11,7 +11,7 @@ function log(...args: any[]) {
 
 function checkCacheHasExpired(
   timestamp: number,
-  ttl: number = defaultTtl
+  ttl: number = defaultTtl,
 ): boolean {
   return new Date().getTime() - timestamp >= ttl;
 }
@@ -20,7 +20,7 @@ function clearCache(onlyExpired: boolean = true) {
   log(
     onlyExpired
       ? 'cache - checando caches expirados...'
-      : 'cache - limpando cache...'
+      : 'cache - limpando cache...',
   );
   Object.keys(localStorage)
     .filter((key: string) => key.startsWith('cache:'))
@@ -73,7 +73,7 @@ function handleCacheResponse(resp: AxiosResponse<any, any>) {
       JSON.stringify({
         data: { data, headers, status, statusText },
         timestamp: new Date().getTime(),
-      })
+      }),
     );
   }
 }

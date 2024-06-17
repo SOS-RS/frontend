@@ -8,7 +8,7 @@ import { IServerResponse } from '@/types';
 
 function usePaginatedQuery<T = any>(
   path: string | PaginatedQueryPath,
-  defaultConfig: AxiosRequestConfig<any> = {}
+  defaultConfig: AxiosRequestConfig<any> = {},
 ) {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IPaginatedResponse<T>>({
@@ -29,7 +29,7 @@ function usePaginatedQuery<T = any>(
         .then(({ data }) => setData(data.data))
         .finally(() => setLoading(false));
     },
-    [defaultConfig, path]
+    [defaultConfig, path],
   );
 
   useEffect(() => {

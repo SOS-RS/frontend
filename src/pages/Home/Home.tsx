@@ -20,7 +20,7 @@ const initialFilterData: IFilterFormProps = {
 
 const loadFilterData = (): IFilterFormProps => {
   const storedFilterData = JSON.parse(
-    localStorage.getItem('filter-data') || '{}'
+    localStorage.getItem('filter-data') || '{}',
   );
   return {
     ...initialFilterData,
@@ -37,9 +37,8 @@ const Home = () => {
   const { data: shelters, loading, refresh } = useShelters({ cache: true });
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [, setSearchParams] = useSearchParams();
-  const [filterData, setFilterData] = useState<IFilterFormProps>(
-    loadFilterData()
-  );
+  const [filterData, setFilterData] =
+    useState<IFilterFormProps>(loadFilterData());
 
   const [, setSearch] = useThrottle<string>(
     {
@@ -50,7 +49,7 @@ const Home = () => {
         refresh({ params });
       },
     },
-    [filterData]
+    [filterData],
   );
 
   const clearSearch = useCallback(() => {
@@ -63,7 +62,7 @@ const Home = () => {
 
   const hasMore = useMemo(
     () => shelters.page * shelters.perPage < shelters.count,
-    [shelters.page, shelters.perPage, shelters.count]
+    [shelters.page, shelters.perPage, shelters.count],
   );
 
   const factorySearchArgs = useCallback((values: IFilterFormProps) => {
@@ -87,7 +86,7 @@ const Home = () => {
       saveFilterData(values);
       refresh({ params: { search: searchQuery } });
     },
-    [refresh, setSearchParams, factorySearchArgs]
+    [refresh, setSearchParams],
   );
 
   const handleFetchMore = useCallback(() => {
@@ -123,7 +122,7 @@ const Home = () => {
   }, [filterData, refresh, setSearchParams]);
 
   return (
-    <div className="flex flex-col h-screen items-center">
+    <div className="flex h-screen flex-col items-center">
       {isModalOpen && (
         <Filter
           open={isModalOpen}
@@ -136,13 +135,13 @@ const Home = () => {
         title="SOS Rio Grande do Sul"
         startAdornment={<BurgerMenu />}
         endAdornment={
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Button
               loading={loading}
               variant="ghost"
               size="sm"
               onClick={() => refresh()}
-              className="disabled:bg-red-500 hover:bg-red-400"
+              className="hover:bg-red-400 disabled:bg-red-500"
             >
               <RotateCw size={20} className="stroke-white" />
             </Button>
@@ -166,7 +165,7 @@ const Home = () => {
             { ...filterData, cities: v },
             {
               skipNulls: true,
-            }
+            },
           );
           setSearchParams(searchQuery);
           refresh({
@@ -178,7 +177,7 @@ const Home = () => {
         hasMoreItems={hasMore}
         onOpenModal={() => setOpenModal(true)}
         onClearSearch={clearSearch}
-        className="flex-1 p-4 max-w-4xl"
+        className="max-w-4xl flex-1 p-4"
       />
       <Footer />
     </div>

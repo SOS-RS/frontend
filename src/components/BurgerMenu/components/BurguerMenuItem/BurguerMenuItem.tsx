@@ -23,8 +23,8 @@ const BurguerMenuItem = React.forwardRef<
       ref={ref}
       href={link}
       className={cn(
-        'hover:font-semibold flex gap-2 items-center text-zinc-600 [&_svg]:stroke-zinc-500',
-        className
+        'flex items-center gap-2 text-zinc-600 hover:font-semibold [&_svg]:stroke-zinc-500',
+        className,
       )}
       onClick={onClick}
       {...rest}
@@ -32,7 +32,7 @@ const BurguerMenuItem = React.forwardRef<
     >
       {icon}
       {label}
-      {openExternal && <ExternalLink className="w-3 h-3" />}
+      {openExternal && <ExternalLink className="h-3 w-3" />}
     </a>
   );
 });

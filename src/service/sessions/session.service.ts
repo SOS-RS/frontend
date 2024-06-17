@@ -6,7 +6,7 @@ const SessionServices = {
   auth: async (payload: IAuthRequest): Promise<IAuthResponse> => {
     const { data } = await api.post<IServerResponse<IAuthResponse>>(
       '/sessions',
-      payload
+      payload,
     );
     return data.data;
   },

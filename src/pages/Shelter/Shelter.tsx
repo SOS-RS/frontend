@@ -54,7 +54,7 @@ const Shelter = () => {
           shelteredPeople: shelter?.shelteredPeople,
           category: shelter?.category,
         }),
-      [shelter?.capacity, shelter?.shelteredPeople, shelter?.category]
+      [shelter?.capacity, shelter?.shelteredPeople, shelter?.category],
     );
   const [priorities, setPriorities] =
     useState<SupplyPriority[]>(defaultPriorities);
@@ -63,22 +63,25 @@ const Shelter = () => {
   const supplyGroups = useMemo(() => {
     if (!shelter?.shelterSupplies) return {};
     const groups = group(shelter.shelterSupplies, 'supply.supplyCategory.name');
-    return Object.entries(groups).reduce((prev, [name, list]) => {
-      const filtered = list.filter(
-        (l) =>
-          priorities.includes(l.priority) &&
-          (!search || normalizedCompare(l.supply.name, search))
-      );
-      if (filtered.length > 0) return { [name]: filtered, ...prev };
-      else return prev;
-    }, {} as Record<string, IUseShelterDataSupply[]>);
+    return Object.entries(groups).reduce(
+      (prev, [name, list]) => {
+        const filtered = list.filter(
+          (l) =>
+            priorities.includes(l.priority) &&
+            (!search || normalizedCompare(l.supply.name, search)),
+        );
+        if (filtered.length > 0) return { [name]: filtered, ...prev };
+        else return prev;
+      },
+      {} as Record<string, IUseShelterDataSupply[]>,
+    );
   }, [shelter, priorities, search]);
 
   const handleSelectPriority = (priority: SupplyPriority) => {
     setPriorities((prev) =>
       prev.includes(priority)
         ? prev.filter((p) => p !== priority)
-        : [...prev, priority]
+        : [...prev, priority],
     );
   };
 
@@ -97,7 +100,7 @@ const Shelter = () => {
         quantity: item.quantity || 1,
       });
     },
-    [addItem, opened, shelterId, toggleOpened]
+    [addItem, opened, shelterId, toggleOpened],
   );
 
   if (loading) return <LoadingScreen />;
@@ -109,14 +112,14 @@ const Shelter = () => {
         opened={opened}
         onClose={toggleOpened}
       />
-      <div className="flex flex-col h-screen items-center">
+      <div className="flex h-screen flex-col items-center">
         <Header
           title={shelter.name}
           startAdornment={
             <Button
               size="sm"
               variant="ghost"
-              className="[&_svg]:stroke-white disabled:bg-red-500 hover:bg-red-400"
+              className="hover:bg-red-400 disabled:bg-red-500 [&_svg]:stroke-white"
               onClick={() => navigate('/')}
             >
               <ChevronLeft size={20} />
@@ -126,9 +129,9 @@ const Shelter = () => {
             <DonationCartIcon quantity={carts[shelterId]?.length} />
           }
         />
-        <div className="p-4 flex flex-col max-w-5xl w-full h-full gap-2">
+        <div className="flex h-full w-full max-w-5xl flex-col gap-2 p-4">
           <div className="flex items-center gap-1">
-            <h1 className="text-[#2f2f2f] font-semibold text-2xl">
+            <h1 className="text-2xl font-semibold text-[#2f2f2f]">
               {shelter.name}
             </h1>
             {shelter.verified && <VerifiedBadge />}
@@ -143,7 +146,7 @@ const Shelter = () => {
             >
               <Button
                 variant="ghost"
-                className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+                className="flex items-center gap-2 text-[16px] font-medium text-blue-600 hover:text-blue-500 active:text-blue-700"
                 onClick={() => navigate(`/abrigo/${shelterId}/atualizar`)}
               >
                 Editar
@@ -154,12 +157,12 @@ const Shelter = () => {
           <div>
             <CardAboutShelter shelter={shelter} />
           </div>
-          <div className="flex justify-between items-center">
-            <h1 className="font-semibold text-[18px]">Itens do abrigo</h1>
-            <div className="flex gap-2 items-center ">
+          <div className="flex items-center justify-between">
+            <h1 className="text-[18px] font-semibold">Itens do abrigo</h1>
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
-                className="font-medium text-[16px] text-blue-600 flex gap-2 items-center hover:text-blue-500 active:text-blue-700"
+                className="flex items-center gap-2 text-[16px] font-medium text-blue-600 hover:text-blue-500 active:text-blue-700"
                 onClick={() => navigate(`/abrigo/${shelterId}/items`)}
               >
                 Editar itens
@@ -176,7 +179,7 @@ const Shelter = () => {
               }}
             />
           </div>
-          <div className="flex gap-2 mt-2 flex-wrap">
+          <div className="mt-2 flex flex-wrap gap-2">
             {defaultPriorities.map((priority, idx) => {
               const { label, className } = getSupplyPriorityProps(priority);
               return (
@@ -184,17 +187,17 @@ const Shelter = () => {
                   key={idx}
                   label={label}
                   className={cn(
-                    'bg-transparent border-[1px] border-border cursor-pointer',
+                    'cursor-pointer border-[1px] border-border bg-transparent',
                     priorities.includes(priority)
                       ? className
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-100',
                   )}
                   onClick={() => handleSelectPriority(priority)}
                 />
               );
             })}
           </div>
-          <div className="flex flex-col gap-4 mt-4">
+          <div className="mt-4 flex flex-col gap-4">
             {Object.entries(supplyGroups)
               .sort((a, b) => (a[0] > b[0] ? 1 : -1))
               .map(([name, list], idx, arr) => {

@@ -49,7 +49,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
         }));
         updateItem(shelterId, item.id, { quantity });
       },
-      [shelterId, updateItem]
+      [shelterId, updateItem],
     );
 
     // const verifyCartItems = useCallback(
@@ -110,7 +110,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
 
         return true;
       },
-      [refreshSession, verifyAccountExists]
+      [refreshSession, verifyAccountExists],
     );
 
     const handleDonate = useCallback(
@@ -126,7 +126,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           if (ok) {
             const items = Object.entries(rest).reduce(
               (prev, [key, value]) => [...prev, { id: key, quantity: +value }],
-              [] as IDonateItem[]
+              [] as IDonateItem[],
             );
             //TODO: discutir produto se vai e como será verificado os "erros" do carrinho
             // const errorsData = await verifyCartItems(shelterId, items);
@@ -146,7 +146,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           setLoading(false);
         }
       },
-      [clearCart, handleCreateAccount, onSuccess, shelterId]
+      [clearCart, handleCreateAccount, onSuccess, shelterId],
     );
 
     return (
@@ -164,7 +164,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
             Ajuste a quantidade que gostaria de doar em cada item
           </SheetDescription>
         </SheetHeader>
-        <div className="px-4 flex flex-col gap-3 mt-4 flex-1">
+        <div className="mt-4 flex flex-1 flex-col gap-3 px-4">
           <div className="flex justify-between">
             <small className="font-semibold">Item</small>
             <small className="font-semibold">Quantidade</small>
@@ -173,14 +173,14 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
             const { className } = getSupplyPriorityProps(item.priority);
             return (
               <div key={item.id} className="flex flex-col gap-2">
-                <div className="flex justify-between gap-2 flex-nowrap">
-                  <div className="flex flex-1 gap-1 items-center">
+                <div className="flex flex-nowrap justify-between gap-2">
+                  <div className="flex flex-1 items-center gap-1">
                     <CircleStatus
-                      className={cn(className, 'rounded-full w-3 h-3')}
+                      className={cn(className, 'h-3 w-3 rounded-full')}
                     />
                     <span className="text-sm font-medium">{item.name}</span>
                   </div>
-                  <div className="flex flex-1 gap-2 items-center justify-end">
+                  <div className="flex flex-1 items-center justify-end gap-2">
                     <div className="relative w-3/5">
                       <Input
                         min={1}
@@ -191,7 +191,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
                           handleChangeQuantity(item, +ev.target.value)
                         }
                       />
-                      <span className="absolute top-[50%] -translate-y-1/2 right-2 text-muted-foreground text-xs -z-10">
+                      <span className="absolute right-2 top-[50%] -z-10 -translate-y-1/2 text-xs text-muted-foreground">
                         {SupplyMeasureMap[item.measure]}
                       </span>
                     </div>
@@ -201,12 +201,12 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
                       className="w-auto"
                       onClick={() => removeItem(shelterId, item.id)}
                     >
-                      <Trash2 className="w-5 h-5 stroke-red-600" />
+                      <Trash2 className="h-5 w-5 stroke-red-600" />
                     </Button>
                   </div>
                 </div>
                 {errors[item.id] && (
-                  <span className="border border-red-200 bg-red-100 text-red-500 p-2 rounded-md">
+                  <span className="rounded-md border border-red-200 bg-red-100 p-2 text-red-500">
                     <p className="text-xs font-light">{errors[item.id]}</p>
                   </span>
                 )}
@@ -216,12 +216,12 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           <Separator className="my-4" />
           {!session && (
             <div className="flex flex-col gap-2">
-              <h3 className="font-bold text-lg">Comunique sua doação</h3>
+              <h3 className="text-lg font-bold">Comunique sua doação</h3>
               <p className="text-sm font-medium text-muted-foreground">
                 Utilizaremos seus dados apenas para comunicar ao abrigo que sua
                 doação esta a caminho.
               </p>
-              <div className="flex flex-col gap-4 mt-4">
+              <div className="mt-4 flex flex-col gap-4">
                 <TextField
                   label="Nome"
                   placeholder="Insira seu nome"
@@ -250,7 +250,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
           )}
         </div>
         <SheetFooter className="border-t-[1px] border-border">
-          <div className="w-full flex justify-between p-4">
+          <div className="flex w-full justify-between p-4">
             <Button size="sm" variant="ghost" onClick={handleCancelCart}>
               Cancelar
             </Button>
@@ -267,7 +267,7 @@ const DonationCartForm = React.forwardRef<HTMLFormElement, IDonationCartForm>(
         </SheetFooter>
       </form>
     );
-  }
+  },
 );
 
 export { DonationCartForm };

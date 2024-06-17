@@ -13,11 +13,11 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
   const { carts } = useContext(DonationCartContext);
   const cart: IDonationCartItem[] = useMemo(
     () => carts[shelterId] ?? [],
-    [carts, shelterId]
+    [carts, shelterId],
   );
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex w-full flex-col gap-4">
       <h6 className="font-medium">
         {name} ({items.length} items)
       </h6>
@@ -29,13 +29,13 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
             return (
               <div
                 key={item.id}
-                className="flex gap-2 items-center justify-between p-1 hover:bg-gray-50"
+                className="flex items-center justify-between gap-2 p-1 hover:bg-gray-50"
               >
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <CircleStatus className={cn('rounded-full', className)} />
                   <span className="font-semibold">{item.name}</span>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   {item.quantity && (
                     <span className="font-semibold text-muted-foreground">{`${
                       item.quantity
@@ -46,10 +46,10 @@ const ShelterCategoryList = (props: ShelterCategoryListProps) => {
                     onClick={() => onDonate(item)}
                     disabled={cart.some((c) => c.id === item.id)}
                     className={clsx(
-                      'text-red-600 font-semibold hover:bg-red-50 active:bg-red-100 px-4 py-1 rounded-md disabled:bg-gray-50 disabled:text-gray-300 disabled:hover:bg-gray-50 disabled:active:bg-gray-100 disabled:cursor-not-allowed',
+                      'rounded-md px-4 py-1 font-semibold text-red-600 hover:bg-red-50 active:bg-red-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 disabled:hover:bg-gray-50 disabled:active:bg-gray-100',
                       {
                         invisible: item.priority === SupplyPriority.Remaining,
-                      }
+                      },
                     )}
                   >
                     doar

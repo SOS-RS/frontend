@@ -10,11 +10,11 @@ const ShelterSupplyServices = {
   update: async (
     shelterId: string,
     supplyId: string,
-    payload: IUpdateShelterSupply
+    payload: IUpdateShelterSupply,
   ): Promise<IServerResponse> => {
     const { data } = await api.put(
       `/shelter/supplies/${shelterId}/${supplyId}`,
-      payload
+      payload,
     );
     return data;
   },
@@ -23,10 +23,10 @@ const ShelterSupplyServices = {
     return data;
   },
   getAll: async (
-    shelterId: string
+    shelterId: string,
   ): Promise<IServerResponse<IShelterSupplyData[]>> => {
     const { data } = await api.get<IServerResponse<IShelterSupplyData[]>>(
-      `/shelter/supplies/${shelterId}`
+      `/shelter/supplies/${shelterId}`,
     );
     return data;
   },

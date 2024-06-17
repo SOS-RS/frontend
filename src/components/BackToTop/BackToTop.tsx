@@ -30,10 +30,7 @@ const BackToTop = () => {
   return (
     isVisible && (
       <button
-        className=" fixed ease-in-out hidden sm:flex justify-center items-center duration-300 
-    bg-red-600/75 focus:bg-red-700 hover:bg-red-700 z-[100] shadow-slate-600/75
-    right-6 bottom-6 rounded-full shadow-md
-    w-12 h-12 "
+        className="fixed bottom-6 right-6 z-[100] hidden h-12 w-12 items-center justify-center rounded-full bg-red-600/75 shadow-md shadow-slate-600/75 duration-300 ease-in-out hover:bg-red-700 focus:bg-red-700 sm:flex"
         onClick={scrollToTop}
       >
         <ArrowUp color="white" />

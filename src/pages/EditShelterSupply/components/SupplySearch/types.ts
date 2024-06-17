@@ -1,4 +1,4 @@
-import { IUseSuppliesData } from "@/hooks/useSupplies/types";
+import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 
 export interface ISupplySearchProps {
   supplyItems: IUseSuppliesData[];

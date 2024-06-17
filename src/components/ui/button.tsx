@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : 'button';
     return (
@@ -35,10 +35,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={loading || disabled}
         {...props}
       >
-        {loading ? <Loader className="w-4 h-4 animate-spin" /> : children}
+        {loading ? <Loader className="h-4 w-4 animate-spin" /> : children}
       </Comp>
     );
-  }
+  },
 );
 Button.displayName = 'Button';
 

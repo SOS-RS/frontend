@@ -47,7 +47,7 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           setLoading(!append);
         });
     },
-    [cache]
+    [cache],
   );
 
   useEffect(() => {

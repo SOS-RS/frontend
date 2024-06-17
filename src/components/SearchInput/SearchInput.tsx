@@ -20,8 +20,8 @@ const SearchInput = React.forwardRef<HTMLDivElement, ISearchInputProps>(
           value={value}
           placeholder={placeholder}
           className={cn(
-            'h-12 text-md font-medium text-zinc-600 pl-10 pr-4',
-            inputClassName
+            'text-md h-12 pl-10 pr-4 font-medium text-zinc-600',
+            inputClassName,
           )}
           onChange={(ev) =>
             onChange ? onChange(ev.target.value ?? '') : undefined
@@ -33,7 +33,7 @@ const SearchInput = React.forwardRef<HTMLDivElement, ISearchInputProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { SearchInput };

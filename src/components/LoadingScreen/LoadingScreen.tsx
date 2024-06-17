@@ -18,12 +18,12 @@ const LoadingScreen = (props: ILoadingScreen) => {
       defaultVariants: {
         variant: 'full',
       },
-    }
+    },
   );
 
   return (
     <div {...rest} className={variants({ className, variant })}>
-      <Loader className="animate-spin h-15 w-15 stroke-white" />
+      <Loader className="h-15 w-15 animate-spin stroke-white" />
     </div>
   );
 };

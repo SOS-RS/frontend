@@ -12,9 +12,8 @@ const DonationCartContext = createContext({} as IDonationCartContext);
 
 const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
   const [opened, setOpened] = useState<boolean>(false);
-  const [carts, setCarts] = useState<Record<string, IDonationCartItem[]>>(
-    getDonationCart()
-  );
+  const [carts, setCarts] =
+    useState<Record<string, IDonationCartItem[]>>(getDonationCart());
 
   const addItem = useCallback((shelterId: string, item: IDonationCartItem) => {
     setCarts((state) => {
@@ -25,7 +24,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
           [shelterId]: prev.map((p) =>
             p.id === item.id
               ? { ...p, quantity: p.quantity + item.quantity }
-              : p
+              : p,
           ),
         };
       else return { ...state, [shelterId]: [...prev, item] };
@@ -36,7 +35,7 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
     (
       shelterId: string,
       supplyId: string,
-      payload: Partial<Omit<IDonationCartItem, 'id'>>
+      payload: Partial<Omit<IDonationCartItem, 'id'>>,
     ) => {
       setCarts((state) => {
         const prev = state[shelterId] ?? [];
@@ -44,13 +43,13 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
           return {
             ...state,
             [shelterId]: prev.map((p) =>
-              p.id === supplyId ? { ...p, ...payload } : p
+              p.id === supplyId ? { ...p, ...payload } : p,
             ),
           };
         else return state;
       });
     },
-    []
+    [],
   );
 
   const removeItem = useCallback((shelterId: string, supplyId: string) => {
@@ -64,14 +63,14 @@ const DonationCartProvider = ({ children }: { children?: React.ReactNode }) => {
 
   const clearCart = useCallback(
     (shelterId: string) => setCarts((state) => ({ ...state, [shelterId]: [] })),
-    []
+    [],
   );
 
   const updateCart = useCallback(
     (shelterId: string, items: IDonationCartItem[]) => {
       setCarts((prev) => ({ ...prev, [shelterId]: items }));
     },
-    []
+    [],
   );
 
   useEffect(() => {

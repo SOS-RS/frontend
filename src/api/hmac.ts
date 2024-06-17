@@ -14,7 +14,7 @@ function getHmacHeaders(props: Partial<IHmacProps>) {
 
   const signature = CryptoJS.HmacSHA256(
     payload,
-    import.meta.env.VITE_HMAC_SECRET_KEY
+    import.meta.env.VITE_HMAC_SECRET_KEY,
   ).toString(CryptoJS.enc.Hex);
 
   return {

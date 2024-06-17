@@ -21,7 +21,7 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>((props, ref) => {
       defaultVariants: {
         variant: 'info',
       },
-    }
+    },
   );
 
   return (

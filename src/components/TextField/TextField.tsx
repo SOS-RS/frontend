@@ -19,7 +19,7 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
     } = props;
 
     return (
-      <div className={cn('flex flex-col gap-2 w-full', containerClassName)}>
+      <div className={cn('flex w-full flex-col gap-2', containerClassName)}>
         <label
           htmlFor={name}
           className={cn('text-muted-foreground', labelClassName)}
@@ -34,13 +34,13 @@ const TextField = forwardRef<React.ElementRef<'input'>, TextFieldProps>(
           {...rest}
         />
         {helperText && (
-          <p className={cn(error ? 'text-red-600 text-sm' : '', className)}>
+          <p className={cn(error ? 'text-sm text-red-600' : '', className)}>
             {helperText}
           </p>
         )}
       </div>
     );
-  }
+  },
 );
 
 export { TextField };

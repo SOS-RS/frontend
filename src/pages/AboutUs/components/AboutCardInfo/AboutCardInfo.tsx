@@ -18,8 +18,8 @@ const AboutCardInfo = React.forwardRef<HTMLDivElement, IAboutCardInfoProps>(
       <div
         ref={ref}
         className={cn(
-          'flex gap-4 p-4 bg-[#E8F0F8] border-border rounded-xl',
-          className
+          'flex gap-4 rounded-xl border-border bg-[#E8F0F8] p-4',
+          className,
         )}
         {...rest}
       >
@@ -29,14 +29,14 @@ const AboutCardInfo = React.forwardRef<HTMLDivElement, IAboutCardInfoProps>(
             className: 'w-4 h-4 md:w-6 md:h-6',
           })}
         </div>
-        <div className="flex-1 flex justify-evenly flex-col gap-1 md:[&_*]:text-md">
+        <div className="md:[&_*]:text-md flex flex-1 flex-col justify-evenly gap-1">
           <span className="font-normal md:font-medium">{topLabel}</span>
           <b className="text-2xl md:text-4xl">{centerLabel}</b>
           <span className="font-normal md:font-medium">{bottomLabel}</span>
         </div>
       </div>
     );
-  }
+  },
 );
 
 export { AboutCardInfo };
