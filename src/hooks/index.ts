@@ -7,6 +7,7 @@ import { useShelterCities } from './useShelterCities';
 import { useDebouncedValue } from './useDebouncedValue';
 import { useSupplyCategories } from './useSupplyCategories';
 import { useSupplies } from './useSupplies';
+import { useGeolocation } from './useGeolocation';
 import { useViaCep } from './useViaCep';
 import { usePartners } from './usePartners';
 import { useGithubContributors } from './useGithubContributors';
@@ -25,6 +26,7 @@ export {
   useDebouncedValue,
   useSupplyCategories,
   useSupplies,
+  useGeolocation,
   useViaCep,
   usePartners,
   useGithubContributors,
