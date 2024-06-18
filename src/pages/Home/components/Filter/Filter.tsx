@@ -19,23 +19,13 @@ import {
 import {
   IFilterFormikProps,
   IFilterProps,
-  ISelectField,
   ShelterAvailabilityStatus,
 } from './types';
-import { priorityOptions } from '@/lib/utils';
-import LocationFilter from './LocationFilter/LocationFilter';
+import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
-
-const ShelterAvailabilityStatusMapped: Record<
-  ShelterAvailabilityStatus,
-  string
-> = {
-  available: 'Abrigo Disponivel',
-  unavailable: 'Abrigo Indisponivel',
-  waiting: 'Sem informação de disponibilidade',
-};
+import { LocationFilter } from './LocationFilter';
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -62,19 +52,18 @@ const Filter = (props: IFilterProps) => {
       {} as Record<string, IUseSuppliesData>
     );
   }, [supplies]);
+
   const { handleSubmit, values, setFieldValue, errors } =
     useFormik<IFilterFormikProps>({
       initialValues: {
         cities: data.cities ?? [],
-        priority: data.priority
-          ? {
-              label: priorityOpts[data.priority],
-              value: data.priority,
-            }
-          : null,
+        priorities: data.priorities.map((p: string) => ({
+          label: priorityOpts[Number(p) as SupplyPriority],
+          value: p,
+        })),
         search: data.search,
         shelterStatus: data.shelterStatus.map((s) => ({
-          label: ShelterAvailabilityStatusMapped[s],
+          label: ShelterAvailabilityStatusMap[s],
           value: s,
         })),
         supplyCategories: data.supplyCategoryIds.map((id) => ({
@@ -101,16 +90,16 @@ const Filter = (props: IFilterProps) => {
       }),
       onSubmit: (values) => {
         const {
-          priority,
+          priorities,
           search,
           shelterStatus,
           supplies,
           supplyCategories,
-          geolocation,
           cities,
+          geolocation,
         } = values;
         onSubmit({
-          priority: priority?.value ? +priority.value : null,
+          priorities: priorities.map((p) => p.value),
           search,
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
@@ -144,7 +133,7 @@ const Filter = (props: IFilterProps) => {
         checked
           ? [
               ...values.shelterStatus,
-              { label: ShelterAvailabilityStatusMapped[status], value: status },
+              { label: ShelterAvailabilityStatusMap[status], value: status },
             ]
           : values.shelterStatus.filter((s) => s.value !== status)
       );
@@ -167,9 +156,7 @@ const Filter = (props: IFilterProps) => {
             <div className="flex flex-col gap-2 w-full my-4">
               <SearchInput
                 value={values.search}
-                onChange={(ev) =>
-                  setFieldValue('search', ev.target.value ?? '')
-                }
+                onChange={(v) => setFieldValue('search', v)}
               />
             </div>
             <LocationFilter
@@ -198,86 +185,45 @@ const Filter = (props: IFilterProps) => {
                 </label>
                 <Select
                   placeholder="Selecione"
-                  value={values.priority}
+                  value={values.priorities}
+                  isMulti
                   options={Object.entries(priorityOpts).map(
-                    ([priority, label]) =>
-                      ({
-                        label,
-                        value: +priority,
-                      } as ISelectField<SupplyPriority>)
+                    ([priority, label]) => ({
+                      label,
+                      value: priority,
+                    })
                   )}
-                  onChange={(v) => {
-                    const newValue = {
-                      ...v,
-                      value: v ? +v.value : SupplyPriority.Urgent,
-                    };
-                    setFieldValue('priority', newValue);
-                  }}
+                  onChange={(v) => setFieldValue('priorities', v)}
                 />
               </div>
-              <Separator className="mt-2" />
-              <div className="flex flex-col gap-2 w-full my-4">
-                <p className="text-sm md:text-lg font-medium">Busca avançada</p>
-                <p className="text-muted-foreground text-sm md:text-lg font-medium">
-                  Você pode buscar pelo item que os abrigos precisam
-                  urgentemente de doação ou por itens que os abrigos tem
-                  disponibilidade para doar.
-                </p>
-                <div className="flex flex-col gap-1 w-full">
-                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                    Status do item no abrigo
-                  </label>
-                  <Select
-                    placeholder="Selecione"
-                    value={{
-                      label:
-                        priorityOpts[
-                          values.priority?.value ?? SupplyPriority.Urgent
-                        ],
-                      value: values.priority?.value ?? SupplyPriority.Needing,
-                    }}
-                    options={Object.entries(priorityOpts).map(
-                      ([priority, label]) =>
-                        ({ label, value: +priority } as any)
-                    )}
-                    onChange={(v) => {
-                      const newValue = {
-                        ...v,
-                        value: v ? +v.value : SupplyPriority.Urgent,
-                      };
-                      setFieldValue('priority', newValue);
-                    }}
-                  />
-                </div>
-                <div className="flex flex-col gap-1 w-full">
-                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                    Categoria
-                  </label>
-                  <Select
-                    value={values.supplyCategories}
-                    placeholder="Selecione"
-                    isMulti
-                    options={supplyCategories
-                      .map((el: ISupplyCategory) => ({
-                        label: el.name,
-                        value: el.id,
-                      }))
-                      .sort((a, b) => a.label.localeCompare(b.label))}
-                    onChange={(v) => setFieldValue('supplyCategories', v)}
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label className="text-muted-foreground text-sm md:text-lg font-medium">
-                    Itens
-                  </label>
-                  <Select
-                    placeholder="Selecione"
-                    isMulti
-                    value={values.supplies}
-                    options={supplyOptions}
-                    onChange={(v) => setFieldValue('supplies', v)}
-                  />
-                </div>
+              <div className="flex flex-col gap-1 w-full">
+                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                  Categoria
+                </label>
+                <Select
+                  value={values.supplyCategories}
+                  placeholder="Selecione"
+                  isMulti
+                  options={supplyCategories
+                    .map((el: ISupplyCategory) => ({
+                      label: el.name,
+                      value: el.id,
+                    }))
+                    .sort((a, b) => a.label.localeCompare(b.label))}
+                  onChange={(v) => setFieldValue('supplyCategories', v)}
+                />
+              </div>
+              <div className="flex flex-col w-full">
+                <label className="text-muted-foreground text-sm md:text-lg font-medium">
+                  Itens
+                </label>
+                <Select
+                  placeholder="Selecione"
+                  isMulti
+                  value={values.supplies}
+                  options={supplyOptions}
+                  onChange={(v) => setFieldValue('supplies', v)}
+                />
               </div>
             </div>
             <Separator className="mt-2" />

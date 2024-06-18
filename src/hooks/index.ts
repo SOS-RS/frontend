@@ -13,6 +13,8 @@ import { usePartners } from './usePartners';
 import { useGithubContributors } from './useGithubContributors';
 import { useAuthRoles } from './useAuthRoles';
 import { useSupporters } from './useSupporters';
+import { useDonationOrder } from './useDonationOrder';
+import { useDonations } from './useDonations';
 
 export {
   useShelters,
@@ -30,4 +32,6 @@ export {
   useGithubContributors,
   useAuthRoles,
   useSupporters,
+  useDonationOrder,
+  useDonations,
 };

@@ -9,7 +9,7 @@ const Footer = React.forwardRef<
   const { className = '', ...rest } = props;
 
   return (
-    <div
+    <footer
       ref={ref}
       {...rest}
       className={cn(
@@ -39,7 +39,7 @@ const Footer = React.forwardRef<
         </a>
         <Heart className="h-3 w-3 stroke-white fill-white" />
       </span>
-    </div>
+    </footer>
   );
 });
 

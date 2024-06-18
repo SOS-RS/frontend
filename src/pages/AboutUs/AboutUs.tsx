@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { HandHeart, Home, LifeBuoy, Loader, Users } from 'lucide-react';
 
 import { BurgerMenu, Header } from '@/components';
@@ -7,12 +7,52 @@ import { frontItems } from './frontItems';
 import { useGithubContributors } from '@/hooks';
 import WithTooltip from '@/components/ui/with-tooltip';
 import { removeDuplicatesByField } from '@/lib/utils';
+import { IAboutUsPerson } from './types';
 
 const AboutUs = () => {
   const { data: frontendContributors, loading: loadingFrontendContributors } =
     useGithubContributors('sos-rs', 'frontend');
   const { data: backendContributors, loading: loadingBackendContributors } =
     useGithubContributors('sos-rs', 'backend');
+
+  const persons: IAboutUsPerson[] = [
+    {
+      name: 'Klaus Riffel',
+      link: 'https://www.linkedin.com/in/klaus-riffel-69441928/',
+    },
+    {
+      name: 'Rhuam Estevam',
+      link: 'https://www.linkedin.com/in/rhuam/',
+    },
+    {
+      name: 'José Fagundes',
+      link: 'https://www.linkedin.com/in/jos%C3%A9-fagundes/',
+    },
+    {
+      name: 'Manoel Júnior',
+      link: 'https://www.linkedin.com/in/manoelfpjunior/',
+    },
+    {
+      name: 'Vinicius Arantes',
+      link: 'https://www.linkedin.com/in/viniciusrnt/',
+    },
+    {
+      name: 'Thiago Marins',
+      link: 'https://www.linkedin.com/in/thiago-dable',
+    },
+    {
+      name: 'Gabriel Mancuso',
+      link: 'https://www.linkedin.com/in/luizgabrielmancuso/',
+    },
+    {
+      name: 'Max Riffel',
+      link: 'https://www.linkedin.com/in/max-riffel-07a134a1/',
+    },
+    {
+      name: 'Kiwi Bertola',
+      link: 'https://www.linkedin.com/in/kiwi-bertola-10079073/',
+    },
+  ];
 
   const loading = useMemo(
     () => loadingBackendContributors || loadingFrontendContributors,
@@ -43,50 +83,23 @@ const AboutUs = () => {
         </h3>
         <p className="text-justify text-md md:text-lg font-medium [&>a]:text-blue-500 [&>a]:hover:text-blue-600 [&>a]:active:text-blue-700">
           Iniciado no domingo (04/05) e concluído na segunda (05/05), após 18
-          horas seguidas de desenvolvimento, nosso webapp <b>SOS RS </b>
-          <LifeBuoy
-            className="align-middle inline-block relative max-h-6 padding pb-0.5"
-            size={18}
-          />
-          , idealizado e desenvolvido por{' '}
-          <a
-            className="hover:underline"
-            href="https://www.linkedin.com/in/klaus-riffel-69441928/"
-            target="_blank"
-          >
-            Klaus Riffel
-          </a>
-          ,{' '}
-          <a
-            className="hover:underline"
-            href="https://www.linkedin.com/in/rhuam/"
-            target="_blank"
-          >
-            Rhuam Estevam
-          </a>
-          ,{' '}
-          <a
-            className="hover:underline"
-            href="https://www.linkedin.com/in/jos%C3%A9-fagundes/"
-            target="_blank"
-          >
-            José Fagundes
-          </a>
-          ,{' '}
-          <a
-            className="hover:underline"
-            href="https://www.linkedin.com/in/manoelfpjunior/"
-            target="_blank"
-          >
-            Manoel Júnior
-          </a>{' '}
+          horas seguidas de desenvolvimento, nosso webapp <b>SOS RS 🛟</b>,
+          idealizado e desenvolvido por{' '}
+          {persons.slice(0, -1).map((p, idx) => (
+            <Fragment key={idx}>
+              <a className="hover:underline" href={p.link} target="_blank">
+                {p.name}
+              </a>
+              {', '}
+            </Fragment>
+          ))}{' '}
           e{' '}
           <a
             className="hover:underline"
-            href="https://www.linkedin.com/in/viniciusrnt/"
+            href={persons.at(-1)?.link}
             target="_blank"
           >
-            Vinicius Arantes
+            {persons.at(-1)?.name}
           </a>
           , atingiu resultados verdadeiramente inspiradores.
         </p>
@@ -95,8 +108,8 @@ const AboutUs = () => {
           seu modelo colaborativo. Alcançamos rapidamente o nível de todas as
           outras iniciativas de gestão de demanda combinadas e lançamos nossa
           comunidade open source, recebendo uma enxurrada de contribuições:
-          nosso projeto alcançou <b>400 estrelas no GitHub</b> e foi{' '}
-          <b>forkeado mais de 150 vezes!</b>
+          nosso projeto alcançou <b>600 estrelas no GitHub</b> e foi{' '}
+          <b>forkeado mais de 350 vezes!</b>
         </p>
         <h3 className="text-2xl font-medium text-muted-foreground mt-8">
           Nossos parceiros
@@ -109,7 +122,7 @@ const AboutUs = () => {
           <AboutCardInfo
             icon={<Home />}
             topLabel="mais de"
-            centerLabel="500"
+            centerLabel="800"
             bottomLabel="abrigos atendidos"
             className="flex-1"
           />
@@ -123,7 +136,7 @@ const AboutUs = () => {
           <AboutCardInfo
             icon={<HandHeart />}
             topLabel="mais de"
-            centerLabel="40.000"
+            centerLabel="55.000"
             bottomLabel="pessoas beneficiadas desde o lançamento"
             className="w-full"
           />

@@ -7,21 +7,26 @@ import { cn } from '@/lib/utils';
 
 const SearchInput = React.forwardRef<HTMLDivElement, ISearchInputProps>(
   (props, ref) => {
+    const { inputProps, value, onChange, className, ...rest } = props;
     const {
-      value,
-      onChange,
-      className,
       placeholder = 'Buscar por abrigo ou endereço',
-      ...rest
-    } = props;
+      className: inputClassName = '',
+      ...restInputProps
+    } = inputProps ?? {};
 
     return (
       <div ref={ref} className={cn(className, 'relative')} {...rest}>
         <Input
           value={value}
           placeholder={placeholder}
-          className="h-12 text-md font-medium text-zinc-600 pl-10 pr-4"
-          onChange={onChange}
+          className={cn(
+            'h-12 text-md font-medium text-zinc-600 pl-10 pr-4',
+            inputClassName
+          )}
+          onChange={(ev) =>
+            onChange ? onChange(ev.target.value ?? '') : undefined
+          }
+          {...restInputProps}
         />
         <div className="absolute inset-y-0 left-0 flex items-center pl-3">
           <Search name="search" size="20" className="stroke-zinc-300" />

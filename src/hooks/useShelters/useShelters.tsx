@@ -5,6 +5,7 @@ import { api } from '@/api';
 import { IServerResponse } from '@/types';
 import { IPaginatedResponse } from '../usePaginatedQuery/types';
 import { IUseShelterOptions, IUseSheltersData } from './types';
+import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 
 const useShelters = (options: IUseShelterOptions = {}) => {
   const { cache } = options;
@@ -20,10 +21,11 @@ const useShelters = (options: IUseShelterOptions = {}) => {
     (config: AxiosRequestConfig<any> = {}, append: boolean = false) => {
       const { search, ...rest } = (config ?? {}).params ?? {};
       const headers = config.headers ?? {};
-      if (cache) headers['x-app-cache'] = 'true';
+      if (cache && import.meta.env.VITE_REQUEST_CACHE !== 'false')
+        headers['x-app-cache'] = 'true';
       if (!append) setLoading(true);
       api
-        .get<IServerResponse<any>>('/shelters', {
+        .get<IServerResponse<any>>(PaginatedQueryPath.Shelters, {
           ...config,
           headers,
           params: {
@@ -35,22 +37,14 @@ const useShelters = (options: IUseShelterOptions = {}) => {
           },
         })
         .then(({ data }) => {
-          if (append) {
-            setData((prev) => ({
-              ...prev,
-              ...data.data,
-              results: [...prev.results, ...data.data.results],
-            }));
-          } else {
-            setData((prev) => ({
-              ...prev,
-              ...data.data,
-              results: [...data.data.results],
-            }));
-          }
+          setData((prev) => ({
+            ...prev,
+            ...data.data,
+            results: [...data.data.results],
+          }));
         })
         .finally(() => {
-          if (!append) setLoading(false);
+          setLoading(!append);
         });
     },
     [cache]
