@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { withAuth } from '@/hocs';
 import { useDebouncedValue, useViaCep } from '@/hooks';
-import { SecondaryLayout } from '@/layouts';
+import { InnerPagesLayout } from '@/layouts';
 import { cn } from '@/lib/utils';
 import { ShelterServices } from '@/service';
 import { ICreateShelter } from '@/service/shelter/types';
@@ -113,7 +113,7 @@ const CreateShelterComponent = () => {
   }, [cepData, setFieldValue, setErrors]);
 
   return (
-    <SecondaryLayout
+    <InnerPagesLayout
       header={{ title: 'Cadastrar novo abrigo' }}
       onBackClick={() => navigate('/')}
     >
@@ -240,7 +240,7 @@ const CreateShelterComponent = () => {
           </div>
         </form>
       </div>
-    </SecondaryLayout>
+    </InnerPagesLayout>
   );
 };
 

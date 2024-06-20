@@ -17,7 +17,7 @@ import { SessionContext } from '@/contexts';
 import { useDebouncedValue, useShelter, useViaCep } from '@/hooks';
 import { useAuthRoles } from '@/hooks/useAuthRoles/useAuthRoles';
 import { ShelterCategory } from '@/hooks/useShelter/types';
-import { SecondaryLayout } from '@/layouts';
+import { InnerPagesLayout } from '@/layouts';
 import { cn } from '@/lib/utils';
 import { ShelterServices } from '@/service';
 import { IUpdateShelter } from '@/service/shelter/types';
@@ -101,7 +101,7 @@ const UpdateShelter = () => {
   if (loading) return <LoadingScreen />;
 
   return (
-    <SecondaryLayout
+    <InnerPagesLayout
       header={{
         title: 'Atualização cadastral',
         className: 'h-[calc(var(--vh,1vh)*100)] md:h-screen',
@@ -252,7 +252,7 @@ const UpdateShelter = () => {
           </div>
         </form>
       </div>
-    </SecondaryLayout>
+    </InnerPagesLayout>
   );
 };
 

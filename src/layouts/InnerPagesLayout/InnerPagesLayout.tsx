@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { PropsWithChildren } from 'react';
 
-type ISecondaryLayout = {
+type IInnerPagesLayout = {
   header: {
     title: string;
     className?: string;
@@ -12,11 +12,11 @@ type ISecondaryLayout = {
   onBackClick?: () => void;
 };
 
-const SecondaryLayout = ({
+const InnerPagesLayout = ({
   header,
   onBackClick,
   children,
-}: PropsWithChildren<ISecondaryLayout>) => {
+}: PropsWithChildren<IInnerPagesLayout>) => {
   return (
     <div className="flex flex-col h-screen items-center">
       <Header
@@ -40,4 +40,4 @@ const SecondaryLayout = ({
   );
 };
 
-export { SecondaryLayout };
+export { InnerPagesLayout };

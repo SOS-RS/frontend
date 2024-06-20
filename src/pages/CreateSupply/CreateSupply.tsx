@@ -15,7 +15,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useShelter, useSupplies, useSupplyCategories } from '@/hooks';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-import { SecondaryLayout } from '@/layouts';
+import { InnerPagesLayout } from '@/layouts';
 import { getSupplyPriorityProps } from '@/lib/utils';
 import { ShelterSupplyServices, SupplyServices } from '@/service';
 import { ICreateShelterSupply } from '@/service/shelterSupply/types';
@@ -169,7 +169,7 @@ const CreateSupply = () => {
           onClose={() => setModalOpened(false)}
         />
       )}
-      <SecondaryLayout
+      <InnerPagesLayout
         header={{ title: 'Cadastrar novo abrigo' }}
         onBackClick={() => navigate(-1)}
       >
@@ -286,7 +286,7 @@ const CreateSupply = () => {
             </div>
           </form>
         </div>
-      </SecondaryLayout>
+      </InnerPagesLayout>
     </Fragment>
   );
 };

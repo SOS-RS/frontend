@@ -13,7 +13,7 @@ import { ShelterSupplyServices } from '@/service';
 import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRow, SupplySearch } from './components';
 import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { SecondaryLayout } from '@/layouts';
+import { InnerPagesLayout } from '@/layouts';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -172,7 +172,7 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <SecondaryLayout
+      <InnerPagesLayout
         header={{ title: 'Editar Itens' }}
         onBackClick={() => navigate(`/abrigo/${shelterId}`)}
       >
@@ -223,7 +223,7 @@ const EditShelterSupply = () => {
             })}
           </div>
         </div>
-      </SecondaryLayout>
+      </InnerPagesLayout>
     </Fragment>
   );
 };
