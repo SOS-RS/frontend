@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IInfoRowProps } from './types';
+import clsx from 'clsx';
+import { toast } from '@/components/ui/use-toast';
 
 const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
   (props, ref) => {
@@ -25,7 +27,33 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
     ) : (
       <h1 className="font-semibold">{value}</h1>
     );
+    const [copied, setCopied] = useState(false);
+    const copy = () => {
+      try {
+        navigator.clipboard.writeText(value as string);
+        toast({ title: 'Chave copiada com sucesso!' });
+        setCopied(true);
+      } catch (error) {
+        console.error(error);
 
+        toast({
+          variant: 'destructive',
+          title:
+            'Ocorreu um erro ao enviar os dados para a sua área de transferência. Por gentileza, copie manualmente.',
+        });
+      }
+    };
+    useEffect(() => {
+      let timeout: NodeJS.Timeout;
+      if (copied) {
+        timeout = setTimeout(() => {
+          setCopied(false);
+        }, 2000);
+      }
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [copied]);
     return (
       <div
         ref={ref}
@@ -47,10 +75,13 @@ const InfoRow = React.forwardRef<HTMLDivElement, IInfoRowProps>(
             {ValueComp}
             {clipboardButton && value && (
               <div
-                className="text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800"
-                onClick={() => navigator.clipboard.writeText(value)}
+                className={clsx(
+                  'text-blue-600 mx-2 hover:cursor-pointer active:text-blue-800',
+                  copied && 'text-green-600 active:text-green-800'
+                )}
+                onClick={copy}
               >
-                copiar
+                {copied ? 'copiado' : 'copiar'}
               </div>
             )}
           </span>
