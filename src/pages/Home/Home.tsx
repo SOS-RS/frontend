@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
 
-const initialFilterData: IFilterFormProps = {
+export const initialFilterData: IFilterFormProps = {
   search: '',
   priorities: [],
   supplyCategoryIds: [],
@@ -130,6 +130,9 @@ const Home = () => {
           data={filterData}
           onClose={() => setOpenModal(false)}
           onSubmit={onSubmitFilterForm}
+          setSearch={setSearch}
+          refreshFn={refresh}
+          setFilterData={setFilterData}
         />
       )}
       <Header

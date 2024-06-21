@@ -21,10 +21,13 @@ import {
   IFilterProps,
   ShelterAvailabilityStatus,
 } from './types';
+import { priorityOptions } from '@/lib/utils';
+import { SupplyPriority } from '@/service/supply/types';
+import { useSearchParams } from 'react-router-dom';
+import { initialFilterData } from '../../Home';
 import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
-import { SupplyPriority } from '@/service/supply/types';
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -35,16 +38,20 @@ const priorityOpts = Object.entries(priorityOptions).reduce(
 );
 
 const Filter = (props: IFilterProps) => {
-  const { data, onClose, onSubmit, open } = props;
+  const { data, onClose, onSubmit, open, setSearch, refreshFn, setFilterData } =
+    props;
   const { data: supplies, loading: loadingSupplies } = useSupplies();
   const { data: supplyCategories, loading: loadingSupplyCategories } =
     useSupplyCategories();
+  const [, setSearchParams] = useSearchParams();
+
   const mappedSupplyCategories = useMemo(() => {
     return supplyCategories.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
       {} as Record<string, ISupplyCategory>
     );
   }, [supplyCategories]);
+
   const mappedSupplies = useMemo(() => {
     return supplies.reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
@@ -52,28 +59,30 @@ const Filter = (props: IFilterProps) => {
     );
   }, [supplies]);
 
-  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
-    {
-      initialValues: {
-        cities: data.cities ?? [],
-        priorities: data.priorities.map((p: string) => ({
+  const initialFormValues = {
+    cities: data.cities ?? [],
+     priorities: data.priorities.map((p: string) => ({
           label: priorityOpts[Number(p) as SupplyPriority],
           value: p,
         })),
-        search: data.search,
-        shelterStatus: data.shelterStatus.map((s) => ({
-          label: ShelterAvailabilityStatusMap[s],
-          value: s,
-        })),
-        supplyCategories: data.supplyCategoryIds.map((id) => ({
-          label: mappedSupplyCategories[id]?.name,
-          value: id,
-        })),
-        supplies: data.supplyIds.map((id) => ({
-          value: id,
-          label: mappedSupplies[id]?.name,
-        })),
-      },
+    search: data.search,
+    shelterStatus: data.shelterStatus.map((s) => ({
+      label: ShelterAvailabilityStatusMapped[s],
+      value: s,
+    })),
+    supplyCategories: data.supplyCategoryIds.map((id) => ({
+      label: mappedSupplyCategories[id]?.name,
+      value: id,
+    })),
+    supplies: data.supplyIds.map((id) => ({
+      value: id,
+      label: mappedSupplies[id]?.name,
+    })),
+  };
+
+  const { handleSubmit, values, setFieldValue, resetForm } =
+    useFormik<IFilterFormikProps>({
+      initialValues: initialFormValues,
       enableReinitialize: true,
       validateOnChange: false,
       validateOnBlur: false,
@@ -99,8 +108,7 @@ const Filter = (props: IFilterProps) => {
           cities,
         });
       },
-    }
-  );
+    });
 
   const supplyOptions = useMemo(() => {
     return supplies
@@ -132,6 +140,16 @@ const Filter = (props: IFilterProps) => {
     },
     [setFieldValue, values.shelterStatus]
   );
+
+  const clearFilters = () => {
+    setSearch('');
+    setFilterData(initialFilterData);
+    resetForm({
+      values: initialFormValues,
+    });
+    setSearchParams('');
+    refreshFn();
+  };
 
   if (loadingSupplies || loadingSupplyCategories) return <LoadingScreen />;
 
@@ -226,7 +244,7 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'available')
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'available'
                     )}
                   />
@@ -244,7 +262,7 @@ const Filter = (props: IFilterProps) => {
                         'unavailable'
                       )
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'unavailable'
                     )}
                   />
@@ -259,7 +277,7 @@ const Filter = (props: IFilterProps) => {
                     onChange={(ev) =>
                       handleToggleShelterStatus(ev.target.checked, 'waiting')
                     }
-                    defaultChecked={values.shelterStatus.some(
+                    checked={values.shelterStatus.some(
                       (s) => s.value === 'waiting'
                     )}
                   />
@@ -269,12 +287,22 @@ const Filter = (props: IFilterProps) => {
             </div>
           </div>
           <DialogFooter className="sticky bg-white -bottom-6">
-            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6">
+            <div className="flex flex-1 flex-col justify-end md:justify-start w-full py-6 gap-4">
               <Button
                 type="submit"
                 className="flex gap-2 text-white font-medium text-lg bg-blue-500 hover:bg-blue-600 w-full"
               >
                 Filtrar resultados
+              </Button>
+              <Button
+                type="button"
+                className="flex gap-2 text-[#1D61C8] font-medium text-lg bg-transparent hover:bg-[#F4F5F7] w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  clearFilters();
+                }}
+              >
+                Limpar filtros
               </Button>
             </div>
           </DialogFooter>
