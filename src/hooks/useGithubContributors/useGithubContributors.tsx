@@ -12,7 +12,7 @@ function useGithubContributors(owner: string, repo: string) {
       setLoading(true);
       axios
         .get(
-          `https://api.github.com/repos/${owner}/${repo}/contributors`,
+          `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100`,
           config
         )
         .then(({ data }) => setData(data))
