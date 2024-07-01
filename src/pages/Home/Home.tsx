@@ -8,6 +8,7 @@ import { useShelters, useThrottle } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Filter, ShelterListView } from './components';
 import { IFilterFormProps } from './components/Filter/types';
+import { CookiesWarning } from '@/components/CookiesWarning';
 
 const initialFilterData: IFilterFormProps = {
   search: '',
@@ -180,6 +181,9 @@ const Home = () => {
         onClearSearch={clearSearch}
         className="flex-1 p-4 max-w-4xl"
       />
+
+      <CookiesWarning />
+
       <Footer />
     </div>
   );
