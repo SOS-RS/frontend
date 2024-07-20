@@ -1,3 +1,6 @@
+import { SupplyPriority } from '@/service/supply/types';
+import { AxiosRequestConfig } from 'axios';
+
 export type ShelterAvailabilityStatus = 'available' | 'unavailable' | 'waiting';
 
 export interface ISelectField<T = string> {
@@ -32,4 +35,7 @@ export interface IFilterProps {
   data: IFilterFormProps;
   open: boolean;
   onClose: () => void;
+  setSearch: React.Dispatch<React.SetStateAction<string | null>>;
+  refreshFn: (config?: AxiosRequestConfig<any>, append?: boolean) => void;
+  setFilterData: React.Dispatch<React.SetStateAction<IFilterFormProps>>;
 }
