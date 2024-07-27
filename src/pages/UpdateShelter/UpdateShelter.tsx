@@ -115,6 +115,7 @@ const UpdateShelter = () => {
             <ChevronLeft size={20} />
           </Button>
         }
+        to={`/abrigo/${shelterId}`}
       />
       <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start h-full">
         <form className="contents" onSubmit={handleSubmit}>
