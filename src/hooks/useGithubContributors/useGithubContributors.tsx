@@ -8,15 +8,22 @@ function useGithubContributors(owner: string, repo: string) {
   const [data, setData] = useState<IGithubContributor[]>([]);
 
   const refresh = useCallback(
-    (config?: AxiosRequestConfig<any>) => {
+    async (config?: AxiosRequestConfig<any>, page=1, allData=[]) => {
       setLoading(true);
-      axios
+      const response = await axios
         .get(
-          `https://api.github.com/repos/${owner}/${repo}/contributors`,
+          `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100&page=${page}`,
           config
-        )
-        .then(({ data }) => setData(data))
-        .finally(() => setLoading(false));
+        );
+        const newData = allData.concat(response.data);
+        const linkHeader = response.headers.link;
+        if (linkHeader && linkHeader.includes('rel="next"')) {
+          const nextPage = page + 1;
+          return refresh(config, nextPage, newData);
+        } else {
+          setData(newData);
+          setLoading(false);
+        }
     },
     [owner, repo]
   );
