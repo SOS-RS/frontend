@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
+import { Badge } from '@/components/ui/badge';
+import { FilterKey } from './types';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
   (props, ref) => {
@@ -32,6 +34,44 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
     } = props;
 
     const [searchParams] = useSearchParams();
+
+    const [filteredData, setFilteredData] = useState(data);
+    const [filters, setFilters] = useState({
+      isPetFriendlyFiltered: false,
+      isAvailableFiltered: false,
+      isUnavailableFiltered: false,
+      needVolunteers: false,
+      isConfirmFiltered: false,
+    });
+
+    useEffect(() => {
+      applyFilters();
+    }, [data, filters]);
+
+    const toggleFilter = (filterName: FilterKey) => {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [filterName]: !prevFilters[filterName],
+      }));
+    };
+
+    const applyFilters = () => {
+      let filtered = data;
+
+      if (filters.isPetFriendlyFiltered) {
+        filtered = filtered.filter(shelter => shelter.petFriendly === true);
+      }
+
+      if (filters.isAvailableFiltered) {
+        filtered = filtered.filter(shelter => (shelter.shelteredPeople ?? 0) < (shelter.capacity ?? 0));
+      }
+
+      if (filters.needVolunteers) {
+        filtered = filtered.filter(shelter => shelter.shelterSupplies.some(supply => supply.tags.includes('NeedVolunteers')));
+      }
+      
+      setFilteredData(filtered);
+    };
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -66,13 +106,13 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             </div>
           ))}
         </div>
-        <div className="flex flex-row">
+        <div className="*:h-9 *:py-0.5 flex flex-row cursor-pointer gap-1 *:whitespace-nowrap flex-wrap">
           <Button
             variant="ghost"
             size="sm"
             className="flex gap-2 items-center text-blue-500 hover:text-blue-600 active:text-blue-700"
             onClick={onOpenModal}
-          >
+            >
             <ListFilter className="h-5 w-5 stroke-blue-500" />
             Filtros
           </Button>
@@ -87,15 +127,24 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
               Limpar Filtros
             </Button>
           )}
+          <Badge onClick={() => toggleFilter('isPetFriendlyFiltered')} variant={filters.isPetFriendlyFiltered ? 'destructive' : 'outline'}>
+            Aceita Pets
+          </Badge>
+          <Badge onClick={() => toggleFilter('needVolunteers')} variant={filters.needVolunteers ? 'destructive' : 'outline'}>
+            Voluntários
+          </Badge>
+          <Badge onClick={() => toggleFilter('isAvailableFiltered')} variant={filters.isAvailableFiltered ? 'destructive' : 'outline'}>
+            Disponível
+          </Badge>
         </div>
         <main ref={ref} className="flex flex-col gap-4" {...rest}>
           {loading ? (
             <LoadingSkeleton amountItems={4} />
-          ) : data.length === 0 ? (
+          ) : filteredData.length === 0 ? (
             <NoFoundSearch />
           ) : (
             <Fragment>
-              {data.map((s, idx) => (
+              {filteredData.map((s, idx) => (
                 <ShelterListItem key={idx} data={s} />
               ))}
               {hasMoreItems ? (
