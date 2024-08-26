@@ -4,5 +4,5 @@ export interface IShelterSupplyCategoryRowProps
   extends React.ComponentPropsWithoutRef<'div'> {
   title: string;
   description?: string;
-  tags: IChipProps[];
+  tags: (IChipProps & { priority: string })[];
 }
