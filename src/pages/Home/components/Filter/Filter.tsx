@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import Select from 'react-select';
-import { useFormik } from 'formik';
+import { getIn, useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { LoadingScreen, SearchInput } from '@/components';
@@ -25,6 +25,7 @@ import { ShelterAvailabilityStatusMap, priorityOptions } from '@/lib/utils';
 import CitiesFilter from './CitiesFilter';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
 import { SupplyPriority } from '@/service/supply/types';
+import { LocationFilter } from './LocationFilter';
 
 const priorityOpts = Object.entries(priorityOptions).reduce(
   (prev, [priority, label]) =>
@@ -52,8 +53,8 @@ const Filter = (props: IFilterProps) => {
     );
   }, [supplies]);
 
-  const { handleSubmit, values, setFieldValue } = useFormik<IFilterFormikProps>(
-    {
+  const { handleSubmit, values, setFieldValue, errors } =
+    useFormik<IFilterFormikProps>({
       initialValues: {
         cities: data.cities ?? [],
         priorities: data.priorities.map((p: string) => ({
@@ -73,6 +74,7 @@ const Filter = (props: IFilterProps) => {
           value: id,
           label: mappedSupplies[id]?.name,
         })),
+        geolocation: data.geolocation,
       },
       enableReinitialize: true,
       validateOnChange: false,
@@ -80,6 +82,11 @@ const Filter = (props: IFilterProps) => {
       validateOnMount: false,
       validationSchema: Yup.object().shape({
         search: Yup.string(),
+        geolocation: Yup.object()
+          .shape({
+            radiusInMeters: Yup.number().positive('Raio deve ser positivo'),
+          })
+          .nullable(),
       }),
       onSubmit: (values) => {
         const {
@@ -89,6 +96,7 @@ const Filter = (props: IFilterProps) => {
           supplies,
           supplyCategories,
           cities,
+          geolocation,
         } = values;
         onSubmit({
           priorities: priorities.map((p) => p.value),
@@ -96,11 +104,11 @@ const Filter = (props: IFilterProps) => {
           shelterStatus: shelterStatus.map((s) => s.value),
           supplyCategoryIds: supplyCategories.map((s) => s.value),
           supplyIds: supplies.map((s) => s.value),
+          geolocation,
           cities,
         });
       },
-    }
-  );
+    });
 
   const supplyOptions = useMemo(() => {
     return supplies
@@ -151,6 +159,11 @@ const Filter = (props: IFilterProps) => {
                 onChange={(v) => setFieldValue('search', v)}
               />
             </div>
+            <LocationFilter
+              geolocationValues={values?.geolocation}
+              setFieldValue={setFieldValue}
+              error={getIn(errors, 'geolocation.radiusInMeters')}
+            />
             <Separator className="mt-2" />
             <CitiesFilter
               cities={values.cities}

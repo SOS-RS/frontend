@@ -1,3 +1,5 @@
+import { IGeolocation } from '@/hooks/useGeolocation/types';
+
 export type ShelterAvailabilityStatus = 'available' | 'unavailable' | 'waiting';
 
 export interface ISelectField<T = string> {
@@ -11,10 +13,12 @@ export interface IFilterFormProps {
   supplyCategoryIds: string[];
   supplyIds: string[];
   shelterStatus: ShelterAvailabilityStatus[];
+  geolocation?: IGeolocation;
   cities: string[];
 }
 
-export interface IFilterSubmittionForm extends Omit<IFilterFormProps, 'priority'>{
+export interface IFilterSubmittionForm
+  extends Omit<IFilterFormProps, 'priority'> {
   priority: string;
 }
 
@@ -24,6 +28,7 @@ export interface IFilterFormikProps {
   supplyCategories: ISelectField[];
   supplies: ISelectField[];
   shelterStatus: ISelectField<ShelterAvailabilityStatus>[];
+  geolocation?: IGeolocation;
   cities: string[];
 }
 
