@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { CircleAlert, ListFilter, X } from 'lucide-react';
 
 import {
@@ -11,6 +11,12 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { IShelterListViewProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { useGeolocation } from '@/hooks/useGeolocation';
+import { MarkerData } from '../../types';
+import { LatLngExpression } from 'leaflet';
+import { Map } from '@/components/Map';
+import { UserLocationControl } from '@/components/UserLocationControl';
+import { CircleMarker, Marker, Popup } from 'react-leaflet';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
 const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
@@ -31,7 +37,45 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
       ...rest
     } = props;
 
+    const { location, success, metersToPixels } = useGeolocation();
     const [searchParams] = useSearchParams();
+    const [markers, setMarkers] = useState<MarkerData[]>([]);
+    const [userMarker, setUserMarker] = useState<MarkerData | null>();
+    const [mapCenter, setMapCenter] = useState<LatLngExpression>([
+      -30.033081, -51.256996,
+    ]);
+    const [mapZoom, setMapZoom] = useState<number>(9);
+
+    useEffect(() => {
+      const { latitude, longitude, accuracy } = location;
+      if (latitude && longitude) {
+        setUserMarker({
+          position: [latitude, longitude],
+          label: 'Você está aqui',
+          accuracy: metersToPixels(accuracy ?? 1, latitude, mapZoom),
+        });
+
+        if (success) {
+          setMapCenter([latitude, longitude]);
+          setMapZoom(15);
+        }
+      }
+    }, [success, location]);
+
+    useEffect(() => {
+      if (data.length) {
+        const markers: MarkerData[] = data
+          .filter((value) => value.latitude && value.longitude)
+          .map((value) => ({
+            position: [
+              parseFloat(value.latitude!),
+              parseFloat(value.longitude!),
+            ],
+            label: value.name,
+          }));
+        setMarkers(markers);
+      }
+    }, [data]);
 
     return (
       <div className={cn(className, 'flex flex-col gap-2')}>
@@ -95,6 +139,31 @@ const ShelterListView = React.forwardRef<HTMLDivElement, IShelterListViewProps>(
             <NoFoundSearch />
           ) : (
             <Fragment>
+              <div>
+                <Map center={mapCenter} zoom={mapZoom}>
+                  <UserLocationControl
+                    position="topright"
+                    location={location}
+                    disabled={!location.latitude || !location.longitude}
+                  />
+                  {markers.map((v) => (
+                    <Marker position={v.position}>
+                      <Popup>{v.label}</Popup>
+                    </Marker>
+                  ))}
+                  {userMarker?.position ? (
+                    <Fragment>
+                      <Marker position={userMarker.position}>
+                        <Popup>{userMarker.label}</Popup>
+                      </Marker>
+                      <CircleMarker
+                        center={userMarker.position}
+                        radius={userMarker.accuracy ?? 1}
+                      />
+                    </Fragment>
+                  ) : null}
+                </Map>
+              </div>
               {data.map((s, idx) => (
                 <ShelterListItem key={idx} data={s} />
               ))}
