@@ -2,19 +2,27 @@ import { SupplyPriority } from '@/service/supply/types';
 import { SupplyRowInfo } from '../SupplyRowInfo';
 import { ISupplyRowProps } from './types';
 import { Archive } from 'lucide-react';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const SupplyRow = (props: ISupplyRowProps) => {
   const { name, items, onClick } = props;
 
   return (
-    <div className={`${name !== '' ? 'gap-4 flex flex-col pb-6' : 'hidden'}`}>
-      <div className="flex w-full">
-        <h3 className="font-semibold text-lg border rounded p-2 flex items-center">
-          <Archive className="mr-2 size-5" />
-          {name.toUpperCase()}
+    <AccordionItem
+      value={name}
+      className={`${name !== '' ? 'gap-4 flex flex-col' : 'hidden'}`}
+    >
+      <AccordionTrigger className="">
+        <h3 className="flex items-center flex-1 gap-2 text-lg font-semibold">
+          <Archive size={20} />
+          <span className="flex-1 text-left">{name.toUpperCase()}</span>
         </h3>
-      </div>
-      <div className="flex flex-col">
+      </AccordionTrigger>
+      <AccordionContent className="flex flex-col">
         {items.map((item, idy) => (
           <SupplyRowInfo
             key={idy}
@@ -24,8 +32,8 @@ const SupplyRow = (props: ISupplyRowProps) => {
             onClick={() => (onClick ? onClick(item) : undefined)}
           />
         ))}
-      </div>
-    </div>
+      </AccordionContent>
+    </AccordionItem>
   );
 };
 

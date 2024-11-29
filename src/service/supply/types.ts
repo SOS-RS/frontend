@@ -11,6 +11,9 @@ export interface ISupply {
   name: string;
   createdAt: string;
   updatedAt?: string | null;
+  supplyCategory?: {
+    name: string;
+  };
 }
 
 export type ICreateSupply = Pick<ISupply, 'name' | 'supplyCategoryId'>;
