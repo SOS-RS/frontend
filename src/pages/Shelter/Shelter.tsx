@@ -8,7 +8,6 @@ import {
   Chip,
   DonationCart,
   DonationCartIcon,
-  Header,
   LoadingScreen,
   SearchInput,
 } from '@/components';
@@ -32,6 +31,7 @@ import { ShelterCategoryList } from './components';
 import { Separator } from '@/components/ui/separator';
 import { DonationCartContext } from '@/contexts';
 import { ShelterCategoryListItemProps } from './components/ShelterCategoryList/types';
+import { MainLayout } from '@/layouts';
 
 const defaultPriorities: SupplyPriority[] = [
   SupplyPriority.Urgent,
@@ -109,10 +109,10 @@ const Shelter = () => {
         opened={opened}
         onClose={toggleOpened}
       />
-      <div className="flex flex-col h-screen items-center">
-        <Header
-          title={shelter.name}
-          startAdornment={
+      <MainLayout
+        header={{
+          title: shelter.name,
+          startAdornment: (
             <Button
               size="sm"
               variant="ghost"
@@ -121,11 +121,12 @@ const Shelter = () => {
             >
               <ChevronLeft size={20} />
             </Button>
-          }
-          endAdornment={
+          ),
+          endAdornment: (
             <DonationCartIcon quantity={carts[shelterId]?.length} />
-          }
-        />
+          ),
+        }}
+      >
         <div className="p-4 flex flex-col max-w-5xl w-full h-full gap-2">
           <div className="flex items-center gap-1">
             <h1 className="text-[#2f2f2f] font-semibold text-2xl">
@@ -219,7 +220,7 @@ const Shelter = () => {
               })}
           </div>
         </div>
-      </div>
+      </MainLayout>
     </Fragment>
   );
 };

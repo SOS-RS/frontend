@@ -1,20 +1,19 @@
-import { ChevronLeft } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { DialogSelector, Header, LoadingScreen } from '@/components';
-import { Button } from '@/components/ui/button';
-import { useShelter, useSupplies, useThrottle } from '@/hooks';
-import { group, normalizedCompare } from '@/lib/utils';
-import { SupplyRow, SupplySearch } from './components';
-import { IDialogSelectorProps } from '@/components/DialogSelector/types';
-import { ISupplyRowItemProps } from './components/SupplyRow/types';
-import { ShelterSupplyServices } from '@/service';
-import { useToast } from '@/components/ui/use-toast';
-import { SupplyPriority } from '@/service/supply/types';
-import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { clearCache } from '@/api/cache';
+import { DialogSelector, LoadingScreen } from '@/components';
+import { IDialogSelectorProps } from '@/components/DialogSelector/types';
+import { useToast } from '@/components/ui/use-toast';
+import { useShelter, useSupplies, useThrottle } from '@/hooks';
+import { IUseShelterDataSupply } from '@/hooks/useShelter/types';
 import { IUseSuppliesData } from '@/hooks/useSupplies/types';
+import { group, normalizedCompare } from '@/lib/utils';
+import { ShelterSupplyServices } from '@/service';
+import { SupplyPriority } from '@/service/supply/types';
+import { SupplyRow, SupplySearch } from './components';
+import { ISupplyRowItemProps } from './components/SupplyRow/types';
+import { InnerPagesLayout } from '@/layouts';
 
 const EditShelterSupply = () => {
   const navigate = useNavigate();
@@ -173,20 +172,10 @@ const EditShelterSupply = () => {
           {...modalData}
         />
       )}
-      <div className="flex flex-col h-screen items-center">
-        <Header
-          title="Editar Itens"
-          className="bg-white [&_*]:text-zinc-800 border-b-[1px] border-b-border"
-          startAdornment={
-            <Button
-              variant="ghost"
-              className="[&_svg]:stroke-blue-500"
-              onClick={() => navigate(`/abrigo/${shelterId}`)}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-          }
-        />
+      <InnerPagesLayout
+        header={{ title: 'Editar Itens' }}
+        onBackClick={() => navigate(`/abrigo/${shelterId}`)}
+      >
         <div className="p-4 flex flex-col max-w-5xl w-full gap-3 items-start">
           <h6 className="text-2xl font-semibold">Editar itens do abrigo</h6>
           <p className="text-muted-foreground">
@@ -234,7 +223,7 @@ const EditShelterSupply = () => {
             })}
           </div>
         </div>
-      </div>
+      </InnerPagesLayout>
     </Fragment>
   );
 };
