@@ -16,6 +16,7 @@ const initialFilterData: IFilterFormProps = {
   supplyIds: [],
   shelterStatus: [],
   cities: [],
+  showDisabled: false,
 };
 
 const loadFilterData = (): IFilterFormProps => {
