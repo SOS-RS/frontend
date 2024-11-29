@@ -3,10 +3,12 @@ import { PaginatedQueryPath } from '../usePaginatedQuery/paths';
 import { ISupplyCategory } from './types';
 
 const useSupplyCategories = () => {
-  return useFetch<ISupplyCategory[]>(PaginatedQueryPath.SupplyCategories, {
+  const supplyCategories = useFetch<ISupplyCategory[]>(PaginatedQueryPath.SupplyCategories, {
     initialValue: [],
     cache: true,
   });
+  supplyCategories.data.sort((a, b) => a.name.localeCompare(b.name));
+  return supplyCategories;
 };
 
 export { useSupplyCategories };
